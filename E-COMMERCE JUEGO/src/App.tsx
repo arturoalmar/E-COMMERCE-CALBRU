@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import OpenAI from 'openai';
 
 type Step = 'select-pot' | 'configurator';
 type OptionsMap = Record<string, string[]>;
@@ -57,7 +58,7 @@ function App() {
     });
   };
 
-  const askOracle = (e: React.FormEvent) => {
+  const askOracle = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!oracleQuery.trim()) return;
 
@@ -66,23 +67,40 @@ function App() {
     setOracleQuery('');
     setIsOracleThinking(true);
 
-    // Simulated AI response (Here you could connect OpenAI/Gemini easily)
-    setTimeout(() => {
-      let aiResponse = "El humo del caldero es espeso... (Conecta aquí una API de IA como OpenAI o Gemini para respuestas reales infinitas).";
-      const q = userText.toLowerCase();
+    // Keywords relacionadas con juegos
+    const gameKeywords = ['juego', 'videojuego', 'mecánica', 'diseño', 'temática', 'plataforma', 'género', 'jugabilidad', 'nivel', 'personaje', 'enemigo', 'puntuación', 'vida', 'power-up', 'boss', 'multiplayer', 'singleplayer', 'roguelike', 'survival', 'platformer', 'rpg', 'fps', 'rts', 'puzzle', 'arcade', 'indie', 'aaa', 'gamedev', 'desarrollo de juegos', 'cartas', 'plataformas', 'party', 'vampire survivor', 'mario party', 'parry', 'auto-shooter', 'horda', 'minijuego'];
 
-      // Smart mock heuristic responses
-      if (q.includes('parry') && q.includes('cartas')) {
-        aiResponse = "¡Una idea fascinante! Un 'parry' en un juego de cartas podría implementarse como una mecánica de 'contraataque instantáneo'. Si un rival te ataca, revelar una carta de Parry en ese exacto segundo podría no solo anular el daño, sino devolverlo. Añade mucha tensión y habilidad mental.";
-      } else if (q.includes('vampire') && q.includes('cartas')) {
-        aiResponse = "Combinar auto-shooters con cartas es rompedor. Tus cartas podrían ser las armas que orbitan alrededor del personaje, y robas nuevas cartas del mazo cada vez que subes de nivel.";
-      } else if (q.includes('mecanica') || q.includes('idea')) {
-        aiResponse = "Las mejores mecánicas son aquellas que recompensan al jugador por tomar riesgos. Si esa idea encaja con tu base de juego, ¡échala al caldero sin miedo!";
-      }
+    const isGameRelated = gameKeywords.some(keyword => userText.toLowerCase().includes(keyword));
 
-      setOracleResponses(prev => [...prev, { role: 'oracle', text: aiResponse }]);
+    if (!isGameRelated) {
+      setOracleResponses(prev => [...prev, { role: 'oracle', text: 'Solo respondo preguntas relacionadas con videojuegos.' }]);
       setIsOracleThinking(false);
-    }, 2000);
+      return;
+    }
+
+    try {
+      const openai = new OpenAI({
+        apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true
+      });
+
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          { role: 'system', content: 'Eres un oráculo sabio sobre videojuegos. Responde de manera mágica y útil a preguntas sobre diseño, mecánicas, temáticas y desarrollo de juegos. Mantén un tono misterioso y creativo, como un espíritu de un caldero.' },
+          { role: 'user', content: userText }
+        ],
+        max_tokens: 200
+      });
+
+      const aiResponse = completion.choices[0].message.content || 'El humo del caldero se disipa... No tengo una respuesta clara.';
+      setOracleResponses(prev => [...prev, { role: 'oracle', text: aiResponse }]);
+    } catch (error) {
+      console.error('Error con OpenAI:', error);
+      setOracleResponses(prev => [...prev, { role: 'oracle', text: 'El caldero burbujea con error... Intenta de nuevo.' }]);
+    } finally {
+      setIsOracleThinking(false);
+    }
   };
 
   const isFusionReady = 
