@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import cauldronSvg from './assets/cauldron.svg';
 
 type Step = 'select-pot' | 'configurator';
 type OptionsMap = Record<string, string[]>;
@@ -10,12 +11,32 @@ interface Genre {
   description: string;
 }
 
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  color: string;
+}
+
 const GENRES: Genre[] = [
   { id: 'cards', name: 'Juego de Cartas', description: 'Construye tu mazo perfecto, crea sinergias y derrota a tus rivales con estrategia pura.' },
   { id: 'platformer', name: 'Plataformas', description: 'Saltos precisos, niveles desafiantes y mundos vibrantes llenos de secretos.' },
   { id: 'party', name: 'Estilo Mario Party', description: 'Minijuegos frenéticos, amigos traicioneros y mucha diversión multijugador local.' },
   { id: 'survivor', name: 'Estilo Vampire Survivor', description: 'Hordas interminables, mejoras auto-disparadas y caos en pantalla hasta el último segundo.' },
 ];
+
+const CATEGORY_COLORS: Record<string, string> = {
+  diseno: '#7cb342',
+  tematica: '#ab47bc',
+  mecanicas: '#ffb300',
+  plataforma: '#00bcd4'
+};
+
+const RANDOM_COLORS = ['#ab47bc', '#ffb300', '#00bcd4', '#ff5555'];
+
+function getRandomColor(): string {
+  return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
+}
 
 function App() {
   const [currentStep, setCurrentStep] = useState<Step>('select-pot');
@@ -29,13 +50,36 @@ function App() {
     plataforma: []
   });
 
-
+  // Particles falling into cauldron
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const [particleCounter, setParticleCounter] = useState(0);
 
   const handleSelectGenre = (genre: Genre) => {
     setSelectedGenre(genre);
     setCurrentStep('configurator');
     // Reset selections on new genre
     setSelections({ diseno: [], tematica: [], mecanicas: [], plataforma: [] });
+  };
+
+  const createParticle = (category: string) => {
+    const randomX = Math.random() * 120 - 60;
+    const randomY = -100;
+    const color = getRandomColor();
+    
+    const newParticle: Particle = {
+      id: particleCounter,
+      x: randomX,
+      y: randomY,
+      color: color
+    };
+
+    setParticles(prev => [...prev, newParticle]);
+    setParticleCounter(prev => prev + 1);
+
+    // Remove particle after animation (increased from 1500 to 2000ms)
+    setTimeout(() => {
+      setParticles(prev => prev.filter(p => p.id !== newParticle.id));
+    }, 2000);
   };
 
   const toggleOption = (category: string, optionId: string) => {
@@ -46,6 +90,11 @@ function App() {
       const newSelections = isSelected
         ? currentSelections.filter(id => id !== optionId)
         : [...currentSelections, optionId];
+
+      // Create particle when selecting (not deselecting)
+      if (!isSelected) {
+        createParticle(category);
+      }
         
       return { ...prev, [category]: newSelections };
     });
@@ -116,6 +165,19 @@ function App() {
       {generateOptionsGrid('plataforma', 'Banda Sonora', 'corner-br')}
 
       <div className="center-dashboard">
+        {/* Particles falling into cauldron */}
+        {particles.map((particle) => (
+          <div
+            key={particle.id}
+            className="falling-particle"
+            style={{
+              '--particle-color': particle.color,
+              '--particle-x': `${particle.x}px`,
+              '--particle-y': `${particle.y}px`
+            } as React.CSSProperties & { '--particle-color': string; '--particle-x': string; '--particle-y': string }}
+          />
+        ))}
+
         <div>
           <h2>El Gran Caldero</h2>
           {selectedGenre && (
@@ -130,6 +192,9 @@ function App() {
             <p>Añade ingredientes de las estanterías (esquinas) a la mezcla...</p>
           )}
         </div>
+
+        {/* Cauldron image */}
+        <img src={cauldronSvg} alt="Caldero" className="cauldron-image" />
 
         <button 
           className="btn-fusionar" 
