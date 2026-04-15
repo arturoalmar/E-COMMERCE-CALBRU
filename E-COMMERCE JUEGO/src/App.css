@@ -1,0 +1,432 @@
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+header h1 {
+  font-size: 4rem;
+  color: var(--primary-light);
+  text-shadow: 0 0 10px rgba(124, 179, 66, 0.5), 2px 2px 4px #000;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+/* Step 1: Olla Selection */
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.genre-card {
+  background: var(--glass-bg);
+  border: 4px ridge var(--border-color); /* Wooden frame look */
+  border-radius: 8px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8), var(--shadow-main);
+  position: relative;
+}
+
+.genre-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-color);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(124, 179, 66, 0.4);
+}
+
+.genre-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--primary-light);
+  text-shadow: 1px 1px 2px #000;
+}
+
+.genre-card p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.btn-select {
+  background: var(--bg-panel);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-light);
+  padding: 0.8rem 2rem;
+  border-radius: 4px; /* More blocky, less modern */
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.btn-select:hover {
+  background: var(--primary-color);
+  color: #111;
+  box-shadow: 0 0 15px rgba(124, 179, 66, 0.6);
+}
+
+/* Step 2: Configurator Canvas */
+.configurator-layout {
+  display: grid;
+  grid-template-areas: 
+    "tl center tr"
+    "bl center br";
+  gap: 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: center;
+  justify-items: center;
+}
+
+.config-corner {
+  background: var(--glass-bg);
+  border: 3px ridge var(--border-color); /* Wooden parchment vibe */
+  border-radius: 8px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: inset 0 0 15px #000, 4px 4px 10px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+/* Little nails for the wooden boards */
+.config-corner::before, .config-corner::after {
+  content: '';
+  position: absolute;
+  width: 8px; height: 8px;
+  background: #111;
+  border-radius: 50%;
+  top: 8px;
+  box-shadow: inset 1px 1px 2px rgba(255,255,255,0.2);
+}
+.config-corner::before { left: 8px; }
+.config-corner::after { right: 8px; }
+
+.corner-tl { grid-area: tl; }
+.corner-tr { grid-area: tr; }
+.corner-bl { grid-area: bl; }
+.corner-br { grid-area: br; }
+
+.config-corner h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: var(--secondary-color);
+  text-shadow: 0 0 5px rgba(171, 71, 188, 0.5);
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.option-btn {
+  background: #1f140e;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 0.8rem;
+  color: var(--text-main);
+}
+
+.option-btn:hover {
+  background: #2d1c15;
+  border-color: var(--text-muted);
+}
+
+.option-btn.selected {
+  background: rgba(171, 71, 188, 0.2);
+  border-color: var(--secondary-color);
+  color: white;
+  box-shadow: 0 0 10px rgba(171, 71, 188, 0.4);
+}
+
+/* Center Dashboard (The Cauldron) */
+.center-dashboard {
+  grid-area: center;
+  background: radial-gradient(circle, #2a1b12, #140d08);
+  border: 5px double var(--secondary-color);
+  border-radius: 50%; /* Make it round like a cauldron! */
+  width: 450px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center everything inside */
+  align-items: center;
+  padding: 2.5rem;
+  box-shadow: 0 0 40px rgba(171, 71, 188, 0.3), inset 0 0 50px rgba(0,0,0,0.9);
+  z-index: 10;
+  text-align: center;
+  position: relative;
+}
+
+.center-dashboard::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 80%;
+  height: 40%;
+  background: radial-gradient(ellipse, rgba(124,179,66,0.3), transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  animation: cauldron-glow 3s infinite alternate;
+}
+
+.center-dashboard h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-light);
+  text-shadow: 0 0 8px rgba(124, 179, 66, 0.5);
+}
+
+.selected-genre-badge {
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--text-main);
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.status-preview {
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.status-preview p {
+  color: var(--text-main);
+  font-style: italic;
+}
+
+.btn-fusionar {
+  background: var(--bg-dark);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-light);
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  width: 90%;
+  animation: pulse 2s infinite;
+  margin-top: auto;
+}
+
+.btn-fusionar:hover {
+  background: var(--primary-color);
+  color: #111;
+  text-shadow: none;
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(124, 179, 66, 0.6);
+}
+
+.btn-fusionar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  animation: none;
+  border-color: var(--border-color);
+  color: var(--text-muted);
+}
+
+.btn-back {
+  margin-top: 3rem;
+  color: var(--text-muted);
+  text-decoration: underline;
+  transition: color 0.2s;
+  font-family: 'Almendra', serif; 
+  font-size: 1.2rem;
+}
+
+.btn-back:hover {
+  color: var(--primary-light);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(124, 179, 66, 0.3); }
+  70% { box-shadow: 0 0 0 15px rgba(124, 179, 66, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(124, 179, 66, 0); }
+}
+
+@keyframes cauldron-glow {
+  0% { opacity: 0.5; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+@media (max-width: 1200px) {
+  .configurator-layout {
+    grid-template-areas: 
+      "tl tr"
+      "center center"
+      "bl br";
+  }
+}
+
+@media (max-width: 800px) {
+  .configurator-layout {
+    grid-template-areas: 
+      "center"
+      "tl"
+      "tr"
+      "bl"
+      "br";
+  }
+  .config-corner {
+    max-width: 100%;
+  }
+  .center-dashboard {
+    width: 100%;
+    border-radius: 20px;
+    height: auto;
+    min-height: 400px;
+  }
+}
+
+/* Oracle AI Chatbot */
+.oracle-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.oracle-toggle {
+  background: var(--bg-panel);
+  border: 2px solid var(--secondary-color);
+  color: var(--text-main);
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: 'Almendra', serif;
+  font-size: 1.2rem;
+  box-shadow: 0 0 15px rgba(171, 71, 188, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s;
+}
+
+.oracle-toggle:hover {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.oracle-chatWindow {
+  background: var(--glass-bg);
+  border: 3px ridge var(--border-color);
+  width: 350px;
+  height: 450px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.7);
+}
+
+.oracle-messages {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message {
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  max-width: 90%;
+}
+
+.message.oracle {
+  background: rgba(171, 71, 188, 0.2);
+  border-left: 3px solid var(--secondary-color);
+  align-self: flex-start;
+  color: var(--primary-light);
+}
+
+.message.user {
+  background: rgba(124, 179, 66, 0.2);
+  border-right: 3px solid var(--primary-color);
+  align-self: flex-end;
+  color: white;
+}
+
+.message.thinking {
+  opacity: 0.7;
+  animation: pulse 1.5s infinite;
+}
+
+.oracle-input {
+  display: flex;
+  padding: 1rem;
+  background: var(--bg-dark);
+  border-top: 2px solid var(--border-color);
+}
+
+.oracle-input input {
+  flex-grow: 1;
+  background: #111;
+  border: 1px solid var(--border-color);
+  color: white;
+  padding: 0.8rem;
+  border-radius: 4px;
+  outline: none;
+}
+
+.oracle-input input:focus {
+  border-color: var(--secondary-color);
+}
+
+.oracle-input button {
+  background: var(--secondary-color);
+  color: white;
+  padding: 0 1rem;
+  margin-left: 0.5rem;
+  border-radius: 4px;
+  font-family: 'Almendra', serif;
+  transition: background 0.2s;
+}
+
+.oracle-input button:hover:not(:disabled) {
+  background: #c362d4;
+}
+
+.oracle-input button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+

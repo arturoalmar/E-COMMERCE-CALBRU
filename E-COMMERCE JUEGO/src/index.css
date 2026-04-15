@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Almendra:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --primary-color: #7cb342; /* Poison green */
+  --primary-light: #aed581;
+  --secondary-color: #ab47bc; /* Witchy purple */
+  --bg-dark: #1e130c; /* Deep wood/mud */
+  --bg-panel: #2d1c15; /* Dark wood panel */
+  --text-main: #e6ddc5; /* Old parchment */
+  --text-muted: #a3947f;
+  --border-color: #4a3424;
+  --shadow-main: 0 8px 32px rgba(10, 5, 0, 0.7);
+  --glass-bg: rgba(45, 28, 21, 0.75);
+  --glass-border: rgba(124, 179, 66, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  /* Dark misty woods / hut vibe */
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(124, 179, 66, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(171, 71, 188, 0.15), transparent 40%),
+    repeating-linear-gradient(45deg, #170e0a 0px, #170e0a 2px, #1e130c 2px, #1e130c 8px);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif; /* For small text */
+}
+
+h1, h2, h3, .btn-select, .btn-fusionar {
+  font-family: 'Almendra', serif; 
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
