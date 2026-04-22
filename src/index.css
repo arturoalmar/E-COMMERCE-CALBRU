@@ -1,25 +1,46 @@
+/* ==========================================================================
+   DISEÑO GLOBAL Y TOKENS DE DISEÑO (DESIGN TOKENS)
+   Este archivo define la base visual, tipografía y paleta de colores.
+   ========================================================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Almendra:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-  --primary-color: #8c5cff; /* Morado intenso */
-  --primary-light: #d7b3ff;
-  --primary-dark: #5728a1;
-  --secondary-color: #bf88ff; /* Púrpura caldero */
-  --secondary-light: #edd7ff;
-  --secondary-dark: #8f54c8;
-  --bg-dark: #090814; /* Noche profunda */
-  --bg-panel: #120f1f; /* Panel oscuro */
-  --bg-accent: #1f1632;
-  --text-main: #f4efff; /* Niebla lunar */
-  --text-muted: #c7c0db;
-  --border-color: #6d52a6;
-  --border-light: #9b80d9;
-  --shadow-main: 0 12px 40px rgba(15, 7, 40, 0.45);
-  --glass-bg: rgba(20, 12, 35, 0.88);
-  --glass-border: rgba(191, 136, 255, 0.18);
-  --gold: #f0c86e;
+  /* Paleta de Colores Primaria - Basada en tonos morados y púrpuras mágicos */
+  --primary-color: #8c5cff;    /* Morado intenso: Color principal para acentos y estados activos */
+  --primary-light: #d7b3ff;    /* Morado claro: Usado para hover y textos destacados */
+  --primary-dark: #5728a1;     /* Morado oscuro: Sombras y profundidad */
+  
+  /* Colores Secundarios - "Púrpura Caldero" */
+  --secondary-color: #bf88ff;  /* Púrpura brillante: Usado en títulos y elementos temáticos */
+  --secondary-light: #edd7ff;  /* Púrpura suave: Contraste para fondos oscuros */
+  --secondary-dark: #8f54c8;   /* Púrpura medio: Bordes y detalles */
+  
+  /* Sistema de Fondos - "Noche Profunda" */
+  --bg-dark: #090814;          /* Fondo base: Casi negro con un matiz azulado/púrpura */
+  --bg-panel: #120f1f;         /* Fondo de paneles: Ligeramente más claro para jerarquía */
+  --bg-accent: #1f1632;        /* Acento de fondo: Para áreas destacadas */
+  
+  /* Tipografía y Texto - "Niebla Lunar" */
+  --text-main: #f4efff;        /* Texto principal: Blanco roto con matiz frío */
+  --text-muted: #c7c0db;       /* Texto secundario: Menos contraste para descripciones */
+  
+  /* Bordes y Estructura */
+  --border-color: #6d52a6;     /* Borde estándar: Define la silueta de los contenedores */
+  --border-light: #9b80d9;     /* Borde brillante: Para efectos de iluminación */
+  
+  /* Sombras y Efectos */
+  --shadow-main: 0 12px 40px rgba(15, 7, 40, 0.45); /* Sombra principal para profundidad */
+  
+  /* Efectos Glassmorphism (Cristal) */
+  --glass-bg: rgba(20, 12, 35, 0.88);              /* Fondo traslúcido oscuro */
+  --glass-border: rgba(191, 136, 255, 0.18);      /* Borde sutil para efecto cristal */
+  
+  /* Colores de Acento Especiales */
+  --gold: #f0c86e;             /* Oro: Para elementos raros o recompensas (estética alquimista) */
 }
 
+/* Reset y Estilos Base */
 * {
   margin: 0;
   padding: 0;
@@ -30,17 +51,23 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-main);
   min-height: 100vh;
+  
+  /* Fondo Dinámico: Gradientes radiales que simulan pulsos de energía mágica */
   background-image:
     radial-gradient(circle at 15% 20%, rgba(140, 92, 255, 0.12), transparent 28%),
     radial-gradient(circle at 80% 10%, rgba(191, 136, 255, 0.09), transparent 25%),
     radial-gradient(circle at 50% 90%, rgba(255, 211, 153, 0.08), transparent 20%),
     linear-gradient(180deg, rgba(9, 8, 20, 0.95), rgba(10, 7, 25, 0.98));
+  
   background-attachment: fixed;
   overflow-x: hidden;
+  
+  /* Tipografía Inter para legibilidad en el cuerpo */
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.7;
 }
 
+/* Tipografía Temática (Almendra) para Encabezados y Botones Especiales */
 h1, h2, h3, .btn-select, .btn-fusionar {
   font-family: 'Almendra', serif; 
   font-weight: 700;
@@ -53,6 +80,7 @@ h1, h2, h3, .btn-select, .btn-fusionar {
   flex-direction: column;
 }
 
+/* Estilos de Botón por Defecto */
 button {
   cursor: pointer;
   border: none;
@@ -62,6 +90,7 @@ button {
   outline: none;
 }
 
+/* Personalización de la Barra de Desplazamiento (Scrollbar) */
 ::-webkit-scrollbar {
   width: 12px;
 }

@@ -1,5 +1,10 @@
 import { useState } from 'react';
 import './App.css';
+
+/**
+ * IMPORTACIÓN DE ACTIVOS (IMÁGENES)
+ * Estos archivos se utilizan para la interfaz y la estética temática de la aplicación.
+ */
 import backgroundImg from './assets/background.png';
 import spritesImg from './assets/Sprittes.png';
 import proyectImg from './assets/proyect.png';
@@ -9,6 +14,13 @@ import partyCauldron from './assets/party_cauldron.png';
 import survivorCauldron from './assets/survivor_cauldron.png';
 import newBgImg from './assets/image.png';
 
+/**
+ * DEFINICIÓN DE TIPOS
+ * Step: Define en qué paso del proceso de creación se encuentra el usuario.
+ * OptionsMap: Estructura para almacenar las selecciones de configuración.
+ * Genre: Interfaz para los géneros de juego disponibles (pociones base).
+ * Particle: Interfaz para las partículas visuales que caen al caldero.
+ */
 type Step = 'select-pot' | 'configurator';
 type OptionsMap = Record<string, string[]>;
 
@@ -17,7 +29,7 @@ interface Genre {
   name: string;
   description: string;
   image: string;
-  hue: number;
+  hue: number; // Valor para rotación de color en CSS (filtro hue-rotate)
 }
 
 interface Particle {
@@ -27,6 +39,10 @@ interface Particle {
   color: string;
 }
 
+/**
+ * DATOS DE GÉNEROS (POCIONES BASE)
+ * Lista de los tipos de juegos que el usuario puede elegir para empezar.
+ */
 const GENRES: Genre[] = [
   {
     id: 'cards',
@@ -58,8 +74,12 @@ const GENRES: Genre[] = [
   },
 ];
 
+// Colores aleatorios para las partículas que caen al caldero
 const RANDOM_COLORS = ['#ab47bc', '#ffb300', '#00bcd4', '#ff5555'];
 
+/**
+ * Función de utilidad para obtener un color aleatorio de la lista.
+ */
 function getRandomColor(): string {
   return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
 }
@@ -67,11 +87,20 @@ function getRandomColor(): string {
 type Page = 'home' | 'creator';
 
 function App() {
+  /* ==========================================================================
+     ESTADOS DE LA APLICACIÓN
+     ========================================================================== */
+  
+  // Controla si estamos en la Landing Page o en el Creador
   const [page, setPage] = useState<Page>('home');
+  
+  // Controla el paso actual dentro del creador (selección o configuración)
   const [currentStep, setCurrentStep] = useState<Step>('select-pot');
+  
+  // Almacena el género seleccionado por el usuario
   const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
 
-  // States to hold the selected options for each characteristic
+  // Almacena las selecciones de ingredientes en el configurador
   const [selections, setSelections] = useState<OptionsMap>({
     diseno: [],
     tematica: [],
@@ -79,12 +108,16 @@ function App() {
     plataforma: []
   });
 
-  // Particles falling into cauldron
+  // Gestión de partículas visuales
   const [particles, setParticles] = useState<Particle[]>([]);
   const [particleCounter, setParticleCounter] = useState(0);
 
+  /* ==========================================================================
+     RENDERIZADO DE LA PÁGINA DE INICIO (LANDING PAGE)
+     ========================================================================== */
   const renderHomePage = () => (
     <main className="homepage">
+      {/* Sección Hero: Primera impresión con imagen de fondo y CTA principal */}
       <section
         className="homepage-hero"
         style={{
@@ -109,6 +142,7 @@ function App() {
               Ir al creador de juegos
             </button>
 
+            {/* Tarjetas de estadísticas/características clave */}
             <div className="hero-highlights">
               <article className="stat-card">
                 <strong>Editor visual</strong>
@@ -131,6 +165,7 @@ function App() {
         </div>
       </section>
 
+      {/* Sección Informativa: Qué hacemos */}
       <section className="homepage-section">
         <div className="text-block">
           <h2>Qué hacemos</h2>
@@ -158,6 +193,7 @@ function App() {
         </div>
       </section>
 
+      {/* Sección de Proceso: Cómo lo hacemos (Orden inverso en desktop) */}
       <section className="homepage-section homepage-section--reverse">
         <div className="image-block image-block--wide">
           <img src={spritesImg} alt="Cómo lo hacemos" />
@@ -190,6 +226,7 @@ function App() {
         </div>
       </section>
 
+      {/* Panel Final de Llamada a la Acción (CTA) */}
       <section className="trial-panel">
         <h2>Pruébanos</h2>
         <p>
@@ -206,16 +243,26 @@ function App() {
     </main>
   );
 
+  /* ==========================================================================
+     LÓGICA DE INTERACCIÓN
+     ========================================================================== */
+
+  /**
+   * Maneja la selección de un género base.
+   */
   const handleSelectGenre = (genre: Genre) => {
     setSelectedGenre(genre);
     setCurrentStep('configurator');
-    // Reset selections on new genre
+    // Reiniciar selecciones al elegir un nuevo género
     setSelections({ diseno: [], tematica: [], mecanicas: [], plataforma: [] });
   };
 
+  /**
+   * Crea una partícula visual animada que cae hacia el caldero.
+   */
   const createParticle = () => {
-    const randomX = Math.random() * 120 - 60;
-    const randomY = -100;
+    const randomX = Math.random() * 120 - 60; // Desplazamiento horizontal aleatorio
+    const randomY = -100; // Inicia por encima de la vista
     const color = getRandomColor();
 
     const newParticle: Particle = {
@@ -228,12 +275,15 @@ function App() {
     setParticles(prev => [...prev, newParticle]);
     setParticleCounter(prev => prev + 1);
 
-    // Remove particle after animation (increased from 1500 to 2000ms)
+    // Eliminar la partícula después de que termine la animación (2 segundos)
     setTimeout(() => {
       setParticles(prev => prev.filter(p => p.id !== newParticle.id));
     }, 2000);
   };
 
+  /**
+   * Alterna la selección de una opción (ingrediente) en una categoría.
+   */
   const toggleOption = (category: string, optionId: string) => {
     setSelections((prev) => {
       const currentSelections = prev[category];
@@ -243,7 +293,7 @@ function App() {
         ? currentSelections.filter(id => id !== optionId)
         : [...currentSelections, optionId];
 
-      // Create particle when selecting (not deselecting)
+      // Disparar efecto de partícula solo al seleccionar (añadir ingrediente)
       if (!isSelected) {
         createParticle();
       }
@@ -252,14 +302,16 @@ function App() {
     });
   };
 
-
-
+  // Comprueba si el usuario ha seleccionado al menos un ingrediente para habilitar el botón final
   const isFusionReady =
     selections.diseno.length > 0 ||
     selections.tematica.length > 0 ||
     selections.mecanicas.length > 0 ||
     selections.plataforma.length > 0;
 
+  /* ==========================================================================
+     RENDERIZADO DEL PASO 1: SELECCIÓN DE POCIÓN BASE
+     ========================================================================== */
   const renderSelectionStep = () => (
     <>
       <header>
@@ -289,9 +341,15 @@ function App() {
     </>
   );
 
-  // Options mock generators (12 default items for the 4x3 grids)
+  /* ==========================================================================
+     COMPONENTES AUXILIARES DEL CONFIGURADOR
+     ========================================================================== */
+
+  /**
+   * Genera una cuadrícula de opciones (estantería) para una categoría específica.
+   */
   const generateOptionsGrid = (category: string, title: string, cornerClass: string) => {
-    // Generates 12 generic option blocks matching the user's sketch layout
+    // Genera 12 opciones genéricas para llenar la cuadrícula (según el diseño original)
     const options = Array.from({ length: 12 }).map((_, i) => ({
       id: `${category}-${i + 1}`,
       label: `Opción ${i + 1}`
@@ -315,8 +373,12 @@ function App() {
     );
   };
 
+  /* ==========================================================================
+     RENDERIZADO DEL PASO 2: CONFIGURADOR (EL CALDERO)
+     ========================================================================== */
   const renderConfiguratorStep = () => (
     <>
+      {/* Fondo específico para el modo configurador */}
       <div
         style={{
           position: 'fixed',
@@ -332,13 +394,15 @@ function App() {
         }}
       />
       <div className="configurator-layout">
+        {/* Las 4 esquinas del configurador (estanterías de ingredientes) */}
         {generateOptionsGrid('diseno', 'Diseño Gráfico', 'corner-tl')}
         {generateOptionsGrid('tematica', 'Temática', 'corner-tr')}
         {generateOptionsGrid('mecanicas', 'Mecánicas Extra', 'corner-bl')}
         {generateOptionsGrid('plataforma', 'Banda Sonora', 'corner-br')}
 
+        {/* El Dashboard Central: El Caldero Mágico */}
         <div className="center-dashboard">
-          {/* Particles falling into cauldron */}
+          {/* Partículas visuales cayendo */}
           {particles.map((particle) => (
             <div
               key={particle.id}
@@ -366,6 +430,7 @@ function App() {
             )}
           </div>
 
+          {/* Imagen del caldero con el color del género seleccionado */}
           {selectedGenre ? (
             <img
               src={selectedGenre.image}
@@ -379,6 +444,7 @@ function App() {
             </div>
           )}
 
+          {/* Botón final de acción */}
           <button
             className="btn-fusionar"
             disabled={!isFusionReady}
@@ -391,24 +457,29 @@ function App() {
     </>
   );
 
-
-
+  /* ==========================================================================
+     ESTRUCTURA PRINCIPAL DEL COMPONENTE APP
+     ========================================================================== */
   return (
     <div className="app-container">
+      {/* Lógica de navegación condicional entre Home y Creador */}
       {page === 'home' && renderHomePage()}
 
       {page === 'creator' && (
         <>
+          {/* Botón de retorno siempre visible en el modo creador */}
           <div className="page-header-row">
             <button className="btn-back-home" onClick={() => setPage('home')}>
               ← Volver a la página de inicio
             </button>
           </div>
 
+          {/* Switch entre los pasos del creador */}
           {currentStep === 'select-pot' && renderSelectionStep()}
           {currentStep === 'configurator' && (
             <>
               {renderConfiguratorStep()}
+              {/* Botón de retroceso al paso anterior */}
               <div style={{ display: 'flex', justifyContent: 'center', width: '100%', position: 'relative', zIndex: 100, marginTop: 'calc(-2.5rem - 10px)', paddingBottom: '2rem' }}>
                 <button
                   className="btn-back"
