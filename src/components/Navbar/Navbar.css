@@ -1,0 +1,149 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  background: rgba(18, 15, 31, 0.75);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(140, 92, 255, 0.2);
+  z-index: 1000;
+}
+
+.navbar-left, .navbar-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right {
+  justify-content: flex-end;
+}
+
+.navbar-center {
+  flex: 2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.logo-text {
+  font-family: 'Almendra', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f4efff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(140, 92, 255, 0.5);
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+}
+
+.bar {
+  width: 25px;
+  height: 2px;
+  background: #f4efff;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+.menu-toggle:hover .bar {
+  background: #bf88ff;
+  box-shadow: 0 0 5px #bf88ff;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 80px;
+  left: 1rem;
+  background: rgba(20, 15, 35, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(140, 92, 255, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  color: #c7c0db;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dropdown-menu button:hover {
+  background: rgba(140, 92, 255, 0.2);
+  color: #f4efff;
+}
+
+.intranet-link {
+  border-top: 1px solid rgba(255,255,255,0.1) !important;
+  color: #f0c86e !important;
+  margin-top: 0.5rem;
+}
+
+.user-profile {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  color: #f4efff;
+}
+
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(140, 92, 255, 0.4);
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.login-placeholder {
+  color: #8c5cff;
+  font-weight: bold;
+}

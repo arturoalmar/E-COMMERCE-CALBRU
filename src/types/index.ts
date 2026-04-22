@@ -1,6 +1,6 @@
 export type Step = 'select-pot' | 'configurator';
 export type OptionsMap = Record<string, string[]>;
-export type Page = 'home' | 'creator';
+export type Page = 'home' | 'creator' | 'my-cauldrons' | 'intranet' | 'login';
 
 export interface Genre {
   id: string;

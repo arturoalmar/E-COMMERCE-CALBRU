@@ -5,6 +5,10 @@ import './App.css';
 import LandingPage from './Landing/LandingPage';
 import SelectionPage from './Selection-Cauldron/SelectionPage';
 import ConfiguratorPage from './Adding-Ingredients/ConfiguratorPage';
+import Navbar from './components/Navbar/Navbar';
+import IntranetPage from './Intranet/IntranetPage';
+import MyCauldronsPage from './MyCauldrons/MyCauldronsPage';
+import LoginPage from './Login/LoginPage';
 
 // Tipos y Datos
 import { GENRES, RANDOM_COLORS } from './constants/gameData';
@@ -38,9 +42,20 @@ function App() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [particleCounter, setParticleCounter] = useState(0);
 
+  // Estados de Usuario
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isWorker, setIsWorker] = useState(true);
+
   /* ==========================================================================
      LÓGICA DE INTERACCIÓN
      ========================================================================== */
+
+  const handleNavigate = (newPage: Page) => {
+    setPage(newPage);
+    if (newPage === 'creator') {
+      setCurrentStep('select-pot');
+    }
+  };
 
   const handleSelectGenre = (genre: Genre) => {
     setSelectedGenre(genre);
@@ -95,57 +110,81 @@ function App() {
      RENDERIZADO DE LAS PÁGINAS
      ========================================================================== */
   
-  const renderHomePage = () => (
-    <LandingPage setPage={setPage} setCurrentStep={setCurrentStep} />
-  );
+  const renderContent = () => {
+    switch (page) {
+      case 'home':
+        return <LandingPage setPage={setPage} setCurrentStep={setCurrentStep} isLoggedIn={isLoggedIn} />;
+      
+      case 'creator':
+        return (
+          <div className="creator-container">
+            {currentStep === 'select-pot' && (
+              <SelectionPage genres={GENRES} handleSelectGenre={handleSelectGenre} />
+            )}
+            {currentStep === 'configurator' && (
+              <>
+                <ConfiguratorPage 
+                  newBgImg={newBgImg}
+                  selections={selections}
+                  particles={particles}
+                  selectedGenre={selectedGenre}
+                  isFusionReady={isFusionReady}
+                  toggleOption={toggleOption}
+                />
+                <div style={{ display: 'flex', justifyContent: 'center', width: '100%', position: 'relative', zIndex: 100, marginTop: 'calc(-2.5rem - 10px)', paddingBottom: '2rem' }}>
+                  <button
+                    className="btn-back"
+                    style={{ width: '100%', maxWidth: '400px', cursor: 'pointer' }}
+                    onClick={() => {
+                      setCurrentStep('select-pot');
+                      setSelectedGenre(null);
+                    }}
+                  >
+                    ← Volver a los calderos
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        );
 
-  const renderSelectionStep = () => (
-    <SelectionPage genres={GENRES} handleSelectGenre={handleSelectGenre} />
-  );
+      case 'my-cauldrons':
+        return <MyCauldronsPage />;
 
-  const renderConfiguratorStep = () => (
-    <ConfiguratorPage 
-      newBgImg={newBgImg}
-      selections={selections}
-      particles={particles}
-      selectedGenre={selectedGenre}
-      isFusionReady={isFusionReady}
-      toggleOption={toggleOption}
-    />
-  );
+      case 'intranet':
+        return <IntranetPage />;
+
+      case 'login':
+        return (
+          <LoginPage onLogin={() => {
+            setIsLoggedIn(true);
+            setPage('home');
+          }} />
+        );
+
+      default:
+        return <LandingPage setPage={setPage} setCurrentStep={setCurrentStep} isLoggedIn={isLoggedIn} />;
+    }
+  };
 
   return (
     <div className="app-container">
-      {page === 'home' && renderHomePage()}
-
-      {page === 'creator' && (
-        <>
-          <div className="page-header-row">
-            <button className="btn-back-home" onClick={() => setPage('home')}>
-              ← Volver a la página de inicio
-            </button>
-          </div>
-
-          {currentStep === 'select-pot' && renderSelectionStep()}
-          {currentStep === 'configurator' && (
-            <>
-              {renderConfiguratorStep()}
-              <div style={{ display: 'flex', justifyContent: 'center', width: '100%', position: 'relative', zIndex: 100, marginTop: 'calc(-2.5rem - 10px)', paddingBottom: '2rem' }}>
-                <button
-                  className="btn-back"
-                  style={{ width: '100%', maxWidth: '400px', cursor: 'pointer' }}
-                  onClick={() => {
-                    setCurrentStep('select-pot');
-                    setSelectedGenre(null);
-                  }}
-                >
-                  ← Volver a los calderos
-                </button>
-              </div>
-            </>
-          )}
-        </>
-      )}
+      <Navbar 
+        isWorker={isWorker} 
+        onNavigate={handleNavigate} 
+        isLoggedIn={isLoggedIn}
+        onLoginToggle={() => {
+          if (isLoggedIn) {
+            setIsLoggedIn(false);
+          } else {
+            setPage('login');
+          }
+        }}
+      />
+      
+      <div className="main-content" style={{ paddingTop: page === 'creator' || page === 'login' ? '0' : '70px' }}>
+        {renderContent()}
+      </div>
     </div>
   );
 }
