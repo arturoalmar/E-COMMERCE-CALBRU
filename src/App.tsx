@@ -152,7 +152,7 @@ function App() {
         return <MyCauldronsPage />;
 
       case 'intranet':
-        return <IntranetPage />;
+        return <IntranetPage username={isLoggedIn ? 'Arturo Almar' : 'Visitante'} />;
 
       case 'login':
         return (
