@@ -3,6 +3,11 @@ import news1 from '../assets/news1.png';
 import news2 from '../assets/news2.png';
 import news3 from '../assets/news3.png';
 
+// Importación de sub-componentes reorganizados
+import Normas from './Normas';
+import Vacaciones from './Vacaciones';
+import Teletrabajo from './Teletrabajo';
+
 interface IntranetPageProps {
   username: string;
 }
@@ -247,102 +252,6 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
     </>
   );
 
-  const renderRulesView = () => (
-    <div className="sub-view-panel parchment-bg detailed-view">
-      <button className="intranet-action-link back-btn" onClick={() => setView('main')}>← Volver</button>
-      <h2 className="section-title-witch">Código de Conducta y Normas de Calbru Games</h2>
-      <div className="rules-content-expanded vertical-stack">
-        <div className="rule-card pro-card">
-          <h4>1. Horario y Puntualidad</h4>
-          <p>El horario general de la oficina es de 09:00 a 18:00, con flexibilidad de entrada hasta las 10:00. Las reuniones diarias (Stand-ups) comienzan puntualmente a las 10:15. Se requiere puntualidad para no retrasar el flujo de trabajo de los equipos.</p>
-        </div>
-        <div className="rule-card pro-card">
-          <h4>2. Uso de Equipos y Software</h4>
-          <p>Los equipos proporcionados por la empresa son para uso exclusivamente profesional. Queda prohibida la instalación de software no autorizado que pueda comprometer la seguridad de la red rúnica. Las licencias de desarrollo son personales e intransferibles.</p>
-        </div>
-        <div className="rule-card pro-card">
-          <h4>3. Comunicación Interna</h4>
-          <p>Slack es nuestra herramienta principal para comunicación asíncrona. Teams se utilizará para videollamadas y reuniones formales. Se espera una respuesta a mensajes directos en un plazo máximo de 2 horas dentro del horario laboral.</p>
-        </div>
-        <div className="rule-card pro-card">
-          <h4>4. Propiedad Intelectual y Confidencialidad</h4>
-          <p>Todo código, diseño o idea generada durante la jornada laboral pertenece a Calbru Games. La firma del acuerdo de confidencialidad (NDA) es obligatoria y su vulneración conlleva medidas disciplinarias graves.</p>
-        </div>
-        <div className="rule-card pro-card">
-          <h4>5. Espacios Comunes</h4>
-          <p>La cocina y las zonas de relax deben mantenerse limpias. Es responsabilidad de cada empleado recoger sus utensilios. El respeto al silencio en las zonas de desarrollo es fundamental para la concentración del equipo.</p>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderVacationView = () => (
-    <div className="sub-view-panel parchment-bg detailed-view">
-      <button className="intranet-action-link back-btn" onClick={() => setView('main')}>← Volver</button>
-      <h2 className="section-title-witch">Solicitud de Vacaciones</h2>
-      <div className="vacation-main-layout">
-        <div className="vacation-stats-panel">
-          <div className="stat-circle">
-            <span className="big-num">{TOTAL_VACATION_LIMIT - selectedVacationDays.length}</span>
-            <span>Días</span>
-          </div>
-          <p className="stat-desc">Días elegidos: {selectedVacationDays.length} / {TOTAL_VACATION_LIMIT}</p>
-          <button className="intranet-confirm-btn" onClick={() => alert('¡Solicitud enviada a RRHH!')}>Enviar Solicitud</button>
-        </div>
-        <div className="vacation-calendar-wrapper">
-          <div className="calendar-header-nav">
-            <button className="nav-btn" onClick={() => changeMonth('vacation', 'prev')}>❮</button>
-            <h3>{MONTH_NAMES[vacationDate.getMonth()]} {vacationDate.getFullYear()}</h3>
-            <button className="nav-btn" onClick={() => changeMonth('vacation', 'next')}>❯</button>
-          </div>
-          <div className="calendar-grid-header">
-            <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
-          </div>
-          <div className="calendar-grid-body vacation-selector fixed-format">
-            {renderCalendarDays(vacationDate, 'select')}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderTeleworkingView = () => (
-    <div className="sub-view-panel parchment-bg detailed-view">
-      <button className="intranet-action-link back-btn" onClick={() => setView('main')}>← Volver</button>
-      <h2 className="section-title-witch">Política de Teletrabajo y Flexibilidad</h2>
-      <div className="telework-policy-details vertical-stack">
-        <div className="policy-block pro-block">
-          <h3>1. Modelos Disponibles</h3>
-          <p>Calbru Games ofrece un modelo híbrido de 3 días de oficina y 2 de teletrabajo. Los perfiles Senior pueden optar al modelo "Remote First" (4 días remoto) previa aprobación del Lead de departamento.</p>
-        </div>
-        <div className="policy-block pro-block">
-          <h3>2. Requisitos Técnicos</h3>
-          <p>Es indispensable contar con una conexión estable de al menos 100 Mbps y un espacio de trabajo adecuado. La empresa proveerá báculo portátil y periféricos necesarios. La VPN corporativa debe estar activa en todo momento.</p>
-        </div>
-        <div className="policy-block pro-block">
-          <h3>3. Cómo Solicitarlo</h3>
-          <p>Para jornadas puntuales, avisa a tu Lead vía Slack con 24h de antelación. Para cambios permanentes de modelo, rellena el formulario inferior. RRHH revisará la solicitud en un máximo de 5 días hábiles.</p>
-        </div>
-        <div className="telework-form-worked pro-form">
-          <h3>Formulario de Solicitud de Teletrabajo</h3>
-          <div className="form-group">
-            <label>Tipo de solicitud:</label>
-            <select className="pro-input">
-              <option>Jornada puntual</option>
-              <option>Cambio a modelo híbrido (3/2)</option>
-              <option>Cambio a modelo Remote First (4/1)</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Motivo y Fechas:</label>
-            <textarea className="pro-input compact-textarea" placeholder="Explica brevemente tu situación..."></textarea>
-          </div>
-          <button className="intranet-confirm-btn" onClick={() => alert('Solicitud de teletrabajo enviada.')}>Enviar Solicitud</button>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="intranet-sketch-layout intranet-full">
       {view === 'main' && (
@@ -352,9 +261,22 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
       )}
 
       {view === 'main' && renderMainView()}
-      {view === 'rules' && renderRulesView()}
-      {view === 'vacation' && renderVacationView()}
-      {view === 'teleworking' && renderTeleworkingView()}
+      
+      {view === 'rules' && <Normas setView={setView} />}
+      
+      {view === 'vacation' && (
+        <Vacaciones 
+          setView={setView}
+          vacationDate={vacationDate}
+          changeMonth={changeMonth}
+          MONTH_NAMES={MONTH_NAMES}
+          TOTAL_VACATION_LIMIT={TOTAL_VACATION_LIMIT}
+          selectedVacationDays={selectedVacationDays}
+          renderCalendarDays={renderCalendarDays}
+        />
+      )}
+      
+      {view === 'teleworking' && <Teletrabajo setView={setView} />}
 
       {view === 'main' && (
         <section className="hr-form-sketch">
