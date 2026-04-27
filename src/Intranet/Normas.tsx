@@ -7,9 +7,21 @@ interface NormasProps {
 const Normas: React.FC<NormasProps> = ({ setView }) => {
   return (
     <div className="sub-view-panel parchment-bg detailed-view">
-      <button className="intranet-action-link back-btn" onClick={() => setView('main')}>← Volver</button>
-      <h2 className="section-title-witch">Código de Conducta y Normas de Calbru Games</h2>
-      <div className="rules-content-expanded vertical-stack">
+      <div className="top-navigation-area">
+        <button className="intranet-action-link back-btn-top" onClick={() => setView('main')}>
+          ← Volver al Panel
+        </button>
+      </div>
+
+      <div className="sub-view-header modern-grid-header">
+        <div className="header-side-left"></div>
+        <h2 className="section-title-witch centered-white-title">
+          Normas de Empresa
+        </h2>
+        <div className="header-side-right"></div>
+      </div>
+
+      <div className="rules-content-expanded vertical-stack full-width-content">
         <div className="rule-card pro-card">
           <h4>1. Horario y Puntualidad</h4>
           <p>El horario general de la oficina es de 09:00 a 18:00, con flexibilidad de entrada hasta las 10:00. Las reuniones diarias (Stand-ups) comienzan puntualmente a las 10:15. Se requiere puntualidad para no retrasar el flujo de trabajo de los equipos.</p>

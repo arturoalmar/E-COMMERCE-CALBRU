@@ -2245,8 +2245,8 @@ body {
 
 
 .sub-view-panel.detailed-view {
-  max-height: 80vh;
-  overflow-y: auto;
+  
+  
   display: flex;
   flex-direction: column;
 }
@@ -2312,7 +2312,7 @@ body {
 
 .intranet-content-area {
   padding: 2rem 3rem;
-  overflow-y: auto;
+  
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -2335,7 +2335,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-height: 800px; /* Evita que crezca demasiado */
+   /* Evita que crezca demasiado */
 }
 
 .vacation-grid-row {
@@ -2709,7 +2709,7 @@ body {
 
 /* VACATION COMPACT SINGLE VIEW */
 .vacation-fixed-view {
-  max-height: 85vh;
+  
   display: flex;
   flex-direction: column;
 }
@@ -2774,5 +2774,210 @@ body {
   border-radius: 8px;
   margin: 1rem 0;
   resize: none;
+}
+
+
+/* UPDATED SUB-VIEW LAYOUTS (NO SIDEBARS) */
+.sub-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(191, 136, 255, 0.1);
+}
+
+.vacation-quick-stats {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  border: 1px solid var(--secondary-color);
+}
+
+.full-width-content {
+  grid-template-columns: 1fr !important; /* Elimina la columna de la sidebar */
+  width: 100%;
+}
+
+.detailed-view {
+  width: 100%;
+  max-width: 100% !important;
+}
+
+
+/* TITULOS DE SUB-VISTAS: CENTRADOS Y GRANDES */
+.sub-view-header {
+  position: relative; /* Para posicionar el botón de volver de forma absoluta */
+  display: flex;
+  justify-content: center; /* Centra el contenido principal (el título) */
+  align-items: center;
+  padding: 2.5rem 0;
+  margin-bottom: 3rem;
+  min-height: 120px;
+}
+
+.sub-view-header .back-btn {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 !sync; /* Anula márgenes previos */
+}
+
+.sub-view-header .section-title-witch {
+  font-size: 3.5rem !important; /* Más grande */
+  text-align: center;
+  margin: 0 !important;
+  text-shadow: 0 0 15px rgba(191, 136, 255, 0.4);
+}
+
+.vacation-quick-stats {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 1000px) {
+  .sub-view-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    min-height: auto;
+  }
+  .sub-view-header .back-btn, 
+  .vacation-quick-stats {
+    position: static;
+    transform: none;
+  }
+  .sub-view-header .section-title-witch {
+    font-size: 2.5rem !important;
+  }
+}
+
+
+/* REFUERZO DE TITULO CENTRADO Y GIGANTE */
+.sub-view-header {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  position: relative !important;
+}
+
+.sub-view-header .section-title-witch {
+  font-size: 4.5rem !important; /* Aún más grande */
+  color: var(--secondary-color) !important;
+  letter-spacing: 2px;
+  z-index: 10;
+}
+
+.sub-view-header .back-btn {
+  position: absolute !important;
+  left: 2rem !important;
+  margin: 0 !important;
+}
+
+.vacation-quick-stats {
+  position: absolute !important;
+  right: 2rem !important;
+  margin: 0 !important;
+}
+
+
+/* MODERN GRID HEADER (NO OVERLAP) */
+.modern-grid-header {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important; /* 3 columnas: izquierda, centro (auto), derecha */
+  align-items: center !important;
+  width: 100% !important;
+  padding: 2rem 0 !important;
+  margin-bottom: 2rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: static !important; /* Volvemos a estático para que el grid funcione */
+}
+
+.header-side-left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.header-side-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.centered-white-title {
+  font-size: 3.5rem !important;
+  color: #ffffff !important;
+  text-align: center;
+  margin: 0 !important;
+  padding: 0 2rem !important; /* Espacio de seguridad para no tocar los lados */
+  white-space: nowrap; /* Evita que el título se parta si hay espacio */
+}
+
+.vacation-quick-stats-clean {
+  background: rgba(140, 92, 255, 0.15);
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid var(--secondary-color);
+  font-size: 0.9rem;
+}
+
+/* Responsividad para evitar que choquen */
+@media (max-width: 1200px) {
+  .centered-white-title {
+    font-size: 2.8rem !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .modern-grid-header {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+  .header-side-left, .header-side-right {
+    justify-content: center;
+  }
+  .centered-white-title {
+    font-size: 2.2rem !important;
+    white-space: normal;
+  }
+}
+
+
+/* TOP NAVIGATION AREA (ABOVE TITLE) */
+.top-navigation-area {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem 0;
+}
+
+.back-btn-top {
+  font-family: "MedievalSharp", cursive;
+  color: var(--gold);
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(240, 200, 110, 0.2);
+}
+
+.back-btn-top:hover {
+  background: rgba(240, 200, 110, 0.1);
+  color: #fff;
+  transform: translateX(-5px);
+  box-shadow: 0 0 10px rgba(240, 200, 110, 0.3);
+}
+
+/* Reducción de márgenes en la cabecera ahora que el botón subió */
+.modern-grid-header {
+  padding-top: 0 !important;
+  margin-top: -1rem;
 }
 

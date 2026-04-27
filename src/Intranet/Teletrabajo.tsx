@@ -7,9 +7,21 @@ interface TeletrabajoProps {
 const Teletrabajo: React.FC<TeletrabajoProps> = ({ setView }) => {
   return (
     <div className="sub-view-panel parchment-bg detailed-view">
-      <button className="intranet-action-link back-btn" onClick={() => setView('main')}>← Volver</button>
-      <h2 className="section-title-witch">Política de Teletrabajo y Flexibilidad</h2>
-      <div className="telework-policy-details vertical-stack">
+      <div className="top-navigation-area">
+        <button className="intranet-action-link back-btn-top" onClick={() => setView('main')}>
+          ← Volver al Panel
+        </button>
+      </div>
+
+      <div className="sub-view-header modern-grid-header">
+        <div className="header-side-left"></div>
+        <h2 className="section-title-witch centered-white-title">
+          Política de Teletrabajo
+        </h2>
+        <div className="header-side-right"></div>
+      </div>
+
+      <div className="telework-policy-details vertical-stack full-width-content">
         <div className="policy-block pro-block">
           <h3>1. Modelos Disponibles</h3>
           <p>Calbru Games ofrece un modelo híbrido de 3 días de oficina y 2 de teletrabajo. Los perfiles Senior pueden optar al modelo "Remote First" (4 días remoto) previa aprobación del Lead de departamento.</p>
