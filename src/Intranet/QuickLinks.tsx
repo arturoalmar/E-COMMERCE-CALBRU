@@ -1,0 +1,49 @@
+import React from 'react';
+
+interface QuickLinksProps {
+  setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking' | 'committee' | 'benefits' | 'support') => void;
+}
+
+const QuickLinks: React.FC<QuickLinksProps> = ({ setView }) => {
+  return (
+    <section className="quick-links-sketch">
+      <h2 className="section-title-witch">Gestión Corporativa</h2>
+      <ul className="interactive-links">
+        <li>
+          <a className="intranet-action-link" href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430" target="_blank" rel="noreferrer">- Estatuto de los Trabajadores</a>
+          <p className="link-description">Marco legal de derechos y deberes.</p>
+        </li>
+        <li>
+          <a className="intranet-action-link" href="https://www.confemetal.es/que-hacemos/negociacion-colectiva/convenios-provinciales/" target="_blank" rel="noreferrer">- Convenio del Metal</a>
+          <p className="link-description">Normativa específica del sector.</p>
+        </li>
+        <li>
+          <button className="intranet-action-link" onClick={() => setView('rules')}>- Normas y Código de Conducta</button>
+          <p className="link-description">Guía de comportamiento y protocolos.</p>
+        </li>
+        <li>
+          <button className="intranet-action-link" onClick={() => setView('vacation')}>- Solicitud de Vacaciones</button>
+          <p className="link-description">Gestión de días libres anuales.</p>
+        </li>
+        <li>
+          <button className="intranet-action-link" onClick={() => setView('teleworking')}>- Política de Teletrabajo</button>
+          <p className="link-description">Condiciones para trabajo remoto.</p>
+        </li>
+        <li>
+          <button className="intranet-action-link" onClick={() => setView('committee')}>- Comité de Empresa</button>
+          <p className="link-description">Representación y derechos de los trabajadores.</p>
+        </li>
+        <li>
+          <button className="intranet-action-link" onClick={() => setView('benefits')} style={{color: '#ffaa00'}}>- Beneficios del Gremio</button>
+          <p className="link-description">Seguro médico, juegos gratis, gimnasio.</p>
+        </li>
+        <li>
+          <button className="intranet-action-link" onClick={() => setView('support')} style={{color: '#ff5555'}}>- Soporte IT</button>
+          <p className="link-description">Resolución de problemas técnicos (hardware/software).</p>
+        </li>
+      </ul>
+    </section>
+  );
+};
+
+export default QuickLinks;
