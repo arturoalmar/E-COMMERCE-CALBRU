@@ -42,7 +42,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, setCurrentStep, isLo
             <p className="hero-subtitle">Let the magic flow... Get a demo in a few clicks.</p>
             <button className="btn-sketch-main" onClick={() => {
               setPage('creator');
-              setCurrentStep('select-pot');
             }}>
               START NOW
             </button>

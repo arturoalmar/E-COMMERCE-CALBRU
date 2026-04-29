@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
 // Componentes
@@ -47,20 +47,53 @@ function App() {
   const [isWorker] = useState(true);
 
   /* ==========================================================================
+     LÓGICA DE NAVEGACIÓN Y HISTORIAL
+     ========================================================================== */
+
+  const navigateTo = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null, shouldPush = true) => {
+    setPage(newPage);
+    setCurrentStep(newStep);
+    setSelectedGenre(newGenre);
+
+    if (shouldPush) {
+      window.history.pushState({ page: newPage, step: newStep, genre: newGenre }, '');
+    }
+  }, []);
+
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state) {
+        const { page: p, step: s, genre: g } = event.state;
+        navigateTo(p, s, g, false);
+      } else {
+        // Si no hay estado (inicio), volver a home
+        navigateTo('home', 'select-pot', null, false);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    
+    // Guardar el estado inicial
+    window.history.replaceState({ page, step: currentStep, genre: selectedGenre }, '');
+
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [navigateTo]);
+
+  /* ==========================================================================
      LÓGICA DE INTERACCIÓN
      ========================================================================== */
 
   const handleNavigate = (newPage: Page) => {
-    setPage(newPage);
     if (newPage === 'creator') {
-      setCurrentStep('select-pot');
+      navigateTo('creator', 'select-pot', null);
+    } else {
+      navigateTo(newPage, 'select-pot', null);
     }
   };
 
   const handleSelectGenre = (genre: Genre) => {
-    setSelectedGenre(genre);
-    setCurrentStep('configurator');
     setSelections({ diseno: [], tematica: [], mecanicas: [], plataforma: [] });
+    navigateTo('creator', 'configurator', genre);
   };
 
   const createParticle = () => {
@@ -113,7 +146,13 @@ function App() {
   const renderContent = () => {
     switch (page) {
       case 'home':
-        return <LandingPage setPage={setPage} setCurrentStep={setCurrentStep} isLoggedIn={isLoggedIn} />;
+        return (
+          <LandingPage 
+            setPage={(p) => navigateTo(p as Page, 'select-pot', null)} 
+            setCurrentStep={(s) => navigateTo('creator', s, selectedGenre)} 
+            isLoggedIn={isLoggedIn} 
+          />
+        );
       
       case 'creator':
         return (
@@ -136,8 +175,7 @@ function App() {
                     className="btn-back"
                     style={{ width: '100%', maxWidth: '400px', cursor: 'pointer' }}
                     onClick={() => {
-                      setCurrentStep('select-pot');
-                      setSelectedGenre(null);
+                      navigateTo('creator', 'select-pot', null);
                     }}
                   >
                     ← Volver a los calderos
@@ -158,12 +196,18 @@ function App() {
         return (
           <LoginPage onLogin={() => {
             setIsLoggedIn(true);
-            setPage('home');
+            navigateTo('home');
           }} />
         );
 
       default:
-        return <LandingPage setPage={setPage} setCurrentStep={setCurrentStep} isLoggedIn={isLoggedIn} />;
+        return (
+          <LandingPage 
+            setPage={(p) => navigateTo(p as Page, 'select-pot', null)} 
+            setCurrentStep={(s) => navigateTo('creator', s, selectedGenre)} 
+            isLoggedIn={isLoggedIn} 
+          />
+        );
     }
   };
 
@@ -177,7 +221,7 @@ function App() {
           if (isLoggedIn) {
             setIsLoggedIn(false);
           } else {
-            setPage('login');
+            navigateTo('login');
           }
         }}
       />
