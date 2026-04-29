@@ -10,7 +10,7 @@ const Cauldron: React.FC<CauldronProps> = ({ selectedGenre, isFusionReady }) => 
   return (
     <div className="center-dashboard-content">
       <div>
-        <h2>El Gran Caldero</h2>
+        <h2>Añadir Ingredientes al Caldero</h2>
         {selectedGenre && (
           <span className="selected-genre-badge">Poción Base: {selectedGenre.name}</span>
         )}
@@ -29,7 +29,6 @@ const Cauldron: React.FC<CauldronProps> = ({ selectedGenre, isFusionReady }) => 
           src={selectedGenre.image}
           alt={`${selectedGenre.name} caldero`}
           className="cauldron-image"
-          style={{ filter: `hue-rotate(${selectedGenre.hue}deg) saturate(1.5)` }}
         />
       ) : (
         <div className="cauldron-placeholder">

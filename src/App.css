@@ -680,6 +680,7 @@ header p {
 
 /* Layout 2x2 para las esquinas de ingredientes con el caldero en el centro */
 .configurator-layout {
+  padding-top: 100px;
   display: grid;
   grid-template-areas:
     "tl center tr"
@@ -813,6 +814,7 @@ header p {
 
 /* Dashboard Central: El Caldero Mágico circular */
 .center-dashboard {
+  margin-top: 10px;
   grid-area: center;
   background: transparent;
   border: none;
@@ -1311,9 +1313,10 @@ header p {
 
 .intranet-grid-main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 2rem;
   margin-bottom: 2rem;
+  align-items: stretch;
 }
 
 .quick-links-sketch,
@@ -1681,14 +1684,13 @@ body {
 .calendar-grid-body {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 1fr;
   gap: 0.3rem;
   flex: 1;
-  align-content: start;
 }
 
 .calendar-day {
   min-height: 60px;
-  max-height: 80px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
