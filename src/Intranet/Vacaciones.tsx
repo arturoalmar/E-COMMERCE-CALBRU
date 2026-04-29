@@ -3,11 +3,11 @@ import React from 'react';
 interface VacacionesProps {
     setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking') => void;
     vacationDate: Date;
-    changeMonth: (type: 'main' | 'vacation', direction: 'next' | 'prev') => void;
+    changeMonth: (direction: 'next' | 'prev') => void;
     MONTH_NAMES: string[];
     TOTAL_VACATION_LIMIT: number;
     selectedVacationDays: { day: number, month: number, year: number }[];
-    renderCalendarDays: (date: Date, mode: 'display' | 'select') => React.ReactNode;
+    renderCalendarDays: (date: Date) => React.ReactNode;
 }
 
 const Vacaciones: React.FC<VacacionesProps> = ({
@@ -54,15 +54,15 @@ const Vacaciones: React.FC<VacacionesProps> = ({
                 
                 <div className="vacation-calendar-wrapper">
                     <div className="calendar-header-nav">
-                        <button className="nav-btn" onClick={() => changeMonth('vacation', 'prev')}>❮</button>
+                        <button className="nav-btn" onClick={() => changeMonth('prev')}>❮</button>
                         <h3>{MONTH_NAMES[vacationDate.getMonth()]} {vacationDate.getFullYear()}</h3>
-                        <button className="nav-btn" onClick={() => changeMonth('vacation', 'next')}>❯</button>
+                        <button className="nav-btn" onClick={() => changeMonth('next')}>❯</button>
                     </div>
                     <div className="calendar-grid-header">
                         <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
                     </div>
                     <div className="calendar-grid-body vacation-selector fixed-format">
-                        {renderCalendarDays(vacationDate, 'select')}
+                        {renderCalendarDays(vacationDate)}
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import news1 from '../assets/news1.png';
 import news2 from '../assets/news2.png';
 import news3 from '../assets/news3.png';
@@ -8,8 +8,6 @@ import Normas from './Normas';
 import Vacaciones from './Vacaciones';
 import Teletrabajo from './Teletrabajo';
 import ComiteEmpresa from './ComiteEmpresa';
-import Beneficios from './Beneficios';
-import SoporteIT from './SoporteIT';
 
 // Nuevos componentes extraídos para organizar
 import NewsSlider, { NewsItem } from './NewsSlider';
@@ -42,7 +40,7 @@ const MONTH_NAMES = [
 ];
 
 const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
-  const [view, setView] = useState<'main' | 'rules' | 'vacation' | 'teleworking' | 'committee' | 'benefits' | 'support'>('main');
+  const [view, setView] = useState<'main' | 'rules' | 'vacation' | 'teleworking' | 'committee'>('main');
   const [selectedVacationDays, setSelectedVacationDays] = useState<{ day: number, month: number, year: number }[]>([]);
 
   const today = useMemo(() => {
@@ -55,7 +53,7 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
 
   const TOTAL_VACATION_LIMIT = 22;
 
-  const changeMonth = (type: 'main' | 'vacation', direction: 'next' | 'prev') => {
+  const changeMonth = (direction: 'next' | 'prev') => {
     // Only used for vacation now, main calendar handles its own state
     setVacationDate(prev => {
       const d = new Date(prev);
@@ -103,7 +101,7 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
   };
 
   // Simplificamos renderCalendarDays para que solo maneje el modo 'select' (Vacaciones)
-  const renderCalendarDays = (date: Date, mode: 'display' | 'select') => {
+  const renderCalendarDays = (date: Date) => {
     const { firstDay, totalDays } = getDaysInMonth(date);
     const elements = [];
 
@@ -140,11 +138,11 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
         {/* Componente Extraído */}
         <QuickLinks setView={setView} />
 
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0}}>
           {/* Componente Extraído */}
           <IntranetCalendar />
           
-          <div className="calendar-legend-colored">
+          <div className="calendar-legend-colored" style={{marginTop: '0.8rem', flexShrink: 0}}>
             <span className="leg-item"><i className="dot-del"></i> Lanzamiento</span>
             <span className="leg-item"><i className="dot-int"></i> Sync Interna</span>
             <span className="leg-item"><i className="dot-cli"></i> Estrategia</span>
@@ -200,10 +198,6 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
       {view === 'teleworking' && <Teletrabajo setView={setView} />}
 
       {view === 'committee' && <ComiteEmpresa setView={setView} />}
-      
-      {view === 'benefits' && <Beneficios setView={setView} />}
-
-      {view === 'support' && <SoporteIT setView={setView} />}
 
       {view === 'main' && (
         <section className="hr-form-sketch">

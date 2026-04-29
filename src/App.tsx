@@ -44,7 +44,7 @@ function App() {
 
   // Estados de Usuario
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isWorker, setIsWorker] = useState(true);
+  const [isWorker] = useState(true);
 
   /* ==========================================================================
      LÓGICA DE INTERACCIÓN

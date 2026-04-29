@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface QuickLinksProps {
-  setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking' | 'committee' | 'benefits' | 'support') => void;
+  setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking' | 'committee') => void;
 }
 
 const QuickLinks: React.FC<QuickLinksProps> = ({ setView }) => {
@@ -32,14 +32,6 @@ const QuickLinks: React.FC<QuickLinksProps> = ({ setView }) => {
         <li>
           <button className="intranet-action-link" onClick={() => setView('committee')}>- Comité de Empresa</button>
           <p className="link-description">Representación y derechos de los trabajadores.</p>
-        </li>
-        <li>
-          <button className="intranet-action-link" onClick={() => setView('benefits')} style={{color: '#ffaa00'}}>- Beneficios del Gremio</button>
-          <p className="link-description">Seguro médico, juegos gratis, gimnasio.</p>
-        </li>
-        <li>
-          <button className="intranet-action-link" onClick={() => setView('support')} style={{color: '#ff5555'}}>- Soporte IT</button>
-          <p className="link-description">Resolución de problemas técnicos (hardware/software).</p>
         </li>
       </ul>
     </section>
