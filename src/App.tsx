@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 import IntranetPage from './Intranet/IntranetPage';
 import MyCauldronsPage from './MyCauldrons/MyCauldronsPage';
 import LoginPage from './Login/LoginPage';
+import Conocenos from './Conocenos/Conocenos';
 
 // Tipos y Datos
 import { GENRES, RANDOM_COLORS } from './constants/gameData';
@@ -28,7 +29,7 @@ function App() {
   /* ==========================================================================
      ESTADOS DE LA APLICACIÓN
      ========================================================================== */
-  
+
   const [page, setPage] = useState<Page>('home');
   const [currentStep, setCurrentStep] = useState<Step>('select-pot');
   const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
@@ -72,7 +73,7 @@ function App() {
     };
 
     window.addEventListener('popstate', handlePopState);
-    
+
     // Guardar el estado inicial
     window.history.replaceState({ page, step: currentStep, genre: selectedGenre }, '');
 
@@ -142,18 +143,18 @@ function App() {
   /* ==========================================================================
      RENDERIZADO DE LAS PÁGINAS
      ========================================================================== */
-  
+
   const renderContent = () => {
     switch (page) {
       case 'home':
         return (
-          <LandingPage 
-            setPage={(p) => navigateTo(p as Page, 'select-pot', null)} 
-            setCurrentStep={(s) => navigateTo('creator', s, selectedGenre)} 
-            isLoggedIn={isLoggedIn} 
+          <LandingPage
+            setPage={(p) => navigateTo(p as Page, 'select-pot', null)}
+            isLoggedIn={isLoggedIn}
+            isWorker={isWorker}
           />
         );
-      
+
       case 'creator':
         return (
           <div className="creator-container">
@@ -162,7 +163,7 @@ function App() {
             )}
             {currentStep === 'configurator' && (
               <>
-                <ConfiguratorPage 
+                <ConfiguratorPage
                   newBgImg={newBgImg}
                   selections={selections}
                   particles={particles}
@@ -192,6 +193,9 @@ function App() {
       case 'intranet':
         return <IntranetPage username={isLoggedIn ? 'Arturo Almar' : 'Visitante'} />;
 
+      case 'conocenos':
+        return <Conocenos onStartNow={() => navigateTo('creator')} />;
+
       case 'login':
         return (
           <LoginPage onLogin={() => {
@@ -202,10 +206,10 @@ function App() {
 
       default:
         return (
-          <LandingPage 
-            setPage={(p) => navigateTo(p as Page, 'select-pot', null)} 
-            setCurrentStep={(s) => navigateTo('creator', s, selectedGenre)} 
-            isLoggedIn={isLoggedIn} 
+          <LandingPage
+            setPage={(p) => navigateTo(p as Page, 'select-pot', null)}
+            isLoggedIn={isLoggedIn}
+            isWorker={isWorker}
           />
         );
     }
@@ -213,10 +217,11 @@ function App() {
 
   return (
     <div className="app-container">
-      <Navbar 
-        isWorker={isWorker} 
-        onNavigate={handleNavigate} 
+      <Navbar
+        isWorker={isWorker}
+        onNavigate={handleNavigate}
         isLoggedIn={isLoggedIn}
+        hideMenuToggle={page === 'home'}
         onLoginToggle={() => {
           if (isLoggedIn) {
             setIsLoggedIn(false);
@@ -225,7 +230,23 @@ function App() {
           }
         }}
       />
-      
+
+      {page !== 'home' && (
+        <button
+          className="back-to-home-btn floating"
+          onClick={() => navigateTo('home')}
+          aria-label="Volver al inicio"
+          style={{
+            position: 'fixed',
+            top: '80px',
+            left: '2rem',
+            zIndex: 1001,
+          }}
+        >
+          <span className="back-text">Back</span>
+        </button>
+      )}
+
       <div className="main-content" style={{ paddingTop: page === 'creator' || page === 'login' ? '0' : '70px' }}>
         {renderContent()}
       </div>

@@ -7,9 +7,10 @@ interface NavbarProps {
   onNavigate: (page: Page) => void;
   isLoggedIn: boolean;
   onLoginToggle: () => void;
+  hideMenuToggle?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, onLoginToggle }) => {
+const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, onLoginToggle, hideMenuToggle }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -22,23 +23,28 @@ const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, onLog
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <button className="menu-toggle" onClick={toggleMenu} aria-label="Abrir menú">
-          <div className="bar"></div>
-          <div className="bar"></div>
-          <div className="bar"></div>
-        </button>
-        
-        {isMenuOpen && (
-          <div className="dropdown-menu">
-            <button onClick={() => handleNavigate('home')}>Home</button>
-            <button onClick={() => handleNavigate('creator')}>New Cauldron</button>
-            <button onClick={() => handleNavigate('my-cauldrons')}>My Cauldrons</button>
-            {isWorker && (
-              <button onClick={() => handleNavigate('intranet')} className="intranet-link">
-                Intranet
-              </button>
+        {!hideMenuToggle && (
+          <>
+            <button className="menu-toggle" onClick={toggleMenu} aria-label="Abrir menú">
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+            </button>
+            
+            {isMenuOpen && (
+              <div className="dropdown-menu">
+                <button onClick={() => handleNavigate('home')}>Home</button>
+                <button onClick={() => handleNavigate('conocenos')}>Conócenos</button>
+                <button onClick={() => handleNavigate('creator')}>New Cauldron</button>
+                <button onClick={() => handleNavigate('my-cauldrons')}>My Cauldrons</button>
+                {isLoggedIn && isWorker && (
+                  <button onClick={() => handleNavigate('intranet')} className="intranet-link">
+                    Intranet
+                  </button>
+                )}
+              </div>
             )}
-          </div>
+          </>
         )}
       </div>
 
