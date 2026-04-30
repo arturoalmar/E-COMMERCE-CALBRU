@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Genre } from '../types';
+import sotanoBg from '../assets/Sotano.png';
+import libroImg from '../assets/Libro.png';
 
 interface SelectionPageProps {
   genres: Genre[];
@@ -7,34 +9,56 @@ interface SelectionPageProps {
 }
 
 const SelectionPage: React.FC<SelectionPageProps> = ({ genres, handleSelectGenre }) => {
+  const [hoveredGenre, setHoveredGenre] = useState<Genre | null>(null);
+
   return (
-    <>
-      <header style={{ paddingTop: '80px', textAlign: 'center', paddingBottom: '12px' }}>
-        <h1 style={{ marginBottom: '0.5rem', color: 'var(--primary-light)', fontSize: '3rem', textShadow: '0 0 10px rgba(124,179,66,0.6)' }}>La Choza de la Bruja</h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1rem', fontStyle: 'italic' }}>Acércate al caldero... Selecciona la poción base de tu videojuego.</p>
-      </header>
-      <div className="genre-grid">
+    <div className="sotano-selection-container">
+      {/* Fondo Sotano */}
+      <div 
+        className="sotano-bg" 
+        style={{ backgroundImage: `url(${sotanoBg})` }}
+      />
+
+      {/* Título superior */}
+      <div className="sotano-header">
+        <h1>Selecciona tu Pócima Base</h1>
+        <p>Elige el caldero que forjará tu destino...</p>
+      </div>
+
+      {/* Área del Libro (Centro) - Ahora puramente informativa y sin eventos de ratón */}
+      <div className={`selection-book-overlay ${hoveredGenre ? 'visible' : ''}`} style={{ pointerEvents: 'none' }}>
+        <img src={libroImg} alt="Libro Abierto" className="selection-book-img" />
+        {hoveredGenre && (
+          <div className="book-content">
+            <h2 className="book-title">{hoveredGenre.name}</h2>
+            <p className="book-description">{hoveredGenre.description}</p>
+            {/* El botón se ha movido al caldero o se ha eliminado para seguir la instrucción estrictamente */}
+            <p className="book-hint">(Haz clic en el caldero para seleccionar)</p>
+          </div>
+        )}
+      </div>
+
+      {/* Calderos en el suelo */}
+      <div className="cauldrons-floor">
         {genres.map((genre) => (
-          <div key={genre.id} className="genre-card">
+          <div 
+            key={genre.id} 
+            className="floor-cauldron-wrapper"
+            onMouseEnter={() => setHoveredGenre(genre)}
+            onMouseLeave={() => setHoveredGenre(null)}
+            onClick={() => handleSelectGenre(genre)}
+          >
             <img
               src={genre.image}
-              alt={`${genre.name} caldero`}
-              className="genre-image"
-              style={{ filter: `hue-rotate(${genre.hue}deg) saturate(1.5)`, marginTop: 0, marginBottom: '1.2rem' }}
+              alt={genre.name}
+              className={`floor-cauldron-img ${hoveredGenre?.id === genre.id ? 'active' : ''}`}
+              style={{ filter: `hue-rotate(${genre.hue}deg) saturate(1.5)` }}
             />
-            <h2>{genre.name}</h2>
-            <p style={{ flexGrow: 1 }}>{genre.description}</p>
-            <button
-              className="btn-select"
-              onClick={() => handleSelectGenre(genre)}
-              style={{ marginTop: '1.5rem', width: '100%' }}
-            >
-              Echar al Caldero
-            </button>
+            <div className="cauldron-glow" style={{ backgroundColor: `hsla(${genre.hue}, 70%, 50%, 0.3)` }}></div>
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -67,8 +67,8 @@ function App() {
       setTimeout(() => {
         setTransitionStatus('none');
         nextPageRoute.current = null;
-      }, 50); // Pequeño delay para resetear posición sin animación
-    }, 800);
+      }, 50);
+    }, 450);
   }, []);
 
   const navigateTo = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null, shouldPush = true) => {
@@ -178,7 +178,17 @@ function App() {
             )}
           </div>
         );
-      case 'my-cauldrons': return <MyCauldronsPage />;
+      case 'my-cauldrons': 
+        return (
+          <>
+            <MyCauldronsPage />
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
+               <button className="btn-back" onClick={() => navigateTo('home')}>
+                 ← Volver a la aldea
+               </button>
+            </div>
+          </>
+        );
       case 'intranet': return <IntranetPage username={isLoggedIn ? 'Arturo Almar' : 'Visitante'} />;
       case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} />;
       case 'login':
@@ -199,9 +209,12 @@ function App() {
     }
   };
 
+  const isSotanoMode = page === 'creator' && currentStep === 'select-pot';
+  const shouldHideNavbar = page === 'home' || isSotanoMode;
+
   return (
-    <div className={`app-container transition-${transitionStatus} dir-${transitionDirection}`}>
-      {page !== 'home' && (
+    <div className={`app-container transition-${transitionStatus} dir-${transitionDirection} ${isSotanoMode ? 'sotano-mode' : ''}`}>
+      {!shouldHideNavbar && (
         <Navbar
           isWorker={isWorker}
           onNavigate={handleNavigate}
@@ -217,7 +230,17 @@ function App() {
         />
       )}
 
-      {page !== 'home' && (
+      {isSotanoMode && (
+        <button
+          className="sotano-back-arrow"
+          onClick={() => navigateTo('home')}
+          aria-label="Subir a la aldea"
+        >
+          <span className="arrow-icon">↑</span>
+        </button>
+      )}
+
+      {(page !== 'home' && !isSotanoMode) && (
         <button
           className="back-to-home-btn floating"
           onClick={() => navigateTo('home')}
@@ -227,7 +250,7 @@ function App() {
         </button>
       )}
 
-      <div className="main-content" style={{ paddingTop: (page === 'home' || page === 'creator' || page === 'login') ? '0' : '70px' }}>
+      <div className="main-content" style={{ paddingTop: shouldHideNavbar ? '0' : '70px' }}>
         {renderContent()}
       </div>
     </div>

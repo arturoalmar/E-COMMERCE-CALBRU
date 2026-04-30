@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import villageBg from '../assets/hags_village_bg.png';
 import woodenSign from '../assets/wooden_sign.png';
-import iconImg from '../assets/icon.png';
+import iconImg from '../assets/icon.png'; 
 
 interface LandingPageProps {
   setPage: (page: any) => void;
@@ -11,16 +11,8 @@ interface LandingPageProps {
 
 const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker }) => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
-  const [isExiting, setIsExiting] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const switchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleNavigate = (page: string) => {
-    setIsExiting(true);
-    setTimeout(() => {
-      setPage(page);
-    }, 800); // Duración de la animación de salida
-  };
 
   const handleMouseEnter = (section: string) => {
     if (timeoutRef.current) {
@@ -31,7 +23,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker
     if (hoveredSection && hoveredSection !== section) {
       setHoveredSection(null);
       if (switchTimeoutRef.current) clearTimeout(switchTimeoutRef.current);
-
+      
       switchTimeoutRef.current = setTimeout(() => {
         setHoveredSection(section);
       }, 650);
@@ -44,37 +36,32 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
       setHoveredSection(null);
-    }, 750);
+    }, 750); 
   };
 
   const renderSignContent = () => {
     switch (hoveredSection) {
-      case 'creator':
+      case 'cauldrons':
         return (
           <div className="sign-options">
-            <button onClick={() => handleNavigate('creator')}>Start Creation</button>
-          </div>
-        );
-      case 'my-cauldrons':
-        return (
-          <div className="sign-options">
-            <button onClick={() => handleNavigate('my-cauldrons')}>Open My Collection</button>
+            <button onClick={() => setPage('creator')}>NEW CAULDRON</button>
+            <button onClick={() => setPage('my-cauldrons')}>MY CAULDRONS</button>
           </div>
         );
       case 'conocenos':
         return (
           <div className="sign-options">
-            <button onClick={() => handleNavigate('conocenos')}>Our Magic Story</button>
-            <button onClick={() => handleNavigate('conocenos')}>How We Forge</button>
+            <button onClick={() => setPage('conocenos')}>Our Magic Story</button>
+            <button onClick={() => setPage('conocenos')}>How We Forge</button>
           </div>
         );
       case 'intranet':
         return (
           <div className="sign-options">
             {isLoggedIn && isWorker ? (
-              <button onClick={() => handleNavigate('intranet')}>Guild Dashboard</button>
+              <button onClick={() => setPage('intranet')}>Guild Dashboard</button>
             ) : (
-              <button onClick={() => handleNavigate('login')}>Worker Portal</button>
+              <button onClick={() => setPage('login')}>Worker Portal</button>
             )}
           </div>
         );
@@ -84,52 +71,45 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker
   };
 
   return (
-    <div className={`landing-immersive ${isExiting ? 'exiting' : ''}`}>
+    <div className="landing-immersive">
       {/* Background */}
-      <div
-        className="village-bg-immersive"
+      <div 
+        className="village-bg-immersive" 
         style={{ backgroundImage: `url(${villageBg})` }}
       />
 
       <div className="landing-interactive-wrapper">
         {/* Top Nav */}
-        <nav
+        <nav 
           className="landing-top-nav"
           onMouseLeave={handleMouseLeave}
         >
           <div className="nav-group-left">
-            <a
-              className="landing-nav-link"
-              onMouseEnter={() => handleMouseEnter('creator')}
-              onClick={() => handleNavigate('creator')}
+            <a 
+              className="landing-nav-link" 
+              onMouseEnter={() => handleMouseEnter('cauldrons')}
+              onClick={() => handleMouseEnter('cauldrons')}
             >
-              NEW CAULDRON
-            </a>
-            <a
-              className="landing-nav-link"
-              onMouseEnter={() => handleMouseEnter('my-cauldrons')}
-              onClick={() => handleNavigate('my-cauldrons')}
-            >
-              MY CAULDRONS
+              CAULDRONS
             </a>
           </div>
-
+          
           <div className="logo-container">
             <img src={iconImg} alt="Icon" className="landing-logo-center" />
           </div>
 
           <div className="nav-group-right">
-            <a
-              className="landing-nav-link"
+            <a 
+              className="landing-nav-link" 
               onMouseEnter={() => handleMouseEnter('conocenos')}
-              onClick={() => handleNavigate('conocenos')}
+              onClick={() => setPage('conocenos')}
             >
               ABOUT US
             </a>
-            <a
-              className="landing-nav-link"
+            <a 
+              className="landing-nav-link" 
               onMouseEnter={() => handleMouseEnter('intranet')}
-              onClick={() => handleNavigate('intranet')}
+              onClick={() => setPage('intranet')}
             >
               INTRANET
             </a>
@@ -137,7 +117,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker
         </nav>
 
         {/* Dropping Wooden Sign */}
-        <div
+        <div 
           className={`wooden-sign-container ${hoveredSection ? 'dropped' : ''}`}
           onMouseEnter={() => {
             if (timeoutRef.current) {
