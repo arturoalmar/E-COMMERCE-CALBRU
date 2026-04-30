@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
 
 // Componentes
@@ -18,18 +18,11 @@ import { Genre, Step, OptionsMap, Page, Particle } from './types';
 // Activos
 import newBgImg from './assets/background.png';
 
-/**
- * Función de utilidad para obtener un color aleatorio de la lista.
- */
 function getRandomColor(): string {
   return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
 }
 
 function App() {
-  /* ==========================================================================
-     ESTADOS DE LA APLICACIÓN
-     ========================================================================== */
-
   const [page, setPage] = useState<Page>('home');
   const [currentStep, setCurrentStep] = useState<Step>('select-pot');
   const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
@@ -42,24 +35,51 @@ function App() {
 
   const [particles, setParticles] = useState<Particle[]>([]);
   const [particleCounter, setParticleCounter] = useState(0);
-
-  // Estados de Usuario
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isWorker] = useState(true);
 
-  /* ==========================================================================
-     LÓGICA DE NAVEGACIÓN Y HISTORIAL
-     ========================================================================== */
+  // Estados de transición
+  const [transitionStatus, setTransitionStatus] = useState<'none' | 'exiting' | 'entering'>('none');
+  const [transitionDirection, setTransitionDirection] = useState<'up' | 'down'>('up');
+  const nextPageRoute = useRef<{ p: Page; s: Step; g: Genre | null } | null>(null);
+
+  const performTransition = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null) => {
+    const isGoingToHome = newPage === 'home';
+    const direction = isGoingToHome ? 'down' : 'up';
+    
+    setTransitionDirection(direction);
+    setTransitionStatus('exiting');
+    nextPageRoute.current = { p: newPage, s: newStep, g: newGenre };
+
+    setTimeout(() => {
+      if (nextPageRoute.current) {
+        setPage(nextPageRoute.current.p);
+        setCurrentStep(nextPageRoute.current.s);
+        setSelectedGenre(nextPageRoute.current.g);
+        window.history.pushState({ 
+          page: nextPageRoute.current.p, 
+          step: nextPageRoute.current.s, 
+          genre: nextPageRoute.current.g 
+        }, '');
+      }
+      setTransitionStatus('entering');
+      
+      setTimeout(() => {
+        setTransitionStatus('none');
+        nextPageRoute.current = null;
+      }, 50); // Pequeño delay para resetear posición sin animación
+    }, 800);
+  }, []);
 
   const navigateTo = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null, shouldPush = true) => {
-    setPage(newPage);
-    setCurrentStep(newStep);
-    setSelectedGenre(newGenre);
-
     if (shouldPush) {
-      window.history.pushState({ page: newPage, step: newStep, genre: newGenre }, '');
+      performTransition(newPage, newStep, newGenre);
+    } else {
+      setPage(newPage);
+      setCurrentStep(newStep);
+      setSelectedGenre(newGenre);
     }
-  }, []);
+  }, [performTransition]);
 
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
@@ -67,29 +87,16 @@ function App() {
         const { page: p, step: s, genre: g } = event.state;
         navigateTo(p, s, g, false);
       } else {
-        // Si no hay estado (inicio), volver a home
         navigateTo('home', 'select-pot', null, false);
       }
     };
-
     window.addEventListener('popstate', handlePopState);
-
-    // Guardar el estado inicial
     window.history.replaceState({ page, step: currentStep, genre: selectedGenre }, '');
-
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [navigateTo]);
-
-  /* ==========================================================================
-     LÓGICA DE INTERACCIÓN
-     ========================================================================== */
+  }, [navigateTo, page, currentStep, selectedGenre]);
 
   const handleNavigate = (newPage: Page) => {
-    if (newPage === 'creator') {
-      navigateTo('creator', 'select-pot', null);
-    } else {
-      navigateTo(newPage, 'select-pot', null);
-    }
+    navigateTo(newPage, 'select-pot', null);
   };
 
   const handleSelectGenre = (genre: Genre) => {
@@ -101,17 +108,14 @@ function App() {
     const randomX = Math.random() * 120 - 60;
     const randomY = -100;
     const color = getRandomColor();
-
     const newParticle: Particle = {
       id: particleCounter,
       x: randomX,
       y: randomY,
       color: color
     };
-
     setParticles(prev => [...prev, newParticle]);
     setParticleCounter(prev => prev + 1);
-
     setTimeout(() => {
       setParticles(prev => prev.filter(p => p.id !== newParticle.id));
     }, 2000);
@@ -121,15 +125,10 @@ function App() {
     setSelections((prev) => {
       const currentSelections = prev[category];
       const isSelected = currentSelections.includes(optionId);
-
       const newSelections = isSelected
         ? currentSelections.filter(id => id !== optionId)
         : [...currentSelections, optionId];
-
-      if (!isSelected) {
-        createParticle();
-      }
-
+      if (!isSelected) createParticle();
       return { ...prev, [category]: newSelections };
     });
   };
@@ -139,10 +138,6 @@ function App() {
     selections.tematica.length > 0 ||
     selections.mecanicas.length > 0 ||
     selections.plataforma.length > 0;
-
-  /* ==========================================================================
-     RENDERIZADO DE LAS PÁGINAS
-     ========================================================================== */
 
   const renderContent = () => {
     switch (page) {
@@ -154,7 +149,6 @@ function App() {
             isWorker={isWorker}
           />
         );
-
       case 'creator':
         return (
           <div className="creator-container">
@@ -175,9 +169,7 @@ function App() {
                   <button
                     className="btn-back"
                     style={{ width: '100%', maxWidth: '400px', cursor: 'pointer' }}
-                    onClick={() => {
-                      navigateTo('creator', 'select-pot', null);
-                    }}
+                    onClick={() => navigateTo('creator', 'select-pot', null)}
                   >
                     ← Volver a los calderos
                   </button>
@@ -186,16 +178,9 @@ function App() {
             )}
           </div>
         );
-
-      case 'my-cauldrons':
-        return <MyCauldronsPage />;
-
-      case 'intranet':
-        return <IntranetPage username={isLoggedIn ? 'Arturo Almar' : 'Visitante'} />;
-
-      case 'conocenos':
-        return <Conocenos onStartNow={() => navigateTo('creator')} />;
-
+      case 'my-cauldrons': return <MyCauldronsPage />;
+      case 'intranet': return <IntranetPage username={isLoggedIn ? 'Arturo Almar' : 'Visitante'} />;
+      case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} />;
       case 'login':
         return (
           <LoginPage onLogin={() => {
@@ -203,7 +188,6 @@ function App() {
             navigateTo('home');
           }} />
         );
-
       default:
         return (
           <LandingPage
@@ -216,38 +200,34 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <Navbar
-        isWorker={isWorker}
-        onNavigate={handleNavigate}
-        isLoggedIn={isLoggedIn}
-        hideMenuToggle={page === 'home'}
-        onLoginToggle={() => {
-          if (isLoggedIn) {
-            setIsLoggedIn(false);
-          } else {
-            navigateTo('login');
-          }
-        }}
-      />
+    <div className={`app-container transition-${transitionStatus} dir-${transitionDirection}`}>
+      {page !== 'home' && (
+        <Navbar
+          isWorker={isWorker}
+          onNavigate={handleNavigate}
+          isLoggedIn={isLoggedIn}
+          hideMenuToggle={page === 'home'}
+          onLoginToggle={() => {
+            if (isLoggedIn) {
+              setIsLoggedIn(false);
+            } else {
+              navigateTo('login');
+            }
+          }}
+        />
+      )}
 
       {page !== 'home' && (
         <button
           className="back-to-home-btn floating"
           onClick={() => navigateTo('home')}
           aria-label="Volver al inicio"
-          style={{
-            position: 'fixed',
-            top: '80px',
-            left: '2rem',
-            zIndex: 1001,
-          }}
         >
           <span className="back-text">Back</span>
         </button>
       )}
 
-      <div className="main-content" style={{ paddingTop: page === 'creator' || page === 'login' ? '0' : '70px' }}>
+      <div className="main-content" style={{ paddingTop: (page === 'home' || page === 'creator' || page === 'login') ? '0' : '70px' }}>
         {renderContent()}
       </div>
     </div>
