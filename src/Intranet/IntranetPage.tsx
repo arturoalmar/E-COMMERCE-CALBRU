@@ -173,11 +173,38 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
 
   return (
     <div className="intranet-sketch-layout intranet-full">
-      {view === 'main' && (
-        <header className="intranet-header">
-          <h1>Bienvenido/a, {username}</h1>
-        </header>
-      )}
+      <nav className="intranet-sub-nav">
+        <button 
+          className={`sub-nav-btn ${view === 'main' ? 'active' : ''}`} 
+          onClick={() => setView('main')}
+        >
+          Inicio
+        </button>
+        <button 
+          className={`sub-nav-btn ${view === 'committee' ? 'active' : ''}`} 
+          onClick={() => setView('committee')}
+        >
+          Comité de Empresa
+        </button>
+        <button 
+          className={`sub-nav-btn ${view === 'teleworking' ? 'active' : ''}`} 
+          onClick={() => setView('teleworking')}
+        >
+          Política de Teletrabajo
+        </button>
+        <button 
+          className={`sub-nav-btn ${view === 'vacation' ? 'active' : ''}`} 
+          onClick={() => setView('vacation')}
+        >
+          Vacaciones
+        </button>
+        <button 
+          className={`sub-nav-btn ${view === 'rules' ? 'active' : ''}`} 
+          onClick={() => setView('rules')}
+        >
+          Normas
+        </button>
+      </nav>
 
       {view === 'main' && renderMainView()}
 
