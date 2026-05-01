@@ -57,7 +57,9 @@ const SelectionPage: React.FC<SelectionPageProps> = ({ genres, handleSelectGenre
               src={genre.image}
               alt={genre.name}
               className={`floor-cauldron-img ${hoveredGenre?.id === genre.id ? 'active' : ''}`}
-              style={{ filter: `hue-rotate(${genre.hue}deg) saturate(1.5)` }}
+              style={{
+                filter: genre.id === 'platformer' ? 'none' : `hue-rotate(${genre.hue}deg) saturate(1.5)`
+              }}
             />
             <div className="cauldron-glow" style={{ backgroundColor: `hsla(${genre.hue}, 70%, 50%, 0.3)` }}></div>
           </div>

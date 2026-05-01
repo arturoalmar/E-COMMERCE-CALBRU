@@ -191,6 +191,7 @@
   }
 }
 
+/* CARDS DEL HOME: Tarjetas de características e información importante */
 .carousel-card {
   padding: 2rem;
   min-height: 220px;
@@ -2968,8 +2969,8 @@ body {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  margin: 0 !sync;
-  /* Anula mï¿½rgenes previos */
+  margin: 0 !important;
+  /* Anula márgenes previos */
 }
 
 .sub-view-header .section-title-witch {
@@ -4393,29 +4394,18 @@ body {
   top: -600px;
   /* Escondido arriba */
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0.95);
   width: 100%;
-  max-width: 650px;
-  transition: top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 975px; /* 150% del tamaño original */
+  transition: top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.3s ease;
   z-index: 50;
   pointer-events: none;
+  --wooden-sign-height: 570px; /* Altura uniforme para todos los carteles */
 }
 
 .wooden-sign-container.dropped {
-  top: 20px;
+  top: -10px;
   pointer-events: auto;
-}
-
-.wooden-sign-container.cauldrons {
-  --wooden-sign-height: 380px;
-}
-
-.wooden-sign-container.conocenos {
-  --wooden-sign-height: 360px;
-}
-
-.wooden-sign-container.intranet {
-  --wooden-sign-height: 340px;
 }
 
 .sign-wrapper {
@@ -4434,11 +4424,27 @@ body {
 
 .sign-content-overlay {
   position: absolute;
-  top: 0px;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
   text-align: center;
+}
+
+/* Posición específica para cada cartel de madera */
+.wooden-sign-container.wooden-sign-cauldrons .sign-content-overlay {
+  top: 91%;
+  width: 18%
+}
+
+.wooden-sign-container.wooden-sign-conocenos .sign-content-overlay {
+  top: 87%;
+  width: 18%
+}
+
+.wooden-sign-container.wooden-sign-intranet .sign-content-overlay {
+  top: 77%;
+  width: 18%
 }
 
 .sign-options {
@@ -4466,6 +4472,19 @@ body {
   color: #8b0000;
   transform: scale(1.1);
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Diferentes alturas de botones para cada cartel */
+.wooden-sign-container.cauldrons .sign-options button {
+  padding: 1.08rem 1.26rem;
+}
+
+.wooden-sign-container.conocenos .sign-options button {
+  padding: 0.81rem 1.26rem;
+}
+
+.wooden-sign-container.intranet .sign-options button {
+  padding: 1.4rem 1.4rem;
 }
 
 .sign-hint {
@@ -4606,17 +4625,8 @@ body {
   /* -10% altura */
 }
 
-/* Wooden Sign adjustments */
-.wooden-sign-container.dropped {
-  top: 0px;
-  /* Era 20px, ahora 0px? O -20px? User said '20px mas arriba' */
-}
-
 /* Asegurar que el mouse pueda moverse entre banner y sign sin cerrarlo */
-.landing-immersive {
-  /* onMouseLeave en el componente se encarga de cerrar */
-}
-
+/* onMouseLeave en el componente se encarga de cerrar */
 
 .interactive-zone {
   position: absolute;
@@ -4873,12 +4883,6 @@ body {
   display: none !important;
 }
 
-/* AJUSTE DE POSICIÃ“N DEL CARTEL PARA LA NAVBAR */
-.wooden-sign-container.dropped {
-  top: 100px;
-  /* Justo debajo de la navbar */
-}
-
 /* Aumentar legibilidad de la navbar */
 .landing-top-nav {
   background: rgba(0, 0, 0, 0.4);
@@ -4992,19 +4996,6 @@ body {
   /* Su centro en la parte superior del semicirculo */
 }
 
-/* WOODEN SIGN GRANDE */
-.wooden-sign-container {
-  transform: translateX(-50%) scale(1.25);
-  top: -800px;
-  /* Mas arriba para esconderlo bien */
-}
-
-.wooden-sign-container.dropped {
-  top: 120px;
-  /* Un poco mas abajo para no tapar la nav semicircular */
-}
-
-
 .landing-top-nav {
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
@@ -5062,30 +5053,6 @@ body {
   height: 65px;
 }
 
-.wooden-sign-container {
-  position: absolute;
-  top: -800px !important; /* Truly hidden */
-  left: 50%;
-  transform: translateX(-50%) scale(0.85);
-  width: 100%;
-  max-width: 650px;
-  transition: top 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  z-index: 500 !important;
-  pointer-events: auto;
-}
-
-.wooden-sign-container.dropped {
-  top: 0 !important; /* Touch top of screen */
-}
-
-.sign-content-overlay {
-  position: absolute;
-  top: 35% !important;
-  left: 87.5% !important;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
 .welcome-gate-sign {
   position: absolute;
   top: 15%;
@@ -5109,13 +5076,6 @@ body {
 }
 
 
-.wooden-sign-container.dropped {
-  top: 0 !important;
-}
-
-.wooden-sign-container {
-  transition: top 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-}
 
 
 .logo-container {
@@ -5144,10 +5104,6 @@ body {
   font-size: 4rem !important;
 }
 
-.wooden-sign-container.dropped {
-  top: -10px !important; /* Ajuste milimétrico para que toque el borde absoluto */
-}
-
 .landing-top-nav {
   z-index: 2000 !important; /* Asegurar que esté siempre encima */
 }
@@ -5162,10 +5118,6 @@ body {
   transform: translateY(-100%) !important;
 }
 
-/* SUBIDA CARTEL 20PX MÁS */
-.wooden-sign-container.dropped {
-  top: -30px !important; /* -10px anterior - 20px = -30px */
-}
 
 
 /* TRANSICIONES GLOBALES DE PÁGINA */
@@ -5285,6 +5237,7 @@ body {
   font-style: italic;
 }
 
+/* OVERLAY DE SELECCIÓN: ventana emergente para los detalles del libro */
 .selection-book-overlay {
   position: absolute;
   top: 45%; left: 50%;
@@ -5354,6 +5307,7 @@ body {
   box-shadow: 0 6px 15px rgba(0,0,0,0.5);
 }
 
+/* CAULDRON GRID: fila de calderos interactivos para elegir la base de juego */
 .cauldrons-floor {
   display: flex;
   justify-content: center;
@@ -5463,8 +5417,7 @@ body {
 .sign-options {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  align-items: center;
+  gap: 9px;
 }
 
 .sign-options button {
@@ -5473,12 +5426,12 @@ body {
   border: none !important;
   color: #4a2c1a !important;
   font-family: 'MedievalSharp', cursive !important;
-  font-size: 1.1rem !important;
+  font-size: 1.15rem !important;
   font-weight: bold !important;
-  padding: 15px 40px !important;
+  padding: 16px 42px !important;
   cursor: pointer !important;
   transition: transform 0.2s ease, filter 0.2s ease !important;
-  min-width: 220px !important;
+  min-width: 231px !important;
   box-shadow: none !important;
 }
 
@@ -5496,46 +5449,31 @@ body {
 
 
 .sign-options button {
-  min-width: 275px !important;
-  padding: 20px 50px !important;
-  font-size: 1.4rem !important;
+  min-width: 289px !important;
+  padding: 21px 53px !important;
+  font-size: 1.47rem !important;
 }
 
 
 .sign-options button {
-  min-width: 345px !important;
-  padding: 25px 65px !important;
-  font-size: 1.75rem !important;
+  min-width: 362px !important;
+  padding: 26px 68px !important;
+  font-size: 1.84rem !important;
 }
 
 
+/* Reglas de posicionamiento de overlay limpia para los carteles de la landing */
 .sign-content-overlay {
-  top: 65% !important; /* Ajuste para centrar mejor el bloque de botones en la madera */
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 100% !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  text-align: center;
 }
 
 .sign-options {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 15px !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-}
-
-
-.sign-content-overlay {
-  top: calc(70% + 30px) !important; /* Bajado 30px desde 65% */
-}
-
-
-.sign-content-overlay {
-  left: 85% !important; /* Desplazado significativamente a la derecha */
-  transform: translate(calc(-50% + 15%), -50%) !important; /* Mueve el bloque 15% hacia la derecha */
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  animation: fadeIn 0.5s ease 0.3s both;
 }
 
