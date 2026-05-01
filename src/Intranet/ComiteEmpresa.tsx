@@ -1,3 +1,6 @@
+// ComiteEmpresa.tsx
+// Vista del Comité de Empresa con pestañas para información, normativa y objetivos.
+
 import React, { useState } from 'react';
 
 interface ComiteEmpresaProps {

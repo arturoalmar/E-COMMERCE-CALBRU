@@ -1,3 +1,6 @@
+// QuickLinks.tsx
+// Lista de acciones rápidas de la intranet que permite navegar entre vistas de RRHH.
+
 import React from 'react';
 
 interface QuickLinksProps {

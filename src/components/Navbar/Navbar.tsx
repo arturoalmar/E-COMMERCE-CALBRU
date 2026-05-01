@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import './Navbar.css';
 import { Page } from '../../types';
 
+// Navbar.tsx
+// Barra de navegación superior que permite cambiar de página,
+// abrir el menú y gestionar el acceso al login/intranet.
+
 interface NavbarProps {
   isWorker: boolean;
   onNavigate: (page: Page) => void;
@@ -11,6 +15,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, onLoginToggle, hideMenuToggle }) => {
+  // Estado local para controlar si el menú desplegable está abierto o cerrado.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);

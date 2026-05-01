@@ -1,3 +1,6 @@
+// IntranetCalendar.tsx
+// Componente de calendario interno para mostrar eventos corporativos y fechas clave.
+
 import React, { useState, useMemo } from 'react';
 
 const EVENTS = [

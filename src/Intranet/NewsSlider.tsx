@@ -1,3 +1,7 @@
+// NewsSlider.tsx
+// Componente de carrusel de noticias para el área de intranet.
+// Avanza automáticamente o manualmente entre items informativos.
+
 import React, { useState, useEffect, useCallback } from 'react';
 
 export interface NewsItem {

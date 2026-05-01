@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
 
+// App.tsx
+// Este componente actúa como el controlador principal de la aplicación.
+// Maneja la navegación entre páginas, las transiciones visuales,
+// el estado global de selección de género, ingredientes y partículas.
+
 // Componentes
 import LandingPage from './Landing/LandingPage';
 import SelectionPage from './Selection-Cauldron/SelectionPage';
@@ -23,9 +28,13 @@ function getRandomColor(): string {
 }
 
 function App() {
+  // Estado de la página actual de la aplicación.
   const [page, setPage] = useState<Page>('home');
+  // Paso actual dentro de la experiencia de creación de calderos.
   const [currentStep, setCurrentStep] = useState<Step>('select-pot');
+  // Género de juego seleccionado por el usuario.
   const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  // Opciones seleccionadas en las diferentes categorías del configurador.
   const [selections, setSelections] = useState<OptionsMap>({
     diseno: [],
     tematica: [],
@@ -43,6 +52,8 @@ function App() {
   const [transitionDirection, setTransitionDirection] = useState<'up' | 'down'>('up');
   const nextPageRoute = useRef<{ p: Page; s: Step; g: Genre | null } | null>(null);
 
+  // Controla la animación cuando se cambia de página.
+  // Guarda la ruta de destino y actualiza estado tras un retardo para permitir la transición.
   const performTransition = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null) => {
     const isGoingToHome = newPage === 'home';
     const direction = isGoingToHome ? 'down' : 'up';
@@ -71,6 +82,8 @@ function App() {
     }, 450);
   }, []);
 
+  // Función central para cambiar de página.
+  // Si shouldPush es true, se desencadena la animación de transición.
   const navigateTo = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null, shouldPush = true) => {
     if (shouldPush) {
       performTransition(newPage, newStep, newGenre);
@@ -99,11 +112,13 @@ function App() {
     navigateTo(newPage, 'select-pot', null);
   };
 
+  // Selecciona un género y reinicia las selecciones para empezar la configuración.
   const handleSelectGenre = (genre: Genre) => {
     setSelections({ diseno: [], tematica: [], mecanicas: [], plataforma: [] });
     navigateTo('creator', 'configurator', genre);
   };
 
+  // Crea partículas visuales cuando el usuario selecciona opciones del configurador.
   const createParticle = () => {
     const randomX = Math.random() * 120 - 60;
     const randomY = -100;
@@ -139,6 +154,8 @@ function App() {
     selections.mecanicas.length > 0 ||
     selections.plataforma.length > 0;
 
+  // Renderiza el contenido principal según la página actual.
+  // Cada caso corresponde a una vista distinta de la aplicación.
   const renderContent = () => {
     switch (page) {
       case 'home':
@@ -219,7 +236,6 @@ function App() {
           isWorker={isWorker}
           onNavigate={handleNavigate}
           isLoggedIn={isLoggedIn}
-          hideMenuToggle={page === 'home'}
           onLoginToggle={() => {
             if (isLoggedIn) {
               setIsLoggedIn(false);

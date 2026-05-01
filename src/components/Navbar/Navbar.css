@@ -1,3 +1,8 @@
+/* Navbar.css
+   Estilos del componente de navegación superior. Define la barra fija,
+   el menú desplegable y los botones del usuario.
+*/
+
 .navbar {
   position: fixed;
   top: 0;

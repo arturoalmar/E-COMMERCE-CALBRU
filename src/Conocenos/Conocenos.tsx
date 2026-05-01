@@ -1,3 +1,6 @@
+// Conocenos.tsx
+// Página de información "Conócenos" que describe el proyecto, cómo funciona y muestra reseñas rotativas.
+
 import React, { useState, useEffect } from 'react';
 import backgroundImg from '../assets/background.png';
 import spritesImg from '../assets/Sprittes.png';

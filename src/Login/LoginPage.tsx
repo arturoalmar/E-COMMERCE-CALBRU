@@ -1,3 +1,6 @@
+// LoginPage.tsx
+// Componente de formulario de acceso. Simula el ingreso de usuario y dispara el callback de login.
+
 import React, { useState } from 'react';
 
 interface LoginPageProps {

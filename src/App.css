@@ -4406,19 +4406,35 @@ body {
   pointer-events: auto;
 }
 
+.wooden-sign-container.cauldrons {
+  --wooden-sign-height: 380px;
+}
+
+.wooden-sign-container.conocenos {
+  --wooden-sign-height: 360px;
+}
+
+.wooden-sign-container.intranet {
+  --wooden-sign-height: 340px;
+}
+
 .sign-wrapper {
   position: relative;
   width: 100%;
 }
 
 .wooden-sign-img {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
+  height: var(--wooden-sign-height, auto);
+  display: block;
+  margin: 0 auto;
   filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
 }
 
 .sign-content-overlay {
   position: absolute;
-  top: 55%;
+  top: 0px;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
@@ -5064,7 +5080,7 @@ body {
 
 .sign-content-overlay {
   position: absolute;
-  top: 75% !important;
+  top: 35% !important;
   left: 87.5% !important;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -5115,7 +5131,7 @@ body {
 }
 
 .landing-logo-center {
-  height: 65px !important;
+  height: 55px !important;
   top: 0 !important;
   position: static !important;
 }
@@ -5514,11 +5530,12 @@ body {
 
 
 .sign-content-overlay {
-  top: 50% !important; /* Centrado absoluto en la imagen del cartel */
+  top: calc(70% + 30px) !important; /* Bajado 30px desde 65% */
 }
 
 
 .sign-content-overlay {
   left: 85% !important; /* Desplazado significativamente a la derecha */
+  transform: translate(calc(-50% + 15%), -50%) !important; /* Mueve el bloque 15% hacia la derecha */
 }
 

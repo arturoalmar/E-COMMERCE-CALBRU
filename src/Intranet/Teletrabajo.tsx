@@ -1,3 +1,6 @@
+// Teletrabajo.tsx
+// Página de política de teletrabajo que explica requisitos y permite enviar una solicitud.
+
 import React from 'react';
 
 interface TeletrabajoProps {

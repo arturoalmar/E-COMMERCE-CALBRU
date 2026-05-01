@@ -1,19 +1,27 @@
 import React, { useState, useRef } from 'react';
 import villageBg from '../assets/hags_village_bg.png';
 import woodenSign from '../assets/wooden_sign.png';
-import iconImg from '../assets/icon.png'; 
+import iconImg from '../assets/icon.png';
+import { Page } from '../types';
+
+// LandingPage.tsx
+// Página de inicio inmersiva. Muestra la aldea, el logo central y los carteles de madera interactivos.
+// El usuario puede elegir entrar al creador de calderos, ver la intranet o conocer más sobre el proyecto.
 
 interface LandingPageProps {
-  setPage: (page: any) => void;
+  setPage: (page: Page) => void;
   isLoggedIn: boolean;
   isWorker?: boolean;
 }
 
 const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker }) => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const switchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const switchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Cuando el ratón entra en un cartel, se prepara un cambio de sección.
+  // Si el usuario mueve el ratón rápidamente entre carteles, se añade un pequeño retardo
+  // para evitar cambios demasiado bruscos y permitir una animación de transición más suave.
   const handleMouseEnter = (section: string) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -39,35 +47,46 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker
     }, 750); 
   };
 
-  const renderSignContent = () => {
-    switch (hoveredSection) {
-      case 'cauldrons':
-        return (
-          <div className="sign-options">
-            <button onClick={() => setPage('creator')}>NEW CAULDRON</button>
-            <button onClick={() => setPage('my-cauldrons')}>MY CAULDRONS</button>
-          </div>
-        );
-      case 'conocenos':
-        return (
-          <div className="sign-options">
-            <button onClick={() => setPage('conocenos')}>Our Magic Story</button>
-            <button onClick={() => setPage('conocenos')}>How We Forge</button>
-          </div>
-        );
-      case 'intranet':
-        return (
-          <div className="sign-options">
-            {isLoggedIn && isWorker ? (
-              <button onClick={() => setPage('intranet')}>Guild Dashboard</button>
-            ) : (
-              <button onClick={() => setPage('login')}>Worker Portal</button>
-            )}
-          </div>
-        );
-      default:
-        return null;
-    }
+  type LandingSignKey = 'cauldrons' | 'conocenos' | 'intranet';
+  const signItems: { key: LandingSignKey; buttons: { label: string; page: Page }[] }[] = [
+    {
+      key: 'cauldrons',
+      buttons: [
+        { label: 'NEW CAULDRON', page: 'creator' },
+        { label: 'MY CAULDRONS', page: 'my-cauldrons' },
+      ],
+    },
+    {
+      key: 'conocenos',
+      buttons: [
+        { label: 'Our Magic Story', page: 'conocenos' },
+        { label: 'How We Forge', page: 'conocenos' },
+      ],
+    },
+    {
+      key: 'intranet',
+      buttons: [
+        {
+          label: isLoggedIn && isWorker ? 'Guild Dashboard' : 'Worker Portal',
+          page: isLoggedIn && isWorker ? 'intranet' : 'login',
+        },
+      ],
+    },
+  ];
+
+  const renderSignContent = (section: string) => {
+    const sign = signItems.find((item) => item.key === section);
+    if (!sign) return null;
+
+    return (
+      <div className="sign-options">
+        {sign.buttons.map((button) => (
+          <button key={button.label} onClick={() => setPage(button.page)}>
+            {button.label}
+          </button>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -116,24 +135,31 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker
           </div>
         </nav>
 
-        {/* Dropping Wooden Sign */}
-        <div 
-          className={`wooden-sign-container ${hoveredSection ? 'dropped' : ''}`}
-          onMouseEnter={() => {
-            if (timeoutRef.current) {
-              clearTimeout(timeoutRef.current);
-              timeoutRef.current = null;
-            }
-          }}
-          onMouseLeave={handleMouseLeave}
-        >
-          <div className="sign-wrapper">
-            <img src={woodenSign} alt="Cartel de madera" className="wooden-sign-img" />
-            <div className="sign-content-overlay">
-              {renderSignContent()}
+        {/* Dropping Wooden Signs */}
+        {signItems.map((sign) => (
+          <div
+            key={sign.key}
+            className={`wooden-sign-container wooden-sign-${sign.key} ${hoveredSection === sign.key ? 'dropped active' : ''}`}
+            onMouseEnter={() => {
+              if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+              }
+            }}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="sign-wrapper">
+              <img
+                src={woodenSign}
+                alt={`Cartel de madera ${sign.key}`}
+                className="wooden-sign-img"
+              />
+              <div className="sign-content-overlay">
+                {renderSignContent(sign.key)}
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
 
       {/* Welcome Sign */}

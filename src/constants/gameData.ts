@@ -1,3 +1,7 @@
+// constants/gameData.ts
+// Datos estáticos que definen los distintos géneros de juego disponibles,
+// sus descripciones, imágenes y el sistema de color para los efectos del juego.
+
 import { Genre } from '../types';
 
 import cardsCauldron from '../assets/cards_cauldron.png';

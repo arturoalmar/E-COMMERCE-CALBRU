@@ -1,3 +1,6 @@
+// Vacaciones.tsx
+// Página para solicitar vacaciones y visualizar un calendario seleccionable.
+
 import React from 'react';
 
 interface VacacionesProps {

@@ -1,3 +1,6 @@
+// MyCauldronsPage.tsx
+// Página de estado de los calderos guardados. Actualmente muestra un estado vacío si no hay calderos.
+
 import React from 'react';
 
 const MyCauldronsPage: React.FC = () => {

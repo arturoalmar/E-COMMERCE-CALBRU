@@ -1,3 +1,7 @@
+// IntranetPage.tsx
+// Página principal de la intranet corporativa para empleados.
+// Contiene noticias, calendario, acceso a normas, vacaciones, teletrabajo y comité de empresa.
+
 import React, { useState, useMemo } from 'react';
 import news1 from '../assets/news1.png';
 import news2 from '../assets/news2.png';
@@ -40,7 +44,9 @@ const MONTH_NAMES = [
 ];
 
 const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
+  // Vista interna activa de la intranet. Cambia entre el panel principal y secciones de RRHH.
   const [view, setView] = useState<'main' | 'rules' | 'vacation' | 'teleworking' | 'committee'>('main');
+  // Días seleccionados para la solicitud de vacaciones.
   const [selectedVacationDays, setSelectedVacationDays] = useState<{ day: number, month: number, year: number }[]>([]);
 
   const today = useMemo(() => {
@@ -62,6 +68,7 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
     });
   };
 
+  // Calcula el primer día de la semana y el total de días para el mes actual.
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -173,6 +180,9 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
 
   return (
     <div className="intranet-sketch-layout intranet-full">
+      <div className="intranet-welcome-bar">
+        <span>Hola, {username}</span>
+      </div>
       <nav className="intranet-sub-nav">
         <button 
           className={`sub-nav-btn ${view === 'main' ? 'active' : ''}`} 

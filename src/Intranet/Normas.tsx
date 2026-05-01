@@ -1,3 +1,6 @@
+// Normas.tsx
+// Vista de normas internas de la empresa con texto explicativo y navegación de vuelta.
+
 import React from 'react';
 
 interface NormasProps {

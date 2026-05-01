@@ -1,3 +1,7 @@
+// SelectionPage.tsx
+// Página donde el usuario elige la base de juego (género) que será usada para configurar el caldero.
+// Muestra los calderos en el sótano y permite previsualizar la descripción de cada género.
+
 import React, { useState } from 'react';
 import { Genre } from '../types';
 import sotanoBg from '../assets/Sotano.png';
@@ -9,6 +13,7 @@ interface SelectionPageProps {
 }
 
 const SelectionPage: React.FC<SelectionPageProps> = ({ genres, handleSelectGenre }) => {
+  // Género actualmente bajo el cursor para mostrar datos en el libro central.
   const [hoveredGenre, setHoveredGenre] = useState<Genre | null>(null);
 
   return (

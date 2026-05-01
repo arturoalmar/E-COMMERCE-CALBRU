@@ -1,3 +1,7 @@
+// OptionsShelf.tsx
+// Componente reutilizable que renderiza una cuadrícula de botones de selección
+// para una categoría concreta de ingredientes.
+
 import React from 'react';
 import { OptionsMap } from '../types';
 

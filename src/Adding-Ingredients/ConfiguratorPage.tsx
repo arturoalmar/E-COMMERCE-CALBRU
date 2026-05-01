@@ -1,3 +1,7 @@
+// ConfiguratorPage.tsx
+// Página donde el usuario combina ingredientes sobre el caldero.
+// Presenta las estanterías de opciones, el efecto de partículas y el estado de la fusión.
+
 import React from 'react';
 import { Genre, Particle, OptionsMap } from '../types';
 import Cauldron from './Cauldron';
