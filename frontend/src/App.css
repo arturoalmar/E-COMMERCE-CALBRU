@@ -1384,49 +1384,124 @@ header p {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url("./assets/Fondo Log-in.png");
+  background-size: cover;
+  background-position: center 60%;
+  background-repeat: no-repeat;
 }
 
 .login-card-sketch {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
+  background: none;
+  backdrop-filter: none;
   padding: 1.8rem;
-  border-radius: 24px;
-  border: 1px solid rgba(140, 92, 255, 0.3);
+  border: none;
   width: 100%;
   max-width: 400px;
   text-align: center;
+  box-shadow: none;
+}
+
+.login-card-sketch h1 {
+  color: #000;
+  margin-top: 5%;
+  margin-bottom: 2rem;
+  font-size: 3rem;
 }
 
 .login-card-sketch input {
-  width: 100%;
+  width: 85%;
   padding: 1rem;
   margin-bottom: 1rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 12px;
-  color: white;
+  color: #000;
+}
+
+.login-card-sketch input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .btn-enter {
-  width: 100%;
-  padding: 1rem;
-  background: #8c5cff;
-  border: none;
-  border-radius: 12px;
-  color: white;
+  width: 90px;
+  height: 90px;
+  background: rgba(128, 0, 0, 0.05);
+  border: 2px dashed #800000;
+  border-radius: 50%;
+  color: #800000;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto 0;
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
 .btn-enter:hover {
-  background: #a37dff;
+  background: rgba(128, 0, 0, 0.2);
 }
+
+/* ANIMACIÓN DE SELLO DE CERA */
+.btn-enter.sealing {
+  position: relative;
+  overflow: visible;
+  pointer-events: none;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.wax-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95px; /* Ligeramente mayor que el botón para cubrirlo */
+  height: 95px;
+  background: radial-gradient(circle, #8b0000 70%, #5a0000 100%);
+  border-radius: 50%;
+  animation: seal-impact 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.wax-seal::after {
+  content: 'C'; /* Letra C de Calbru */
+  color: rgba(240, 200, 110, 0.8);
+  font-size: 2.5rem;
+  font-family: 'Almendra', serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+@keyframes seal-impact {
+  0% {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 0;
+    filter: blur(10px);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+
 
 
 /* BACKGROUND THEMATIC GLOBAL */
 body {
-  background-image: linear-gradient(rgba(9, 8, 20, 0.85), rgba(16, 8, 40, 0.95)), url("./assets/theme_bg.png");
+  background-image: url("./assets/Fondo de tierra.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -4396,15 +4471,17 @@ body {
   left: 50%;
   transform: translateX(-50%) scale(0.95);
   width: 100%;
-  max-width: 975px; /* 150% del tamaño original */
+  max-width: 975px;
+  /* 150% del tamaño original */
   transition: top 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.3s ease;
   z-index: 50;
   pointer-events: none;
-  --wooden-sign-height: 570px; /* Altura uniforme para todos los carteles */
+  --wooden-sign-height: 570px;
+  /* Altura uniforme para todos los carteles */
 }
 
 .wooden-sign-container.dropped {
-  top: -10px;
+  top: -125px;
   pointer-events: auto;
 }
 
@@ -4790,55 +4867,20 @@ body {
 /* WELCOME SIGN OVER GATE */
 .welcome-gate-sign {
   position: absolute;
-  top: 30%;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 30;
   pointer-events: none;
 }
 
-.welcome-sign-bg {
-  background: rgba(74, 47, 27, 0.9);
-  border: 4px solid #8b4513;
-  padding: 1rem 3rem;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  text-align: center;
-  position: relative;
-}
-
-.welcome-sign-bg::before,
-.welcome-sign-bg::after {
-  content: '';
-  position: absolute;
-  top: -20px;
-  width: 4px;
-  height: 20px;
-  background: #333;
-}
-
-.welcome-sign-bg::before {
-  left: 20%;
-}
-
-.welcome-sign-bg::after {
-  right: 20%;
-}
-
-.welcome-prefix {
-  font-family: 'Almendra', serif;
-  color: #f0c86e;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.welcome-title {
-  font-family: 'MedievalSharp', cursive;
-  color: #fff;
-  font-size: 3rem;
-  margin: 0.5rem 0 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+.welcome-sign-img {
+  width: 745px;
+  /* Increased 20% from 621px */
+  max-width: 90vw;
+  height: auto;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+  display: block;
 }
 
 .logo-container {
@@ -4889,6 +4931,449 @@ body {
   backdrop-filter: blur(5px);
 }
 
+/* QUICK ACTION BOTTOM BUTTON */
+.landing-bottom-action {
+  position: absolute;
+  bottom: calc(5% + 20px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Add global wand cursor explicitly here to ensure it works on the button */
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size:24px"><text y="24">🪄</text></svg>') 0 0, auto !important;
+}
+
+.potion-btn {
+  background: none;
+  border: none;
+  position: relative;
+  width: 140px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer !important;
+  outline: none;
+  transition: all 0.3s ease;
+  z-index: 50;
+}
+
+.potion-btn:hover {
+  animation: potion-shake 0.5s infinite ease-in-out;
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.8));
+}
+
+@keyframes potion-shake {
+  0% {
+    transform: scale(1.05) rotate(0deg) translate(0, 0);
+  }
+
+  25% {
+    transform: scale(1.05) rotate(3deg) translate(2px, -2px);
+  }
+
+  50% {
+    transform: scale(1.05) rotate(0deg) translate(0, 0);
+  }
+
+  75% {
+    transform: scale(1.05) rotate(-3deg) translate(-2px, 2px);
+  }
+
+  100% {
+    transform: scale(1.05) rotate(0deg) translate(0, 0);
+  }
+}
+
+.potion-cork {
+  position: absolute;
+  top: 15px;
+  width: 36px;
+  height: 30px;
+  background: #8b5a2b;
+  border: 3px solid #3b4252;
+  border-radius: 8px 8px 3px 3px;
+  z-index: 3;
+  box-shadow: inset -5px -2px 5px rgba(0, 0, 0, 0.4), inset 5px 2px 5px rgba(255, 255, 255, 0.2);
+}
+
+.potion-neck {
+  position: absolute;
+  top: 40px;
+  width: 50px;
+  height: 40px;
+  border: 4px solid #3b4252;
+  border-bottom: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px 12px 0 0;
+  z-index: 2;
+  box-shadow: inset -10px 0 10px rgba(0, 0, 0, 0.3), inset 10px 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.potion-neck::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(to right, #1a0b2e, #4c1d95, #3b82f6);
+}
+
+.potion-tie {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: #5c3a21;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.potion-tie-1 {
+  top: 10px;
+}
+
+.potion-tie-2 {
+  top: 20px;
+}
+
+.potion-tie-3 {
+  top: 30px;
+}
+
+.potion-charm {
+  position: absolute;
+  top: 25px;
+  right: -20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+  transform: rotate(15deg);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  animation: charm-dangle 2s infinite alternate ease-in-out;
+}
+
+@keyframes charm-dangle {
+  from {
+    transform: rotate(10deg);
+  }
+
+  to {
+    transform: rotate(20deg);
+  }
+}
+
+.potion-body {
+  width: 140px;
+  height: 140px;
+  border: 4px solid #3b4252;
+  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset -15px -15px 30px rgba(0, 0, 0, 0.6), inset 15px 15px 30px rgba(255, 255, 255, 0.4), 0 15px 25px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.potion-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 85%;
+  background: radial-gradient(circle at 50% 120%, #0a041c, #1a0b2e, #4c1d95, #3b82f6, #8b5cf6);
+  border-radius: 0 0 45% 45% / 0 0 40% 40%;
+  overflow: hidden;
+}
+
+.potion-btn:hover .potion-liquid {
+  filter: brightness(1.3) contrast(1.2);
+}
+
+.bubble {
+  position: absolute;
+  bottom: -10px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.potion-btn:hover .bubble {
+  animation: bubble-rise 2s infinite ease-in;
+}
+
+.bubble-1 {
+  left: 20%;
+  width: 10px;
+  height: 10px;
+  animation-delay: 0s !important;
+}
+
+.bubble-2 {
+  left: 40%;
+  width: 15px;
+  height: 15px;
+  animation-delay: 0.3s !important;
+}
+
+.bubble-3 {
+  left: 60%;
+  width: 8px;
+  height: 8px;
+  animation-delay: 0.7s !important;
+}
+
+.bubble-4 {
+  left: 80%;
+  width: 12px;
+  height: 12px;
+  animation-delay: 0.5s !important;
+}
+
+.bubble-5 {
+  left: 30%;
+  width: 18px;
+  height: 18px;
+  animation-delay: 0.2s !important;
+}
+
+.bubble-6 {
+  left: 70%;
+  width: 9px;
+  height: 9px;
+  animation-delay: 0.8s !important;
+}
+
+.bubble-7 {
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  animation-delay: 0.1s !important;
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.8;
+  }
+
+  80% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(-100px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.potion-swirl {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 120%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+  border-radius: 50%;
+  transform: rotate(-20deg);
+  animation: swirl-spin 10s infinite linear;
+  opacity: 0.5;
+}
+
+@keyframes swirl-spin {
+  0% {
+    transform: rotate(-20deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(10deg) scale(1.1);
+  }
+
+  100% {
+    transform: rotate(-20deg) scale(1);
+  }
+}
+
+.potion-label-wrapper {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.potion-label-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #e6c594;
+  border: 2px solid #8b5a2b;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+  transform: perspective(200px) rotateX(10deg);
+}
+
+.potion-label-text {
+  position: relative;
+  font-family: 'Almendra', serif;
+  color: #3e2723;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 6px 4px;
+  text-align: center;
+  z-index: 11;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.potion-glare {
+  position: absolute;
+  top: 15%;
+  left: 12%;
+  width: 25px;
+  height: 60px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+  border-radius: 50%;
+  transform: rotate(-30deg);
+  z-index: 5;
+}
+
+.potion-glare-small {
+  position: absolute;
+  bottom: 20%;
+  right: 15%;
+  width: 15px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  z-index: 5;
+}
+
+/* POTION EXPLOSION */
+.potion-btn.exploding {
+  animation: potion-explode 0.4s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+@keyframes potion-explode {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1) drop-shadow(0 0 20px #8b5cf6);
+  }
+
+  30% {
+    transform: scale(1.2) rotate(-15deg);
+    filter: brightness(1.5) drop-shadow(0 0 40px #8b5cf6);
+  }
+
+  60% {
+    transform: scale(0.8) rotate(15deg);
+    filter: brightness(2) drop-shadow(0 0 80px #3b82f6);
+  }
+
+  100% {
+    transform: scale(3);
+    opacity: 0;
+    filter: brightness(3) drop-shadow(0 0 150px #fff);
+  }
+}
+
+/* GLOBAL POTION SPLATTER OVERLAY */
+.potion-global-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 100%, #1a0b2e, #4c1d95, #3b82f6);
+  opacity: 0;
+  clip-path: circle(0% at 50% 90%);
+  transform: translateY(0);
+}
+
+.potion-global-overlay.splatter {
+  opacity: 1;
+  clip-path: circle(150% at 50% 90%);
+  transition: clip-path 0.5s ease-out, opacity 0.1s;
+}
+
+.potion-global-overlay.slide {
+  opacity: 1;
+  clip-path: circle(150% at 50% 90%);
+  transform: translateY(100%);
+  transition: transform 1s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+.splatter-drop {
+  position: absolute;
+  background: #3b82f6;
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.potion-global-overlay.splatter .splatter-drop {
+  animation: drop-splat 0.6s ease-out forwards;
+}
+
+.drop-1 {
+  width: 50px;
+  height: 50px;
+  left: 30%;
+  bottom: 15%;
+  animation-delay: 0.05s;
+}
+
+.drop-2 {
+  width: 80px;
+  height: 80px;
+  left: 60%;
+  bottom: 35%;
+  animation-delay: 0.15s;
+}
+
+.drop-3 {
+  width: 40px;
+  height: 40px;
+  left: 45%;
+  bottom: 55%;
+  animation-delay: 0.1s;
+}
+
+@keyframes drop-splat {
+  0% {
+    transform: scale(0) translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(6) translateY(-100px);
+    opacity: 0;
+  }
+}
+
+/* MAGIC WAND CURSOR FOR LANDING */
+.landing-immersive,
+.landing-immersive *,
+.landing-immersive button,
+.landing-immersive a {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size:24px"><text y="24">🪄</text></svg>') 0 0, auto !important;
+}
 
 .landing-interactive-wrapper {
   position: absolute;
@@ -5012,14 +5497,20 @@ body {
 
 .landing-immersive {
   position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   z-index: 10;
 }
 
 .village-bg-immersive {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover !important;
   background-position: center;
   z-index: -1;
@@ -5090,7 +5581,10 @@ body {
 
 .landing-interactive-wrapper {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 500px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 500px;
   z-index: 100;
 }
 
@@ -5119,12 +5613,14 @@ body {
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
 
 .welcome-title {
-  font-family: 'Cinzel Decorative', cursive !important; /* Estética similar a Enchanted Land */
+  font-family: 'Cinzel Decorative', cursive !important;
+  /* Estética similar a Enchanted Land */
   font-size: 4rem !important;
 }
 
 .landing-top-nav {
-  z-index: 2000 !important; /* Asegurar que esté siempre encima */
+  z-index: 2000 !important;
+  /* Asegurar que esté siempre encima */
 }
 
 
@@ -5210,6 +5706,22 @@ body {
 
 .app-container {
   transition: transform 0.45s cubic-bezier(0.7, 0, 0.3, 1) !important;
+  position: relative;
+}
+
+/* El pseudo-elemento acompaña al contenedor para que el fondo de tierra "resbale" con la transición */
+.app-container::before {
+  content: '';
+  position: absolute;
+  top: -100vh;
+  left: 0;
+  width: 100vw;
+  height: 300vh;
+  background-image: url("./assets/Fondo de tierra.png");
+  background-size: 100vw 100vh; /* Asegura que la escala sea igual a la pantalla */
+  background-repeat: repeat-y;
+  z-index: -1000;
+  pointer-events: none;
 }
 
 
@@ -5229,7 +5741,10 @@ body {
 
 .sotano-bg {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
   z-index: -1;
@@ -5259,7 +5774,8 @@ body {
 /* OVERLAY DE SELECCIÓN: ventana emergente para los detalles del libro */
 .selection-book-overlay {
   position: absolute;
-  top: 45%; left: 50%;
+  top: 45%;
+  left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
   width: 800px;
   height: 500px;
@@ -5279,12 +5795,13 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 0 30px rgba(0,0,0,0.8));
+  filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.8));
 }
 
 .book-content {
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   width: 60%;
   text-align: center;
@@ -5317,20 +5834,21 @@ body {
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .book-select-btn:hover {
   background: #4e342e;
   transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* CAULDRON GRID: fila de calderos interactivos para elegir la base de juego */
 .cauldrons-floor {
   display: flex;
   justify-content: center;
-  gap: 3.4rem; /* Reduced by 15% from 4rem for tighter cauldron spacing */
+  gap: 3.4rem;
+  /* Reduced by 15% from 4rem for tighter cauldron spacing */
   width: 100%;
   padding-bottom: 50px;
   z-index: 20;
@@ -5348,7 +5866,7 @@ body {
 
 .floor-cauldron-img {
   height: 180px;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.8));
   transition: all 0.3s ease;
 }
 
@@ -5358,7 +5876,8 @@ body {
 
 .cauldron-glow {
   position: absolute;
-  bottom: -10px; left: 50%;
+  bottom: -10px;
+  left: 50%;
   transform: translateX(-50%);
   width: 120px;
   height: 30px;
@@ -5403,7 +5922,8 @@ body {
 }
 
 .sotano-bg {
-  filter: brightness(0.6) contrast(1.2) !important; /* Más oscuro para resaltar el libro */
+  filter: brightness(0.6) contrast(1.2) !important;
+  /* Más oscuro para resaltar el libro */
 }
 
 
@@ -5415,7 +5935,8 @@ body {
 }
 
 .sotano-back-arrow {
-  width: 52px !important; /* ~10% más pequeño de 60px */
+  width: 52px !important;
+  /* ~10% más pequeño de 60px */
   height: 52px !important;
   font-size: 1.8rem !important;
 }
@@ -5427,7 +5948,8 @@ body {
 
 
 .sotano-back-arrow {
-  top: 15px !important; /* Subido de 30px a 15px (~3% de la pantalla) */
+  top: 15px !important;
+  /* Subido de 30px a 15px (~3% de la pantalla) */
 }
 
 
@@ -5496,3 +6018,31 @@ body {
   animation: fadeIn 0.5s ease 0.3s both;
 }
 
+/* BOTÓN DE LOGIN EN LA LANDING (ARRIBA DERECHA) */
+.landing-login-btn-top-right {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  background: rgba(20, 12, 35, 0.7);
+  border: 2px solid #8c5cff;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-family: 'Almendra', serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer !important;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  z-index: 3000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(140, 92, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.landing-login-btn-top-right:hover {
+  background: rgba(140, 92, 255, 0.4);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(140, 92, 255, 0.6), inset 0 0 15px rgba(191, 136, 255, 0.5);
+  color: #fff;
+}

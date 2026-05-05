@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import villageBg from '../assets/hags_village_bg.png';
 import woodenSign from '../assets/wooden_sign.png';
 import iconImg from '../assets/icon.png';
+import titleLabel from '../assets/Etiqueta-titulo.png';
 import { Page } from '../types';
 
 // LandingPage.tsx
@@ -16,8 +17,24 @@ interface LandingPageProps {
 
 const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker }) => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
+  const [isExploding, setIsExploding] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const switchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handlePotionClick = () => {
+    if (isExploding) return;
+    setIsExploding(true);
+    
+    // Trigger the global splash immediately after explosion starts
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('potion-splash'));
+      
+      // Navigate to creator while the screen is covered
+      setTimeout(() => {
+        setPage('creator');
+      }, 500); 
+    }, 400); // the potion shakes then explodes after 400ms
+  };
 
   // Cuando el ratón entra en un cartel, se prepara un cambio de sección.
   // Si el usuario mueve el ratón rápidamente entre carteles, se añade un pequeño retardo
@@ -98,7 +115,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker
       />
 
       <div className="landing-interactive-wrapper">
-        {/* Top Nav */}
+        <button 
+          className="landing-login-btn-top-right" 
+          onClick={() => setPage('login')}
+        >
+          Sign In
+        </button>
         <nav 
           className="landing-top-nav"
           onMouseLeave={handleMouseLeave}
@@ -164,10 +186,41 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker
 
       {/* Welcome Sign */}
       <div className="welcome-gate-sign">
-        <div className="welcome-sign-bg">
-          <span className="welcome-prefix">Welcome to</span>
-          <h1 className="welcome-title">The Hag's Cauldron</h1>
-        </div>
+        <img src={titleLabel} alt="The Hag's Cauldron" className="welcome-sign-img" />
+      </div>
+
+      {/* Quick Action Bottom Button */}
+      <div className="landing-bottom-action">
+        <button className={`potion-btn ${isExploding ? 'exploding' : ''}`} onClick={handlePotionClick}>
+          <div className="potion-cork"></div>
+          <div className="potion-neck">
+            <div className="potion-tie potion-tie-1"></div>
+            <div className="potion-tie potion-tie-2"></div>
+            <div className="potion-tie potion-tie-3"></div>
+            <div className="potion-charm">
+              <span className="charm-moon">🌙</span>
+              <span className="charm-star">⭐</span>
+            </div>
+          </div>
+          <div className="potion-body">
+            <div className="potion-liquid">
+              <div className="bubble bubble-1"></div>
+              <div className="bubble bubble-2"></div>
+              <div className="bubble bubble-3"></div>
+              <div className="bubble bubble-4"></div>
+              <div className="bubble bubble-5"></div>
+              <div className="bubble bubble-6"></div>
+              <div className="bubble bubble-7"></div>
+              <div className="potion-swirl"></div>
+            </div>
+            <div className="potion-label-wrapper">
+              <div className="potion-label-bg"></div>
+              <span className="potion-label-text">Start creating</span>
+            </div>
+            <div className="potion-glare"></div>
+            <div className="potion-glare-small"></div>
+          </div>
+        </button>
       </div>
     </div>
   );

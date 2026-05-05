@@ -50,6 +50,7 @@ function App() {
   // Estados de transición
   const [transitionStatus, setTransitionStatus] = useState<'none' | 'exiting' | 'entering'>('none');
   const [transitionDirection, setTransitionDirection] = useState<'up' | 'down'>('up');
+  const [potionSplash, setPotionSplash] = useState<'idle' | 'splatter' | 'slide'>('idle');
   const nextPageRoute = useRef<{ p: Page; s: Step; g: Genre | null } | null>(null);
 
   // Controla la animación cuando se cambia de página.
@@ -107,6 +108,16 @@ function App() {
     window.history.replaceState({ page, step: currentStep, genre: selectedGenre }, '');
     return () => window.removeEventListener('popstate', handlePopState);
   }, [navigateTo, page, currentStep, selectedGenre]);
+
+  useEffect(() => {
+    const handleSplash = () => {
+      setPotionSplash('splatter');
+      setTimeout(() => setPotionSplash('slide'), 1200); 
+      setTimeout(() => setPotionSplash('idle'), 2200);
+    };
+    window.addEventListener('potion-splash', handleSplash);
+    return () => window.removeEventListener('potion-splash', handleSplash);
+  }, []);
 
   const handleNavigate = (newPage: Page) => {
     navigateTo(newPage, 'select-pot', null);
@@ -226,12 +237,18 @@ function App() {
     }
   };
 
-  const isSotanoMode = page === 'creator' && currentStep === 'select-pot';
-  const shouldHideNavbar = page === 'home' || isSotanoMode;
+  const isImmersiveMode = page === 'home' || (page === 'creator' && currentStep === 'select-pot') || page === 'login';
+  const shouldHideNavbar = isImmersiveMode;
 
   return (
-    <div className={`app-container transition-${transitionStatus} dir-${transitionDirection} ${isSotanoMode ? 'sotano-mode' : ''}`}>
-      {!shouldHideNavbar && (
+    <>
+      <div className={`potion-global-overlay ${potionSplash}`}>
+        <div className="splatter-drop drop-1"></div>
+        <div className="splatter-drop drop-2"></div>
+        <div className="splatter-drop drop-3"></div>
+      </div>
+      <div className={`app-container transition-${transitionStatus} dir-${transitionDirection} ${isImmersiveMode ? 'sotano-mode' : ''}`}>
+        {!shouldHideNavbar && (
         <Navbar
           isWorker={isWorker}
           onNavigate={handleNavigate}
@@ -246,17 +263,17 @@ function App() {
         />
       )}
 
-      {isSotanoMode && (
+      {(isImmersiveMode && page !== 'home') && (
         <button
           className="sotano-back-arrow"
           onClick={() => navigateTo('home')}
-          aria-label="Subir a la aldea"
+          aria-label="Volver a la aldea"
         >
           <span className="arrow-icon">↑</span>
         </button>
       )}
 
-      {(page !== 'home' && !isSotanoMode) && (
+      {(page !== 'home' && !isImmersiveMode) && (
         <button
           className="back-to-home-btn floating"
           onClick={() => navigateTo('home')}
@@ -270,6 +287,7 @@ function App() {
         {renderContent()}
       </div>
     </div>
+    </>
   );
 }
 

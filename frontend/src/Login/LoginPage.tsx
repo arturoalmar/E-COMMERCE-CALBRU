@@ -10,10 +10,17 @@ interface LoginPageProps {
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isSealing, setIsSealing] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin();
+    if (isSealing) return;
+    setIsSealing(true);
+    
+    // Simular el tiempo de "estampado" antes de entrar
+    setTimeout(() => {
+      onLogin();
+    }, 800);
   };
 
   return (
@@ -38,7 +45,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             />
           </div>
           <div className="login-actions">
-            <button type="submit" className="btn-enter">Enter</button>
+            <button type="submit" className={`btn-enter ${isSealing ? 'sealing' : ''}`}>
+              {!isSealing ? 'Enter' : <div className="wax-seal"></div>}
+            </button>
           </div>
         </form>
       </div>
