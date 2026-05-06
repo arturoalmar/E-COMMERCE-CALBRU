@@ -8,20 +8,28 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "setup-db": "tsx src/setupDb.ts"
   },
   "dependencies": {
-    "express": "^4.18.2",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.20.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
     "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
-    "tsx": "^3.13.0",
-    "eslint": "^8.40.0",
+    "@types/pg": "^8.20.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
-    "@typescript-eslint/eslint-plugin": "^5.59.0"
+    "eslint": "^8.40.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.0.0"
   }
 }

@@ -221,7 +221,8 @@ function App() {
       case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} />;
       case 'login':
         return (
-          <LoginPage onLogin={() => {
+          <LoginPage onLogin={(userData) => {
+            console.log('Logged in user:', userData);
             setIsLoggedIn(true);
             navigateTo('home');
           }} />
