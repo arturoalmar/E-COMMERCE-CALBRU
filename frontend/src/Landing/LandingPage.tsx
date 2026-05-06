@@ -1,13 +1,12 @@
-import React, { useState, useRef } from 'react';
-import villageBg from '../assets/hags_village_bg.png';
-import woodenSign from '../assets/wooden_sign.png';
-import iconImg from '../assets/icon.png';
+import React, { useState } from 'react';
+import forestBg from '../assets/forest_house_bg.png';
 import titleLabel from '../assets/Etiqueta-titulo.png';
+import iconImg from '../assets/Icon.png';
+import potionImg from '../assets/jump__cauldron.png';
 import { Page } from '../types';
 
-// LandingPage.tsx
-// Página de inicio inmersiva. Muestra la aldea, el logo central y los carteles de madera interactivos.
-// El usuario puede elegir entrar al creador de calderos, ver la intranet o conocer más sobre el proyecto.
+// LandingPage.tsx - Versión "Forest Cottage"
+// Basada en el mockup de la cabaña en el bosque con estética de cuento ilustrado.
 
 interface LandingPageProps {
   setPage: (page: Page) => void;
@@ -16,212 +15,118 @@ interface LandingPageProps {
 }
 
 const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker }) => {
-  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const [isExploding, setIsExploding] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const switchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handlePotionClick = () => {
     if (isExploding) return;
     setIsExploding(true);
     
-    // Trigger the global splash immediately after explosion starts
     setTimeout(() => {
       window.dispatchEvent(new CustomEvent('potion-splash'));
       
-      // Navigate to creator while the screen is covered
       setTimeout(() => {
         setPage('creator');
       }, 500); 
-    }, 400); // the potion shakes then explodes after 400ms
-  };
-
-  // Cuando el ratón entra en un cartel, se prepara un cambio de sección.
-  // Si el usuario mueve el ratón rápidamente entre carteles, se añade un pequeño retardo
-  // para evitar cambios demasiado bruscos y permitir una animación de transición más suave.
-  const handleMouseEnter = (section: string) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-
-    if (hoveredSection && hoveredSection !== section) {
-      setHoveredSection(null);
-      if (switchTimeoutRef.current) clearTimeout(switchTimeoutRef.current);
-      
-      switchTimeoutRef.current = setTimeout(() => {
-        setHoveredSection(section);
-      }, 650);
-    } else {
-      setHoveredSection(section);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      setHoveredSection(null);
-    }, 750); 
-  };
-
-  type LandingSignKey = 'cauldrons' | 'conocenos' | 'intranet';
-  const signItems: { key: LandingSignKey; buttons: { label: string; page: Page }[] }[] = [
-    {
-      key: 'cauldrons',
-      buttons: [
-        { label: 'NEW CAULDRON', page: 'creator' },
-        { label: 'MY CAULDRONS', page: 'my-cauldrons' },
-      ],
-    },
-    {
-      key: 'conocenos',
-      buttons: [
-        { label: 'Our Magic Story', page: 'conocenos' },
-        { label: 'How We Forge', page: 'conocenos' },
-      ],
-    },
-    {
-      key: 'intranet',
-      buttons: [
-        {
-          label: isLoggedIn && isWorker ? 'Guild Dashboard' : 'Worker Portal',
-          page: isLoggedIn && isWorker ? 'intranet' : 'login',
-        },
-      ],
-    },
-  ];
-
-  const renderSignContent = (section: string) => {
-    const sign = signItems.find((item) => item.key === section);
-    if (!sign) return null;
-
-    return (
-      <div className="sign-options">
-        {sign.buttons.map((button) => (
-          <button key={button.label} onClick={() => setPage(button.page)}>
-            {button.label}
-          </button>
-        ))}
-      </div>
-    );
+    }, 400); 
   };
 
   return (
-    <div className="landing-immersive">
-      {/* Background */}
+    <div className="landing-forest-container">
+      {/* Background Illustration */}
       <div 
-        className="village-bg-immersive" 
-        style={{ backgroundImage: `url(${villageBg})` }}
+        className="forest-bg-layer" 
+        style={{ backgroundImage: `url(${forestBg})` }}
       />
 
-      <div className="landing-interactive-wrapper">
-        <button 
-          className="landing-login-btn-top-right" 
-          onClick={() => setPage('login')}
-        >
-          Sign In
-        </button>
-        <nav 
-          className="landing-top-nav"
-          onMouseLeave={handleMouseLeave}
-        >
-          <div className="nav-group-left">
-            <a 
-              className="landing-nav-link" 
-              onMouseEnter={() => handleMouseEnter('cauldrons')}
-              onClick={() => handleMouseEnter('cauldrons')}
-            >
-              CAULDRONS
-            </a>
+      {/* Header Navigation */}
+      <header className="forest-header">
+        <nav className="forest-nav">
+          <div className="nav-left">
+            <button className="nav-btn magical-btn" onClick={() => setPage('creator')}>CAULDRONS</button>
+            <button className="nav-btn magical-btn" onClick={() => setPage('conocenos')}>ABOUT US</button>
           </div>
           
-          <div className="logo-container">
-            <img src={iconImg} alt="Icon" className="landing-logo-center" />
+          <div className="logo-center">
+            <img src={iconImg} alt="Calbru Logo" className="nav-logo-img" />
           </div>
 
-          <div className="nav-group-right">
-            <a 
-              className="landing-nav-link" 
-              onMouseEnter={() => handleMouseEnter('conocenos')}
-              onClick={() => setPage('conocenos')}
+          <div className="nav-right">
+            <button className="nav-btn magical-btn" onClick={() => setPage('intranet')}>INTRANET</button>
+            <button 
+              className="forest-sign-in-btn" 
+              onClick={() => setPage('login')}
             >
-              ABOUT US
-            </a>
-            <a 
-              className="landing-nav-link" 
-              onMouseEnter={() => handleMouseEnter('intranet')}
-              onClick={() => setPage('intranet')}
-            >
-              INTRANET
-            </a>
+              SIGN IN
+            </button>
           </div>
         </nav>
+      </header>
 
-        {/* Dropping Wooden Signs */}
-        {signItems.map((sign) => (
-          <div
-            key={sign.key}
-            className={`wooden-sign-container wooden-sign-${sign.key} ${hoveredSection === sign.key ? 'dropped active' : ''}`}
-            onMouseEnter={() => {
-              if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-                timeoutRef.current = null;
-              }
-            }}
-            onMouseLeave={handleMouseLeave}
+      {/* Main Content */}
+      <main className="forest-main">
+        {/* Title Scroll Banner */}
+        <div className="title-banner-wrapper">
+          <img src={titleLabel} alt="The Hag's Cauldron" className="title-scroll-img" />
+        </div>
+
+        {/* Rebuilt High-Fidelity Potion */}
+        <div className="forest-action-area">
+          <button 
+            className={`forest-potion-new-btn ${isExploding ? 'exploding' : ''}`} 
+            onClick={handlePotionClick}
           >
-            <div className="sign-wrapper">
-              <img
-                src={woodenSign}
-                alt={`Cartel de madera ${sign.key}`}
-                className="wooden-sign-img"
-              />
-              <div className="sign-content-overlay">
-                {renderSignContent(sign.key)}
+            <div className="potion-container">
+              <svg className="potion-svg-rebuilt" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <mask id="potion-body-mask">
+                    <path d="M50,125 C75,125 92,105 92,75 C92,45 75,35 50,35 C25,35 8,45 8,75 C8,105 25,125 50,125 Z" fill="white" />
+                  </mask>
+                  <radialGradient id="glass-gradient" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" stopColor="white" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="black" stopOpacity="0.1" />
+                  </radialGradient>
+                </defs>
+
+                <path className="bottle-glass-back" d="M50,125 C75,125 92,105 92,75 C92,45 75,35 50,35 C25,35 8,45 8,75 C8,105 25,125 50,125 Z" />
+                
+                <g mask="url(#potion-body-mask)">
+                  <rect className="liquid-fill-rebuilt" x="0" y="35" width="100" height="100" />
+                  
+                  {/* Progressive Bubbles */}
+                  <circle className="internal-bubble b1" cx="30" cy="115" r="2" />
+                  <circle className="internal-bubble b2" cx="70" cy="110" r="3" />
+                  <circle className="internal-bubble b3" cx="50" cy="120" r="1.5" />
+                  <circle className="internal-bubble b4" cx="40" cy="105" r="2.5" />
+                  <circle className="internal-bubble b5" cx="60" cy="112" r="2" />
+                  <circle className="internal-bubble b6" cx="45" cy="118" r="3" />
+                </g>
+
+                <g className="bottle-neck-group">
+                  <path className="neck-glass" d="M40,15 L60,15 L62,38 L38,38 Z" />
+                  <rect className="potion-cork-rebuilt" x="38" y="5" width="24" height="12" rx="2" />
+                  <line x1="41" y1="22" x2="59" y2="22" className="neck-band" />
+                  <line x1="41" y1="28" x2="59" y2="28" className="neck-band" />
+                </g>
+
+                <path className="bottle-shine" d="M25,55 C15,70 15,85 25,100" fill="none" stroke="white" strokeOpacity="0.3" strokeWidth="4" strokeLinecap="round" />
+                <circle className="bottle-body-glow" cx="50" cy="75" r="42" fill="url(#glass-gradient)" pointerEvents="none" />
+              </svg>
+
+              <div className="potion-parchment-label">
+                <span>Start creating</span>
               </div>
+              
+              <span className="potion-deco star">⭐</span>
+              <span className="potion-deco moon">🌙</span>
             </div>
-          </div>
-        ))}
-      </div>
+          </button>
+        </div>
+      </main>
 
-      {/* Welcome Sign */}
-      <div className="welcome-gate-sign">
-        <img src={titleLabel} alt="The Hag's Cauldron" className="welcome-sign-img" />
-      </div>
-
-      {/* Quick Action Bottom Button */}
-      <div className="landing-bottom-action">
-        <button className={`potion-btn ${isExploding ? 'exploding' : ''}`} onClick={handlePotionClick}>
-          <div className="potion-cork"></div>
-          <div className="potion-neck">
-            <div className="potion-tie potion-tie-1"></div>
-            <div className="potion-tie potion-tie-2"></div>
-            <div className="potion-tie potion-tie-3"></div>
-            <div className="potion-charm">
-              <span className="charm-moon">🌙</span>
-              <span className="charm-star">⭐</span>
-            </div>
-          </div>
-          <div className="potion-body">
-            <div className="potion-liquid">
-              <div className="bubble bubble-1"></div>
-              <div className="bubble bubble-2"></div>
-              <div className="bubble bubble-3"></div>
-              <div className="bubble bubble-4"></div>
-              <div className="bubble bubble-5"></div>
-              <div className="bubble bubble-6"></div>
-              <div className="bubble bubble-7"></div>
-              <div className="potion-swirl"></div>
-            </div>
-            <div className="potion-label-wrapper">
-              <div className="potion-label-bg"></div>
-              <span className="potion-label-text">Start creating</span>
-            </div>
-            <div className="potion-glare"></div>
-            <div className="potion-glare-small"></div>
-          </div>
-        </button>
-      </div>
+      {/* Footer Info */}
+      <footer className="forest-footer">
+        {/* Footer text removed as requested */}
+      </footer>
     </div>
   );
 };

@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import { Genre } from '../types';
-import sotanoBg from '../assets/Sotano.png';
+import sotanoBg from '../assets/forest_house_bg.png';
 import libroImg from '../assets/Libro.png';
 
 interface SelectionPageProps {

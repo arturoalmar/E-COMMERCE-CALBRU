@@ -2,7 +2,7 @@
 // Página de información "Conócenos" que describe el proyecto, cómo funciona y muestra reseñas rotativas.
 
 import React, { useState, useEffect } from 'react';
-import backgroundImg from '../assets/background.png';
+import backgroundImg from '../assets/forest_house_bg.png';
 import spritesImg from '../assets/Sprittes.png';
 
 const REVIEWS = [

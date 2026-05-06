@@ -21,7 +21,7 @@ import { GENRES, RANDOM_COLORS } from './constants/gameData';
 import { Genre, Step, OptionsMap, Page, Particle } from './types';
 
 // Activos
-import newBgImg from './assets/background.png';
+import newBgImg from './assets/forest_house_bg.png';
 
 function getRandomColor(): string {
   return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
@@ -58,7 +58,7 @@ function App() {
   const performTransition = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null) => {
     const isGoingToHome = newPage === 'home';
     const direction = isGoingToHome ? 'down' : 'up';
-    
+
     setTransitionDirection(direction);
     setTransitionStatus('exiting');
     nextPageRoute.current = { p: newPage, s: newStep, g: newGenre };
@@ -68,14 +68,14 @@ function App() {
         setPage(nextPageRoute.current.p);
         setCurrentStep(nextPageRoute.current.s);
         setSelectedGenre(nextPageRoute.current.g);
-        window.history.pushState({ 
-          page: nextPageRoute.current.p, 
-          step: nextPageRoute.current.s, 
-          genre: nextPageRoute.current.g 
+        window.history.pushState({
+          page: nextPageRoute.current.p,
+          step: nextPageRoute.current.s,
+          genre: nextPageRoute.current.g
         }, '');
       }
       setTransitionStatus('entering');
-      
+
       setTimeout(() => {
         setTransitionStatus('none');
         nextPageRoute.current = null;
@@ -112,7 +112,7 @@ function App() {
   useEffect(() => {
     const handleSplash = () => {
       setPotionSplash('splatter');
-      setTimeout(() => setPotionSplash('slide'), 1200); 
+      setTimeout(() => setPotionSplash('slide'), 1200);
       setTimeout(() => setPotionSplash('idle'), 2200);
     };
     window.addEventListener('potion-splash', handleSplash);
@@ -206,14 +206,14 @@ function App() {
             )}
           </div>
         );
-      case 'my-cauldrons': 
+      case 'my-cauldrons':
         return (
           <>
             <MyCauldronsPage />
             <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
-               <button className="btn-back" onClick={() => navigateTo('home')}>
-                 ← Volver a la aldea
-               </button>
+              <button className="btn-back" onClick={() => navigateTo('home')}>
+                ← Volver a la aldea
+              </button>
             </div>
           </>
         );
@@ -249,44 +249,44 @@ function App() {
       </div>
       <div className={`app-container transition-${transitionStatus} dir-${transitionDirection} ${isImmersiveMode ? 'sotano-mode' : ''}`}>
         {!shouldHideNavbar && (
-        <Navbar
-          isWorker={isWorker}
-          onNavigate={handleNavigate}
-          isLoggedIn={isLoggedIn}
-          onLoginToggle={() => {
-            if (isLoggedIn) {
-              setIsLoggedIn(false);
-            } else {
-              navigateTo('login');
-            }
-          }}
-        />
-      )}
+          <Navbar
+            isWorker={isWorker}
+            onNavigate={handleNavigate}
+            isLoggedIn={isLoggedIn}
+            onLoginToggle={() => {
+              if (isLoggedIn) {
+                setIsLoggedIn(false);
+              } else {
+                navigateTo('login');
+              }
+            }}
+          />
+        )}
 
-      {(isImmersiveMode && page !== 'home') && (
-        <button
-          className="sotano-back-arrow"
-          onClick={() => navigateTo('home')}
-          aria-label="Volver a la aldea"
-        >
-          <span className="arrow-icon">↑</span>
-        </button>
-      )}
+        {(isImmersiveMode && page !== 'home') && (
+          <button
+            className="sotano-back-arrow"
+            onClick={() => navigateTo('home')}
+            aria-label="Volver a la aldea"
+          >
+            <span className="arrow-icon">↑</span>
+          </button>
+        )}
 
-      {(page !== 'home' && !isImmersiveMode) && (
-        <button
-          className="back-to-home-btn floating"
-          onClick={() => navigateTo('home')}
-          aria-label="Volver al inicio"
-        >
-          <span className="back-text">Back</span>
-        </button>
-      )}
+        {(page !== 'home' && !isImmersiveMode) && (
+          <button
+            className="back-to-home-btn floating"
+            onClick={() => navigateTo('home')}
+            aria-label="Volver al inicio"
+          >
+            <span className="back-text">Back</span>
+          </button>
+        )}
 
-      <div className="main-content" style={{ paddingTop: shouldHideNavbar ? '0' : '70px' }}>
-        {renderContent()}
+        <div className="main-content" style={{ paddingTop: shouldHideNavbar ? '0' : '70px' }}>
+          {renderContent()}
+        </div>
       </div>
-    </div>
     </>
   );
 }
