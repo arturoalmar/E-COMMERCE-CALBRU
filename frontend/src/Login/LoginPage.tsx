@@ -1,12 +1,20 @@
+/**
+ * 📄 ARCHIVO: LoginPage.tsx
+ * 📝 DESCRIPCIÓN: Formulario de acceso.
+ */
+
 // LoginPage.tsx
 // Componente de formulario de acceso y registro conectado al backend con AWS RDS.
 
 import React, { useState } from 'react';
+import './LoginPage.css';
 
+// SECCIÓN: Definición de datos/propiedades
 interface LoginPageProps {
   onLogin: (userData: { id: number, username: string }) => void;
 }
 
+// SECCIÓN: Componente o Función lógica
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [username, setUsername] = useState('');
@@ -15,6 +23,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
+// SECCIÓN: Componente o Función lógica
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSealing) return;
@@ -61,6 +70,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     }
   };
 
+// SECCIÓN: Renderizado visual
   return (
     <div className="login-page-sketch">
       <div className="login-card-sketch" style={{ position: 'relative', overflow: 'hidden' }}>

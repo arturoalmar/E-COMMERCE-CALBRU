@@ -1,0 +1,110 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: LandingSketch_base.css
+ 📝 DESCRIPCIÓN: Archivo del proyecto.
+=========================================================
+*/
+
+/* SKETCH DESIGNS (Landing, Intranet, Login)
+   ========================================================================== */
+
+/* APARTADO: .landing-hero-sketch - Estilos para este elemento */
+.landing-hero-sketch {
+  min-height: calc(100vh - 200px);
+  /* Ocupa el resto de la pantalla para empujar lo demÃ¡s hacia abajo */
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+/* APARTADO: .hero-sketch-content - Estilos para este elemento */
+.hero-sketch-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem;
+  align-items: center;
+}
+
+/* APARTADO: .hero-text-side h1 - Estilos para este elemento */
+.hero-text-side h1 {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  color: #f4efff;
+  margin-bottom: 0.5rem;
+}
+
+/* APARTADO: .hero-subtitle - Estilos para este elemento */
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #c7c0db;
+  margin-bottom: 0.8rem;
+}
+
+/* APARTADO: .btn-sketch-main - Estilos para este elemento */
+.btn-sketch-main {
+  padding: 1.2rem 3rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: #f4efff;
+  color: #120f1f;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* APARTADO: .btn-sketch-main:hover - Estilos para este elemento */
+.btn-sketch-main:hover {
+  background: #bf88ff;
+  transform: scale(1.05);
+}
+
+/* APARTADO: .sketch-placeholder-box - Estilos para este elemento */
+.sketch-placeholder-box {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* APARTADO: .sketch-info-grid - Estilos para este elemento */
+.sketch-info-grid {
+  padding: 1rem 0;
+}
+
+/* APARTADO: .info-box - Estilos para este elemento */
+.info-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 4rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.8rem;
+  border-radius: 24px;
+}
+
+/* APARTADO: .sketch-visual-small - Estilos para este elemento */
+.sketch-visual-small {
+  width: 100%;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+/* APARTADO: .info-text ul - Estilos para este elemento */
+.info-text ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* APARTADO: .info-text li - Estilos para este elemento */
+.info-text li {
+  font-size: 1.1rem;
+  color: #c7c0db;
+  margin-bottom: 0.5rem;
+}
+

@@ -1,8 +1,15 @@
+/**
+ * 📄 ARCHIVO: IntranetPage.tsx
+ * 📝 DESCRIPCIÓN: Portal del empleado.
+ */
+
 // IntranetPage.tsx
 // Página principal de la intranet corporativa para empleados.
 // Contiene noticias, calendario, acceso a normas, vacaciones, teletrabajo y comité de empresa.
 
 import React, { useState, useMemo } from 'react';
+import './IntranetPage.css';
+
 import news1 from '../assets/news1.png';
 import news2 from '../assets/news2.png';
 import news3 from '../assets/news3.png';
@@ -18,6 +25,7 @@ import NewsSlider, { NewsItem } from './NewsSlider';
 import QuickLinks from './QuickLinks';
 import IntranetCalendar from './IntranetCalendar';
 
+// SECCIÓN: Definición de datos/propiedades
 interface IntranetPageProps {
   username: string;
 }
@@ -43,12 +51,14 @@ const MONTH_NAMES = [
   "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
 ];
 
+// SECCIÓN: Componente o Función lógica
 const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
   // Vista interna activa de la intranet. Cambia entre el panel principal y secciones de RRHH.
   const [view, setView] = useState<'main' | 'rules' | 'vacation' | 'teleworking' | 'committee'>('main');
   // Días seleccionados para la solicitud de vacaciones.
   const [selectedVacationDays, setSelectedVacationDays] = useState<{ day: number, month: number, year: number }[]>([]);
 
+// SECCIÓN: Componente o Función lógica
   const today = useMemo(() => {
     const d = new Date();
     d.setHours(0, 0, 0, 0);
@@ -59,6 +69,7 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
 
   const TOTAL_VACATION_LIMIT = 22;
 
+// SECCIÓN: Componente o Función lógica
   const changeMonth = (direction: 'next' | 'prev') => {
     // Only used for vacation now, main calendar handles its own state
     setVacationDate(prev => {
@@ -69,6 +80,7 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
   };
 
   // Calcula el primer día de la semana y el total de días para el mes actual.
+// SECCIÓN: Componente o Función lógica
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -77,19 +89,23 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
     return { firstDay: firstDay === 0 ? 6 : firstDay - 1, totalDays };
   };
 
+// SECCIÓN: Componente o Función lógica
   const isDayInVacations = (day: number, date: Date) => {
     return selectedVacationDays.some(v => v.day === day && v.month === date.getMonth() && v.year === date.getFullYear());
   };
 
+// SECCIÓN: Componente o Función lógica
   const isPast = (day: number, date: Date) => {
     const target = new Date(date.getFullYear(), date.getMonth(), day);
     return target < today;
   };
 
+// SECCIÓN: Componente o Función lógica
   const isOccupied = (day: number, date: Date) => {
     return OCCUPIED_DATA.some(o => o.day === day && o.month === date.getMonth() && o.year === date.getFullYear());
   };
 
+// SECCIÓN: Componente o Función lógica
   const toggleVacationDay = (day: number) => {
     if (isPast(day, vacationDate) || isOccupied(day, vacationDate)) return;
 
@@ -108,6 +124,7 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
   };
 
   // Simplificamos renderCalendarDays para que solo maneje el modo 'select' (Vacaciones)
+// SECCIÓN: Componente o Función lógica
   const renderCalendarDays = (date: Date) => {
     const { firstDay, totalDays } = getDaysInMonth(date);
     const elements = [];
@@ -136,6 +153,7 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
     return elements;
   };
 
+// SECCIÓN: Componente o Función lógica
   const renderMainView = () => (
     <>
       {/* Componente Extraído */}
@@ -178,6 +196,7 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
     </>
   );
 
+// SECCIÓN: Renderizado visual
   return (
     <div className="intranet-sketch-layout intranet-full">
       <div className="intranet-welcome-bar">

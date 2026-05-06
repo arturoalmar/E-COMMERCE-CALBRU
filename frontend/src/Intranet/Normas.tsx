@@ -1,13 +1,21 @@
+/**
+ * 📄 ARCHIVO: Normas.tsx
+ * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ */
+
 // Normas.tsx
 // Vista de normas internas de la empresa con texto explicativo y navegación de vuelta.
 
 import React from 'react';
 
+// SECCIÓN: Definición de datos/propiedades
 interface NormasProps {
   setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking') => void;
 }
 
+// SECCIÓN: Componente o Función lógica
 const Normas: React.FC<NormasProps> = ({ setView }) => {
+// SECCIÓN: Renderizado visual
   return (
     <div className="sub-view-panel parchment-bg detailed-view">
       <div className="top-navigation-area">

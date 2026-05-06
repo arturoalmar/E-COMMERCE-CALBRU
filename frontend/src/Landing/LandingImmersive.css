@@ -1,0 +1,16 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: LandingImmersive.css
+ 📝 DESCRIPCIÓN: Experiencia cinematográfica inicial.
+=========================================================
+*/
+
+/* ARCHIVO MAESTRO - LandingImmersive */
+/* IMPORTACIÓN: ./LandingImmersive_main.css */
+@import './LandingImmersive_main.css';
+/* IMPORTACIÓN: ./LandingImmersive_base.css */
+@import './LandingImmersive_base.css';
+/* IMPORTACIÓN: ./LandingImmersive_background.css */
+@import './LandingImmersive_background.css';
+/* IMPORTACIÓN: ./LandingImmersive_animations.css */
+@import './LandingImmersive_animations.css';

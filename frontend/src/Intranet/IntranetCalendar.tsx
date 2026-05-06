@@ -1,3 +1,8 @@
+/**
+ * 📄 ARCHIVO: IntranetCalendar.tsx
+ * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ */
+
 // IntranetCalendar.tsx
 // Componente de calendario interno para mostrar eventos corporativos y fechas clave.
 
@@ -20,7 +25,9 @@ const MONTH_NAMES = [
   "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
 ];
 
+// SECCIÓN: Componente o Función lógica
 const IntranetCalendar: React.FC = () => {
+// SECCIÓN: Componente o Función lógica
   const today = useMemo(() => {
     const d = new Date();
     d.setHours(0, 0, 0, 0);
@@ -29,6 +36,7 @@ const IntranetCalendar: React.FC = () => {
 
   const [mainDate, setMainDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
 
+// SECCIÓN: Componente o Función lógica
   const changeMonth = (direction: 'next' | 'prev') => {
     setMainDate(prev => {
       const d = new Date(prev);
@@ -37,6 +45,7 @@ const IntranetCalendar: React.FC = () => {
     });
   };
 
+// SECCIÓN: Componente o Función lógica
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -45,10 +54,12 @@ const IntranetCalendar: React.FC = () => {
     return { firstDay: firstDay === 0 ? 6 : firstDay - 1, totalDays };
   };
 
+// SECCIÓN: Componente o Función lógica
   const getEventsForDay = (day: number, date: Date) => {
     return EVENTS.filter(e => e.day === day && e.month === date.getMonth() && e.year === date.getFullYear());
   };
 
+// SECCIÓN: Componente o Función lógica
   const renderCalendarDays = () => {
     const { firstDay, totalDays } = getDaysInMonth(mainDate);
     const days = [];
@@ -86,6 +97,7 @@ const IntranetCalendar: React.FC = () => {
     return days;
   };
 
+// SECCIÓN: Renderizado visual
   return (
     <section className="calendar-sketch functional-calendar">
       <div className="calendar-header-nav">

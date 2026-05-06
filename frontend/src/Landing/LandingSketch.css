@@ -1,0 +1,16 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: LandingSketch.css
+ 📝 DESCRIPCIÓN: Diseños de boceto.
+=========================================================
+*/
+
+/* ARCHIVO MAESTRO - LandingSketch */
+/* IMPORTACIÓN: ./LandingSketch_main.css */
+@import './LandingSketch_main.css';
+/* IMPORTACIÓN: ./LandingSketch_base.css */
+@import './LandingSketch_base.css';
+/* IMPORTACIÓN: ./LandingSketch_carousel.css */
+@import './LandingSketch_carousel.css';
+/* IMPORTACIÓN: ./LandingSketch_buttons.css */
+@import './LandingSketch_buttons.css';

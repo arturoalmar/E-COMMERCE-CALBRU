@@ -1,9 +1,18 @@
+/**
+ * 📄 ARCHIVO: MyCauldronsPage.tsx
+ * 📝 DESCRIPCIÓN: Historial de calderos creados.
+ */
+
 // MyCauldronsPage.tsx
 // Página de estado de los calderos guardados. Actualmente muestra un estado vacío si no hay calderos.
 
 import React from 'react';
+import './MyCauldronsPage.css';
 
+
+// SECCIÓN: Componente o Función lógica
 const MyCauldronsPage: React.FC = () => {
+// SECCIÓN: Renderizado visual
   return (
     <div className="my-cauldrons-page" style={{ padding: '100px 2rem 2rem', color: 'white' }}>
       <h1>Mis Calderos</h1>

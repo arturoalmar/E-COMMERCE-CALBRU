@@ -1,8 +1,16 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: Navbar.css
+ 📝 DESCRIPCIÓN: Archivo del proyecto.
+=========================================================
+*/
+
 /* Navbar.css
    Estilos del componente de navegación superior. Define la barra fija,
    el menú desplegable y los botones del usuario.
 */
 
+/* APARTADO: .navbar - Estilos para este elemento */
 .navbar {
   position: fixed;
   top: 0;
@@ -20,22 +28,26 @@
   z-index: 1000;
 }
 
+/* APARTADO: .navbar-left, .navbar-right - Estilos para este elemento */
 .navbar-left, .navbar-right {
   flex: 1;
   display: flex;
   align-items: center;
 }
 
+/* APARTADO: .navbar-right - Estilos para este elemento */
 .navbar-right {
   justify-content: flex-end;
 }
 
+/* APARTADO: .navbar-center - Estilos para este elemento */
 .navbar-center {
   flex: 2;
   text-align: center;
   cursor: pointer;
 }
 
+/* APARTADO: .logo-text - Estilos para este elemento */
 .logo-text {
   font-family: 'Almendra', serif;
   font-size: 1.5rem;
@@ -46,6 +58,7 @@
   text-shadow: 0 0 10px rgba(140, 92, 255, 0.5);
 }
 
+/* APARTADO: .menu-toggle - Estilos para este elemento */
 .menu-toggle {
   background: none;
   border: none;
@@ -56,6 +69,7 @@
   padding: 10px;
 }
 
+/* APARTADO: .bar - Estilos para este elemento */
 .bar {
   width: 25px;
   height: 2px;
@@ -64,11 +78,13 @@
   transition: 0.3s;
 }
 
+/* APARTADO: .menu-toggle:hover .bar - Estilos para este elemento */
 .menu-toggle:hover .bar {
   background: #bf88ff;
   box-shadow: 0 0 5px #bf88ff;
 }
 
+/* APARTADO: .dropdown-menu - Estilos para este elemento */
 .dropdown-menu {
   position: absolute;
   top: 80px;
@@ -86,11 +102,13 @@
   animation: slideDown 0.3s ease-out;
 }
 
+/* ANIMACIÓN: slideDown */
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* APARTADO: .dropdown-menu button - Estilos para este elemento */
 .dropdown-menu button {
   background: none;
   border: none;
@@ -103,17 +121,20 @@
   transition: 0.2s;
 }
 
+/* APARTADO: .dropdown-menu button:hover - Estilos para este elemento */
 .dropdown-menu button:hover {
   background: rgba(140, 92, 255, 0.2);
   color: #f4efff;
 }
 
+/* APARTADO: .intranet-link - Estilos para este elemento */
 .intranet-link {
   border-top: 1px solid rgba(255,255,255,0.1) !important;
   color: #f0c86e !important;
   margin-top: 0.5rem;
 }
 
+/* APARTADO: .user-profile - Estilos para este elemento */
 .user-profile {
   background: none;
   border: none;
@@ -124,12 +145,14 @@
   color: #f4efff;
 }
 
+/* APARTADO: .user-name - Estilos para este elemento */
 .user-name {
   font-size: 0.9rem;
   font-weight: 500;
   opacity: 0.8;
 }
 
+/* APARTADO: .user-icon - Estilos para este elemento */
 .user-icon {
   width: 40px;
   height: 40px;
@@ -142,18 +165,21 @@
   justify-content: center;
 }
 
+/* APARTADO: .user-icon img - Estilos para este elemento */
 .user-icon img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* APARTADO: .login-placeholder - Estilos para este elemento */
 .login-placeholder {
   color: #8c5cff;
   font-weight: bold;
 }
 
 
+/* APARTADO: .back-to-home-btn - Estilos para este elemento */
 .back-to-home-btn {
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   backdrop-filter: blur(10px);
@@ -173,6 +199,7 @@
   transition: all 0.3s ease;
 }
 
+/* APARTADO: .back-to-home-btn:hover - Estilos para este elemento */
 .back-to-home-btn:hover {
   background: rgba(140, 92, 255, 0.2);
   border-color: #bf88ff;
@@ -180,14 +207,17 @@
   transform: translateX(-3px);
 }
 
+/* APARTADO: .back-icon - Estilos para este elemento */
 .back-icon {
   font-size: 1.1rem;
 }
 
 @media (max-width: 600px) {
+/* APARTADO: .back-text - Estilos para este elemento */
   .back-text {
     display: none;
   }
+/* APARTADO: .back-to-home-btn - Estilos para este elemento */
   .back-to-home-btn {
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   backdrop-filter: blur(10px);
@@ -199,21 +229,26 @@
 
 
 @media (max-width: 768px) {
+/* APARTADO: .navbar - Estilos para este elemento */
   .navbar {
     padding: 0 1rem;
   }
+/* APARTADO: .user-name - Estilos para este elemento */
   .user-name {
     display: none;
   }
+/* APARTADO: .logo-text - Estilos para este elemento */
   .logo-text {
     font-size: 1.2rem;
   }
+/* APARTADO: .dropdown-menu - Estilos para este elemento */
   .dropdown-menu {
     width: calc(100% - 2rem);
     left: 1rem;
     right: 1rem;
   }
 }
+/* APARTADO: .navbar.transparent - Estilos para este elemento */
 .navbar.transparent {
   background: transparent;
   border-bottom: none;
@@ -221,6 +256,7 @@
   -webkit-backdrop-filter: none;
 }
 
+/* APARTADO: .navbar.transparent .logo-text - Estilos para este elemento */
 .navbar.transparent .logo-text {
   color: #f0e68c;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.8);

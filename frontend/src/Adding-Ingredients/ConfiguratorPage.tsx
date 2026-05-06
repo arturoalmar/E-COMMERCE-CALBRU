@@ -1,13 +1,21 @@
+/**
+ * 📄 ARCHIVO: ConfiguratorPage.tsx
+ * 📝 DESCRIPCIÓN: Página de configuración de pociones.
+ */
+
 // ConfiguratorPage.tsx
 // Página donde el usuario combina ingredientes sobre el caldero.
 // Presenta las estanterías de opciones, el efecto de partículas y el estado de la fusión.
 
 import React from 'react';
 import { Genre, Particle, OptionsMap } from '../types';
+import './AddingIngredients.css';
+
 import Cauldron from './Cauldron';
 import OptionsShelf from './OptionsShelf';
 import ParticleEffect from './ParticleEffect';
 
+// SECCIÓN: Definición de datos/propiedades
 interface ConfiguratorPageProps {
   newBgImg: string;
   selections: OptionsMap;
@@ -25,6 +33,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
   isFusionReady,
   toggleOption
 }) => {
+// SECCIÓN: Renderizado visual
   return (
     <>
       <div

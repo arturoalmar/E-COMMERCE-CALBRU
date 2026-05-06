@@ -1,0 +1,369 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: LandingInfo.css
+ 📝 DESCRIPCIÓN: Secciones informativas de la landing.
+=========================================================
+*/
+
+/* ==========================================================================
+   SECCIONES INFORMATIVAS
+   ========================================================================== */
+
+/* APARTADO: .homepage-section - Estilos para este elemento */
+.homepage-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  align-items: center;
+}
+
+/* VariaciÃ³n con orden inverso (Imagen a la derecha/izquierda) */
+/* APARTADO: .homepage-section--reverse - Estilos para este elemento */
+.homepage-section--reverse {
+  direction: rtl;
+}
+
+.homepage-section--reverse .text-block,
+/* APARTADO: .homepage-section--reverse .process-list - Estilos para este elemento */
+.homepage-section--reverse .process-list {
+  direction: ltr;
+}
+
+/* CuadrÃ­cula de caracterÃ­sticas */
+/* APARTADO: .feature-grid - Estilos para este elemento */
+.feature-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 1.5rem;
+}
+
+/* APARTADO: .feature-card - Estilos para este elemento */
+.feature-card {
+  padding: 1.45rem 1.6rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(191, 136, 255, 0.14);
+  box-shadow: 0 20px 50px rgba(20, 10, 50, 0.12);
+}
+
+/* APARTADO: .feature-card h3 - Estilos para este elemento */
+.feature-card h3 {
+  margin-bottom: 0.75rem;
+  color: var(--secondary-color);
+}
+
+/* APARTADO: .feature-card p - Estilos para este elemento */
+.feature-card p {
+  color: var(--text-muted);
+}
+
+/* APARTADO: .btn-cta - Estilos para este elemento */
+.btn-cta {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+/* APARTADO: .btn-cta:hover - Estilos para este elemento */
+.btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 35px rgba(140, 47, 255, 0.22);
+}
+
+/* APARTADO: .text-block - Estilos para este elemento */
+.text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* APARTADO: .text-block h2 - Estilos para este elemento */
+.text-block h2 {
+  font-size: 2.4rem;
+  color: var(--secondary-color);
+  letter-spacing: 0.02em;
+}
+
+/* APARTADO: .text-block p - Estilos para este elemento */
+.text-block p {
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+/* APARTADO: .image-block - Estilos para este elemento */
+.image-block {
+  padding: 1rem;
+}
+
+/* APARTADO: .image-block img - Estilos para este elemento */
+.image-block img {
+  width: 100%;
+  border-radius: 24px;
+  object-fit: cover;
+  min-height: 360px;
+  box-shadow: 0 24px 60px rgba(23, 10, 70, 0.35);
+}
+
+/* APARTADO: .image-block--wide img - Estilos para este elemento */
+.image-block--wide img {
+  min-height: 420px;
+}
+
+/* Lista de procesos numerados */
+/* APARTADO: .process-list - Estilos para este elemento */
+.process-list {
+  display: grid;
+  gap: 1rem;
+}
+
+/* APARTADO: .process-step-simple - Estilos para este elemento */
+.process-step-simple {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  padding: 1.4rem 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 18px;
+  border: 1px solid rgba(191, 136, 255, 0.12);
+}
+
+/* APARTADO: .process-step-simple span - Estilos para este elemento */
+.process-step-simple span {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(191, 136, 255, 0.18);
+  color: var(--secondary-light);
+  font-weight: 700;
+}
+
+/* APARTADO: .process-step-simple h3 - Estilos para este elemento */
+.process-step-simple h3 {
+  margin-bottom: 0.5rem;
+  color: var(--primary-light);
+}
+
+/* APARTADO: .process-step-simple p - Estilos para este elemento */
+.process-step-simple p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* APARTADO: .trial-panel - Estilos para este elemento */
+.trial-panel {
+  padding: 1.8rem;
+  text-align: center;
+}
+
+/* APARTADO: .trial-panel h2 - Estilos para este elemento */
+.trial-panel h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+}
+
+/* APARTADO: .trial-panel p - Estilos para este elemento */
+.trial-panel p {
+  max-width: 860px;
+  margin: 0 auto 2rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+@media (max-width: 1100px) {
+
+  .homepage-top,
+/* APARTADO: .homepage-section - Estilos para este elemento */
+  .homepage-section {
+    grid-template-columns: 1fr;
+  }
+
+/* APARTADO: .homepage-section--reverse - Estilos para este elemento */
+  .homepage-section--reverse {
+    direction: ltr;
+  }
+
+/* APARTADO: .image-block img - Estilos para este elemento */
+  .image-block img {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 720px) {
+
+  .homepage-top,
+/* APARTADO: .homepage-section - Estilos para este elemento */
+  .homepage-section {
+    gap: 1.5rem;
+  }
+
+  .hero-panel,
+  .carousel-card,
+  .image-block,
+/* APARTADO: .trial-panel - Estilos para este elemento */
+  .trial-panel {
+    padding: 2rem;
+  }
+
+/* APARTADO: .hero-panel h1 - Estilos para este elemento */
+  .hero-panel h1 {
+    font-size: 2.4rem;
+  }
+
+/* APARTADO: .carousel-card - Estilos para este elemento */
+  .carousel-card {
+    min-height: 180px;
+  }
+
+/* APARTADO: .process-step-simple - Estilos para este elemento */
+  .process-step-simple {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* APARTADO: .section-panel - Estilos para este elemento */
+.section-panel {
+  background: rgba(23, 34, 61, 0.92);
+  border: 1px solid rgba(122, 160, 255, 0.14);
+  border-radius: 22px;
+  padding: 2.5rem;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+}
+
+/* APARTADO: .section-title - Estilos para este elemento */
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--secondary-color);
+  text-transform: none;
+  letter-spacing: 0.08em;
+}
+
+.feature-grid,
+/* APARTADO: .process-grid - Estilos para este elemento */
+.process-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* APARTADO: .feature-grid - Estilos para este elemento */
+.feature-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.feature-card,
+/* APARTADO: .process-step - Estilos para este elemento */
+.process-step {
+  background: rgba(23, 35, 62, 0.88);
+  border: 1px solid rgba(122, 160, 255, 0.16);
+  border-radius: 18px;
+  padding: 1.8rem;
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card:hover,
+/* APARTADO: .process-step:hover - Estilos para este elemento */
+.process-step:hover {
+  transform: translateY(-4px);
+  border-color: rgba(124, 179, 66, 0.3);
+}
+
+.feature-card h3,
+/* APARTADO: .process-step h3 - Estilos para este elemento */
+.process-step h3 {
+  margin-bottom: 0.9rem;
+  font-size: 1.35rem;
+  color: var(--secondary-color);
+}
+
+.feature-card p,
+/* APARTADO: .process-step p - Estilos para este elemento */
+.process-step p {
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+/* APARTADO: .process-grid - Estilos para este elemento */
+.process-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* APARTADO: .process-step span - Estilos para este elemento */
+.process-step span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: #111;
+  font-weight: 700;
+}
+
+/* APARTADO: .section-link - Estilos para este elemento */
+.section-link {
+  text-align: center;
+}
+
+.btn-cta,
+.btn-back-home,
+/* APARTADO: .btn-back - Estilos para este elemento */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+/* APARTADO: .btn-cta - Estilos para este elemento */
+.btn-cta {
+  background: linear-gradient(135deg, rgba(191, 136, 255, 0.95), rgba(140, 92, 255, 0.92));
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 14px 36px rgba(95, 39, 135, 0.28);
+}
+
+.btn-cta:hover,
+.btn-back-home:hover,
+/* APARTADO: .btn-back:hover - Estilos para este elemento */
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 30px rgba(124, 179, 66, 0.28);
+}
+
+/* APARTADO: .btn-back-home - Estilos para este elemento */
+.btn-back-home {
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+/* APARTADO: .btn-back - Estilos para este elemento */
+.btn-back {
+  margin: 3rem auto 0;
+  background: rgba(30, 30, 30, 0.9);
+  border: 2px solid rgba(191, 136, 255, 0.8);
+  color: var(--text-main);
+}
+
+/* APARTADO: .page-header-row - Estilos para este elemento */
+.page-header-row {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+/* ==========================================================================
+*/

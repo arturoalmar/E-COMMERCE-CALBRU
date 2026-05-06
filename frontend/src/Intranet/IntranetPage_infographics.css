@@ -1,0 +1,247 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: IntranetPage_infographics.css
+ 📝 DESCRIPCIÓN: Archivo del proyecto.
+=========================================================
+*/
+
+/* PREMIUM INFOGRAPHICS */
+/* APARTADO: .premium-info-card - Estilos para este elemento */
+.premium-info-card {
+  padding: 2rem !important;
+  background: linear-gradient(145deg, rgba(30, 20, 40, 0.9), rgba(20, 10, 25, 0.95)) !important;
+  border-top: 4px solid var(--secondary-color) !important;
+}
+
+/* APARTADO: .alert-card - Estilos para este elemento */
+.alert-card {
+  border-top: 4px solid #ff5555 !important;
+}
+
+/* APARTADO: .info-card-header - Estilos para este elemento */
+.info-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+/* APARTADO: .info-icon - Estilos para este elemento */
+.info-icon {
+  font-size: 2.5rem;
+  background: rgba(140, 92, 255, 0.1);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(140, 92, 255, 0.3);
+}
+
+/* APARTADO: .alert-icon - Estilos para este elemento */
+.alert-icon {
+  background: rgba(255, 85, 85, 0.1);
+  border-color: rgba(255, 85, 85, 0.3);
+}
+
+/* APARTADO: .info-card-header h3 - Estilos para este elemento */
+.info-card-header h3 {
+  margin: 0 0 0.2rem 0 !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 1.4rem;
+}
+
+/* APARTADO: .legal-ref - Estilos para este elemento */
+.legal-ref {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* APARTADO: .info-intro - Estilos para este elemento */
+.info-intro {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: #f4efff;
+}
+
+/* Timeline */
+/* APARTADO: .timeline-witch - Estilos para este elemento */
+.timeline-witch {
+  position: relative;
+  padding-left: 2rem;
+}
+
+/* APARTADO: .timeline-witch::before - Estilos para este elemento */
+.timeline-witch::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--secondary-color);
+  opacity: 0.5;
+}
+
+/* APARTADO: .timeline-item - Estilos para este elemento */
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+/* APARTADO: .timeline-marker - Estilos para este elemento */
+.timeline-marker {
+  position: absolute;
+  left: -2.85rem;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: var(--dark-bg);
+  border: 2px solid var(--secondary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.85rem;
+  z-index: 2;
+}
+
+/* APARTADO: .timeline-content h4 - Estilos para este elemento */
+.timeline-content h4 {
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+/* APARTADO: .timeline-content p - Estilos para este elemento */
+.timeline-content p {
+  font-size: 0.95rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+/* Options List */
+/* APARTADO: .options-list - Estilos para este elemento */
+.options-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+/* APARTADO: .options-list li - Estilos para este elemento */
+.options-list li {
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+/* APARTADO: .badge-green - Estilos para este elemento */
+.badge-green {
+  background: #28a745;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* APARTADO: .badge-red - Estilos para este elemento */
+.badge-red {
+  background: #dc3545;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* APARTADO: .badge-purple - Estilos para este elemento */
+.badge-purple {
+  background: #8c5cff;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* Grid 2 Cols */
+/* APARTADO: .info-grid-2col - Estilos para este elemento */
+.info-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 800px) {
+/* APARTADO: .info-grid-2col - Estilos para este elemento */
+  .info-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* APARTADO: .info-box - Estilos para este elemento */
+.info-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* APARTADO: .info-box h4 - Estilos para este elemento */
+.info-box h4 {
+  color: #ffaa00;
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed rgba(255, 170, 0, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+/* APARTADO: .bullet-list - Estilos para este elemento */
+.bullet-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* APARTADO: .bullet-list li - Estilos para este elemento */
+.bullet-list li {
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+/* APARTADO: .action-step - Estilos para este elemento */
+.action-step {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* APARTADO: .action-num - Estilos para este elemento */
+.action-num {
+  background: var(--gold);
+  color: #000;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* APARTADO: .action-step p - Estilos para este elemento */
+.action-step p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+

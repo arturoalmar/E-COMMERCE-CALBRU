@@ -1,3 +1,8 @@
+/**
+ * 📄 ARCHIVO: Cauldron.tsx
+ * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ */
+
 // Cauldron.tsx
 // Componente central del configurador. Muestra el caldero, la base de juego seleccionada
 // y el estado de si el conjuro está listo para disparar.
@@ -5,12 +10,15 @@
 import React from 'react';
 import { Genre } from '../types';
 
+// SECCIÓN: Definición de datos/propiedades
 interface CauldronProps {
   selectedGenre: Genre | null;
   isFusionReady: boolean;
 }
 
+// SECCIÓN: Componente o Función lógica
 const Cauldron: React.FC<CauldronProps> = ({ selectedGenre, isFusionReady }) => {
+// SECCIÓN: Renderizado visual
   return (
     <div className="center-dashboard-content">
       <div>

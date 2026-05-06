@@ -1,0 +1,16 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: AddingIngredients.css
+ 📝 DESCRIPCIÓN: Importador maestro del configurador.
+=========================================================
+*/
+
+/* ARCHIVO MAESTRO - AddingIngredients */
+/* IMPORTACIÓN: ./AddingIngredients_main.css */
+@import './AddingIngredients_main.css';
+/* IMPORTACIÓN: ./AddingIngredients_layout.css */
+@import './AddingIngredients_layout.css';
+/* IMPORTACIÓN: ./AddingIngredients_cauldron.css */
+@import './AddingIngredients_cauldron.css';
+/* IMPORTACIÓN: ./AddingIngredients_animations.css */
+@import './AddingIngredients_animations.css';

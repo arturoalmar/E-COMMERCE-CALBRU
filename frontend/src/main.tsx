@@ -1,3 +1,8 @@
+/**
+ * 📄 ARCHIVO: main.tsx
+ * 📝 DESCRIPCIÓN: Punto de entrada de React.
+ */
+
 // main.tsx
 // Punto de arranque de la aplicación React. Renderiza el componente App
 // dentro del elemento HTML con id 'root'.

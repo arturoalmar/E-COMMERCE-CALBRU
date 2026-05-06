@@ -1,0 +1,24 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: IntranetPage.css
+ 📝 DESCRIPCIÓN: Importador maestro de la intranet.
+=========================================================
+*/
+
+/* ARCHIVO MAESTRO - IntranetPage */
+/* IMPORTACIÓN: ./IntranetPage_sketch.css */
+@import './IntranetPage_sketch.css';
+/* IMPORTACIÓN: ./IntranetPage_comite.css */
+@import './IntranetPage_comite.css';
+/* IMPORTACIÓN: ./IntranetPage_infographics.css */
+@import './IntranetPage_infographics.css';
+/* IMPORTACIÓN: ./IntranetPage_tabs.css */
+@import './IntranetPage_tabs.css';
+/* IMPORTACIÓN: ./IntranetPage_logros.css */
+@import './IntranetPage_logros.css';
+/* IMPORTACIÓN: ./IntranetPage_beneficios.css */
+@import './IntranetPage_beneficios.css';
+/* IMPORTACIÓN: ./IntranetPage_soporte.css */
+@import './IntranetPage_soporte.css';
+/* IMPORTACIÓN: ./IntranetPage_subnav.css */
+@import './IntranetPage_subnav.css';

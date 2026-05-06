@@ -1,0 +1,165 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: IntranetPage_logros.css
+ 📝 DESCRIPCIÓN: Archivo del proyecto.
+=========================================================
+*/
+
+/* LOGROS Y METAS STYLES */
+
+/* Achievements Grid */
+/* APARTADO: .achievements-grid - Estilos para este elemento */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* APARTADO: .achievement-card - Estilos para este elemento */
+.achievement-card {
+  display: flex;
+  gap: 1.2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(240, 200, 110, 0.2);
+  border-left: 4px solid var(--gold);
+  padding: 1.5rem;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* APARTADO: .achievement-card:hover - Estilos para este elemento */
+.achievement-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(240, 200, 110, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* APARTADO: .ach-icon - Estilos para este elemento */
+.ach-icon {
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* APARTADO: .ach-content h4 - Estilos para este elemento */
+.ach-content h4 {
+  color: #fff;
+  margin-bottom: 0.2rem;
+  font-size: 1.1rem;
+}
+
+/* APARTADO: .ach-date - Estilos para este elemento */
+.ach-date {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+/* APARTADO: .ach-content p - Estilos para este elemento */
+.ach-content p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Goals Timeline */
+/* APARTADO: .goals-timeline - Estilos para este elemento */
+.goals-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* APARTADO: .goal-pro-card - Estilos para este elemento */
+.goal-pro-card {
+  background: linear-gradient(145deg, rgba(30, 20, 40, 0.8), rgba(20, 10, 25, 0.9));
+  border: 1px solid rgba(140, 92, 255, 0.3);
+  border-radius: 12px;
+  padding: 1.8rem;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* APARTADO: .goal-header - Estilos para este elemento */
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+/* APARTADO: .goal-header h4 - Estilos para este elemento */
+.goal-header h4 {
+  color: var(--secondary-light);
+  font-size: 1.25rem;
+  margin: 0;
+  font-family: "MedievalSharp", cursive;
+}
+
+/* APARTADO: .goal-status - Estilos para este elemento */
+.goal-status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* APARTADO: .goal-status.in-progress - Estilos para este elemento */
+.goal-status.in-progress {
+  background: rgba(140, 92, 255, 0.2);
+  color: #d7b3ff;
+  border: 1px solid #8c5cff;
+}
+
+/* APARTADO: .goal-status.blocked - Estilos para este elemento */
+.goal-status.blocked {
+  background: rgba(255, 170, 0, 0.2);
+  color: #ffcc00;
+  border: 1px solid #ffaa00;
+}
+
+/* APARTADO: .goal-status.close - Estilos para este elemento */
+.goal-status.close {
+  background: rgba(40, 167, 69, 0.2);
+  color: #5cb85c;
+  border: 1px solid #28a745;
+}
+
+/* APARTADO: .goal-pro-card>p - Estilos para este elemento */
+.goal-pro-card>p {
+  color: #ddd;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* APARTADO: .progress-container - Estilos para este elemento */
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+}
+
+/* APARTADO: .progress-bar - Estilos para este elemento */
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease-in-out;
+}
+
+/* APARTADO: .progress-text - Estilos para este elemento */
+.progress-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+

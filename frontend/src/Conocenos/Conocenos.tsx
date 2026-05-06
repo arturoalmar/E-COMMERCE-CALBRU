@@ -1,7 +1,14 @@
+/**
+ * 📄 ARCHIVO: Conocenos.tsx
+ * 📝 DESCRIPCIÓN: Información sobre nosotros.
+ */
+
 // Conocenos.tsx
 // Página de información "Conócenos" que describe el proyecto, cómo funciona y muestra reseñas rotativas.
 
 import React, { useState, useEffect } from 'react';
+import './Conocenos.css';
+
 import backgroundImg from '../assets/forest_house_bg.png';
 import spritesImg from '../assets/Sprittes.png';
 
@@ -11,20 +18,25 @@ const REVIEWS = [
   { id: 3, user: 'PixelWizard', text: 'Calbru Games ha cambiado mi forma de presentar ideas. Rápido, estiloso y funcional.' }
 ];
 
+// SECCIÓN: Definición de datos/propiedades
 interface ConocenosProps {
   onStartNow: () => void;
 }
 
+// SECCIÓN: Componente o Función lógica
 const Conocenos: React.FC<ConocenosProps> = ({ onStartNow }) => {
   const [currentReview, setCurrentReview] = useState(0);
 
   useEffect(() => {
+// SECCIÓN: Componente o Función lógica
     const interval = setInterval(() => {
       setCurrentReview((prev) => (prev + 1) % REVIEWS.length);
     }, 5000);
+// SECCIÓN: Renderizado visual
     return () => clearInterval(interval);
   }, []);
 
+// SECCIÓN: Renderizado visual
   return (
     <div className="conocenos-page">
       {/* SECTION: WHAT DO WE DO? & MAGIC */}

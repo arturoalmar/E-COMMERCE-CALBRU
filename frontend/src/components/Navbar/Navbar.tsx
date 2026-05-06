@@ -1,3 +1,8 @@
+/**
+ * 📄 ARCHIVO: Navbar.tsx
+ * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ */
+
 import React, { useState } from 'react';
 import './Navbar.css';
 import { Page } from '../../types';
@@ -6,6 +11,7 @@ import { Page } from '../../types';
 // Barra de navegación superior que permite cambiar de página,
 // abrir el menú y gestionar el acceso al login/intranet.
 
+// SECCIÓN: Definición de datos/propiedades
 interface NavbarProps {
   isWorker: boolean;
   onNavigate: (page: Page) => void;
@@ -14,17 +20,21 @@ interface NavbarProps {
   hideMenuToggle?: boolean;
 }
 
+// SECCIÓN: Componente o Función lógica
 const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, onLoginToggle, hideMenuToggle }) => {
   // Estado local para controlar si el menú desplegable está abierto o cerrado.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+// SECCIÓN: Componente o Función lógica
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+// SECCIÓN: Componente o Función lógica
   const handleNavigate = (page: Page) => {
     onNavigate(page);
     setIsMenuOpen(false);
   };
 
+// SECCIÓN: Renderizado visual
   return (
     <nav className="navbar">
       <div className="navbar-left">

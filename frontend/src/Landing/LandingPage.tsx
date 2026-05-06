@@ -1,22 +1,32 @@
+/**
+ * 📄 ARCHIVO: LandingPage.tsx
+ * 📝 DESCRIPCIÓN: Página de inicio temática con la poción mágica.
+ */
+
 import React, { useState } from 'react';
 import forestBg from '../assets/forest_house_bg.png';
+import './LandingPage.css';
+
 import titleLabel from '../assets/Etiqueta-titulo.png';
 import iconImg from '../assets/Icon.png';
-import potionImg from '../assets/jump__cauldron.png';
+// potionImg reserved for future use
 import { Page } from '../types';
 
 // LandingPage.tsx - Versión "Forest Cottage"
 // Basada en el mockup de la cabaña en el bosque con estética de cuento ilustrado.
 
+// SECCIÓN: Definición de datos/propiedades
 interface LandingPageProps {
   setPage: (page: Page) => void;
   isLoggedIn: boolean;
   isWorker?: boolean;
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker }) => {
+// SECCIÓN: Componente o Función lógica
+const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn: _isLoggedIn, isWorker: _isWorker }) => {
   const [isExploding, setIsExploding] = useState(false);
 
+// SECCIÓN: Componente o Función lógica
   const handlePotionClick = () => {
     if (isExploding) return;
     setIsExploding(true);
@@ -30,6 +40,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, isWorker
     }, 400); 
   };
 
+// SECCIÓN: Renderizado visual
   return (
     <div className="landing-forest-container">
       {/* Background Illustration */}

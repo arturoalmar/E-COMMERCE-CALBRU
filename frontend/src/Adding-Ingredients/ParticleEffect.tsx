@@ -1,3 +1,8 @@
+/**
+ * 📄 ARCHIVO: ParticleEffect.tsx
+ * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ */
+
 // ParticleEffect.tsx
 // Renderiza las partículas que caen desde el caldero cuando el usuario selecciona opciones.
 // Cada partícula usa variables CSS personalizadas para recibir posición y color.
@@ -5,11 +10,14 @@
 import React from 'react';
 import { Particle } from '../types';
 
+// SECCIÓN: Definición de datos/propiedades
 interface ParticleEffectProps {
   particles: Particle[];
 }
 
+// SECCIÓN: Componente o Función lógica
 const ParticleEffect: React.FC<ParticleEffectProps> = ({ particles }) => {
+// SECCIÓN: Renderizado visual
   return (
     <>
       {particles.map((particle) => (

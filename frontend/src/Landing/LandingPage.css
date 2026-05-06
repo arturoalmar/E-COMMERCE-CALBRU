@@ -1,0 +1,20 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: LandingPage.css
+ 📝 DESCRIPCIÓN: Importador maestro de estilos de la landing.
+=========================================================
+*/
+
+/* ARCHIVO MAESTRO DE LA LANDING PAGE */
+/* Este archivo importa los estilos modulares para facilitar la edición */
+
+/* IMPORTACIÓN: ./LandingHomepage.css */
+@import './LandingHomepage.css';
+/* IMPORTACIÓN: ./LandingInfo.css */
+@import './LandingInfo.css';
+/* IMPORTACIÓN: ./LandingSketch.css */
+@import './LandingSketch.css';
+/* IMPORTACIÓN: ./LandingImmersive.css */
+@import './LandingImmersive.css';
+/* IMPORTACIÓN: ./LandingForest.css */
+@import './LandingForest.css';

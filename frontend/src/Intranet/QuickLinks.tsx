@@ -1,13 +1,21 @@
+/**
+ * 📄 ARCHIVO: QuickLinks.tsx
+ * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ */
+
 // QuickLinks.tsx
 // Lista de acciones rápidas de la intranet que permite navegar entre vistas de RRHH.
 
 import React from 'react';
 
+// SECCIÓN: Definición de datos/propiedades
 interface QuickLinksProps {
   setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking' | 'committee') => void;
 }
 
+// SECCIÓN: Componente o Función lógica
 const QuickLinks: React.FC<QuickLinksProps> = ({ setView }) => {
+// SECCIÓN: Renderizado visual
   return (
     <section className="quick-links-sketch">
       <h2 className="section-title-witch">Gestión Corporativa</h2>

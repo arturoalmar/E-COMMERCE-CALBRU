@@ -1,0 +1,322 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: MyCauldronsPage.css
+ 📝 DESCRIPCIÓN: Estilos del historial.
+=========================================================
+*/
+
+/* MY CAULDRONS PAGE - COMPACT PREMIUM DESIGN */
+/* APARTADO: .my-cauldrons-container - Estilos para este elemento */
+.my-cauldrons-container {
+  padding: 80px 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* APARTADO: .cauldrons-header - Estilos para este elemento */
+.cauldrons-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* APARTADO: .cauldrons-header h1 - Estilos para este elemento */
+.cauldrons-header h1 {
+  font-size: 2.8rem;
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+}
+
+/* APARTADO: .cauldrons-grid - Estilos para este elemento */
+.cauldrons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+/* APARTADO: .cauldron-item-card - Estilos para este elemento */
+.cauldron-item-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 15px;
+  padding: 1.2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* APARTADO: .cauldron-item-card:hover - Estilos para este elemento */
+.cauldron-item-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--secondary-color);
+  box-shadow: 0 10px 25px rgba(140, 92, 255, 0.2);
+}
+
+/* APARTADO: .cauldron-thumb-wrapper - Estilos para este elemento */
+.cauldron-thumb-wrapper {
+  width: 140px;
+  height: 140px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* APARTADO: .cauldron-thumb-wrapper img - Estilos para este elemento */
+.cauldron-thumb-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* APARTADO: .cauldron-item-card h3 - Estilos para este elemento */
+.cauldron-item-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+/* APARTADO: .cauldron-item-card p - Estilos para este elemento */
+.cauldron-item-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* APARTADO: .cauldron-meta - Estilos para este elemento */
+.cauldron-meta {
+  margin-top: auto;
+  padding-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+/* APARTADO: .cauldron-badge - Estilos para este elemento */
+.cauldron-badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* APARTADO: .badge-rarity-gold - Estilos para este elemento */
+.badge-rarity-gold {
+  background: rgba(240, 200, 110, 0.1);
+  color: #f0c86e;
+  border: 1px solid #f0c86e;
+}
+
+/* APARTADO: .badge-type-game - Estilos para este elemento */
+.badge-type-game {
+  background: rgba(140, 92, 255, 0.1);
+  color: #d7b3ff;
+  border: 1px solid #8c5cff;
+}
+
+/* Empty state styling */
+/* APARTADO: .cauldrons-empty - Estilos para este elemento */
+.cauldrons-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 5rem 0;
+  opacity: 0.7;
+}
+
+/* APARTADO: .cauldrons-empty .icon - Estilos para este elemento */
+.cauldrons-empty .icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+
+/* COMITï¿½ DE EMPRESA STYLES */
+/* APARTADO: .committee-section - Estilos para este elemento */
+.committee-section {
+  margin-bottom: 2.5rem;
+}
+
+/* APARTADO: .committee-section h3 - Estilos para este elemento */
+.committee-section h3 {
+  color: var(--gold);
+  border-bottom: 1px solid rgba(240, 200, 110, 0.3);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-family: "MedievalSharp", cursive;
+}
+
+/* Organigrama */
+/* APARTADO: .org-chart-witch - Estilos para este elemento */
+.org-chart-witch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+/* APARTADO: .org-node - Estilos para este elemento */
+.org-node {
+  background: rgba(140, 92, 255, 0.1);
+  border: 1px solid var(--secondary-color);
+  border-radius: 8px;
+  padding: 1rem;
+  width: 180px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(140, 92, 255, 0.2);
+}
+
+/* APARTADO: .org-node h4 - Estilos para este elemento */
+.org-node h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+/* APARTADO: .org-node p - Estilos para este elemento */
+.org-node p {
+  margin: 0.3rem 0 0;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+/* APARTADO: .org-connect - Estilos para este elemento */
+.org-connect {
+  width: 2px;
+  height: 30px;
+  background: var(--secondary-color);
+}
+
+/* APARTADO: .org-row - Estilos para este elemento */
+.org-row {
+  display: flex;
+  gap: 3rem;
+  margin-top: 0;
+}
+
+/* Info Pills */
+/* APARTADO: .info-pills-grid - Estilos para este elemento */
+.info-pills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+/* APARTADO: .info-pill - Estilos para este elemento */
+.info-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid var(--secondary-color);
+  padding: 1.2rem;
+  border-radius: 0 8px 8px 0;
+}
+
+/* APARTADO: .info-pill h4 - Estilos para este elemento */
+.info-pill h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+/* APARTADO: .info-pill p - Estilos para este elemento */
+.info-pill p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Infographics */
+/* APARTADO: .infographics-container - Estilos para este elemento */
+.infographics-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* APARTADO: .infographic-card - Estilos para este elemento */
+.infographic-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+/* APARTADO: .infographic-content - Estilos para este elemento */
+.infographic-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* APARTADO: .step - Estilos para este elemento */
+.step {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.8rem;
+  border-radius: 6px;
+}
+
+/* APARTADO: .step-num - Estilos para este elemento */
+.step-num {
+  width: 24px;
+  height: 24px;
+  background: var(--secondary-color);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* APARTADO: .step.error .step-num - Estilos para este elemento */
+.step.error .step-num {
+  background: #ff5555;
+}
+
+/* APARTADO: .step.warning .step-num - Estilos para este elemento */
+.step.warning .step-num {
+  background: #ffaa00;
+}
+
+/* APARTADO: .step.info .step-num - Estilos para este elemento */
+.step.info .step-num {
+  background: #55aaff;
+}
+
+/* Lists */
+.achievements-list,
+/* APARTADO: .goals-list - Estilos para este elemento */
+.goals-list {
+  list-style: none;
+  padding: 0;
+}
+
+.achievements-list li,
+/* APARTADO: .goals-list li - Estilos para este elemento */
+.goals-list li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+}
+
+/* APARTADO: .gold-border - Estilos para este elemento */
+.gold-border {
+  border: 2px solid rgba(240, 200, 110, 0.3) !important;
+}
+
+/* APARTADO: .purple-border - Estilos para este elemento */
+.purple-border {
+  border: 2px solid rgba(140, 92, 255, 0.3) !important;
+}
+
+

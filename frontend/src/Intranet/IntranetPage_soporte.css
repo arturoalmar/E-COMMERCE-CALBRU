@@ -1,0 +1,93 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: IntranetPage_soporte.css
+ 📝 DESCRIPCIÓN: Archivo del proyecto.
+=========================================================
+*/
+
+/* SOPORTE IT STYLES */
+/* APARTADO: .support-layout - Estilos para este elemento */
+.support-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+/* APARTADO: .support-layout - Estilos para este elemento */
+  .support-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* APARTADO: .support-sidebar - Estilos para este elemento */
+.support-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* APARTADO: .support-contacts p - Estilos para este elemento */
+.support-contacts p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* APARTADO: .faq-card details - Estilos para este elemento */
+.faq-card details {
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* APARTADO: .faq-card summary - Estilos para este elemento */
+.faq-card summary {
+  padding: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  outline: none;
+}
+
+/* APARTADO: .faq-card details p - Estilos para este elemento */
+.faq-card details p {
+  padding: 0 1rem 1rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* APARTADO: .form-row-2col - Estilos para este elemento */
+.form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+/* APARTADO: .form-row-2col - Estilos para este elemento */
+  .form-row-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* APARTADO: .success-message - Estilos para este elemento */
+.success-message {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  border-radius: 12px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* APARTADO: .success-message h4 - Estilos para este elemento */
+.success-message h4 {
+  color: #5cb85c;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+
+

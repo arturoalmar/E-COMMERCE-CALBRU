@@ -1,3 +1,8 @@
+/**
+ * 📄 ARCHIVO: App.tsx
+ * 📝 DESCRIPCIÓN: Componente principal que gestiona el estado global, la navegación y las transiciones.
+ */
+
 import { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
 
@@ -55,6 +60,7 @@ function App() {
 
   // Controla la animación cuando se cambia de página.
   // Guarda la ruta de destino y actualiza estado tras un retardo para permitir la transición.
+// SECCIÓN: Componente o Función lógica
   const performTransition = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null) => {
     const isGoingToHome = newPage === 'home';
     const direction = isGoingToHome ? 'down' : 'up';
@@ -85,6 +91,7 @@ function App() {
 
   // Función central para cambiar de página.
   // Si shouldPush es true, se desencadena la animación de transición.
+// SECCIÓN: Componente o Función lógica
   const navigateTo = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null, shouldPush = true) => {
     if (shouldPush) {
       performTransition(newPage, newStep, newGenre);
@@ -96,6 +103,7 @@ function App() {
   }, [performTransition]);
 
   useEffect(() => {
+// SECCIÓN: Componente o Función lógica
     const handlePopState = (event: PopStateEvent) => {
       if (event.state) {
         const { page: p, step: s, genre: g } = event.state;
@@ -106,30 +114,36 @@ function App() {
     };
     window.addEventListener('popstate', handlePopState);
     window.history.replaceState({ page, step: currentStep, genre: selectedGenre }, '');
+// SECCIÓN: Renderizado visual
     return () => window.removeEventListener('popstate', handlePopState);
   }, [navigateTo, page, currentStep, selectedGenre]);
 
   useEffect(() => {
+// SECCIÓN: Componente o Función lógica
     const handleSplash = () => {
       setPotionSplash('splatter');
       setTimeout(() => setPotionSplash('slide'), 1200);
       setTimeout(() => setPotionSplash('idle'), 2200);
     };
     window.addEventListener('potion-splash', handleSplash);
+// SECCIÓN: Renderizado visual
     return () => window.removeEventListener('potion-splash', handleSplash);
   }, []);
 
+// SECCIÓN: Componente o Función lógica
   const handleNavigate = (newPage: Page) => {
     navigateTo(newPage, 'select-pot', null);
   };
 
   // Selecciona un género y reinicia las selecciones para empezar la configuración.
+// SECCIÓN: Componente o Función lógica
   const handleSelectGenre = (genre: Genre) => {
     setSelections({ diseno: [], tematica: [], mecanicas: [], plataforma: [] });
     navigateTo('creator', 'configurator', genre);
   };
 
   // Crea partículas visuales cuando el usuario selecciona opciones del configurador.
+// SECCIÓN: Componente o Función lógica
   const createParticle = () => {
     const randomX = Math.random() * 120 - 60;
     const randomY = -100;
@@ -147,6 +161,7 @@ function App() {
     }, 2000);
   };
 
+// SECCIÓN: Componente o Función lógica
   const toggleOption = (category: string, optionId: string) => {
     setSelections((prev) => {
       const currentSelections = prev[category];
@@ -167,9 +182,11 @@ function App() {
 
   // Renderiza el contenido principal según la página actual.
   // Cada caso corresponde a una vista distinta de la aplicación.
+// SECCIÓN: Componente o Función lógica
   const renderContent = () => {
     switch (page) {
       case 'home':
+// SECCIÓN: Renderizado visual
         return (
           <LandingPage
             setPage={(p) => navigateTo(p as Page, 'select-pot', null)}
@@ -178,6 +195,7 @@ function App() {
           />
         );
       case 'creator':
+// SECCIÓN: Renderizado visual
         return (
           <div className="creator-container">
             {currentStep === 'select-pot' && (
@@ -207,6 +225,7 @@ function App() {
           </div>
         );
       case 'my-cauldrons':
+// SECCIÓN: Renderizado visual
         return (
           <>
             <MyCauldronsPage />
@@ -220,6 +239,7 @@ function App() {
       case 'intranet': return <IntranetPage username={isLoggedIn ? 'Arturo Almar' : 'Visitante'} />;
       case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} />;
       case 'login':
+// SECCIÓN: Renderizado visual
         return (
           <LoginPage onLogin={(userData) => {
             console.log('Logged in user:', userData);
@@ -228,6 +248,7 @@ function App() {
           }} />
         );
       default:
+// SECCIÓN: Renderizado visual
         return (
           <LandingPage
             setPage={(p) => navigateTo(p as Page, 'select-pot', null)}
@@ -241,6 +262,7 @@ function App() {
   const isImmersiveMode = page === 'home' || (page === 'creator' && currentStep === 'select-pot') || page === 'login';
   const shouldHideNavbar = isImmersiveMode;
 
+// SECCIÓN: Renderizado visual
   return (
     <>
       <div className={`potion-global-overlay ${potionSplash}`}>

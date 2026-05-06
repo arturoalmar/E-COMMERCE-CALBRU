@@ -1,0 +1,171 @@
+/* CONFIGURADOR (EL CALDERO MAGICO)
+   ========================================================================== */
+
+/* 
+=========================================================
+ 📄 ARCHIVO: AddingIngredients_layout.css
+ 📝 DESCRIPCIÓN: Define la cuadrícula y disposición de los 
+ paneles en el configurador de ingredientes.
+=========================================================
+*/
+
+/* 
+=========================================================
+ 📐 LAYOUT DEL CONFIGURADOR 📐
+ Define la estructura de 4 esquinas (ingredientes) y 1 centro (caldero).
+=========================================================
+*/
+/* Layout 2x2 para las esquinas de ingredientes con el caldero en el centro */
+/* APARTADO: .configurator-layout - Estilos para este elemento */
+.configurator-layout {
+  padding-top: 100px;
+  display: grid;
+  grid-template-areas:
+    "tl center tr"
+    "bl center br";
+  gap: calc(3rem - 3px);
+  transform: translateX(-3px);
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: stretch;
+  justify-items: center;
+  animation: fadeInUp 0.8s ease;
+}
+
+/* Estilo de los paneles de las esquinas (EstanterÃ­as de ingredientes) */
+/* APARTADO: .config-corner - Estilos para este elemento */
+.config-corner {
+  background: linear-gradient(135deg, rgba(18, 6, 43, 0.4), rgba(28, 12, 57, 0.4));
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(191, 136, 255, 0.18);
+  border-radius: 18px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 340px;
+  box-shadow:
+    inset 0 0 20px rgba(0, 0, 0, 0.4),
+    0 10px 28px rgba(36, 12, 97, 0.32);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* APARTADO: .config-corner:hover - Estilos para este elemento */
+.config-corner:hover {
+  border-color: var(--secondary-light);
+  box-shadow:
+    inset 0 0 15px rgba(0, 0, 0, 0.5),
+    0 12px 32px rgba(171, 71, 188, 0.25),
+    0 0 20px rgba(171, 71, 188, 0.3);
+}
+
+/* Detalle estÃ©tico: "clavos" de madera en las esquinas */
+.config-corner::before,
+/* APARTADO: .config-corner::after - Estilos para este elemento */
+.config-corner::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle at 30% 30%, #666, #222);
+  border-radius: 50%;
+  top: 10px;
+  box-shadow:
+    inset 1px 1px 3px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* APARTADO: .config-corner::before - Estilos para este elemento */
+.config-corner::before {
+  left: 10px;
+}
+
+/* APARTADO: .config-corner::after - Estilos para este elemento */
+.config-corner::after {
+  right: 10px;
+}
+
+/* APARTADO: .corner-tl - Estilos para este elemento */
+.corner-tl {
+  grid-area: tl;
+}
+
+/* APARTADO: .corner-tr - Estilos para este elemento */
+.corner-tr {
+  grid-area: tr;
+}
+
+/* APARTADO: .corner-bl - Estilos para este elemento */
+.corner-bl {
+  grid-area: bl;
+}
+
+/* APARTADO: .corner-br - Estilos para este elemento */
+.corner-br {
+  grid-area: br;
+}
+
+/* APARTADO: .config-corner h3 - Estilos para este elemento */
+.config-corner h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  color: var(--secondary-light);
+  text-shadow:
+    0 0 8px rgba(171, 71, 188, 0.6),
+    1px 1px 2px #000;
+  letter-spacing: 0.1em;
+}
+
+/* APARTADO: .options-grid - Estilos para este elemento */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+/* APARTADO: .option-btn - Estilos para este elemento */
+.option-btn {
+  background: linear-gradient(135deg, #1f140e, #2a1a11);
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+  color: var(--text-main);
+  font-weight: 500;
+  text-align: center;
+  padding: 0.3rem;
+  cursor: pointer;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* APARTADO: .option-btn:hover - Estilos para este elemento */
+.option-btn:hover {
+  background: linear-gradient(135deg, #2d1c15, #3a2618);
+  border-color: var(--text-muted);
+  transform: scale(1.05);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba(124, 179, 66, 0.2);
+}
+
+/* APARTADO: .option-btn.selected - Estilos para este elemento */
+.option-btn.selected {
+  background: linear-gradient(135deg, rgba(171, 71, 188, 0.3), rgba(171, 71, 188, 0.15));
+  border-color: var(--secondary-color);
+  color: var(--secondary-light);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.5),
+    0 0 12px rgba(171, 71, 188, 0.5);
+  font-weight: 600;
+}
+
+/* 
+=========================================================
+
+=========================================================
+*/

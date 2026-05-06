@@ -1,0 +1,53 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: IntranetPage_beneficios.css
+ 📝 DESCRIPCIÓN: Archivo del proyecto.
+=========================================================
+*/
+
+/* BENEFICIOS STYLES */
+/* APARTADO: .benefits-grid - Estilos para este elemento */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+/* APARTADO: .benefit-card - Estilos para este elemento */
+.benefit-card {
+  background: linear-gradient(145deg, rgba(30, 20, 40, 0.6), rgba(20, 10, 25, 0.8));
+  border: 1px solid rgba(140, 92, 255, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* APARTADO: .benefit-card:hover - Estilos para este elemento */
+.benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+}
+
+/* APARTADO: .benefit-icon - Estilos para este elemento */
+.benefit-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 10px rgba(240, 200, 110, 0.5));
+}
+
+/* APARTADO: .benefit-card h3 - Estilos para este elemento */
+.benefit-card h3 {
+  color: var(--secondary-light);
+  margin-bottom: 1rem;
+  font-family: "MedievalSharp", cursive;
+}
+
+/* APARTADO: .benefit-card p - Estilos para este elemento */
+.benefit-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+

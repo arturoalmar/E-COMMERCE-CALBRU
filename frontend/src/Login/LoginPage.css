@@ -1,0 +1,142 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: LoginPage.css
+ 📝 DESCRIPCIÓN: Estilos del login.
+=========================================================
+*/
+
+/* LOGIN SKETCH */
+/* APARTADO: .login-page-sketch - Estilos para este elemento */
+.login-page-sketch {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("./assets/forest_house_bg.png");
+  background-size: cover;
+  background-position: center 60%;
+  background-repeat: no-repeat;
+}
+
+/* APARTADO: .login-card-sketch - Estilos para este elemento */
+.login-card-sketch {
+  background: none;
+  backdrop-filter: none;
+  padding: 1.8rem;
+  border: none;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: none;
+}
+
+/* APARTADO: .login-card-sketch h1 - Estilos para este elemento */
+.login-card-sketch h1 {
+  color: #000;
+  margin-top: 5%;
+  margin-bottom: 2rem;
+  font-size: 3rem;
+}
+
+/* APARTADO: .login-card-sketch input - Estilos para este elemento */
+.login-card-sketch input {
+  width: 85%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  color: #000;
+}
+
+/* APARTADO: .login-card-sketch input::placeholder - Estilos para este elemento */
+.login-card-sketch input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* APARTADO: .btn-enter - Estilos para este elemento */
+.btn-enter {
+  width: 90px;
+  height: 90px;
+  background: rgba(128, 0, 0, 0.05);
+  border: 2px dashed #800000;
+  border-radius: 50%;
+  color: #800000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto 0;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+/* APARTADO: .btn-enter:hover - Estilos para este elemento */
+.btn-enter:hover {
+  background: rgba(128, 0, 0, 0.2);
+}
+
+/* ANIMACIÓN DE SELLO DE CERA */
+/* APARTADO: .btn-enter.sealing - Estilos para este elemento */
+.btn-enter.sealing {
+  position: relative;
+  overflow: visible;
+  pointer-events: none;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+/* APARTADO: .wax-seal - Estilos para este elemento */
+.wax-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95px;
+  /* Ligeramente mayor que el botón para cubrirlo */
+  height: 95px;
+  background: radial-gradient(circle, #8b0000 70%, #5a0000 100%);
+  border-radius: 50%;
+  animation: seal-impact 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+/* APARTADO: .wax-seal::after - Estilos para este elemento */
+.wax-seal::after {
+  content: 'C';
+  /* Letra C de Calbru */
+  color: rgba(240, 200, 110, 0.8);
+  font-size: 2.5rem;
+  font-family: 'Almendra', serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+/* ANIMACIÓN: seal-impact */
+@keyframes seal-impact {
+  0% {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+
+
+

@@ -1,15 +1,23 @@
+/**
+ * 📄 ARCHIVO: ComiteEmpresa.tsx
+ * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ */
+
 // ComiteEmpresa.tsx
 // Vista del Comité de Empresa con pestañas para información, normativa y objetivos.
 
 import React, { useState } from 'react';
 
+// SECCIÓN: Definición de datos/propiedades
 interface ComiteEmpresaProps {
   setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking' | 'committee') => void;
 }
 
+// SECCIÓN: Componente o Función lógica
 const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView }) => {
   const [activeTab, setActiveTab] = useState<'info' | 'legal' | 'goals'>('info');
 
+// SECCIÓN: Renderizado visual
   return (
     <div className="sub-view-panel parchment-bg detailed-view">
       <div className="top-navigation-area">

@@ -1,0 +1,374 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: AddingIngredients_animations.css
+ 📝 DESCRIPCIÓN: Define las animaciones y efectos de partículas
+ para el proceso de creación de pociones en el caldero.
+=========================================================
+*/
+
+/* Partículas que caen dentro del caldero al seleccionar ingredientes */
+/* APARTADO: .falling-particle - Estilos para este elemento */
+.falling-particle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--particle-color);
+  box-shadow:
+    0 0 10px var(--particle-color),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.5);
+  animation: fall-to-cauldron 2s ease-in forwards;
+  top: 0;
+  left: 50%;
+  z-index: 1;
+}
+
+/* APARTADO: .center-dashboard::before - Estilos para este elemento */
+.center-dashboard::before {
+  content: '';
+  position: absolute;
+  bottom: -200px;
+  width: 85%;
+  height: 40%;
+  background: radial-gradient(ellipse 100% 100% at 50% 100%,
+      rgba(124, 179, 66, 0.3),
+      rgba(124, 179, 66, 0.1) 40%,
+      transparent 80%);
+  border-radius: 50% 50% 20% 20%;
+  z-index: 3;
+  animation: cauldron-glow 3s infinite alternate;
+  filter: blur(8px);
+}
+
+/* APARTADO: .center-dashboard::after - Estilos para este elemento */
+.center-dashboard::after {
+  content: '';
+  position: absolute;
+  bottom: -230px;
+  left: 0;
+  right: 0;
+  height: 12%;
+  background: radial-gradient(ellipse 80% 100% at 50% 100%,
+      rgba(171, 71, 188, 0.2),
+      transparent 80%);
+  border-radius: 50%;
+  z-index: 3;
+  filter: blur(10px);
+}
+
+/* APARTADO: .center-dashboard h2 - Estilos para este elemento */
+.center-dashboard h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-light);
+  text-shadow:
+    0 0 15px rgba(124, 179, 66, 0.7),
+    0 0 30px rgba(124, 179, 66, 0.3),
+    1px 1px 3px #000;
+  letter-spacing: 0.1em;
+}
+
+/* APARTADO: .selected-genre-badge - Estilos para este elemento */
+.selected-genre-badge {
+  background: linear-gradient(135deg, rgba(191, 136, 255, 0.24), rgba(191, 136, 255, 0.08));
+  color: var(--secondary-light);
+  padding: 0.7rem 1.6rem;
+  border-radius: 10px;
+  border: 1px solid rgba(191, 136, 255, 0.4);
+  font-size: 0.95rem;
+  margin-top: 0.8rem;
+  display: inline-block;
+  box-shadow: 0 0 16px rgba(191, 136, 255, 0.22);
+  transition: all 0.3s ease;
+}
+
+/* APARTADO: .selected-genre-badge:hover - Estilos para este elemento */
+.selected-genre-badge:hover {
+  box-shadow: 0 0 20px rgba(171, 71, 188, 0.5);
+  transform: scale(1.05);
+}
+
+/* APARTADO: .status-preview - Estilos para este elemento */
+.status-preview {
+  margin: 2.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 40px;
+}
+
+/* APARTADO: .status-preview p - Estilos para este elemento */
+.status-preview p {
+  color: var(--secondary-light);
+  font-style: italic;
+  text-shadow: 0 0 10px rgba(191, 136, 255, 0.35);
+  font-size: 1.05rem;
+  animation: pulse-text 1.5s infinite;
+}
+
+/* APARTADO: .btn-fusionar - Estilos para este elemento */
+.btn-fusionar {
+  background: linear-gradient(135deg, var(--secondary-dark), var(--secondary-color));
+  border: 3px solid rgba(191, 136, 255, 0.9);
+  color: #fff;
+  padding: 1.2rem 3rem;
+  border-radius: 14px;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  width: 90%;
+  animation: pulse 2.5s infinite;
+  margin-top: auto;
+  box-shadow:
+    0 0 22px rgba(111, 53, 161, 0.35),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+/* APARTADO: .btn-fusionar:hover - Estilos para este elemento */
+.btn-fusionar:hover {
+  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+  color: #111;
+  transform: scale(1.08);
+  box-shadow:
+    0 0 44px rgba(111, 53, 161, 0.55),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* APARTADO: .btn-fusionar:active - Estilos para este elemento */
+.btn-fusionar:active {
+  transform: scale(0.98);
+}
+
+/* APARTADO: .btn-fusionar:disabled - Estilos para este elemento */
+.btn-fusionar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  animation: none;
+  border-color: var(--border-color);
+  color: var(--text-muted);
+  background: linear-gradient(135deg, rgba(123, 31, 45, 0.5), rgba(139, 39, 58, 0.5));
+}
+
+/* APARTADO: .btn-back - Estilos para este elemento */
+.btn-back {
+  margin-top: 4rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: 'Almendra', serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+}
+
+/* APARTADO: .btn-back:hover - Estilos para este elemento */
+.btn-back:hover {
+  color: var(--primary-light);
+  border-bottom-color: var(--primary-light);
+  text-shadow: 0 0 10px rgba(124, 179, 66, 0.4);
+  transform: translateX(-3px);
+}
+
+/* ANIMACIÓN: fadeInDown */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ANIMACIÓN: fadeInUp */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ANIMACIÓN: fall-to-cauldron */
+@keyframes fall-to-cauldron {
+  0% {
+    opacity: 1;
+    transform: translateX(var(--particle-x)) translateY(var(--particle-y)) scale(1) rotate(0deg);
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(0) translateY(500px) scale(0.2) rotate(720deg);
+  }
+}
+
+/* ANIMACIÓN: cauldron-bob */
+@keyframes cauldron-bob {
+
+  0%,
+  100% {
+    transform: translate(-50%, calc(-27% + 5px));
+  }
+
+  50% {
+    transform: translate(-50%, calc(-30% + 5px));
+  }
+}
+
+/* ANIMACIÓN: pulse */
+@keyframes pulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(124, 179, 66, 0.3),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  50% {
+    box-shadow:
+      0 0 40px rgba(124, 179, 66, 0.6),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ANIMACIÓN: pulse-text */
+@keyframes pulse-text {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ANIMACIÓN: cauldron-glow */
+@keyframes cauldron-glow {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.9) translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.1) translateY(-5px);
+  }
+}
+
+/* ANIMACIÓN: majorGlow */
+@keyframes majorGlow {
+
+  0%,
+  100% {
+    border-color: var(--secondary-light);
+  }
+
+  50% {
+    border-color: var(--secondary-color);
+  }
+}
+
+@media (max-width: 1200px) {
+/* APARTADO: .configurator-layout - Estilos para este elemento */
+  .configurator-layout {
+    grid-template-areas:
+      "tl tr"
+      "center center"
+      "bl br";
+    gap: 2rem;
+  }
+
+/* APARTADO: .center-dashboard - Estilos para este elemento */
+  .center-dashboard {
+    width: 450px;
+    height: 380px;
+  }
+}
+
+@media (max-width: 900px) {
+  header h1 {
+    font-size: 3rem;
+  }
+
+/* APARTADO: .configurator-layout - Estilos para este elemento */
+  .configurator-layout {
+    grid-template-areas:
+      "center"
+      "tl"
+      "tr"
+      "bl"
+      "br";
+    gap: 1.5rem;
+  }
+
+/* APARTADO: .config-corner - Estilos para este elemento */
+  .config-corner {
+    max-width: 100%;
+  }
+
+/* APARTADO: .center-dashboard - Estilos para este elemento */
+  .center-dashboard {
+    width: 100%;
+    border-radius: 20px;
+    height: auto;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 600px) {
+/* APARTADO: .app-container - Estilos para este elemento */
+  .app-container {
+    padding: 1.5rem 1rem;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+/* APARTADO: .genre-grid - Estilos para este elemento */
+  .genre-grid {
+    gap: 1.5rem;
+  }
+
+/* APARTADO: .genre-card - Estilos para este elemento */
+  .genre-card {
+    padding: 1.5rem;
+  }
+
+/* APARTADO: .options-grid - Estilos para este elemento */
+  .options-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+
+/* APARTADO: .btn-fusionar - Estilos para este elemento */
+  .btn-fusionar {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+/* ==========================================================================
+*/

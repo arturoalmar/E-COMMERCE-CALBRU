@@ -1,8 +1,14 @@
+/**
+ * 📄 ARCHIVO: Vacaciones.tsx
+ * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ */
+
 // Vacaciones.tsx
 // Página para solicitar vacaciones y visualizar un calendario seleccionable.
 
 import React from 'react';
 
+// SECCIÓN: Definición de datos/propiedades
 interface VacacionesProps {
     setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking') => void;
     vacationDate: Date;
@@ -22,6 +28,7 @@ const Vacaciones: React.FC<VacacionesProps> = ({
     selectedVacationDays,
     renderCalendarDays
 }) => {
+// SECCIÓN: Renderizado visual
     return (
         <div className="sub-view-panel parchment-bg detailed-view">
             {/* Botón de volver por encima de todo */}

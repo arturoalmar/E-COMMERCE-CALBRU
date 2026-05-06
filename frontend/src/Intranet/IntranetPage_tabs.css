@@ -1,0 +1,71 @@
+/* 
+=========================================================
+ 📄 ARCHIVO: IntranetPage_tabs.css
+ 📝 DESCRIPCIÓN: Archivo del proyecto.
+=========================================================
+*/
+
+/* TABS NAVIGATION */
+/* APARTADO: .committee-tabs-nav - Estilos para este elemento */
+.committee-tabs-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1.5rem;
+}
+
+/* APARTADO: .tab-btn-witch - Estilos para este elemento */
+.tab-btn-witch {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-family: "MedievalSharp", cursive;
+  font-size: 1.1rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* APARTADO: .tab-btn-witch:hover - Estilos para este elemento */
+.tab-btn-witch:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+/* APARTADO: .tab-btn-witch.active - Estilos para este elemento */
+.tab-btn-witch.active {
+  background: rgba(140, 92, 255, 0.15);
+  border: 1px solid var(--secondary-color);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(140, 92, 255, 0.2);
+}
+
+/* APARTADO: .fade-in-active - Estilos para este elemento */
+.fade-in-active {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+
+/* APARTADO: .committee-info-box - Estilos para este elemento */
+.committee-info-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* APARTADO: .committee-info-box h4 - Estilos para este elemento */
+.committee-info-box h4 {
+  color: #ffaa00;
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed rgba(255, 170, 0, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+
