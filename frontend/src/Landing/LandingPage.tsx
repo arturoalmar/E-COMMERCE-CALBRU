@@ -78,61 +78,59 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn: _isLogge
         <img src={titleLabel} alt="The Hag's Cauldron" className="title-scroll-img" />
       </div>
 
+      {/* High-Fidelity Potion Button (Moved for better positioning) */}
+      <div className="forest-action-area" style={{ zIndex: 9999 }}>
+        <button 
+          className={`forest-potion-new-btn ${isExploding ? 'exploding' : ''}`} 
+          onClick={handlePotionClick}
+        >
+          <div className="potion-container">
+            <svg className="potion-svg-rebuilt" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <mask id="potion-body-mask">
+                  <path d="M50,125 C75,125 92,105 92,75 C92,45 75,35 50,35 C25,35 8,45 8,75 C8,105 25,125 50,125 Z" fill="white" />
+                </mask>
+                <radialGradient id="glass-gradient" cx="30%" cy="30%" r="70%">
+                  <stop offset="0%" stopColor="white" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="black" stopOpacity="0.1" />
+                </radialGradient>
+              </defs>
+
+              <path className="bottle-glass-back" d="M50,125 C75,125 92,105 92,75 C92,45 75,35 50,35 C25,35 8,45 8,75 C8,105 25,125 50,125 Z" fill="rgba(255,255,255,0.1)" stroke="#3e2723" strokeWidth="2" />
+              
+              <g mask="url(#potion-body-mask)">
+                <rect className="liquid-fill-rebuilt" x="0" y="35" width="100" height="100" />
+                
+                {/* Progressive Bubbles */}
+                <circle className="internal-bubble b1" cx="30" cy="115" r="2" />
+                <circle className="internal-bubble b2" cx="70" cy="110" r="3" />
+                <circle className="internal-bubble b3" cx="50" cy="120" r="1.5" />
+                <circle className="internal-bubble b4" cx="40" cy="105" r="2.5" />
+                <circle className="internal-bubble b5" cx="60" cy="112" r="2" />
+                <circle className="internal-bubble b6" cx="45" cy="118" r="3" />
+              </g>
+
+              <g className="bottle-neck-group">
+                <path className="neck-glass" d="M40,15 L60,15 L62,38 L38,38 Z" fill="rgba(255,255,255,0.1)" stroke="#3e2723" strokeWidth="2" />
+                <rect className="potion-cork-rebuilt" x="38" y="5" width="24" height="12" rx="2" fill="#6d4c41" />
+              </g>
+
+              <path className="bottle-shine" d="M25,55 C15,70 15,85 25,100" fill="none" stroke="white" strokeOpacity="0.3" strokeWidth="4" strokeLinecap="round" />
+            </svg>
+
+            <div className="potion-parchment-label">
+              <span>New Cauldron</span>
+            </div>
+            
+            <span className="potion-deco star">⭐</span>
+            <span className="potion-deco moon">🌙</span>
+          </div>
+        </button>
+      </div>
+
       {/* Main Content */}
       <main className="forest-main">
-
-        {/* Rebuilt High-Fidelity Potion */}
-        <div className="forest-action-area">
-          <button
-            className={`forest-potion-new-btn ${isExploding ? 'exploding' : ''}`}
-            onClick={handlePotionClick}
-          >
-            <div className="potion-container">
-              <svg className="potion-svg-rebuilt" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <mask id="potion-body-mask">
-                    <path d="M50,125 C75,125 92,105 92,75 C92,45 75,35 50,35 C25,35 8,45 8,75 C8,105 25,125 50,125 Z" fill="white" />
-                  </mask>
-                  <radialGradient id="glass-gradient" cx="30%" cy="30%" r="70%">
-                    <stop offset="0%" stopColor="white" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="black" stopOpacity="0.1" />
-                  </radialGradient>
-                </defs>
-
-                <path className="bottle-glass-back" d="M50,125 C75,125 92,105 92,75 C92,45 75,35 50,35 C25,35 8,45 8,75 C8,105 25,125 50,125 Z" />
-
-                <g mask="url(#potion-body-mask)">
-                  <rect className="liquid-fill-rebuilt" x="0" y="35" width="100" height="100" />
-
-                  {/* Progressive Bubbles */}
-                  <circle className="internal-bubble b1" cx="30" cy="115" r="2" />
-                  <circle className="internal-bubble b2" cx="70" cy="110" r="3" />
-                  <circle className="internal-bubble b3" cx="50" cy="120" r="1.5" />
-                  <circle className="internal-bubble b4" cx="40" cy="105" r="2.5" />
-                  <circle className="internal-bubble b5" cx="60" cy="112" r="2" />
-                  <circle className="internal-bubble b6" cx="45" cy="118" r="3" />
-                </g>
-
-                <g className="bottle-neck-group">
-                  <path className="neck-glass" d="M40,15 L60,15 L62,38 L38,38 Z" />
-                  <rect className="potion-cork-rebuilt" x="38" y="5" width="24" height="12" rx="2" />
-                  <line x1="41" y1="22" x2="59" y2="22" className="neck-band" />
-                  <line x1="41" y1="28" x2="59" y2="28" className="neck-band" />
-                </g>
-
-                <path className="bottle-shine" d="M25,55 C15,70 15,85 25,100" fill="none" stroke="white" strokeOpacity="0.3" strokeWidth="4" strokeLinecap="round" />
-                <circle className="bottle-body-glow" cx="50" cy="75" r="42" fill="url(#glass-gradient)" pointerEvents="none" />
-              </svg>
-
-              <div className="potion-parchment-label">
-                <span>Start creating</span>
-              </div>
-
-              <span className="potion-deco star">⭐</span>
-              <span className="potion-deco moon">🌙</span>
-            </div>
-          </button>
-        </div>
+        {/* Main content area */}
       </main>
 
       {/* Footer Info */}

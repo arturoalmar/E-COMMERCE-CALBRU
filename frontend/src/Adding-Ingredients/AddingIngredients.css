@@ -1,14 +1,616 @@
+﻿/* CONFIGURADOR (EL CALDERO MAGICO)
+   ========================================================================== */
+
 /* 
 =========================================================
- 📄 ARCHIVO: AddingIngredients.css
- 📝 DESCRIPCIÓN: Importador maestro del configurador.
+ ðŸ“„ ARCHIVO: AddingIngredients_layout.css
+ ðŸ“ DESCRIPCIÃ“N: Define la cuadrÃ­cula y disposiciÃ³n de los 
+ paneles en el configurador de ingredientes.
 =========================================================
 */
 
-/* ARCHIVO MAESTRO - AddingIngredients */
-/* IMPORTACIÓN: ./AddingIngredients_layout.css */
-@import './AddingIngredients_layout.css';
-/* IMPORTACIÓN: ./AddingIngredients_cauldron.css */
-@import './AddingIngredients_cauldron.css';
-/* IMPORTACIÓN: ./AddingIngredients_animations.css */
-@import './AddingIngredients_animations.css';
+/* 
+=========================================================
+ ðŸ“ LAYOUT DEL CONFIGURADOR ðŸ“
+ Define la estructura de 4 esquinas (ingredientes) y 1 centro (caldero).
+=========================================================
+*/
+/* Layout 2x2 para las esquinas de ingredientes con el caldero en el centro */
+/* APARTADO: .configurator-layout - Estilos para este elemento */
+.configurator-layout {
+  padding-top: 100px;
+  display: grid;
+  grid-template-areas:
+    "tl center tr"
+    "bl center br";
+  gap: calc(3rem - 3px);
+  transform: translateX(-3px);
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: stretch;
+  justify-items: center;
+  animation: fadeInUp 0.8s ease;
+}
+
+/* Estilo de los paneles de las esquinas (EstanterÃƒÂ­as de ingredientes) */
+/* APARTADO: .config-corner - Estilos para este elemento */
+.config-corner {
+  background: linear-gradient(135deg, rgba(18, 6, 43, 0.4), rgba(28, 12, 57, 0.4));
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(191, 136, 255, 0.18);
+  border-radius: 18px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 340px;
+  box-shadow:
+    inset 0 0 20px rgba(0, 0, 0, 0.4),
+    0 10px 28px rgba(36, 12, 97, 0.32);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* APARTADO: .config-corner:hover - Estilos para este elemento */
+.config-corner:hover {
+  border-color: var(--secondary-light);
+  box-shadow:
+    inset 0 0 15px rgba(0, 0, 0, 0.5),
+    0 12px 32px rgba(171, 71, 188, 0.25),
+    0 0 20px rgba(171, 71, 188, 0.3);
+}
+
+/* Detalle estÃƒÂ©tico: "clavos" de madera en las esquinas */
+.config-corner::before,
+/* APARTADO: .config-corner::after - Estilos para este elemento */
+.config-corner::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle at 30% 30%, #666, #222);
+  border-radius: 50%;
+  top: 10px;
+  box-shadow:
+    inset 1px 1px 3px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* APARTADO: .config-corner::before - Estilos para este elemento */
+.config-corner::before {
+  left: 10px;
+}
+
+/* APARTADO: .config-corner::after - Estilos para este elemento */
+.config-corner::after {
+  right: 10px;
+}
+
+/* APARTADO: .corner-tl - Estilos para este elemento */
+.corner-tl {
+  grid-area: tl;
+}
+
+/* APARTADO: .corner-tr - Estilos para este elemento */
+.corner-tr {
+  grid-area: tr;
+}
+
+/* APARTADO: .corner-bl - Estilos para este elemento */
+.corner-bl {
+  grid-area: bl;
+}
+
+/* APARTADO: .corner-br - Estilos para este elemento */
+.corner-br {
+  grid-area: br;
+}
+
+/* APARTADO: .config-corner h3 - Estilos para este elemento */
+.config-corner h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  color: var(--secondary-light);
+  text-shadow:
+    0 0 8px rgba(171, 71, 188, 0.6),
+    1px 1px 2px #000;
+  letter-spacing: 0.1em;
+}
+
+/* APARTADO: .options-grid - Estilos para este elemento */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+/* APARTADO: .option-btn - Estilos para este elemento */
+.option-btn {
+  background: linear-gradient(135deg, #1f140e, #2a1a11);
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+  color: var(--text-main);
+  font-weight: 500;
+  text-align: center;
+  padding: 0.3rem;
+  cursor: pointer;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* APARTADO: .option-btn:hover - Estilos para este elemento */
+.option-btn:hover {
+  background: linear-gradient(135deg, #2d1c15, #3a2618);
+  border-color: var(--text-muted);
+  transform: scale(1.05);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba(124, 179, 66, 0.2);
+}
+
+/* APARTADO: .option-btn.selected - Estilos para este elemento */
+.option-btn.selected {
+  background: linear-gradient(135deg, rgba(171, 71, 188, 0.3), rgba(171, 71, 188, 0.15));
+  border-color: var(--secondary-color);
+  color: var(--secondary-light);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.5),
+    0 0 12px rgba(171, 71, 188, 0.5);
+  font-weight: 600;
+}
+
+/* 
+=========================================================
+
+=========================================================
+*/
+/* 
+=========================================================
+ ðŸ“„ ARCHIVO: AddingIngredients_cauldron.css
+ ðŸ“ DESCRIPCIÃ“N: Estilos especÃ­ficos para la visualizaciÃ³n y animaciÃ³n del caldero central.
+=========================================================
+*/
+
+ ðŸ² TAMAÃ‘O Y POSICIÃ“N DEL CALDERO CENTRAL ðŸ²
+ Modifica ".center-dashboard" para el Ã¡rea invisible redonda.
+ Modifica ".cauldron-image" para la imagen visible de la olla.
+ - Cambia "width" y "height" para hacerlos mÃ¡s grandes/pequeÃ±os.
+ - Usa "margin-top" para subir o bajar todo el bloque.
+=========================================================
+*/
+/* Dashboard Central: El Caldero Magico circular */
+/* APARTADO: .center-dashboard - Estilos para este elemento */
+.center-dashboard {
+  margin-top: 10px;
+  grid-area: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 650px;
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.8rem;
+  box-shadow:
+    0 0 50px rgba(171, 71, 188, 0.4),
+    inset 0 0 80px rgba(0, 0, 0, 0.7),
+    inset 0 20px 40px rgba(171, 71, 188, 0.1);
+  z-index: 50;
+  text-align: center;
+  position: relative;
+  animation: majorGlow 4s ease-in-out infinite;
+  overflow: visible;
+}
+
+/* Imagen y animaciÃƒÂ³n del caldero */
+/* APARTADO: .cauldron-image - Estilos para este elemento */
+.cauldron-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+  animation: cauldron-bob 3s ease-in-out infinite;
+  z-index: 8;
+}
+
+/* APARTADO: .cauldron-placeholder - Estilos para este elemento */
+.cauldron-placeholder {
+  width: 100%;
+  max-width: 320px;
+  padding: 1.2rem 1.5rem;
+  border-radius: 18px;
+  border: 1px dashed rgba(191, 136, 255, 0.32);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  margin: 1rem auto 0;
+}
+
+/* Falling particles into cauldron */
+/* 
+=========================================================
+ ðŸ“„ ARCHIVO: AddingIngredients_animations.css
+ ðŸ“ DESCRIPCIÃ“N: Define las animaciones y efectos de partÃ­culas
+ para el proceso de creaciÃ³n de pociones en el caldero.
+=========================================================
+*/
+
+/* PartÃ­culas que caen dentro del caldero al seleccionar ingredientes */
+/* APARTADO: .falling-particle - Estilos para este elemento */
+.falling-particle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--particle-color);
+  box-shadow:
+    0 0 10px var(--particle-color),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.5);
+  animation: fall-to-cauldron 2s ease-in forwards;
+  top: 0;
+  left: 50%;
+  z-index: 1;
+}
+
+/* APARTADO: .center-dashboard::before - Estilos para este elemento */
+.center-dashboard::before {
+  content: '';
+  position: absolute;
+  bottom: -200px;
+  width: 85%;
+  height: 40%;
+  background: radial-gradient(ellipse 100% 100% at 50% 100%,
+      rgba(124, 179, 66, 0.3),
+      rgba(124, 179, 66, 0.1) 40%,
+      transparent 80%);
+  border-radius: 50% 50% 20% 20%;
+  z-index: 3;
+  animation: cauldron-glow 3s infinite alternate;
+  filter: blur(8px);
+}
+
+/* APARTADO: .center-dashboard::after - Estilos para este elemento */
+.center-dashboard::after {
+  content: '';
+  position: absolute;
+  bottom: -230px;
+  left: 0;
+  right: 0;
+  height: 12%;
+  background: radial-gradient(ellipse 80% 100% at 50% 100%,
+      rgba(171, 71, 188, 0.2),
+      transparent 80%);
+  border-radius: 50%;
+  z-index: 3;
+  filter: blur(10px);
+}
+
+/* APARTADO: .center-dashboard h2 - Estilos para este elemento */
+.center-dashboard h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-light);
+  text-shadow:
+    0 0 15px rgba(124, 179, 66, 0.7),
+    0 0 30px rgba(124, 179, 66, 0.3),
+    1px 1px 3px #000;
+  letter-spacing: 0.1em;
+}
+
+/* APARTADO: .selected-genre-badge - Estilos para este elemento */
+.selected-genre-badge {
+  background: linear-gradient(135deg, rgba(191, 136, 255, 0.24), rgba(191, 136, 255, 0.08));
+  color: var(--secondary-light);
+  padding: 0.7rem 1.6rem;
+  border-radius: 10px;
+  border: 1px solid rgba(191, 136, 255, 0.4);
+  font-size: 0.95rem;
+  margin-top: 0.8rem;
+  display: inline-block;
+  box-shadow: 0 0 16px rgba(191, 136, 255, 0.22);
+  transition: all 0.3s ease;
+}
+
+/* APARTADO: .selected-genre-badge:hover - Estilos para este elemento */
+.selected-genre-badge:hover {
+  box-shadow: 0 0 20px rgba(171, 71, 188, 0.5);
+  transform: scale(1.05);
+}
+
+/* APARTADO: .status-preview - Estilos para este elemento */
+.status-preview {
+  margin: 2.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 40px;
+}
+
+/* APARTADO: .status-preview p - Estilos para este elemento */
+.status-preview p {
+  color: var(--secondary-light);
+  font-style: italic;
+  text-shadow: 0 0 10px rgba(191, 136, 255, 0.35);
+  font-size: 1.05rem;
+  animation: pulse-text 1.5s infinite;
+}
+
+/* APARTADO: .btn-fusionar - Estilos para este elemento */
+.btn-fusionar {
+  background: linear-gradient(135deg, var(--secondary-dark), var(--secondary-color));
+  border: 3px solid rgba(191, 136, 255, 0.9);
+  color: #fff;
+  padding: 1.2rem 3rem;
+  border-radius: 14px;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  width: 90%;
+  animation: pulse 2.5s infinite;
+  margin-top: auto;
+  box-shadow:
+    0 0 22px rgba(111, 53, 161, 0.35),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+/* APARTADO: .btn-fusionar:hover - Estilos para este elemento */
+.btn-fusionar:hover {
+  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+  color: #111;
+  transform: scale(1.08);
+  box-shadow:
+    0 0 44px rgba(111, 53, 161, 0.55),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* APARTADO: .btn-fusionar:active - Estilos para este elemento */
+.btn-fusionar:active {
+  transform: scale(0.98);
+}
+
+/* APARTADO: .btn-fusionar:disabled - Estilos para este elemento */
+.btn-fusionar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  animation: none;
+  border-color: var(--border-color);
+  color: var(--text-muted);
+  background: linear-gradient(135deg, rgba(123, 31, 45, 0.5), rgba(139, 39, 58, 0.5));
+}
+
+/* APARTADO: .btn-back - Estilos para este elemento */
+.btn-back {
+  margin-top: 4rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: 'Almendra', serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+}
+
+/* APARTADO: .btn-back:hover - Estilos para este elemento */
+.btn-back:hover {
+  color: var(--primary-light);
+  border-bottom-color: var(--primary-light);
+  text-shadow: 0 0 10px rgba(124, 179, 66, 0.4);
+  transform: translateX(-3px);
+}
+
+/* ANIMACIÃ“N: fadeInDown */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ANIMACIÃ“N: fadeInUp */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ANIMACIÃ“N: fall-to-cauldron */
+@keyframes fall-to-cauldron {
+  0% {
+    opacity: 1;
+    transform: translateX(var(--particle-x)) translateY(var(--particle-y)) scale(1) rotate(0deg);
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(0) translateY(500px) scale(0.2) rotate(720deg);
+  }
+}
+
+/* ANIMACIÃ“N: cauldron-bob */
+@keyframes cauldron-bob {
+
+  0%,
+  100% {
+    transform: translate(-50%, calc(-27% + 5px));
+  }
+
+  50% {
+    transform: translate(-50%, calc(-30% + 5px));
+  }
+}
+
+/* ANIMACIÃ“N: pulse */
+@keyframes pulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(124, 179, 66, 0.3),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  50% {
+    box-shadow:
+      0 0 40px rgba(124, 179, 66, 0.6),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ANIMACIÃ“N: pulse-text */
+@keyframes pulse-text {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ANIMACIÃ“N: cauldron-glow */
+@keyframes cauldron-glow {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.9) translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.1) translateY(-5px);
+  }
+}
+
+/* ANIMACIÃ“N: majorGlow */
+@keyframes majorGlow {
+
+  0%,
+  100% {
+    border-color: var(--secondary-light);
+  }
+
+  50% {
+    border-color: var(--secondary-color);
+  }
+}
+
+@media (max-width: 1200px) {
+/* APARTADO: .configurator-layout - Estilos para este elemento */
+  .configurator-layout {
+    grid-template-areas:
+      "tl tr"
+      "center center"
+      "bl br";
+    gap: 2rem;
+  }
+
+/* APARTADO: .center-dashboard - Estilos para este elemento */
+  .center-dashboard {
+    width: 450px;
+    height: 380px;
+  }
+}
+
+@media (max-width: 900px) {
+  header h1 {
+    font-size: 3rem;
+  }
+
+/* APARTADO: .configurator-layout - Estilos para este elemento */
+  .configurator-layout {
+    grid-template-areas:
+      "center"
+      "tl"
+      "tr"
+      "bl"
+      "br";
+    gap: 1.5rem;
+  }
+
+/* APARTADO: .config-corner - Estilos para este elemento */
+  .config-corner {
+    max-width: 100%;
+  }
+
+/* APARTADO: .center-dashboard - Estilos para este elemento */
+  .center-dashboard {
+    width: 100%;
+    border-radius: 20px;
+    height: auto;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 600px) {
+/* APARTADO: .app-container - Estilos para este elemento */
+  .app-container {
+    padding: 1.5rem 1rem;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+/* APARTADO: .genre-grid - Estilos para este elemento */
+  .genre-grid {
+    gap: 1.5rem;
+  }
+
+/* APARTADO: .genre-card - Estilos para este elemento */
+  .genre-card {
+    padding: 1.5rem;
+  }
+
+/* APARTADO: .options-grid - Estilos para este elemento */
+  .options-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+
+/* APARTADO: .btn-fusionar - Estilos para este elemento */
+  .btn-fusionar {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+/* ==========================================================================
+*/

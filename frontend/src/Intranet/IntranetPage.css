@@ -1,24 +1,1011 @@
-/* 
+﻿/* 
 =========================================================
- 📄 ARCHIVO: IntranetPage.css
- 📝 DESCRIPCIÓN: Importador maestro de estilos para la Intranet.
+ ðŸ“„ ARCHIVO: IntranetPage_sketch.css
+ ðŸ“ DESCRIPCIÃ“N: Estilos generales del diseÃ±o tipo boceto de la Intranet.
 =========================================================
 */
 
-/* ARCHIVO MAESTRO - IntranetPage */
-/* IMPORTACIÓN: ./IntranetPage_sketch.css */
-@import './IntranetPage_sketch.css';
-/* IMPORTACIÓN: ./IntranetPage_comite.css */
-@import './IntranetPage_comite.css';
-/* IMPORTACIÓN: ./IntranetPage_infographics.css */
-@import './IntranetPage_infographics.css';
-/* IMPORTACIÓN: ./IntranetPage_tabs.css */
-@import './IntranetPage_tabs.css';
-/* IMPORTACIÓN: ./IntranetPage_logros.css */
-@import './IntranetPage_logros.css';
-/* IMPORTACIÓN: ./IntranetPage_beneficios.css */
-@import './IntranetPage_beneficios.css';
-/* IMPORTACIÓN: ./IntranetPage_soporte.css */
-@import './IntranetPage_soporte.css';
-/* IMPORTACIÓN: ./IntranetPage_subnav.css */
-@import './IntranetPage_subnav.css';
+/* INTRANET SKETCH */
+/* APARTADO: .intranet-sketch-layout - Estilos para este elemento */
+.intranet-sketch-layout {
+  padding: 2rem;
+  color: #f4efff;
+}
+
+/* APARTADO: .news-slider-sketch - Estilos para este elemento */
+.news-slider-sketch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(140, 92, 255, 0.15);
+  border: 2px solid rgba(140, 92, 255, 0.3);
+  padding: 2rem;
+  border-radius: 16px;
+  margin: 2rem 0;
+}
+
+/* APARTADO: .slider-control - Estilos para este elemento */
+.slider-control {
+  font-size: 2rem;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+/* APARTADO: .intranet-grid-main - Estilos para este elemento */
+.intranet-grid-main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+  align-items: stretch;
+}
+
+.quick-links-sketch,
+.calendar-sketch,
+/* APARTADO: .org-chart-sketch - Estilos para este elemento */
+.org-chart-sketch {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* APARTADO: .quick-links-sketch ul - Estilos para este elemento */
+.quick-links-sketch ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* APARTADO: .quick-links-sketch li - Estilos para este elemento */
+.quick-links-sketch li {
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+}
+
+.calendar-placeholder-box,
+/* APARTADO: .org-chart-box - Estilos para este elemento */
+.org-chart-box {
+  width: 100%;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+/* APARTADO: .org-chart-sketch - Estilos para este elemento */
+.org-chart-sketch {
+  margin-bottom: 2rem;
+}
+
+/* APARTADO: .intranet-info-footer - Estilos para este elemento */
+.intranet-info-footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* APARTADO: .form-box - Estilos para este elemento */
+.form-box {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 16px;
+}
+
+/* APARTADO: .form-box textarea - Estilos para este elemento */
+.form-box textarea {
+  width: 100%;
+  height: 150px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+
+/* 
+=========================================================
+ ðŸ“„ ARCHIVO: IntranetPage_subnav.css
+ ðŸ“ DESCRIPCIÃ“N: Estilos para la sub-navegaciÃ³n de la Intranet.
+=========================================================
+*/
+
+/* INTRANET SUB-NAVIGATION */
+/* APARTADO: .intranet-sub-nav - Estilos para este elemento */
+.intranet-sub-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(140, 92, 255, 0.2);
+  background: rgba(140, 92, 255, 0.03);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+/* APARTADO: .sub-nav-btn - Estilos para este elemento */
+.sub-nav-btn {
+  background: rgba(140, 92, 255, 0.1);
+  border: 1px solid rgba(140, 92, 255, 0.3);
+  color: #f4efff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Almendra', serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+/* APARTADO: .sub-nav-btn:hover - Estilos para este elemento */
+.sub-nav-btn:hover {
+  background: rgba(140, 92, 255, 0.2);
+  border-color: #bf88ff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(140, 92, 255, 0.2);
+}
+
+/* APARTADO: .sub-nav-btn.active - Estilos para este elemento */
+.sub-nav-btn.active {
+  background: #8c5cff;
+  color: white;
+  border-color: #bf88ff;
+  box-shadow: 0 0 15px rgba(140, 92, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+/* APARTADO: .intranet-sub-nav - Estilos para este elemento */
+  .intranet-sub-nav {
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+/* APARTADO: .sub-nav-btn - Estilos para este elemento */
+  .sub-nav-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+
+/* ==========================================================================
+*/
+/* 
+=========================================================
+ ðŸ“„ ARCHIVO: IntranetPage_tabs.css
+ ðŸ“ DESCRIPCIÃ“N: Estilos para las pestaÃ±as de navegaciÃ³n de la Intranet.
+=========================================================
+*/
+
+/* TABS NAVIGATION */
+/* APARTADO: .committee-tabs-nav - Estilos para este elemento */
+.committee-tabs-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1.5rem;
+}
+
+/* APARTADO: .tab-btn-witch - Estilos para este elemento */
+.tab-btn-witch {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-family: "MedievalSharp", cursive;
+  font-size: 1.1rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* APARTADO: .tab-btn-witch:hover - Estilos para este elemento */
+.tab-btn-witch:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+/* APARTADO: .tab-btn-witch.active - Estilos para este elemento */
+.tab-btn-witch.active {
+  background: rgba(140, 92, 255, 0.15);
+  border: 1px solid var(--secondary-color);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(140, 92, 255, 0.2);
+}
+
+/* APARTADO: .fade-in-active - Estilos para este elemento */
+.fade-in-active {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+
+/* APARTADO: .committee-info-box - Estilos para este elemento */
+.committee-info-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* APARTADO: .committee-info-box h4 - Estilos para este elemento */
+.committee-info-box h4 {
+  color: #ffaa00;
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed rgba(255, 170, 0, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+
+/* 
+=========================================================
+ ðŸ“„ ARCHIVO: IntranetPage_beneficios.css
+ ðŸ“ DESCRIPCIÃ“N: Estilos para la secciÃ³n de beneficios en la Intranet.
+=========================================================
+*/
+
+/* BENEFICIOS STYLES */
+/* APARTADO: .benefits-grid - Estilos para este elemento */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+/* APARTADO: .benefit-card - Estilos para este elemento */
+.benefit-card {
+  background: linear-gradient(145deg, rgba(30, 20, 40, 0.6), rgba(20, 10, 25, 0.8));
+  border: 1px solid rgba(140, 92, 255, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* APARTADO: .benefit-card:hover - Estilos para este elemento */
+.benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+}
+
+/* APARTADO: .benefit-icon - Estilos para este elemento */
+.benefit-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 10px rgba(240, 200, 110, 0.5));
+}
+
+/* APARTADO: .benefit-card h3 - Estilos para este elemento */
+.benefit-card h3 {
+  color: var(--secondary-light);
+  margin-bottom: 1rem;
+  font-family: "MedievalSharp", cursive;
+}
+
+/* APARTADO: .benefit-card p - Estilos para este elemento */
+.benefit-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* 
+=========================================================
+ ðŸ“„ ARCHIVO: IntranetPage_comite.css
+ ðŸ“ DESCRIPCIÃ“N: Estilos para la secciÃ³n del ComitÃ© de Empresa en la Intranet.
+=========================================================
+*/
+
+/* ENHANCED COMITE DE EMPRESA STYLES */
+/* Who we are */
+/* APARTADO: .who-we-are-content - Estilos para este elemento */
+.who-we-are-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.intro-text,
+/* APARTADO: .closing-text - Estilos para este elemento */
+.closing-text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #fff;
+}
+
+/* APARTADO: .mission-vision-grid - Estilos para este elemento */
+.mission-vision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+
+/* APARTADO: .mv-card - Estilos para este elemento */
+.mv-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(140, 92, 255, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+/* APARTADO: .mv-card:hover - Estilos para este elemento */
+.mv-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(140, 92, 255, 0.5);
+}
+
+/* APARTADO: .mv-icon - Estilos para este elemento */
+.mv-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* APARTADO: .mv-card h4 - Estilos para este elemento */
+.mv-card h4 {
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-family: "MedievalSharp", cursive;
+}
+
+/* APARTADO: .mv-card p - Estilos para este elemento */
+.mv-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Enhanced Organigram */
+/* APARTADO: .enhanced-org - Estilos para este elemento */
+.enhanced-org {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+/* APARTADO: .org-level - Estilos para este elemento */
+.org-level {
+  display: flex;
+  justify-content: center;
+}
+
+/* APARTADO: .org-row-multi - Estilos para este elemento */
+.org-row-multi {
+  display: flex;
+  gap: 2rem;
+}
+
+/* APARTADO: .org-branch - Estilos para este elemento */
+.org-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* APARTADO: .org-node - Estilos para este elemento */
+.org-node {
+  background: linear-gradient(145deg, rgba(30, 20, 40, 0.8), rgba(20, 10, 25, 0.9));
+  border: 2px solid var(--secondary-color);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(140, 92, 255, 0.15);
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+/* APARTADO: .org-node:hover - Estilos para este elemento */
+.org-node:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(140, 92, 255, 0.3);
+  border-color: var(--gold);
+}
+
+/* APARTADO: .org-node.leader - Estilos para este elemento */
+.org-node.leader {
+  border-color: var(--gold);
+  box-shadow: 0 5px 20px rgba(240, 200, 110, 0.2);
+}
+
+/* APARTADO: .org-avatar - Estilos para este elemento */
+.org-avatar {
+  width: 50px;
+  height: 50px;
+  background: var(--secondary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 auto 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* APARTADO: .org-avatar.er - Estilos para este elemento */
+.org-avatar.er {
+  background: linear-gradient(135deg, #f0c86e, #d4a017);
+  color: #333;
+}
+
+/* APARTADO: .org-avatar.ma - Estilos para este elemento */
+.org-avatar.ma {
+  background: linear-gradient(135deg, #8c5cff, #5f268b);
+}
+
+/* APARTADO: .org-avatar.ld - Estilos para este elemento */
+.org-avatar.ld {
+  background: linear-gradient(135deg, #ff5555, #cc0000);
+}
+
+/* APARTADO: .org-avatar.tf - Estilos para este elemento */
+.org-avatar.tf {
+  background: linear-gradient(135deg, #55aaff, #0066cc);
+}
+
+/* APARTADO: .org-node h4 - Estilos para este elemento */
+.org-node h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+/* APARTADO: .org-node p - Estilos para este elemento */
+.org-node p {
+  margin: 0.3rem 0 0;
+  color: #f4efff;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+/* APARTADO: .org-dept - Estilos para este elemento */
+.org-dept {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* APARTADO: .org-connect-vertical - Estilos para este elemento */
+.org-connect-vertical {
+  width: 2px;
+  height: 40px;
+  background: var(--secondary-color);
+}
+
+/* APARTADO: .org-connect-vertical.short - Estilos para este elemento */
+.org-connect-vertical.short {
+  height: 30px;
+}
+
+/* APARTADO: .org-horizontal-line - Estilos para este elemento */
+.org-horizontal-line {
+  width: calc(100% - 200px);
+  /* Aproximado para conectar las ramas */
+  max-width: 440px;
+  height: 2px;
+  background: var(--secondary-color);
+}
+
+
+/* 
+=========================================================
+ ðŸ“„ ARCHIVO: IntranetPage_infographics.css
+ ðŸ“ DESCRIPCIÃ“N: Estilos para infografÃ­as y grÃ¡ficos informativos de la Intranet.
+=========================================================
+*/
+
+/* PREMIUM INFOGRAPHICS */
+/* APARTADO: .premium-info-card - Estilos para este elemento */
+.premium-info-card {
+  padding: 2rem !important;
+  background: linear-gradient(145deg, rgba(30, 20, 40, 0.9), rgba(20, 10, 25, 0.95)) !important;
+  border-top: 4px solid var(--secondary-color) !important;
+}
+
+/* APARTADO: .alert-card - Estilos para este elemento */
+.alert-card {
+  border-top: 4px solid #ff5555 !important;
+}
+
+/* APARTADO: .info-card-header - Estilos para este elemento */
+.info-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+/* APARTADO: .info-icon - Estilos para este elemento */
+.info-icon {
+  font-size: 2.5rem;
+  background: rgba(140, 92, 255, 0.1);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(140, 92, 255, 0.3);
+}
+
+/* APARTADO: .alert-icon - Estilos para este elemento */
+.alert-icon {
+  background: rgba(255, 85, 85, 0.1);
+  border-color: rgba(255, 85, 85, 0.3);
+}
+
+/* APARTADO: .info-card-header h3 - Estilos para este elemento */
+.info-card-header h3 {
+  margin: 0 0 0.2rem 0 !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 1.4rem;
+}
+
+/* APARTADO: .legal-ref - Estilos para este elemento */
+.legal-ref {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* APARTADO: .info-intro - Estilos para este elemento */
+.info-intro {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: #f4efff;
+}
+
+/* Timeline */
+/* APARTADO: .timeline-witch - Estilos para este elemento */
+.timeline-witch {
+  position: relative;
+  padding-left: 2rem;
+}
+
+/* APARTADO: .timeline-witch::before - Estilos para este elemento */
+.timeline-witch::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--secondary-color);
+  opacity: 0.5;
+}
+
+/* APARTADO: .timeline-item - Estilos para este elemento */
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+/* APARTADO: .timeline-marker - Estilos para este elemento */
+.timeline-marker {
+  position: absolute;
+  left: -2.85rem;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: var(--dark-bg);
+  border: 2px solid var(--secondary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.85rem;
+  z-index: 2;
+}
+
+/* APARTADO: .timeline-content h4 - Estilos para este elemento */
+.timeline-content h4 {
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+/* APARTADO: .timeline-content p - Estilos para este elemento */
+.timeline-content p {
+  font-size: 0.95rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+/* Options List */
+/* APARTADO: .options-list - Estilos para este elemento */
+.options-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+/* APARTADO: .options-list li - Estilos para este elemento */
+.options-list li {
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+/* APARTADO: .badge-green - Estilos para este elemento */
+.badge-green {
+  background: #28a745;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* APARTADO: .badge-red - Estilos para este elemento */
+.badge-red {
+  background: #dc3545;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* APARTADO: .badge-purple - Estilos para este elemento */
+.badge-purple {
+  background: #8c5cff;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* Grid 2 Cols */
+/* APARTADO: .info-grid-2col - Estilos para este elemento */
+.info-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 800px) {
+/* APARTADO: .info-grid-2col - Estilos para este elemento */
+  .info-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* APARTADO: .info-box - Estilos para este elemento */
+.info-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* APARTADO: .info-box h4 - Estilos para este elemento */
+.info-box h4 {
+  color: #ffaa00;
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed rgba(255, 170, 0, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+/* APARTADO: .bullet-list - Estilos para este elemento */
+.bullet-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* APARTADO: .bullet-list li - Estilos para este elemento */
+.bullet-list li {
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+/* APARTADO: .action-step - Estilos para este elemento */
+.action-step {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* APARTADO: .action-num - Estilos para este elemento */
+.action-num {
+  background: var(--gold);
+  color: #000;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* APARTADO: .action-step p - Estilos para este elemento */
+.action-step p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+
+/* 
+=========================================================
+ ðŸ“„ ARCHIVO: IntranetPage_soporte.css
+ ðŸ“ DESCRIPCIÃ“N: Estilos para la secciÃ³n de soporte de la Intranet.
+=========================================================
+*/
+
+/* SOPORTE IT STYLES */
+/* APARTADO: .support-layout - Estilos para este elemento */
+.support-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+/* APARTADO: .support-layout - Estilos para este elemento */
+  .support-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* APARTADO: .support-sidebar - Estilos para este elemento */
+.support-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* APARTADO: .support-contacts p - Estilos para este elemento */
+.support-contacts p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* APARTADO: .faq-card details - Estilos para este elemento */
+.faq-card details {
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* APARTADO: .faq-card summary - Estilos para este elemento */
+.faq-card summary {
+  padding: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  outline: none;
+}
+
+/* APARTADO: .faq-card details p - Estilos para este elemento */
+.faq-card details p {
+  padding: 0 1rem 1rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* APARTADO: .form-row-2col - Estilos para este elemento */
+.form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+/* APARTADO: .form-row-2col - Estilos para este elemento */
+  .form-row-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* APARTADO: .success-message - Estilos para este elemento */
+.success-message {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  border-radius: 12px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* APARTADO: .success-message h4 - Estilos para este elemento */
+.success-message h4 {
+  color: #5cb85c;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+
+
+/* 
+=========================================================
+ ðŸ“„ ARCHIVO: IntranetPage_logros.css
+ ðŸ“ DESCRIPCIÃ“N: Estilos especÃ­ficos para la secciÃ³n de logros y metas de la Intranet.
+=========================================================
+*/
+
+/* LOGROS Y METAS STYLES */
+
+/* Achievements Grid */
+/* APARTADO: .achievements-grid - Estilos para este elemento */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* APARTADO: .achievement-card - Estilos para este elemento */
+.achievement-card {
+  display: flex;
+  gap: 1.2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(240, 200, 110, 0.2);
+  border-left: 4px solid var(--gold);
+  padding: 1.5rem;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* APARTADO: .achievement-card:hover - Estilos para este elemento */
+.achievement-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(240, 200, 110, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* APARTADO: .ach-icon - Estilos para este elemento */
+.ach-icon {
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* APARTADO: .ach-content h4 - Estilos para este elemento */
+.ach-content h4 {
+  color: #fff;
+  margin-bottom: 0.2rem;
+  font-size: 1.1rem;
+}
+
+/* APARTADO: .ach-date - Estilos para este elemento */
+.ach-date {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+/* APARTADO: .ach-content p - Estilos para este elemento */
+.ach-content p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Goals Timeline */
+/* APARTADO: .goals-timeline - Estilos para este elemento */
+.goals-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* APARTADO: .goal-pro-card - Estilos para este elemento */
+.goal-pro-card {
+  background: linear-gradient(145deg, rgba(30, 20, 40, 0.8), rgba(20, 10, 25, 0.9));
+  border: 1px solid rgba(140, 92, 255, 0.3);
+  border-radius: 12px;
+  padding: 1.8rem;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* APARTADO: .goal-header - Estilos para este elemento */
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+/* APARTADO: .goal-header h4 - Estilos para este elemento */
+.goal-header h4 {
+  color: var(--secondary-light);
+  font-size: 1.25rem;
+  margin: 0;
+  font-family: "MedievalSharp", cursive;
+}
+
+/* APARTADO: .goal-status - Estilos para este elemento */
+.goal-status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* APARTADO: .goal-status.in-progress - Estilos para este elemento */
+.goal-status.in-progress {
+  background: rgba(140, 92, 255, 0.2);
+  color: #d7b3ff;
+  border: 1px solid #8c5cff;
+}
+
+/* APARTADO: .goal-status.blocked - Estilos para este elemento */
+.goal-status.blocked {
+  background: rgba(255, 170, 0, 0.2);
+  color: #ffcc00;
+  border: 1px solid #ffaa00;
+}
+
+/* APARTADO: .goal-status.close - Estilos para este elemento */
+.goal-status.close {
+  background: rgba(40, 167, 69, 0.2);
+  color: #5cb85c;
+  border: 1px solid #28a745;
+}
+
+/* APARTADO: .goal-pro-card>p - Estilos para este elemento */
+.goal-pro-card>p {
+  color: #ddd;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* APARTADO: .progress-container - Estilos para este elemento */
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+}
+
+/* APARTADO: .progress-bar - Estilos para este elemento */
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease-in-out;
+}
+
+/* APARTADO: .progress-text - Estilos para este elemento */
+.progress-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+

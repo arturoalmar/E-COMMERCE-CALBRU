@@ -8,9 +8,15 @@
 /* IMPORTACIÓN: https://fonts.googleapis.com/css2?family=MedievalSharp&family=Almendra+Display&family=Uncial+Antiqua&display=swap */
 @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Almendra+Display&family=Uncial+Antiqua&display=swap');
 
-/* ==========================================================================
-   ESTILOS GLOBALES DE LA APLICACIÓN
-   ========================================================================== */
+/* BLOQUEO TOTAL DE SCROLL: Asegura que la Landing sea un menú estático */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden !important;
+  position: fixed; /* Evita cualquier movimiento inercial en móviles */
+}
 
 /* APARTADO: .app-container - Estilos para este elemento */
 .app-container {
@@ -64,6 +70,7 @@ body {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -76,6 +83,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -88,6 +96,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -96,11 +105,14 @@ body {
 
 /* ANIMACIÓN: pulse */
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow:
       0 0 20px rgba(124, 179, 66, 0.3),
       inset 0 -2px 6px rgba(0, 0, 0, 0.3);
   }
+
   50% {
     box-shadow:
       0 0 40px rgba(124, 179, 66, 0.6),
@@ -110,9 +122,12 @@ body {
 
 /* ANIMACIÓN: pulse-text */
 @keyframes pulse-text {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.7;
   }
@@ -124,9 +139,11 @@ body {
     opacity: 1;
     transform: translateX(var(--particle-x)) translateY(var(--particle-y)) scale(1) rotate(0deg);
   }
+
   85% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     transform: translateX(0) translateY(500px) scale(0.2) rotate(720deg);
@@ -135,9 +152,12 @@ body {
 
 /* ANIMACIÓN: cauldron-bob */
 @keyframes cauldron-bob {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(-50%, calc(-27% + 5px));
   }
+
   50% {
     transform: translate(-50%, calc(-30% + 5px));
   }
@@ -149,6 +169,7 @@ body {
     opacity: 0.5;
     transform: scale(0.9) translateY(5px);
   }
+
   100% {
     opacity: 1;
     transform: scale(1.1) translateY(-5px);
@@ -157,9 +178,12 @@ body {
 
 /* ANIMACIÓN: majorGlow */
 @keyframes majorGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     border-color: var(--secondary-light);
   }
+
   50% {
     border-color: var(--secondary-color);
   }
@@ -233,14 +257,16 @@ body {
    ========================================================================== */
 
 @media (max-width: 768px) {
-/* APARTADO: .app-container - Estilos para este elemento */
+
+  /* APARTADO: .app-container - Estilos para este elemento */
   .app-container {
     padding: 0 1rem 2rem;
   }
 }
 
 @media (max-width: 600px) {
-/* APARTADO: .app-container - Estilos para este elemento */
+
+  /* APARTADO: .app-container - Estilos para este elemento */
   .app-container {
     padding: 1.5rem 1rem;
   }
