@@ -92,7 +92,8 @@
     width: 100vw;
     height: 100vh;
     position: relative;
-    overflow: hidden !important; /* Garantía de no scroll interno */
+    overflow: hidden !important;
+    /* Garantía de no scroll interno */
     background-color: #dcd6c5;
     font-family: "Almendra", serif;
     display: flex;
@@ -100,11 +101,11 @@
 }
 
 .forest-bg-layer {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-size: cover;
     background-position: center;
     z-index: 1;
@@ -125,7 +126,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 900px;
+    max-width: 1400px;
 }
 
 .logo-center {
@@ -140,24 +141,30 @@
     display: flex;
     align-items: center;
     gap: 2rem;
+    min-width: 300px;
+}
+
+.nav-right {
+    justify-content: flex-end;
 }
 
 .nav-left .nav-btn,
 .nav-right .nav-btn {
     text-decoration: none;
-    background: rgba(121, 58, 119, 0.35);
-    border: 1px solid rgba(121, 58, 119, 0.45);
-    padding: 0.5rem 1rem;
-    min-width: 160px;
-    border-radius: 8px;
-    color: #4a3728;
+    background: rgba(121, 58, 119, 0.85); /* Much more opaque */
+    border: 2px solid var(--gold); /* Gold border for visibility */
+    padding: 0.7rem 1.2rem;
+    min-width: 180px;
+    border-radius: 12px;
+    color: #ffffff; /* White text for contrast */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     font-family: "Almendra", serif;
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     letter-spacing: 1.5px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 15px rgba(121, 58, 119, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(121, 58, 119, 0.3);
     position: relative;
 }
 
@@ -212,19 +219,20 @@
 }
 
 .forest-sign-in-btn {
-    background: rgba(121, 58, 119, 0.25);
+    background: rgba(121, 58, 119, 0.9);
     backdrop-filter: blur(8px);
-    color: #4a3728;
-    border: 1px solid rgb(121, 58, 119);
-    padding: 0.5rem 1.5rem;
-    border-radius: 8px;
+    color: #ffffff;
+    border: 2px solid var(--gold);
+    padding: 0.7rem 2rem;
+    border-radius: 12px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-family: "Almendra", serif;
     letter-spacing: 1px;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .forest-sign-in-btn::before,
@@ -264,6 +272,48 @@
     box-shadow: 0 8px 25px rgba(121, 58, 119, 0.4);
 }
 
+/* User Profile Badge Styles */
+.user-profile-badge {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    background: rgba(121, 58, 119, 0.9) !important;
+    border: 2px solid var(--gold) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+    padding: 0.4rem 1.2rem;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.user-profile-badge:hover {
+    background: rgb(121, 58, 119) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(240, 200, 110, 0.4) !important;
+}
+
+.user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(240, 200, 110, 0.1);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(240, 200, 110, 0.3);
+}
+
+.user-info-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.user-info-text span {
+    line-height: 1.2;
+}
+
 .forest-main {
     position: relative;
     z-index: 10;
@@ -274,10 +324,10 @@
 .title-banner-wrapper {
     position: absolute;
     left: 50%;
-    top: 45%;
+    top: 38%; /* Bajado desde 28% */
     transform: translate(-50%, -50%);
-    max-width: 957px;
-    width: 100%;
+    max-width: 850px;
+    width: 90%;
     animation: banner-float 4s infinite alternate ease-in-out;
     z-index: 15;
 }
@@ -301,7 +351,7 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 50%;
+    top: 65%; /* Bajado desde 50% */
     z-index: 20;
 }
 
@@ -320,7 +370,7 @@
 
 .potion-container {
     position: relative;
-    width: 192px;
+    width: 140px; /* Reducido desde 192px */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -442,7 +492,7 @@
     color: #3e2723;
     font-family: "Almendra", serif;
     font-weight: 800;
-    font-size: 1.8rem;
+    font-size: 1.3rem; /* Reducido proporcionalmente */
     text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.3);
 }
 

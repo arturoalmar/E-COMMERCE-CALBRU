@@ -9,13 +9,15 @@
 @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Almendra+Display&family=Uncial+Antiqua&display=swap');
 
 /* BLOQUEO TOTAL DE SCROLL: Asegura que la Landing sea un menú estático */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100vh;
   width: 100vw;
   overflow: hidden !important;
-  position: fixed; /* Evita cualquier movimiento inercial en móviles */
+  position: fixed;
+  /* Evita cualquier movimiento inercial en móviles */
 }
 
 /* APARTADO: .app-container - Estilos para este elemento */
@@ -28,7 +30,18 @@ html, body {
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  transition: transform 0.45s cubic-bezier(0.7, 0, 0.3, 1) !important;
+  transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1) !important;
+}
+
+/* Modo pantalla completa para Login/Registro */
+.app-container.full-width-page {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.app-container.full-width-page .main-content {
+  padding-top: 0 !important;
 }
 
 /* APARTADO: .app-container::before - Estilos para este elemento */
@@ -48,11 +61,10 @@ html, body {
 
 /* Background global */
 body {
-  background-image: url("./assets/Fondo de tierra.png");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  background: var(--bg-dark); /* Fondo sólido oscuro, sin imágenes de huesos */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 /* APARTADO: .main-content - Estilos para este elemento */

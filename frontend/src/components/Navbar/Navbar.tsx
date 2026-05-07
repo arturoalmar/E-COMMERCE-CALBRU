@@ -16,12 +16,13 @@ interface NavbarProps {
   isWorker: boolean;
   onNavigate: (page: Page) => void;
   isLoggedIn: boolean;
+  user?: { username: string } | null;
   onLoginToggle: () => void;
   hideMenuToggle?: boolean;
 }
 
 // SECCIÓN: Componente o Función lógica
-const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, onLoginToggle, hideMenuToggle }) => {
+const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, user, onLoginToggle, hideMenuToggle }) => {
   // Estado local para controlar si el menú desplegable está abierto o cerrado.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -69,7 +70,7 @@ const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, onLog
 
       <div className="navbar-right">
         <button className="user-profile" onClick={onLoginToggle}>
-          <span className="user-name">{isLoggedIn ? 'User' : 'Sign In'}</span>
+          <span className="user-name">{isLoggedIn && user ? user.username : 'Sign In'}</span>
           <div className="user-icon">
             {isLoggedIn ? (
               <img 

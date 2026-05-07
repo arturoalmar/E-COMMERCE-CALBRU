@@ -1,142 +1,157 @@
 /* 
 =========================================================
  📄 ARCHIVO: LoginPage.css
- 📝 DESCRIPCIÓN: Estilos para la interfaz de acceso y el efecto de sello de cera.
+ 📝 DESCRIPCIÓN: Diseño de alta fidelidad, inmersivo y cómodo.
 =========================================================
 */
 
-/* LOGIN SKETCH */
-/* APARTADO: .login-page-sketch - Estilos para este elemento */
 .login-page-sketch {
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("./assets/forest_house_bg.png");
+  background-image: url("../assets/forest_house_bg.png"); /* Imagen de la casa */
   background-size: cover;
-  background-position: center 60%;
+  background-position: center;
   background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  overflow: hidden;
 }
 
-/* APARTADO: .login-card-sketch - Estilos para este elemento */
+/* Efecto de oscurecimiento suave sobre el fondo */
+.login-page-sketch::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+  z-index: -1;
+}
+
 .login-card-sketch {
-  background: none;
-  backdrop-filter: none;
-  padding: 1.8rem;
-  border: none;
-  width: 100%;
-  max-width: 400px;
+  background: rgba(15, 12, 20, 0.94);
+  backdrop-filter: blur(12px);
+  padding: 1.5rem 2.2rem; /* Reducido verticalmente */
+  border: 2px solid var(--gold, #f0c86e);
+  border-radius: 28px;
+  width: 90%;
+  max-width: 420px;
   text-align: center;
-  box-shadow: none;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 20px rgba(240, 200, 110, 0.1);
+  animation: card-entrance 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* APARTADO: .login-card-sketch h1 - Estilos para este elemento */
+@keyframes card-entrance {
+  from { opacity: 0; transform: scale(0.9) translateY(30px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
 .login-card-sketch h1 {
-  color: #000;
-  margin-top: 5%;
-  margin-bottom: 2rem;
-  font-size: 3rem;
+  color: var(--gold, #f0c86e);
+  margin-bottom: 0.2rem; /* Reducido */
+  font-size: 2.2rem; /* Reducido */
+  font-family: 'Almendra', serif;
+  text-shadow: 0 4px 8px rgba(0,0,0,0.5);
 }
 
-/* APARTADO: .login-card-sketch input - Estilos para este elemento */
-.login-card-sketch input {
-  width: 85%;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  margin-left: auto;
-  margin-right: auto;
+.login-card-sketch p {
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1rem; /* Reducido */
+  font-size: 0.85rem; /* Reducido */
+  font-style: italic;
+}
+
+.input-group {
+  margin-bottom: 0.8rem; /* Reducido significativamente */
+  text-align: left;
+}
+
+.input-group label {
   display: block;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 0.2rem; /* Reducido */
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem; /* Reducido */
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.login-card-sketch input {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(240, 200, 110, 0.2);
   border-radius: 12px;
-  color: #000;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s;
 }
 
-/* APARTADO: .login-card-sketch input::placeholder - Estilos para este elemento */
-.login-card-sketch input::placeholder {
-  color: rgba(0, 0, 0, 0.5);
+.login-card-sketch input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--gold, #f0c86e);
+  box-shadow: 0 0 15px rgba(240, 200, 110, 0.2);
 }
 
-/* APARTADO: .btn-enter - Estilos para este elemento */
-.btn-enter {
-  width: 90px;
-  height: 90px;
-  background: rgba(128, 0, 0, 0.05);
-  border: 2px dashed #800000;
-  border-radius: 50%;
-  color: #800000;
+.btn-enter-magical {
+  width: 100%;
+  padding: 0.8rem; /* Reducido */
+  background: linear-gradient(135deg, #793a77 0%, #5728a1 100%);
+  border: 2px solid var(--gold, #f0c86e);
+  border-radius: 14px;
+  color: white;
   font-weight: bold;
+  font-size: 1.1rem; /* Reducido */
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-family: 'Almendra', serif;
+  letter-spacing: 2px;
+  margin-top: 0.5rem; /* Reducido */
+}
+
+.btn-enter-magical:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(121, 58, 119, 0.6);
+  filter: brightness(1.15);
+}
+
+.login-divider {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 2rem auto 0;
-  text-transform: uppercase;
+  margin: 1.5rem 0;
+}
+
+.login-divider hr {
+  flex: 1;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-divider span {
+  padding: 0 15px;
+  color: rgba(255, 255, 255, 0.3);
   font-size: 0.8rem;
 }
 
-/* APARTADO: .btn-enter:hover - Estilos para este elemento */
-.btn-enter:hover {
-  background: rgba(128, 0, 0, 0.2);
-}
-
-/* ANIMACIÓN DE SELLO DE CERA */
-/* APARTADO: .btn-enter.sealing - Estilos para este elemento */
-.btn-enter.sealing {
-  position: relative;
-  overflow: visible;
-  pointer-events: none;
-  background: transparent !important;
-  border-color: transparent !important;
-}
-
-/* APARTADO: .wax-seal - Estilos para este elemento */
-.wax-seal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 95px;
-  /* Ligeramente mayor que el botón para cubrirlo */
-  height: 95px;
-  background: radial-gradient(circle, #8b0000 70%, #5a0000 100%);
-  border-radius: 50%;
-  animation: seal-impact 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-}
-
-/* APARTADO: .wax-seal::after - Estilos para este elemento */
-.wax-seal::after {
-  content: 'C';
-  /* Letra C de Calbru */
-  color: rgba(240, 200, 110, 0.8);
-  font-size: 2.5rem;
+.btn-toggle-auth-prominent {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.8rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
   font-family: 'Almendra', serif;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  font-weight: bold;
 }
 
-/* ANIMACIÓN: seal-impact */
-@keyframes seal-impact {
-  0% {
-    transform: translate(-50%, -50%) scale(5);
-    opacity: 0;
-    filter: blur(10px);
-  }
-
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-    filter: blur(0);
-  }
+.btn-toggle-auth-prominent:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border-color: var(--gold, #f0c86e);
 }
-
-
-
-

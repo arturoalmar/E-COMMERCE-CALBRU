@@ -12,7 +12,7 @@ import './MyCauldronsPage.css';
 
 // SECCIÓN: Componente o Función lógica
 const MyCauldronsPage: React.FC = () => {
-// SECCIÓN: Renderizado visual
+  // SECCIÓN: Renderizado visual
   return (
     <div className="my-cauldrons-page" style={{ padding: '100px 2rem 2rem', color: 'white' }}>
       <h1>Mis Calderos</h1>
