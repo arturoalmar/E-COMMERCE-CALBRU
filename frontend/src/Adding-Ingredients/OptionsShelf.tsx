@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: OptionsShelf.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Estante interactivo que contiene los ingredientes seleccionables.
  */
 
 // OptionsShelf.tsx

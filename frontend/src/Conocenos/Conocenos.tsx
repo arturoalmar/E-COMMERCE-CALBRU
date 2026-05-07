@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: Conocenos.tsx
- * 📝 DESCRIPCIÓN: Información sobre nosotros.
+ * 📝 DESCRIPCIÓN: Página informativa que presenta el proyecto y reseñas de usuarios.
  */
 
 // Conocenos.tsx

@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: IntranetPage.tsx
- * 📝 DESCRIPCIÓN: Portal del empleado.
+ * 📝 DESCRIPCIÓN: Componente principal del portal del empleado (Intranet).
  */
 
 // IntranetPage.tsx

@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: LoginPage.tsx
- * 📝 DESCRIPCIÓN: Formulario de acceso.
+ * 📝 DESCRIPCIÓN: Página de login y registro con integración de backend.
  */
 
 // LoginPage.tsx

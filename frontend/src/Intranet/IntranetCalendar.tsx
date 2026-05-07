@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: IntranetCalendar.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Componente de calendario interactivo para la Intranet.
  */
 
 // IntranetCalendar.tsx

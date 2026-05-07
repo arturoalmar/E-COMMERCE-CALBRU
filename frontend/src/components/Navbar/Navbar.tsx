@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: Navbar.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Componente de la barra de navegación superior de la aplicación.
  */
 
 import React, { useState } from 'react';

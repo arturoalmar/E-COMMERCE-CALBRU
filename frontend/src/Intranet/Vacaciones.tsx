@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: Vacaciones.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Componente para la gestión de vacaciones en la Intranet.
  */
 
 // Vacaciones.tsx

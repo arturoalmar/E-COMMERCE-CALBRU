@@ -26,26 +26,26 @@ interface LandingPageProps {
 const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn: _isLoggedIn, isWorker: _isWorker }) => {
   const [isExploding, setIsExploding] = useState(false);
 
-// SECCIÓN: Componente o Función lógica
+  // SECCIÓN: Componente o Función lógica
   const handlePotionClick = () => {
     if (isExploding) return;
     setIsExploding(true);
-    
+
     setTimeout(() => {
       window.dispatchEvent(new CustomEvent('potion-splash'));
-      
+
       setTimeout(() => {
         setPage('creator');
-      }, 500); 
-    }, 400); 
+      }, 500);
+    }, 400);
   };
 
-// SECCIÓN: Renderizado visual
+  // SECCIÓN: Renderizado visual
   return (
     <div className="landing-forest-container">
       {/* Background Illustration */}
-      <div 
-        className="forest-bg-layer" 
+      <div
+        className="forest-bg-layer"
         style={{ backgroundImage: `url(${forestBg})` }}
       />
 
@@ -53,18 +53,18 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn: _isLogge
       <header className="forest-header">
         <nav className="forest-nav">
           <div className="nav-left">
-            <button className="nav-btn magical-btn" onClick={() => setPage('creator')}>CAULDRONS</button>
+            <button className="nav-btn magical-btn" onClick={() => setPage('my-cauldrons')}>CAULDRONS</button>
             <button className="nav-btn magical-btn" onClick={() => setPage('conocenos')}>ABOUT US</button>
           </div>
-          
+
           <div className="logo-center">
             <img src={iconImg} alt="Calbru Logo" className="nav-logo-img" />
           </div>
 
           <div className="nav-right">
             <button className="nav-btn magical-btn" onClick={() => setPage('intranet')}>INTRANET</button>
-            <button 
-              className="forest-sign-in-btn" 
+            <button
+              className="forest-sign-in-btn"
               onClick={() => setPage('login')}
             >
               SIGN IN
@@ -73,17 +73,18 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn: _isLogge
         </nav>
       </header>
 
+      {/* Title Scroll Banner */}
+      <div className="title-banner-wrapper">
+        <img src={titleLabel} alt="The Hag's Cauldron" className="title-scroll-img" />
+      </div>
+
       {/* Main Content */}
       <main className="forest-main">
-        {/* Title Scroll Banner */}
-        <div className="title-banner-wrapper">
-          <img src={titleLabel} alt="The Hag's Cauldron" className="title-scroll-img" />
-        </div>
 
         {/* Rebuilt High-Fidelity Potion */}
         <div className="forest-action-area">
-          <button 
-            className={`forest-potion-new-btn ${isExploding ? 'exploding' : ''}`} 
+          <button
+            className={`forest-potion-new-btn ${isExploding ? 'exploding' : ''}`}
             onClick={handlePotionClick}
           >
             <div className="potion-container">
@@ -99,10 +100,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn: _isLogge
                 </defs>
 
                 <path className="bottle-glass-back" d="M50,125 C75,125 92,105 92,75 C92,45 75,35 50,35 C25,35 8,45 8,75 C8,105 25,125 50,125 Z" />
-                
+
                 <g mask="url(#potion-body-mask)">
                   <rect className="liquid-fill-rebuilt" x="0" y="35" width="100" height="100" />
-                  
+
                   {/* Progressive Bubbles */}
                   <circle className="internal-bubble b1" cx="30" cy="115" r="2" />
                   <circle className="internal-bubble b2" cx="70" cy="110" r="3" />
@@ -126,7 +127,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn: _isLogge
               <div className="potion-parchment-label">
                 <span>Start creating</span>
               </div>
-              
+
               <span className="potion-deco star">⭐</span>
               <span className="potion-deco moon">🌙</span>
             </div>

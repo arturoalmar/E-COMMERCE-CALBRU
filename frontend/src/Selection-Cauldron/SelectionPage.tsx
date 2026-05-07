@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: SelectionPage.tsx
- * 📝 DESCRIPCIÓN: Selección de calderos.
+ * 📝 DESCRIPCIÓN: Página de selección de caldero base (género del juego).
  */
 
 // SelectionPage.tsx

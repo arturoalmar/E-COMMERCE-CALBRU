@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: ComiteEmpresa.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Componente principal de la sección del Comité de Empresa.
  */
 
 // ComiteEmpresa.tsx

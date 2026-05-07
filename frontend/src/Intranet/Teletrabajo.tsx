@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: Teletrabajo.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Componente para la gestión de teletrabajo en la Intranet.
  */
 
 // Teletrabajo.tsx

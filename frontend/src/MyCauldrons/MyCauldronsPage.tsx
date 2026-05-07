@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: MyCauldronsPage.tsx
- * 📝 DESCRIPCIÓN: Historial de calderos creados.
+ * 📝 DESCRIPCIÓN: Página que muestra la colección de calderos creados por el usuario.
  */
 
 // MyCauldronsPage.tsx

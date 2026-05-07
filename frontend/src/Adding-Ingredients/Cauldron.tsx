@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: Cauldron.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Componente principal que representa el caldero mágico y su lógica.
  */
 
 // Cauldron.tsx

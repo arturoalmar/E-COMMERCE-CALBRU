@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: ParticleEffect.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Componente para el efecto visual de partículas al añadir ingredientes.
  */
 
 // ParticleEffect.tsx

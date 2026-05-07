@@ -74,7 +74,8 @@
 /* APARTADO: .nav-right .nav-btn - Estilos para este elemento */
 .nav-right .nav-btn {
   text-decoration: none;
-  background: rgba(121, 58, 119, 0.35); /* Opacidad aumentada */
+  background: rgba(121, 58, 119, 0.35);
+  /* Opacidad aumentada */
   border: 1px solid rgba(121, 58, 119, 0.45);
   padding: 0.5rem 1rem;
   min-width: 160px;
@@ -165,7 +166,8 @@
 }
 
 /* APARTADO: .forest-sign-in-btn::before, .forest-sign-in-btn::after - Estilos para este elemento */
-.forest-sign-in-btn::before, .forest-sign-in-btn::after {
+.forest-sign-in-btn::before,
+.forest-sign-in-btn::after {
   content: '⭐';
   position: absolute;
   font-size: 0.7rem;
@@ -175,14 +177,28 @@
 }
 
 /* APARTADO: .forest-sign-in-btn::before - Estilos para este elemento */
-.forest-sign-in-btn::before { top: 2px; left: 2px; }
+.forest-sign-in-btn::before {
+  top: 2px;
+  left: 2px;
+}
+
 /* APARTADO: .forest-sign-in-btn::after - Estilos para este elemento */
-.forest-sign-in-btn::after { bottom: 2px; right: 2px; }
+.forest-sign-in-btn::after {
+  bottom: 2px;
+  right: 2px;
+}
 
 /* APARTADO: .forest-sign-in-btn:hover::before - Estilos para este elemento */
-.forest-sign-in-btn:hover::before { opacity: 1; transform: translate(-8px, -8px) scale(1.2); }
+.forest-sign-in-btn:hover::before {
+  opacity: 1;
+  transform: translate(-8px, -8px) scale(1.2);
+}
+
 /* APARTADO: .forest-sign-in-btn:hover::after - Estilos para este elemento */
-.forest-sign-in-btn:hover::after { opacity: 1; transform: translate(8px, 8px) scale(1.2); }
+.forest-sign-in-btn:hover::after {
+  opacity: 1;
+  transform: translate(8px, 8px) scale(1.2);
+}
 
 /* APARTADO: .forest-sign-in-btn:hover - Estilos para este elemento */
 .forest-sign-in-btn:hover {
@@ -207,7 +223,8 @@
   top: 50%;
   transform: translate(-50%, -50%);
   /* Centrado total */
-  max-width: 957px; /* Aumentado otro 50% */
+  max-width: 957px;
+  /* Aumentado otro 50% */
   width: 100%;
   animation: banner-float 4s infinite alternate ease-in-out;
   z-index: 15;
@@ -222,11 +239,11 @@
 /* ANIMACIÓN: banner-float */
 @keyframes banner-float {
   from {
-    transform: translateY(0);
+    transform: translate(-50%, -50%);
   }
 
   to {
-    transform: translateY(-15px);
+    transform: translate(-50%, calc(-50% - 15px));
   }
 }
 
@@ -283,7 +300,8 @@
 }
 
 /* APARTADO: .bottle-glass-back, .neck-glass - Estilos para este elemento */
-.bottle-glass-back, .neck-glass {
+.bottle-glass-back,
+.neck-glass {
   fill: rgba(255, 255, 255, 0.12);
   stroke: #3e2723;
   stroke-width: 2.5;
@@ -337,22 +355,46 @@
 
 /* ANIMACIÓN: internal-float */
 @keyframes internal-float {
-  0% { transform: translateY(0); opacity: 0.6; }
-  100% { transform: translateY(-40px); opacity: 0; }
+  0% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
 }
 
 /* APARTADO: .b1 - Estilos para este elemento */
-.b1 { animation-delay: 0s; }
+.b1 {
+  animation-delay: 0s;
+}
+
 /* APARTADO: .b2 - Estilos para este elemento */
-.b2 { animation-delay: 0.3s; }
+.b2 {
+  animation-delay: 0.3s;
+}
+
 /* APARTADO: .b3 - Estilos para este elemento */
-.b3 { animation-delay: 0.6s; }
+.b3 {
+  animation-delay: 0.6s;
+}
+
 /* APARTADO: .b4 - Estilos para este elemento */
-.b4 { animation-delay: 0.9s; }
+.b4 {
+  animation-delay: 0.9s;
+}
+
 /* APARTADO: .b5 - Estilos para este elemento */
-.b5 { animation-delay: 1.2s; }
+.b5 {
+  animation-delay: 1.2s;
+}
+
 /* APARTADO: .b6 - Estilos para este elemento */
-.b6 { animation-delay: 1.5s; }
+.b6 {
+  animation-delay: 1.5s;
+}
 
 /* APARTADO: .potion-cork-svg - Estilos para este elemento */
 .potion-cork-svg {

@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: QuickLinks.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Enlaces rápidos para la navegación de la Intranet.
  */
 
 // QuickLinks.tsx

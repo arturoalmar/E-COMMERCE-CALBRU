@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: NewsSlider.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Carrusel de noticias destacadas para la Intranet.
  */
 
 // NewsSlider.tsx

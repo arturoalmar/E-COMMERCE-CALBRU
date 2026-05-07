@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: ConfiguratorPage.tsx
- * 📝 DESCRIPCIÓN: Página de configuración de pociones.
+ * 📝 DESCRIPCIÓN: Página principal del configurador de ingredientes y creación de pociones.
  */
 
 // ConfiguratorPage.tsx

@@ -1,6 +1,6 @@
 /**
  * 📄 ARCHIVO: Normas.tsx
- * 📝 DESCRIPCIÓN: Archivo del proyecto.
+ * 📝 DESCRIPCIÓN: Visualización de normas y políticas en la Intranet.
  */
 
 // Normas.tsx
