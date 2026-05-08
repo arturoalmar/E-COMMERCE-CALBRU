@@ -71,9 +71,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack }) => {
     } catch (err: any) {
       setError(err.message);
     } finally {
-      if (isRegistering || error) {
-        setIsSealing(false);
-      }
+      setIsSealing(false);
     }
   };
 
@@ -121,7 +119,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack }) => {
             <input
               type="text"
               name="username"
-              autocomplete="username"
+              autoComplete="username"
               placeholder="Enter your wizard name..."
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -134,7 +132,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack }) => {
               <input
                 type="email"
                 name="email"
-                autocomplete="email"
+                autoComplete="email"
                 placeholder="Where should we send the owls? (Email)"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -147,7 +145,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack }) => {
             <input
               type="password"
               name="password"
-              autocomplete={isRegistering ? "new-password" : "current-password"}
+              autoComplete={isRegistering ? "new-password" : "current-password"}
               placeholder="Keep it secret, keep it safe..."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
