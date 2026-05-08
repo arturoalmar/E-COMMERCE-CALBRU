@@ -21,15 +21,22 @@ router.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Insertar usuario
+    // Insertar usuario usando el esquema real de AWS
     const newUser = await pool.query(
-      'INSERT INTO usuarios (username, email, password) VALUES ($1, $2, $3) RETURNING id, username, email',
+      'INSERT INTO usuarios (username, email, password_hash) VALUES ($1, $2, $3) RETURNING id_usuario AS id, username, email',
       [username, email, hashedPassword]
     );
 
+    const createdUser = newUser.rows[0];
+    const createdUserId = createdUser.id || createdUser.id_usuario;
+
     res.status(201).json({
       message: 'Usuario registrado con éxito',
-      user: newUser.rows[0]
+      user: {
+        id: createdUserId,
+        username: createdUser.username,
+        email: createdUser.email
+      }
     });
   } catch (error) {
     console.error('Error en registro:', error);
@@ -50,21 +57,23 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Credenciales inválidas' });
     }
 
-    // Verificar contraseña
-    const isMatch = await bcrypt.compare(password, user.password);
+    // Verificar contraseña usando password_hash
+    const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
       return res.status(400).json({ message: 'Credenciales inválidas' });
     }
 
+    const userId = user.id || user.id_usuario;
+
     // Crear token JWT
-    const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, {
+    const token = jwt.sign({ id: userId, username: user.username }, JWT_SECRET, {
       expiresIn: '24h'
     });
 
     res.json({
       message: 'Inicio de sesión exitoso',
       token,
-      user: { id: user.id, username: user.username }
+      user: { id: userId, username: user.username }
     });
   } catch (error) {
     console.error('Error en login:', error);

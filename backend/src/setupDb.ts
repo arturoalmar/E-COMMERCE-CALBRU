@@ -4,11 +4,11 @@ const createTables = async () => {
   const queryText = `
     DROP TABLE IF EXISTS usuarios CASCADE;
     CREATE TABLE usuarios (
-      id SERIAL PRIMARY KEY,
+      id_usuario SERIAL PRIMARY KEY,
       username VARCHAR(100) UNIQUE NOT NULL,
       email VARCHAR(150) UNIQUE,
-      password VARCHAR(255) NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      password_hash VARCHAR(255) NOT NULL,
+      fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `;
 

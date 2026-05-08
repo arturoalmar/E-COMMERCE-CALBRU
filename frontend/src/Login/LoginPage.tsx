@@ -71,9 +71,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack }) => {
     } catch (err: any) {
       setError(err.message);
     } finally {
-      if (isRegistering || error) {
-        setIsSealing(false);
-      }
+      setIsSealing(false);
     }
   };
 
