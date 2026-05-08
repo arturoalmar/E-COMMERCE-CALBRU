@@ -206,7 +206,11 @@ function App() {
         return (
           <div className="creator-container">
             {currentStep === 'select-pot' && (
-              <SelectionPage genres={GENRES} handleSelectGenre={handleSelectGenre} />
+              <SelectionPage 
+                genres={GENRES} 
+                handleSelectGenre={handleSelectGenre} 
+                onBack={() => navigateTo('home')}
+              />
             )}
             {currentStep === 'configurator' && (
               <>

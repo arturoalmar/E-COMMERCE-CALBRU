@@ -1,4 +1,4 @@
-/* 
+﻿/* 
 =========================================================
  📄 ARCHIVO: LandingPage.css
  📝 DESCRIPCIÓN: Estilos purificados para la Landing (Forest Cottage).
@@ -151,13 +151,16 @@
 .nav-left .nav-btn,
 .nav-right .nav-btn {
     text-decoration: none;
-    background: rgba(121, 58, 119, 0.85); /* Much more opaque */
-    border: 2px solid var(--gold); /* Gold border for visibility */
+    background: rgba(121, 58, 119, 0.85);
+    /* Much more opaque */
+    border: 2px solid var(--gold);
+    /* Gold border for visibility */
     padding: 0.7rem 1.2rem;
     min-width: 180px;
     border-radius: 12px;
-    color: #ffffff; /* White text for contrast */
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    color: #ffffff;
+    /* White text for contrast */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     font-family: "Almendra", serif;
     font-weight: 700;
     font-size: 1.1rem;
@@ -324,7 +327,8 @@
 .title-banner-wrapper {
     position: absolute;
     left: 50%;
-    top: 38%; /* Bajado desde 28% */
+    top: 50%;
+    /* Bajado desde 28% */
     transform: translate(-50%, -50%);
     max-width: 850px;
     width: 90%;
@@ -334,7 +338,7 @@
 
 .title-scroll-img {
     width: 100%;
-    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0 20px 10px rgba(0, 0, 0, 0.5)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
 }
 
 @keyframes banner-float {
@@ -351,7 +355,8 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 65%; /* Bajado desde 50% */
+    top: 55%;
+    /* Bajado desde 50% */
     z-index: 20;
 }
 
@@ -370,11 +375,12 @@
 
 .potion-container {
     position: relative;
-    width: 140px; /* Reducido desde 192px */
+    width: 140px;
+    /* Reducido desde 192px */
     display: flex;
     justify-content: center;
     align-items: center;
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 40px rgba(0, 0, 0, 0.2));
     pointer-events: auto;
 }
 
@@ -492,7 +498,8 @@
     color: #3e2723;
     font-family: "Almendra", serif;
     font-weight: 800;
-    font-size: 1.3rem; /* Reducido proporcionalmente */
+    font-size: 1.3rem;
+    /* Reducido proporcionalmente */
     text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.3);
 }
 
@@ -502,16 +509,6 @@
     font-size: 2rem;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
     pointer-events: none;
-}
-
-.potion-deco.star {
-    top: 45%;
-    right: 15%;
-}
-
-.potion-deco.moon {
-    top: 40%;
-    left: 15%;
 }
 
 .forest-potion-new-btn:hover {

@@ -68,8 +68,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
             <button className="nav-btn magical-btn" onClick={() => setPage('intranet')}>INTRANET</button>
             {isLoggedIn && user ? (
               <>
-                <div 
-                  className="user-profile-badge" 
+                <div
+                  className="user-profile-badge"
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'rgba(121, 58, 119, 0.9)', padding: '0.4rem 1rem', borderRadius: '30px', border: '2px solid var(--gold)', cursor: 'pointer' }}
                 >
@@ -100,7 +100,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
                       <p style={{ margin: 0, fontSize: '0.75rem', color: '#888' }}>Logged in as</p>
                       <p style={{ margin: 0, fontWeight: 'bold', color: 'var(--gold)' }}>{user.username}</p>
                     </div>
-                    <button 
+                    <button
                       onClick={onLogout}
                       style={{
                         background: 'rgba(255, 50, 50, 0.1)',
@@ -179,9 +179,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
             <div className="potion-parchment-label">
               <span>New Cauldron</span>
             </div>
-
-            <span className="potion-deco star">⭐</span>
-            <span className="potion-deco moon">🌙</span>
           </div>
         </button>
       </div>

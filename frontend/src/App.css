@@ -205,63 +205,37 @@ body {
    TRANSICIONES GLOBALES DE PÁGINA
    ========================================================================== */
 
-/* APARTADO: .app-container - Estilos para este elemento */
 .app-container {
-  transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1) !important;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease !important;
 }
 
-/* Landing -> SubPage: Todo sube */
-/* APARTADO: .app-container.transition-exiting.is-subpage - Estilos para este elemento */
-.app-container.transition-exiting.is-subpage {
-  transform: translateY(-100%) !important;
+/* Transición de salida: Se desvanece y se aleja ligeramente */
+.app-container.transition-exiting {
+  opacity: 0 !important;
+  transform: scale(1.1) !important;
 }
 
-/* SubPage -> Landing: Todo baja de vuelta */
-/* APARTADO: .app-container.transition-exiting.is-home - Estilos para este elemento */
-.app-container.transition-exiting.is-home {
-  transform: translateY(100%) !important;
-}
-
-/* Estado al entrar (preparar para deslizar desde el lado opuesto) */
-/* APARTADO: .app-container.transition-entering.is-subpage - Estilos para este elemento */
-.app-container.transition-entering.is-subpage {
-  transform: translateY(100%);
+/* Transición de entrada: Aparece desde un tamaño menor */
+.app-container.transition-entering {
+  opacity: 0 !important;
+  transform: scale(0.9) !important;
   transition: none !important;
 }
 
-/* APARTADO: .app-container.transition-entering.is-home - Estilos para este elemento */
-.app-container.transition-entering.is-home {
-  transform: translateY(-100%);
-  transition: none !important;
-}
-
-/* Volver a la posición normal */
-/* APARTADO: .app-container.transition-none - Estilos para este elemento */
+/* Estado normal: Visible y tamaño original */
 .app-container.transition-none {
-  transform: translateY(0) !important;
+  opacity: 1 !important;
+  transform: scale(1) !important;
 }
 
-/* Transiciones direccionales refinadas */
-/* APARTADO: .app-container.transition-exiting.dir-up - Estilos para este elemento */
-.app-container.transition-exiting.dir-up {
-  transform: translateY(-100%) !important;
-}
-
-/* APARTADO: .app-container.transition-exiting.dir-down - Estilos para este elemento */
-.app-container.transition-exiting.dir-down {
-  transform: translateY(100%) !important;
-}
-
-/* APARTADO: .app-container.transition-entering.dir-up - Estilos para este elemento */
-.app-container.transition-entering.dir-up {
-  transform: translateY(100%);
-  transition: none !important;
-}
-
-/* APARTADO: .app-container.transition-entering.dir-down - Estilos para este elemento */
+/* Eliminamos las transiciones direccionales antiguas para evitar conflictos */
+.app-container.transition-exiting.dir-up,
+.app-container.transition-exiting.dir-down,
+.app-container.transition-entering.dir-up,
 .app-container.transition-entering.dir-down {
-  transform: translateY(-100%);
-  transition: none !important;
+  /* Estas ya no son necesarias pero las reseteamos para seguridad */
+  transform: scale(1.1);
+  opacity: 0;
 }
 
 /* ==========================================================================

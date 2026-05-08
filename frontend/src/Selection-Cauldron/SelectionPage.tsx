@@ -1,80 +1,61 @@
-/**
- * 📄 ARCHIVO: SelectionPage.tsx
- * 📝 DESCRIPCIÓN: Página de selección de caldero base (género del juego).
- */
-
-// SelectionPage.tsx
-// Página donde el usuario elige la base de juego (género) que será usada para configurar el caldero.
-// Muestra los calderos en el sótano y permite previsualizar la descripción de cada género.
-
 import React, { useState } from 'react';
 import { Genre } from '../types';
 import './SelectionCauldron.css';
 
-import sotanoBg from '../assets/forest_house_bg.png';
-import libroImg from '../assets/Libro.png';
+import fondoElegir from '../assets/Fondo_elegir.png';
+import libroImg from '../assets/libro.png';
 
-// SECCIÓN: Definición de datos/propiedades
 interface SelectionPageProps {
   genres: Genre[];
   handleSelectGenre: (genre: Genre) => void;
+  onBack: () => void;
 }
 
-// SECCIÓN: Componente o Función lógica
-const SelectionPage: React.FC<SelectionPageProps> = ({ genres, handleSelectGenre }) => {
-  // Género actualmente bajo el cursor para mostrar datos en el libro central.
+const SelectionPage: React.FC<SelectionPageProps> = ({ genres, handleSelectGenre, onBack }) => {
   const [hoveredGenre, setHoveredGenre] = useState<Genre | null>(null);
+  const [selectedGenreId, setSelectedGenreId] = useState<string | number | null>(null);
 
-// SECCIÓN: Renderizado visual
+  const onGenreClick = (genre: Genre) => {
+    setSelectedGenreId(genre.id);
+    handleSelectGenre(genre);
+  };
+
   return (
-    <div className="sotano-selection-container">
-      {/* Fondo Sotano */}
-      <div 
-        className="sotano-bg" 
-        style={{ backgroundImage: `url(${sotanoBg})` }}
+    <div className="selection-container">
+      <button className="back-to-landing-btn" onClick={onBack} aria-label="Volver al inicio">
+        ← Volver
+      </button>
+      <div
+        className="selection-bg-layer"
+        style={{ backgroundImage: `url(${fondoElegir})` }}
       />
-
-      {/* Título superior */}
-      <div className="sotano-header">
-        <h1>Selecciona tu Pócima Base</h1>
-        <p>Elige el caldero que forjará tu destino...</p>
+      <div className="selection-content">
+        <h1 className="selection-title">Selecciona un Género de Juego</h1>
+        <div className="cauldrons-grid">
+          {genres.map((genre) => (
+            <div
+              key={genre.id}
+              className={`cauldron-button ${selectedGenreId === genre.id ? 'selected' : ''}`}
+              onClick={() => onGenreClick(genre)}
+              onMouseEnter={() => setHoveredGenre(genre)}
+              onMouseLeave={() => setHoveredGenre(null)}
+            >
+              <img src={genre.image} alt={genre.name} />
+            </div>
+          ))}
+        </div>
       </div>
-
-      {/* Área del Libro (Centro) - Ahora puramente informativa y sin eventos de ratón */}
-      <div className={`selection-book-overlay ${hoveredGenre ? 'visible' : ''}`} style={{ pointerEvents: 'none' }}>
-        <img src={libroImg} alt="Libro Abierto" className="selection-book-img" />
-        {hoveredGenre && (
-          <div className="book-content">
-            <h2 className="book-title">{hoveredGenre.name}</h2>
-            <p className="book-description">{hoveredGenre.description}</p>
-            {/* El botón se ha movido al caldero o se ha eliminado para seguir la instrucción estrictamente */}
-            <p className="book-hint">(Haz clic en el caldero para seleccionar)</p>
+      {hoveredGenre && (
+        <div className="book-overlay">
+          <div className="book-container">
+            <img src={libroImg} alt="Libro" className="book-image" />
+            <div className="book-text-overlay">
+              <h2>{hoveredGenre.name}</h2>
+              <p>{hoveredGenre.description}</p>
+            </div>
           </div>
-        )}
-      </div>
-
-      {/* Calderos en el suelo */}
-      <div className="cauldrons-floor">
-        {genres.map((genre) => (
-          <div 
-            key={genre.id} 
-            className="floor-cauldron-wrapper"
-            onMouseEnter={() => setHoveredGenre(genre)}
-            onMouseLeave={() => setHoveredGenre(null)}
-            onClick={() => handleSelectGenre(genre)}
-          >
-            <img
-              src={genre.image}
-              alt={genre.name}
-              className={`floor-cauldron-img ${hoveredGenre?.id === genre.id ? 'active' : ''}`}
-              style={{
-                filter: genre.id === 'platformer' ? 'none' : `hue-rotate(${genre.hue}deg) saturate(1.5)`
-              }}
-            />
-            <div className="cauldron-glow" style={{ backgroundColor: `hsla(${genre.hue}, 70%, 50%, 0.3)` }}></div>
-          </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
