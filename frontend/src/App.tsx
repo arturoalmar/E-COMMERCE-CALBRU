@@ -131,6 +131,17 @@ function App() {
     return () => window.removeEventListener('potion-splash', handleSplash);
   }, []);
 
+  // Control del scroll según la página
+  useEffect(() => {
+    if (page === 'home') {
+      document.body.classList.add('no-scroll');
+      document.documentElement.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('no-scroll');
+    }
+  }, [page]);
+
   // SECCIÓN: Componente o Función lógica
   const handleNavigate = (newPage: Page) => {
     navigateTo(newPage, 'select-pot', null);

@@ -1,320 +1,289 @@
-/* 
-=========================================================
- 📄 ARCHIVO: MyCauldronsPage.css
- 📝 DESCRIPCIÓN: Estilos para el historial de calderos y diseños guardados.
-=========================================================
-*/
+.my-cauldrons-page {
+  min-height: 100vh;
+  background-color: #0d0617;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(184, 31, 181, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(140, 92, 255, 0.1) 0%, transparent 40%);
+  color: #fff;
+  padding: 100px 2rem 4rem;
+  font-family: 'Inter', sans-serif;
+}
 
-/* MY CAULDRONS PAGE - COMPACT PREMIUM DESIGN */
-/* APARTADO: .my-cauldrons-container - Estilos para este elemento */
-.my-cauldrons-container {
-  padding: 80px 2rem 2rem;
+.cauldrons-container {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* APARTADO: .cauldrons-header - Estilos para este elemento */
+/* Header Styles */
 .cauldrons-header {
-  text-align: center;
-  margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* APARTADO: .cauldrons-header h1 - Estilos para este elemento */
-.cauldrons-header h1 {
-  font-size: 2.8rem;
-  color: var(--secondary-color);
-  margin-bottom: 0.5rem;
-}
-
-/* APARTADO: .cauldrons-grid - Estilos para este elemento */
-.cauldrons-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+.title-section {
+  display: flex;
+  align-items: center;
   gap: 1.5rem;
 }
 
-/* APARTADO: .cauldron-item-card - Estilos para este elemento */
-.cauldron-item-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 15px;
-  padding: 1.2rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
+.floating-icon {
+  width: 64px;
+  height: 64px;
+  filter: drop-shadow(0 0 10px rgba(184, 31, 181, 0.5));
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.title-section h1 {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 2.8rem;
+  margin: 0;
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.title-section p {
+  margin: 5px 0 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+}
+
+.stats-section .stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-}
-
-/* APARTADO: .cauldron-item-card:hover - Estilos para este elemento */
-.cauldron-item-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--secondary-color);
-  box-shadow: 0 10px 25px rgba(140, 92, 255, 0.2);
-}
-
-/* APARTADO: .cauldron-thumb-wrapper - Estilos para este elemento */
-.cauldron-thumb-wrapper {
-  width: 140px;
-  height: 140px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.8rem 1.5rem;
   border-radius: 12px;
-  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #b81fb5;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Shelves Layout */
+.shelves-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  padding-top: 2rem;
+}
+
+.cauldron-shelf {
+  position: relative;
+  width: 100%;
+}
+
+.shelf-plank {
+  position: absolute;
+  bottom: -20px;
+  left: -5%;
+  width: 110%;
+  height: 25px;
+  background: #3e2723;
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px);
+  background-size: 100% 4px, 40px 100%;
+  border-radius: 4px;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.6),
+    inset 0 2px 5px rgba(255, 255, 255, 0.1);
+  transform: perspective(500px) rotateX(20deg);
+  z-index: 1;
+}
+
+.shelf-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem;
+}
+
+/* Card Styling */
+.cauldron-item {
+  background: rgba(20, 10, 30, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(184, 31, 181, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.cauldron-item:hover {
+  transform: translateY(-20px) scale(1.02);
+  border-color: rgba(184, 31, 181, 0.6);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(184, 31, 181, 0.3);
+}
+
+.item-visual {
+  position: relative;
+  height: 200px;
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  position: relative;
+  padding: 2rem;
 }
 
-/* APARTADO: .cauldron-thumb-wrapper img - Estilos para este elemento */
-.cauldron-thumb-wrapper img {
+.item-visual img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
 }
 
-/* APARTADO: .cauldron-item-card h3 - Estilos para este elemento */
-.cauldron-item-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+.rarity-tag {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.rarity-legendario .rarity-tag { background: #ffd700; color: #000; box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+.rarity-raro .rarity-tag { background: #b81fb5; color: #fff; }
+.rarity-común .rarity-tag { background: rgba(255, 255, 255, 0.1); color: #fff; }
+
+.item-details {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.genre-label { color: #b81fb5; font-weight: 800; }
+.date-label { color: rgba(255, 255, 255, 0.3); }
+
+.item-details h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-family: 'MedievalSharp', cursive;
   color: #fff;
 }
 
-/* APARTADO: .cauldron-item-card p - Estilos para este elemento */
-.cauldron-item-card p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.4;
+.item-details p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  height: 4.5rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
-/* APARTADO: .cauldron-meta - Estilos para este elemento */
-.cauldron-meta {
-  margin-top: auto;
+.item-footer {
+  margin-top: 1rem;
   padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingredients-count {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.item-actions {
   display: flex;
   gap: 0.5rem;
-  width: 100%;
-  justify-content: center;
 }
 
-/* APARTADO: .cauldron-badge - Estilos para este elemento */
-.cauldron-badge {
-  font-size: 0.7rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: bold;
+.action-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
 
-/* APARTADO: .badge-rarity-gold - Estilos para este elemento */
-.badge-rarity-gold {
-  background: rgba(240, 200, 110, 0.1);
-  color: #f0c86e;
-  border: 1px solid #f0c86e;
+.edit-btn {
+  background: rgba(184, 31, 181, 0.15);
+  color: #b81fb5;
+  border-color: rgba(184, 31, 181, 0.3);
 }
 
-/* APARTADO: .badge-type-game - Estilos para este elemento */
-.badge-type-game {
-  background: rgba(140, 92, 255, 0.1);
-  color: #d7b3ff;
-  border: 1px solid #8c5cff;
+.edit-btn:hover {
+  background: #b81fb5;
+  color: #fff;
 }
 
-/* Empty state styling */
-/* APARTADO: .cauldrons-empty - Estilos para este elemento */
-.cauldrons-empty {
-  grid-column: 1 / -1;
+.delete-btn {
+  background: transparent;
+  color: rgba(255, 85, 85, 0.5);
+}
+
+.delete-btn:hover {
+  color: #ff5555;
+  background: rgba(255, 85, 85, 0.1);
+}
+
+/* Empty State */
+.empty-state {
   text-align: center;
   padding: 5rem 0;
-  opacity: 0.7;
 }
 
-/* APARTADO: .cauldrons-empty .icon - Estilos para este elemento */
-.cauldrons-empty .icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-
-/* COMITï¿½ DE EMPRESA STYLES */
-/* APARTADO: .committee-section - Estilos para este elemento */
-.committee-section {
-  margin-bottom: 2.5rem;
-}
-
-/* APARTADO: .committee-section h3 - Estilos para este elemento */
-.committee-section h3 {
-  color: var(--gold);
-  border-bottom: 1px solid rgba(240, 200, 110, 0.3);
-  padding-bottom: 0.5rem;
+.empty-vfx {
+  font-size: 4rem;
   margin-bottom: 1.5rem;
-  font-family: "MedievalSharp", cursive;
+  opacity: 0.3;
 }
 
-/* Organigrama */
-/* APARTADO: .org-chart-witch - Estilos para este elemento */
-.org-chart-witch {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem 0;
-}
-
-/* APARTADO: .org-node - Estilos para este elemento */
-.org-node {
-  background: rgba(140, 92, 255, 0.1);
-  border: 1px solid var(--secondary-color);
-  border-radius: 8px;
-  padding: 1rem;
-  width: 180px;
-  text-align: center;
-  box-shadow: 0 0 15px rgba(140, 92, 255, 0.2);
-}
-
-/* APARTADO: .org-node h4 - Estilos para este elemento */
-.org-node h4 {
-  margin: 0;
-  color: #fff;
-  font-size: 0.9rem;
-}
-
-/* APARTADO: .org-node p - Estilos para este elemento */
-.org-node p {
-  margin: 0.3rem 0 0;
-  color: var(--gold);
-  font-weight: bold;
-}
-
-/* APARTADO: .org-connect - Estilos para este elemento */
-.org-connect {
-  width: 2px;
-  height: 30px;
-  background: var(--secondary-color);
-}
-
-/* APARTADO: .org-row - Estilos para este elemento */
-.org-row {
-  display: flex;
-  gap: 3rem;
-  margin-top: 0;
-}
-
-/* Info Pills */
-/* APARTADO: .info-pills-grid - Estilos para este elemento */
-.info-pills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-}
-
-/* APARTADO: .info-pill - Estilos para este elemento */
-.info-pill {
-  background: rgba(255, 255, 255, 0.05);
-  border-left: 4px solid var(--secondary-color);
-  padding: 1.2rem;
-  border-radius: 0 8px 8px 0;
-}
-
-/* APARTADO: .info-pill h4 - Estilos para este elemento */
-.info-pill h4 {
-  color: #fff;
-  margin-bottom: 0.5rem;
+.create-btn {
+  margin-top: 2rem;
+  background: #ffd700;
+  color: #000;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 30px;
+  font-weight: 800;
   font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* APARTADO: .info-pill p - Estilos para este elemento */
-.info-pill p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-/* Infographics */
-/* APARTADO: .infographics-container - Estilos para este elemento */
-.infographics-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-/* APARTADO: .infographic-card - Estilos para este elemento */
-.infographic-card {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
-  border-radius: 12px;
-}
-
-/* APARTADO: .infographic-content - Estilos para este elemento */
-.infographic-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* APARTADO: .step - Estilos para este elemento */
-.step {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 0.8rem;
-  border-radius: 6px;
-}
-
-/* APARTADO: .step-num - Estilos para este elemento */
-.step-num {
-  width: 24px;
-  height: 24px;
-  background: var(--secondary-color);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  flex-shrink: 0;
-}
-
-/* APARTADO: .step.error .step-num - Estilos para este elemento */
-.step.error .step-num {
-  background: #ff5555;
-}
-
-/* APARTADO: .step.warning .step-num - Estilos para este elemento */
-.step.warning .step-num {
-  background: #ffaa00;
-}
-
-/* APARTADO: .step.info .step-num - Estilos para este elemento */
-.step.info .step-num {
-  background: #55aaff;
-}
-
-/* Lists */
-.achievements-list,
-/* APARTADO: .goals-list - Estilos para este elemento */
-.goals-list {
-  list-style: none;
-  padding: 0;
-}
-
-.achievements-list li,
-/* APARTADO: .goals-list li - Estilos para este elemento */
-.goals-list li {
-  padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 0.95rem;
-}
-
-/* APARTADO: .gold-border - Estilos para este elemento */
-.gold-border {
-  border: 2px solid rgba(240, 200, 110, 0.3) !important;
-}
-
-/* APARTADO: .purple-border - Estilos para este elemento */
-.purple-border {
-  border: 2px solid rgba(140, 92, 255, 0.3) !important;
+.create-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
 }

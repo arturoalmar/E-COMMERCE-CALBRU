@@ -8,16 +8,22 @@
 /* IMPORTACIÓN: https://fonts.googleapis.com/css2?family=MedievalSharp&family=Almendra+Display&family=Uncial+Antiqua&display=swap */
 @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Almendra+Display&family=Uncial+Antiqua&display=swap');
 
-/* BLOQUEO TOTAL DE SCROLL: Asegura que la Landing sea un menú estático */
+/* Estilos globales del HTML y Body */
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
   width: 100vw;
+  position: relative;
+  /* Evita cualquier movimiento inercial en móviles */
+}
+
+/* Aplicar bloqueo de scroll SOLO en la página de landing */
+html.no-scroll,
+body.no-scroll {
   overflow: hidden !important;
   position: fixed;
-  /* Evita cualquier movimiento inercial en móviles */
 }
 
 /* APARTADO: .app-container - Estilos para este elemento */
@@ -28,7 +34,6 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   position: relative;
   transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1) !important;
 }
@@ -64,7 +69,6 @@ body {
   background: var(--bg-dark); /* Fondo sólido oscuro, sin imágenes de huesos */
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
 /* APARTADO: .main-content - Estilos para este elemento */
