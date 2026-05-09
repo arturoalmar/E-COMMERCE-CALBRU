@@ -4,7 +4,8 @@
 // los datos de selección y el modelo de partículas para los efectos visuales.
 
 export type Step = 'select-pot' | 'configurator';
-export type OptionsMap = Record<string, string[]>;
+export type ConfigCategory = 'diseno' | 'tematica' | 'mecanicas' | 'sonido';
+export type OptionsMap = Record<ConfigCategory, string[]>;
 export type Page = 'home' | 'creator' | 'my-cauldrons' | 'intranet' | 'login' | 'conocenos';
 
 export interface Genre {

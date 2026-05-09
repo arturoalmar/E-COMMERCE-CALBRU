@@ -230,6 +230,10 @@ function App() {
                   toggleOption={toggleOption}
                   onBack={() => navigateTo('creator', 'select-pot', null)}
                   onCreateGame={() => navigateTo('home')}
+
+                  onCreateGame={() => navigateTo('home')}
+
+                  onCreateGame={() => navigateTo('home')}
                 />
               </>
             )}
@@ -273,7 +277,7 @@ function App() {
     }
   };
 
-  const isImmersiveMode = page === 'home' || page === 'creator' || page === 'login';
+  const isImmersiveMode = page === 'home' || (page === 'creator' && currentStep === 'select-pot') || page === 'login';
   const shouldHideNavbar = isImmersiveMode;
 
   // SECCIÓN: Renderizado visual

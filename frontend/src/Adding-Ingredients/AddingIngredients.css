@@ -78,7 +78,7 @@
   filter: brightness(0.6);
 }
 
-/* Estilo de los paneles de las esquinas (EstanterÃƒÂ­as de ingredientes) */
+/* Estilo de los paneles de las esquinas (Estanterías de ingredientes) */
 /* APARTADO: .config-corner - Estilos para este elemento */
 .config-corner {
   background: linear-gradient(135deg, rgba(86, 46, 18, 0.82), rgba(49, 31, 5, 0.82));
@@ -97,7 +97,6 @@
     inset 0 0 12px rgba(0, 0, 0, 0.4),
     0 8px 20px rgba(36, 12, 97, 0.35);
   position: absolute;
-  transition: all 0.3s ease;
   z-index: 15;
 }
 
@@ -252,10 +251,8 @@
 }
 
 .btn-create-game {
-  bottom: -120px;
-  left: -20px;
   position: relative;
-  margin: 35px auto 5px auto;
+  margin: 120px 180px auto auto;
   display: block;
   padding: 0.8rem 2rem;
   background: rgb(83, 22, 84);
@@ -315,7 +312,7 @@
 /* APARTADO: .cauldron-image - Estilos para este elemento */
 .cauldron-image {
   position: absolute;
-  top: calc(30% - 15px);
+  top: -35px;
   left: 45%;
   transform: translateX(-50%);
   width: 39%;
@@ -324,6 +321,11 @@
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
   animation: cauldron-bob 3s ease-in-out infinite;
   z-index: 8;
+}
+
+.cauldron-ready .cauldron-image {
+  filter: drop-shadow(0 0 30px rgba(124, 179, 66, 0.8));
+  transform: translateX(-50%) scale(1.03);
 }
 
 /* APARTADO: .cauldron-placeholder - Estilos para este elemento */
@@ -364,7 +366,7 @@
   animation: fall-to-cauldron 2s ease-in forwards;
   top: -20px;
   left: calc(50% + var(--particle-x));
-  z-index: 100;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -510,9 +512,8 @@
 
 /* APARTADO: .btn-back - Estilos para este elemento */
 .btn-back {
-  margin-top: 4rem;
+  margin-top: 3rem;
   color: var(--text-muted);
-  text-decoration: none;
   transition: all 0.3s ease;
   font-family: 'Almendra', serif;
   font-size: 1.1rem;
@@ -560,16 +561,16 @@
 @keyframes fall-to-cauldron {
   0% {
     opacity: 1;
-    transform: translateX(var(--particle-x)) translateY(var(--particle-y)) scale(1) rotate(0deg);
+    transform: translateX(0) translateY(0) scale(1) rotate(0deg);
   }
 
-  85% {
+  75% {
     opacity: 1;
   }
 
   100% {
     opacity: 0;
-    transform: translateX(0) translateY(500px) scale(0.2) rotate(720deg);
+    transform: translateX(0) translateY(calc(85vh - 10px)) scale(0.2) rotate(720deg);
   }
 }
 
@@ -754,16 +755,16 @@
 @keyframes fall-to-cauldron {
   0% {
     opacity: 1;
-    transform: translateX(var(--particle-x)) translateY(var(--particle-y)) scale(1) rotate(0deg);
+    transform: translateX(0) translateY(0) scale(1) rotate(0deg);
   }
 
-  85% {
+  75% {
     opacity: 1;
   }
 
   100% {
     opacity: 0;
-    transform: translateX(0) translateY(500px) scale(0.2) rotate(720deg);
+    transform: translateX(0) translateY(calc(85vh - 10px)) scale(0.2) rotate(720deg);
   }
 }
 

@@ -8,7 +8,7 @@
 // Presenta las estanterías de opciones, el efecto de partículas y el estado de la fusión.
 
 import React from 'react';
-import { Genre, Particle, OptionsMap } from '../types';
+import { ConfigCategory, Genre, Particle, OptionsMap } from '../types';
 import './AddingIngredients.css';
 
 import Cauldron from './Cauldron';
@@ -23,7 +23,7 @@ interface ConfiguratorPageProps {
   particles: Particle[];
   selectedGenre: Genre | null;
   isFusionReady: boolean;
-  toggleOption: (category: string, optionId: string) => void;
+  toggleOption: (category: ConfigCategory, optionId: string) => void;
   onBack: () => void;
   onCreateGame: () => void;
 }
@@ -46,7 +46,9 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
       />
       <div className="configurator-layout">
         {/* Botón volver arriba a la izquierda */}
-
+        <button className="btn-back" onClick={onBack}>
+          Volver
+        </button>
 
         <OptionsShelf category="diseno" title="Diseño" cornerClass="corner-tl" selections={selections} toggleOption={toggleOption} />
         <OptionsShelf category="tematica" title="Temática" cornerClass="corner-tr" selections={selections} toggleOption={toggleOption} />

@@ -18,9 +18,10 @@ interface CauldronProps {
 
 // SECCIÓN: Componente o Función lógica
 const Cauldron: React.FC<CauldronProps> = ({ selectedGenre, isFusionReady }) => {
+  const readyClass = isFusionReady ? 'cauldron-ready' : '';
 // SECCIÓN: Renderizado visual
   return (
-    <div className="center-dashboard-content">
+    <div className={`center-dashboard-content ${readyClass}`}>
 
 
 

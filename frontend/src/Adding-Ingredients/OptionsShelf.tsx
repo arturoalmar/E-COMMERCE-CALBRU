@@ -8,15 +8,15 @@
 // para una categoría concreta de ingredientes.
 
 import React from 'react';
-import { OptionsMap } from '../types';
+import { ConfigCategory, OptionsMap } from '../types';
 
 // SECCIÓN: Definición de datos/propiedades
 interface OptionsShelfProps {
-  category: string;
+  category: ConfigCategory;
   title: string;
   cornerClass: string;
   selections: OptionsMap;
-  toggleOption: (category: string, optionId: string) => void;
+  toggleOption: (category: ConfigCategory, optionId: string) => void;
 }
 
 const OptionsShelf: React.FC<OptionsShelfProps> = ({
