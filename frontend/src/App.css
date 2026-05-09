@@ -5,8 +5,8 @@
 =========================================================
 */
 
-/* IMPORTACIÓN: https://fonts.googleapis.com/css2?family=MedievalSharp&family=Almendra+Display&family=Uncial+Antiqua&display=swap */
-@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Almendra+Display&family=Uncial+Antiqua&display=swap');
+/* IMPORTACIÓN: Las fuentes se importan en index.css para uniformidad */
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Almendra:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* Estilos globales del HTML y Body */
 html,
@@ -66,7 +66,8 @@ body.no-scroll {
 
 /* Background global */
 body {
-  background: var(--bg-dark); /* Fondo sólido oscuro, sin imágenes de huesos */
+  background: var(--bg-dark);
+  /* Fondo sólido oscuro, sin imágenes de huesos */
   margin: 0;
   padding: 0;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './MyCauldronsPage.css';
+import Footer from '../components/Footer/Footer';
 
 // Import assets
 import cauldronIcon from '../assets/Icon.png';
@@ -138,6 +139,7 @@ const MyCauldronsPage: React.FC = () => {
           )}
         </main>
       </div>
+      <Footer />
     </div>
   );
 };

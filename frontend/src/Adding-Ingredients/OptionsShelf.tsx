@@ -19,20 +19,20 @@ interface OptionsShelfProps {
   toggleOption: (category: string, optionId: string) => void;
 }
 
-const OptionsShelf: React.FC<OptionsShelfProps> = ({ 
-  category, 
-  title, 
-  cornerClass, 
-  selections, 
-  toggleOption 
+const OptionsShelf: React.FC<OptionsShelfProps> = ({
+  category,
+  title,
+  cornerClass,
+  selections,
+  toggleOption
 }) => {
-// SECCIÓN: Componente o Función lógica
-  const options = Array.from({ length: 12 }).map((_, i) => ({
+  // SECCIÓN: Componente o Función lógica
+  const options = Array.from({ length: 9 }).map((_, i) => ({
     id: `${category}-${i + 1}`,
     label: `Opción ${i + 1}`
   }));
 
-// SECCIÓN: Renderizado visual
+  // SECCIÓN: Renderizado visual
   return (
     <div className={`config-corner ${cornerClass}`}>
       <h3>{title}</h3>
@@ -40,7 +40,7 @@ const OptionsShelf: React.FC<OptionsShelfProps> = ({
         {options.map((opt) => (
           <button
             key={opt.id}
-            className={`option-btn ${selections[category].includes(opt.id) ? 'selected' : ''}`}
+            className={`option-btn ${selections[category]?.includes(opt.id) ? 'selected' : ''}`}
             onClick={() => toggleOption(category, opt.id)}
           >
             {opt.label}

@@ -23,10 +23,7 @@ import Conocenos from './Conocenos/Conocenos';
 
 // Tipos y Datos
 import { GENRES, RANDOM_COLORS } from './constants/gameData';
-import { Genre, Step, OptionsMap, Page, Particle } from './types';
-
-// Activos
-import newBgImg from './assets/forest_house_bg.png';
+import { ConfigCategory, Genre, Step, OptionsMap, Page, Particle } from './types';
 
 function getRandomColor(): string {
   return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
@@ -44,7 +41,7 @@ function App() {
     diseno: [],
     tematica: [],
     mecanicas: [],
-    plataforma: []
+    sonido: []
   });
 
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -150,7 +147,7 @@ function App() {
   // Selecciona un género y reinicia las selecciones para empezar la configuración.
   // SECCIÓN: Componente o Función lógica
   const handleSelectGenre = (genre: Genre) => {
-    setSelections({ diseno: [], tematica: [], mecanicas: [], plataforma: [] });
+    setSelections({ diseno: [], tematica: [], mecanicas: [], sonido: [] });
     navigateTo('creator', 'configurator', genre);
   };
 
@@ -174,9 +171,9 @@ function App() {
   };
 
   // SECCIÓN: Componente o Función lógica
-  const toggleOption = (category: string, optionId: string) => {
+  const toggleOption = (category: ConfigCategory, optionId: string) => {
     setSelections((prev) => {
-      const currentSelections = prev[category];
+      const currentSelections = prev[category] ?? [];
       const isSelected = currentSelections.includes(optionId);
       const newSelections = isSelected
         ? currentSelections.filter(id => id !== optionId)
@@ -190,7 +187,7 @@ function App() {
     selections.diseno.length > 0 ||
     selections.tematica.length > 0 ||
     selections.mecanicas.length > 0 ||
-    selections.plataforma.length > 0;
+    selections.sonido.length > 0;
 
   // Renderiza el contenido principal según la página actual.
   // Cada caso corresponde a una vista distinta de la aplicación.
@@ -217,31 +214,23 @@ function App() {
         return (
           <div className="creator-container">
             {currentStep === 'select-pot' && (
-              <SelectionPage 
-                genres={GENRES} 
-                handleSelectGenre={handleSelectGenre} 
+              <SelectionPage
+                genres={GENRES}
+                handleSelectGenre={handleSelectGenre}
                 onBack={() => navigateTo('home')}
               />
             )}
             {currentStep === 'configurator' && (
               <>
                 <ConfiguratorPage
-                  newBgImg={newBgImg}
                   selections={selections}
                   particles={particles}
                   selectedGenre={selectedGenre}
                   isFusionReady={isFusionReady}
                   toggleOption={toggleOption}
+                  onBack={() => navigateTo('creator', 'select-pot', null)}
+                  onCreateGame={() => navigateTo('home')}
                 />
-                <div style={{ display: 'flex', justifyContent: 'center', width: '100%', position: 'relative', zIndex: 100, marginTop: 'calc(-2.5rem - 10px)', paddingBottom: '2rem' }}>
-                  <button
-                    className="btn-back"
-                    style={{ width: '100%', maxWidth: '400px', cursor: 'pointer' }}
-                    onClick={() => navigateTo('creator', 'select-pot', null)}
-                  >
-                    ← Volver a los calderos
-                  </button>
-                </div>
               </>
             )}
           </div>
@@ -263,12 +252,12 @@ function App() {
       case 'login':
         // SECCIÓN: Renderizado visual
         return (
-          <LoginPage 
+          <LoginPage
             onLogin={(userData) => {
               setIsLoggedIn(true);
               setUser(userData);
               navigateTo('home');
-            }} 
+            }}
             onBack={() => navigateTo('home')}
           />
         );
@@ -284,7 +273,7 @@ function App() {
     }
   };
 
-  const isImmersiveMode = page === 'home' || (page === 'creator' && currentStep === 'select-pot') || page === 'login';
+  const isImmersiveMode = page === 'home' || page === 'creator' || page === 'login';
   const shouldHideNavbar = isImmersiveMode;
 
   // SECCIÓN: Renderizado visual

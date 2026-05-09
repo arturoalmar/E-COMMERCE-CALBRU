@@ -10,8 +10,8 @@
    Este archivo define la base visual, tipografía y paleta de colores.
    ========================================================================== */
 
-/* IMPORTACIÓN: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Almendra:ital,wght@0,400;0,700;1,400&display=swap */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Almendra:ital,wght@0,400;0,700;1,400&display=swap');
+/* IMPORTACIÓN: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Almendra:ital,wght@0,400;0,700;1,400&family=MedievalSharp&display=swap */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Almendra:ital,wght@0,400;0,700;1,400&family=MedievalSharp&display=swap');
 
 :root {
   /* Paleta de Colores Primaria - Basada en tonos morados y púrpuras mágicos */
@@ -65,16 +65,28 @@ body {
   
   overflow-x: hidden;
   
-  /* Tipografía Inter para legibilidad en el cuerpo */
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Tipografía Almendra como fuente principal en todo el proyecto */
+  font-family: 'Almendra', serif;
   line-height: 1.7;
 }
 
-/* Tipografía Temática (Almendra) para Encabezados y Botones Especiales */
-h1, h2, h3, .btn-select, .btn-fusionar {
+/* Tipografía MedievalSharp solo para títulos principales y decorativos */
+h1, .page-title, .configurator-title {
+  font-family: 'MedievalSharp', cursive;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+/* Encabezados h2 y h3 mantienen Almendra */
+h2, h3 {
   font-family: 'Almendra', serif; 
   font-weight: 700;
   letter-spacing: 0.08em;
+}
+
+/* Botones especiales */
+.btn-select, .btn-fusionar, button {
+  font-family: 'Almendra', serif;
 }
 
 #root {

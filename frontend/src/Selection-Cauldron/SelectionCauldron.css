@@ -186,7 +186,7 @@
 .book-text-overlay p {
   font-size: 1.1rem;
   line-height: 1.4;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Almendra', serif;
   max-width: 85%;
 }
 
@@ -200,121 +200,6 @@
     opacity: 1;
     transform: scale(1);
   }
-}
-
-.selection-footer {
-  position: relative;
-  width: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%);
-  color: rgba(255, 255, 255, 0.8);
-  z-index: 5;
-  padding: 3rem 1rem 0;
-  font-family: 'MedievalSharp', cursive;
-  border-top: 2px solid rgba(205, 98, 215, 0.4);
-}
-
-.footer-content {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto 2rem;
-  padding: 2rem;
-  text-align: center;
-}
-
-.footer-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.footer-logo-social {
-  gap: 1.5rem;
-}
-
-.footer-logo {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(205, 98, 215, 0.5));
-  transition: transform 0.3s ease;
-}
-
-.footer-logo:hover {
-  transform: scale(1.1);
-}
-
-.social-links {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-}
-
-.social-links a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(205, 98, 215, 0.6);
-  border-radius: 50%;
-  background: rgba(184, 31, 181, 0.2);
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-}
-
-.social-links a:hover {
-  background: rgba(184, 31, 181, 0.5);
-  border-color: rgba(205, 98, 215, 1);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(205, 98, 215, 0.4);
-}
-
-.footer-section h4 {
-  margin: 0 0 1rem;
-  font-size: 1.1rem;
-  color: #ffd700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.footer-section a {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-}
-
-.footer-section a:hover {
-  color: #ffd700;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-}
-
-.footer-bottom {
-  text-align: center;
-  padding: 2rem 1rem;
-  border-top: 1px solid rgba(205, 98, 215, 0.3);
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-}
-
-.footer-bottom p {
-  margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 @media (max-width: 768px) {

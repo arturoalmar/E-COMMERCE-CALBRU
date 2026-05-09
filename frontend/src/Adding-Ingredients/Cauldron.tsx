@@ -21,20 +21,8 @@ const Cauldron: React.FC<CauldronProps> = ({ selectedGenre, isFusionReady }) => 
 // SECCIÓN: Renderizado visual
   return (
     <div className="center-dashboard-content">
-      <div>
-        <h2>Añadir Ingredientes al Caldero</h2>
-        {selectedGenre && (
-          <span className="selected-genre-badge">Poción Base: {selectedGenre.name}</span>
-        )}
-      </div>
 
-      <div className="status-preview">
-        {isFusionReady ? (
-          <p>Los ingredientes reaccionan... ¡El conjuro está listo!</p>
-        ) : (
-          <p>Añade ingredientes de las estanterías (esquinas) a la mezcla...</p>
-        )}
-      </div>
+
 
       {selectedGenre ? (
         <img
