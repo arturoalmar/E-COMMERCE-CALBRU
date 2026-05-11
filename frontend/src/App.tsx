@@ -277,7 +277,7 @@ function App() {
     }
   };
 
-  const isImmersiveMode = page === 'home' || (page === 'creator' && currentStep === 'select-pot') || page === 'login';
+  const isImmersiveMode = page === 'home' || page === 'creator' || page === 'login';
   const shouldHideNavbar = isImmersiveMode;
 
   // SECCIÓN: Renderizado visual

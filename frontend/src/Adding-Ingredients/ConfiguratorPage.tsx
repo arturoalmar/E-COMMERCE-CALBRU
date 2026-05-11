@@ -46,9 +46,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
       />
       <div className="configurator-layout">
         {/* Botón volver arriba a la izquierda */}
-        <button className="btn-back" onClick={onBack}>
-          Volver
-        </button>
+      
 
         <OptionsShelf category="diseno" title="Diseño" cornerClass="corner-tl" selections={selections} toggleOption={toggleOption} />
         <OptionsShelf category="tematica" title="Temática" cornerClass="corner-tr" selections={selections} toggleOption={toggleOption} />
@@ -65,6 +63,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
           <ParticleEffect particles={particles} />
           <Cauldron selectedGenre={selectedGenre} isFusionReady={isFusionReady} />
           <button className="btn-create-game" onClick={onCreateGame}>Crear Juego</button>
+          <button className="btn-back-game" onClick={onBack}>Volver</button>
         </div>
       </div>
       <Footer />
