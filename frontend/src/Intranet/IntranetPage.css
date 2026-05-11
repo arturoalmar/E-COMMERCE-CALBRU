@@ -6,10 +6,25 @@
 */
 
 /* INTRANET SKETCH */
+:root {
+  --intranet-bg: #100b1e;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --panel-border: rgba(140, 92, 255, 0.3);
+  --accent: #8c5cff;
+  --accent-soft: rgba(140, 92, 255, 0.15);
+  --accent-strong: rgba(140, 92, 255, 0.4);
+  --text-main: #f4efff;
+  --text-muted: #d7c7ff;
+  --button-bg: rgba(140, 92, 255, 0.18);
+  --button-border: rgba(140, 92, 255, 0.4);
+  --gold: #ffd93d;
+}
+
 /* APARTADO: .intranet-sketch-layout - Estilos para este elemento */
 .intranet-sketch-layout {
+  position: relative;
   padding: 2rem;
-  color: #f4efff;
+  color: var(--text-main);
 }
 
 /* APARTADO: .news-slider-sketch - Estilos para este elemento */
@@ -48,6 +63,199 @@
   padding: 2rem;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* FUNCTIONAL CALENDAR STYLES */
+/* APARTADO: .functional-calendar - Estilos para este elemento */
+.functional-calendar {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(140, 92, 255, 0.05));
+  border: 1px solid rgba(140, 92, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 600px;
+}
+
+/* APARTADO: .calendar-header-nav - Estilos para este elemento */
+.functional-calendar .calendar-header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(140, 92, 255, 0.2);
+}
+
+/* APARTADO: .calendar-header-nav h3 - Estilos para este elemento */
+.functional-calendar .calendar-header-nav h3 {
+  color: #edd7ff;
+  margin: 0;
+  font-size: 1.3rem;
+  font-family: 'MedievalSharp', cursive;
+  letter-spacing: 1px;
+}
+
+/* APARTADO: .calendar-grid-header - Estilos para este elemento */
+.calendar-grid-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #bf88ff;
+  text-align: center;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+/* APARTADO: .calendar-grid-body - Estilos para este elemento */
+.calendar-grid-body {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.4rem;
+  flex: 1;
+  min-height: 0;
+}
+
+/* APARTADO: .calendar-day - Estilos para este elemento (Calendar) */
+.functional-calendar .calendar-day {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(140, 92, 255, 0.2);
+  border-radius: 6px;
+  padding: 0.6rem;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.functional-calendar .calendar-day:hover {
+  background: rgba(140, 92, 255, 0.1);
+  border-color: rgba(140, 92, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* APARTADO: .calendar-day.empty - Estilos para este elemento */
+.functional-calendar .calendar-day.empty {
+  background: transparent;
+  border: none;
+}
+
+/* APARTADO: .calendar-day.weekend - Estilos para este elemento */
+.functional-calendar .calendar-day.weekend {
+  background: rgba(200, 100, 200, 0.05);
+  border-color: rgba(200, 100, 200, 0.15);
+}
+
+/* APARTADO: .calendar-day.past - Estilos para este elemento */
+.functional-calendar .calendar-day.past {
+  opacity: 0.35;
+  background: rgba(0, 0, 0, 0.85);
+  border-color: rgba(80, 80, 80, 0.3);
+}
+
+/* APARTADO: .calendar-day (Futuro) - Estilos para este elemento */
+.functional-calendar .calendar-day:not(.past):not(.empty) {
+  background: rgba(20, 15, 35, 0.7);
+}
+
+/* APARTADO: .calendar-day.today-marker - Estilos para este elemento */
+.functional-calendar .calendar-day.today-marker {
+  background: linear-gradient(135deg, rgba(240, 200, 110, 0.4), rgba(240, 200, 110, 0.2));
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 12px rgba(240, 200, 110, 0.4);
+  opacity: 1;
+}
+
+/* APARTADO: .day-number - Estilos para este elemento (Calendar) */
+.functional-calendar .day-number {
+  color: #f4efff;
+  font-weight: bold;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+/* APARTADO: .day-events-container - Estilos para este elemento */
+.day-events-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-content: flex-start;
+}
+
+/* APARTADO: .day-event-pill - Estilos para este elemento (ahora es un punto) */
+.day-event-pill {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* APARTADO: .day-event-pill.delivery - Estilos para este elemento */
+.day-event-pill.delivery {
+  background: var(--accent);
+  box-shadow: 0 0 4px rgba(140, 92, 255, 0.8);
+}
+
+/* APARTADO: .day-event-pill.internal - Estilos para este elemento */
+.day-event-pill.internal {
+  background: var(--accent-soft);
+  box-shadow: 0 0 4px rgba(140, 92, 255, 0.5);
+}
+
+/* APARTADO: .day-event-pill.client - Estilos para este elemento */
+.day-event-pill.client {
+  background: var(--gold);
+  box-shadow: 0 0 4px rgba(255, 217, 61, 0.8);
+}
+
+/* CALENDAR LEGEND */
+/* APARTADO: .calendar-legend - Estilos para este elemento */
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(140, 92, 255, 0.2);
+  flex-wrap: wrap;
+}
+
+/* APARTADO: .legend-item - Estilos para este elemento */
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #e0d7ff;
+  font-size: 0.9rem;
+}
+
+/* APARTADO: .legend-dot - Estilos para este elemento */
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot.delivery {
+  background: var(--accent);
+  box-shadow: 0 0 5px rgba(140, 92, 255, 0.8);
+}
+
+.legend-dot.internal {
+  background: var(--accent-soft);
+  box-shadow: 0 0 5px rgba(140, 92, 255, 0.5);
+}
+
+.legend-dot.client {
+  background: var(--gold);
+  box-shadow: 0 0 5px rgba(255, 217, 61, 0.8);
 }
 
 /* APARTADO: .quick-links-sketch ul - Estilos para este elemento */
@@ -115,20 +323,21 @@
 .intranet-sub-nav {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  padding: 1.5rem 0;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid rgba(140, 92, 255, 0.2);
-  background: rgba(140, 92, 255, 0.03);
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--panel-border);
+  background: rgba(140, 92, 255, 0.06);
   border-radius: 12px;
-  flex-wrap: wrap;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* APARTADO: .sub-nav-btn - Estilos para este elemento */
 .sub-nav-btn {
-  background: rgba(140, 92, 255, 0.1);
-  border: 1px solid rgba(140, 92, 255, 0.3);
-  color: #f4efff;
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  color: var(--text-main);
   padding: 0.8rem 1.5rem;
   border-radius: 50px;
   cursor: pointer;
@@ -140,18 +349,65 @@
 
 /* APARTADO: .sub-nav-btn:hover - Estilos para este elemento */
 .sub-nav-btn:hover {
-  background: rgba(140, 92, 255, 0.2);
-  border-color: #bf88ff;
+  background: var(--accent-soft);
+  border-color: var(--accent-strong);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(140, 92, 255, 0.2);
 }
 
 /* APARTADO: .sub-nav-btn.active - Estilos para este elemento */
 .sub-nav-btn.active {
-  background: #8c5cff;
+  background: var(--accent);
   color: white;
-  border-color: #bf88ff;
+  border-color: var(--accent-strong);
   box-shadow: 0 0 15px rgba(140, 92, 255, 0.4);
+}
+
+/* APARTADO: .sub-nav-btn.back-btn - Estilos para el botón de atrás */
+.sub-nav-btn.back-btn {
+  background: var(--button-bg);
+  border-color: var(--button-border);
+  color: var(--text-main);
+  margin-right: auto;
+  font-weight: bold;
+}
+
+.sub-nav-btn.back-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-strong);
+  box-shadow: 0 5px 15px rgba(140, 92, 255, 0.2);
+}
+
+/* APARTADO: .sub-nav-center - Estilos para centrar los botones principales */
+.sub-nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* APARTADO: .intranet-back-btn - Botón de volver flotante */
+.intranet-back-btn {
+  position: absolute;
+  top: 1.625rem;
+  left: 1rem;
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  color: var(--text-main);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Almendra', serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.intranet-back-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-strong);
+  box-shadow: 0 5px 15px rgba(140, 92, 255, 0.2);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
@@ -1008,4 +1264,669 @@
   font-style: italic;
 }
 
+/* 
+=========================================================
+ 📄 ARCHIVO: IntranetPage_news_slider.css
+ 📝 DESCRIPCIÓN: Estilos para el carrusel de noticias dinámico.
+=========================================================
+*/
 
+/* NEWS SLIDER DYNAMIC */
+/* APARTADO: .news-slider-dynamic - Estilos para este elemento */
+.news-slider-dynamic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(140, 92, 255, 0.12), rgba(255, 170, 0, 0.08));
+  border: 2px solid rgba(140, 92, 255, 0.3);
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin: 2rem 0;
+  gap: 1rem;
+  min-height: 300px;
+}
+
+/* APARTADO: .slider-wrapper - Estilos para este elemento */
+.slider-wrapper {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+/* APARTADO: .slider-track - Estilos para este elemento */
+.slider-track {
+  display: flex;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+}
+
+/* APARTADO: .news-slide - Estilos para este elemento */
+.news-slide {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+}
+
+/* APARTADO: .news-image-container - Estilos para este elemento */
+.news-image-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* APARTADO: .news-image-container img - Estilos para este elemento */
+.news-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.news-slide:hover .news-image-container img {
+  transform: scale(1.05);
+}
+
+/* APARTADO: .news-overlay-gradient - Estilos para este elemento */
+.news-overlay-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 30%, rgba(0, 0, 0, 0.8));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  color: #fff;
+}
+
+/* APARTADO: .news-overlay-gradient h3 - Estilos para este elemento */
+.news-overlay-gradient h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+  font-family: 'MedievalSharp', cursive;
+  letter-spacing: 1px;
+}
+
+/* APARTADO: .news-overlay-gradient p - Estilos para este elemento */
+.news-overlay-gradient p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* APARTADO: .slider-btn - Estilos para este elemento */
+.slider-btn {
+  background: rgba(140, 92, 255, 0.2);
+  border: 2px solid rgba(140, 92, 255, 0.4);
+  color: #f4efff;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.slider-btn:hover {
+  background: rgba(140, 92, 255, 0.4);
+  border-color: var(--gold);
+  box-shadow: 0 0 15px rgba(140, 92, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* APARTADO: .slider-btn.prev - Estilos para este elemento */
+.slider-btn.prev {
+  order: -1;
+}
+
+/* 
+=========================================================
+ 📄 ARCHIVO: IntranetPage_vacation.css
+ 📝 DESCRIPCIÓN: Estilos para la sección de vacaciones.
+=========================================================
+*/
+
+/* VACATION SECTION */
+/* APARTADO: .sub-view-panel - Estilos para este elemento */
+.sub-view-panel {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--panel-border);
+  min-height: 100vh;
+}
+
+/* APARTADO: .detailed-view - Estilos para este elemento */
+.detailed-view {
+  display: flex;
+  flex-direction: column;
+}
+
+/* APARTADO: .top-navigation-area - Estilos para este elemento */
+.top-navigation-area {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+/* APARTADO: .intranet-action-link - Estilos para este elemento */
+.intranet-action-link {
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  color: var(--text-main);
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Almendra', serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.intranet-action-link:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-strong);
+  box-shadow: 0 4px 12px rgba(140, 92, 255, 0.3);
+}
+
+/* APARTADO: .back-btn-top - Estilos para este elemento */
+.back-btn-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* APARTADO: .sub-view-header - Estilos para este elemento */
+.sub-view-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--panel-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* APARTADO: .modern-grid-header - Estilos para este elemento */
+.modern-grid-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .modern-grid-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* APARTADO: .header-side-left - Estilos para este elemento */
+.header-side-left,
+.header-side-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* APARTADO: .section-title-witch - Estilos para este elemento */
+.section-title-witch {
+  color: var(--text-main);
+  font-size: 2rem;
+  font-family: 'MedievalSharp', cursive;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* APARTADO: .centered-white-title - Estilos para este elemento */
+.centered-white-title {
+  text-align: center;
+}
+
+/* APARTADO: .vacation-main-layout - Estilos para este elemento */
+.vacation-main-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2rem;
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .vacation-main-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* APARTADO: .vacation-stats-panel - Estilos para este elemento */
+.vacation-stats-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  text-align: center;
+  height: fit-content;
+}
+
+/* APARTADO: .stat-circle - Estilos para este elemento */
+.stat-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  border: 2px solid var(--panel-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+/* APARTADO: .big-num - Estilos para este elemento */
+.big-num {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--text-main);
+  font-family: 'MedievalSharp', cursive;
+}
+
+/* APARTADO: .stat-desc - Estilos para este elemento */
+.stat-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* APARTADO: .vacation-calendar-wrapper - Estilos para este elemento */
+.vacation-calendar-wrapper {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--panel-border);
+}
+
+/* APARTADO: .calendar-header-nav - Estilos para este elemento */
+.calendar-header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+/* APARTADO: .nav-btn - Estilos para este elemento */
+.nav-btn {
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  color: var(--text-main);
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-strong);
+  box-shadow: 0 4px 12px rgba(140, 92, 255, 0.3);
+}
+
+/* CALENDAR GRID */
+/* APARTADO: .calendar-grid - Estilos para este elemento */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* APARTADO: .calendar-day-header - Estilos para este elemento */
+.calendar-day-header {
+  text-align: center;
+  color: #bf88ff;
+  font-weight: bold;
+  font-size: 0.85rem;
+  padding: 0.5rem 0;
+  text-transform: uppercase;
+}
+
+/* APARTADO: .calendar-day - Estilos para este elemento */
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: default;
+  position: relative;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.calendar-day.empty {
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+.calendar-day.selectable {
+  cursor: pointer;
+  border-color: rgba(140, 92, 255, 0.3);
+}
+
+.calendar-day.selectable:hover {
+  background: rgba(140, 92, 255, 0.2);
+  border-color: rgba(140, 92, 255, 0.6);
+  transform: scale(1.05);
+}
+
+.calendar-day.selected {
+  background: linear-gradient(135deg, rgba(140, 92, 255, 0.5), rgba(191, 136, 255, 0.3));
+  border-color: var(--secondary-color);
+  color: var(--secondary-light);
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(140, 92, 255, 0.4);
+}
+
+.calendar-day.occupied {
+  background: rgba(255, 100, 100, 0.15);
+  border-color: rgba(255, 100, 100, 0.3);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.calendar-day.past-day {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.calendar-day.is-today {
+  border: 2px solid var(--gold);
+  background: rgba(240, 200, 110, 0.1);
+}
+
+/* APARTADO: .day-number - Estilos para este elemento */
+.day-number {
+  z-index: 2;
+}
+
+/* APARTADO: .occupied-label - Estilos para este elemento */
+.occupied-label {
+  position: absolute;
+  font-size: 0.65rem;
+  color: var(--accent);
+  font-weight: bold;
+  bottom: 2px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+
+/* =====================================================
+   FOOTER LIST ENHANCED STYLES
+   Estrategia Q2 & Hitos Alcanzados Formatting
+   ===================================================== */
+
+.footer-list {
+  color: #f4efff;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1),
+              0 0 40px rgba(140, 92, 255, 0.1);
+}
+
+.footer-list::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 4px
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footer-list > * {
+  position: relative;
+  z-index: 2;
+}
+
+.footer-list h3 {
+  color: var(--gold);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  margin-left: 0;
+  margin-right: 0;
+  font-family: 'Georgia', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  border-bottom: 3px solid rgba(255, 217, 61, 0.4);
+  padding: 1.2rem 1.5rem;
+  padding-bottom: 1rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 0 0 15px rgba(255, 217, 61, 0.3);
+  font-weight: bold;
+}
+
+.footer-list ul {
+  list-style: none;
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  margin: 0;
+}
+
+.footer-list li {
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid rgba(255, 217, 61, 0.6);
+  background: linear-gradient(90deg, rgba(255, 217, 61, 0.08), transparent);
+  color: #e0d7ff;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+  border-radius: 0 8px 8px 0;
+}
+
+.footer-list li:hover {
+  border-left-color: #ffd93d;
+  background: linear-gradient(90deg, rgba(255, 217, 61, 0.15), transparent);
+  padding-left: 2rem;
+  color: #fff;
+  box-shadow: inset 0 0 15px rgba(255, 217, 61, 0.1);
+  transform: translateX(4px);
+}
+
+/* CALENDAR EVENT TOOLTIP */
+/* APARTADO: .event-tooltip - Tooltip para mostrar el evento al hover */
+.event-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(140, 92, 255, 0.3);
+}
+
+.event-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+}
+
+/* TELETRABAJO PAGE STYLES */
+/* APARTADO: .telework-policy-details - Contenedor de políticas */
+.telework-policy-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.telework-policy-details .policy-block {
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.telework-policy-details .policy-block:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(140, 92, 255, 0.2);
+  border-color: var(--accent-strong);
+}
+
+.telework-policy-details .policy-block h3 {
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.telework-policy-details .policy-block p {
+  color: var(--text-main);
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* APARTADO: .telework-form-worked - Formulario de teletrabajo */
+.telework-form-worked {
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.telework-form-worked h3 {
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: none;
+}
+}
+
+.telework-form-worked .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.telework-form-worked label {
+  display: block;
+  color: #f4efff;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.telework-form-worked select,
+.telework-form-worked textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid rgba(140, 92, 255, 0.3);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #f4efff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.telework-form-worked select:focus,
+.telework-form-worked textarea:focus {
+  outline: none;
+  border-color: #8c5cff;
+  box-shadow: 0 0 10px rgba(140, 92, 255, 0.3);
+}
+
+.telework-form-worked textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* NORMAS PAGE STYLES */
+/* APARTADO: .rules-content-expanded - Contenedor de normas */
+.rules-content-expanded {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.rules-content-expanded .rule-card {
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.rules-content-expanded .rule-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(140, 92, 255, 0.2);
+  border-color: var(--accent-strong);
+}
+
+.rules-content-expanded .rule-card h4 {
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.rules-content-expanded .rule-card p {
+  color: var(--text-main);
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.95rem;
+}

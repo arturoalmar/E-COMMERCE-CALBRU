@@ -7,7 +7,7 @@
 // Página principal de la intranet corporativa para empleados.
 // Contiene noticias, calendario, acceso a normas, vacaciones, teletrabajo y comité de empresa.
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import './IntranetPage.css';
 
 import news1 from '../assets/news1.png';
@@ -16,7 +16,6 @@ import news3 from '../assets/news3.png';
 
 // Importación de sub-componentes reorganizados
 import Normas from './Normas';
-import Vacaciones from './Vacaciones';
 import Teletrabajo from './Teletrabajo';
 import ComiteEmpresa from './ComiteEmpresa';
 
@@ -25,9 +24,12 @@ import NewsSlider, { NewsItem } from './NewsSlider';
 import QuickLinks from './QuickLinks';
 import IntranetCalendar from './IntranetCalendar';
 
+// Importar el footer compartido
+import Footer from '../components/Footer/Footer';
+
 // SECCIÓN: Definición de datos/propiedades
 interface IntranetPageProps {
-  username: string;
+  onBack?: () => void;
 }
 
 const NEWS_ITEMS: NewsItem[] = [
@@ -36,122 +38,10 @@ const NEWS_ITEMS: NewsItem[] = [
   { id: 3, title: 'Workshop: Optimización de Embudo de Conversión', img: news3, desc: 'Cómo mejorar el ratio de compra en la tienda usando análisis detallado de comportamiento de usuario.' }
 ];
 
-const OCCUPIED_DATA = [
-  { day: 5, month: 3, year: 2026 },
-  { day: 6, month: 3, year: 2026 },
-  { day: 20, month: 3, year: 2026 },
-  { day: 4, month: 4, year: 2026 },
-  { day: 28, month: 4, year: 2026 },
-  { day: 29, month: 4, year: 2026 },
-  { day: 15, month: 5, year: 2026 }
-];
-
-const MONTH_NAMES = [
-  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-];
-
 // SECCIÓN: Componente o Función lógica
-const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
+const IntranetPage: React.FC<IntranetPageProps> = ({ onBack }) => {
   // Vista interna activa de la intranet. Cambia entre el panel principal y secciones de RRHH.
-  const [view, setView] = useState<'main' | 'rules' | 'vacation' | 'teleworking' | 'committee'>('main');
-  // Días seleccionados para la solicitud de vacaciones.
-  const [selectedVacationDays, setSelectedVacationDays] = useState<{ day: number, month: number, year: number }[]>([]);
-
-// SECCIÓN: Componente o Función lógica
-  const today = useMemo(() => {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    return d;
-  }, []);
-
-  const [vacationDate, setVacationDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
-
-  const TOTAL_VACATION_LIMIT = 22;
-
-// SECCIÓN: Componente o Función lógica
-  const changeMonth = (direction: 'next' | 'prev') => {
-    // Only used for vacation now, main calendar handles its own state
-    setVacationDate(prev => {
-      const d = new Date(prev);
-      d.setMonth(prev.getMonth() + (direction === 'next' ? 1 : -1));
-      return d;
-    });
-  };
-
-  // Calcula el primer día de la semana y el total de días para el mes actual.
-// SECCIÓN: Componente o Función lógica
-  const getDaysInMonth = (date: Date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const firstDay = new Date(year, month, 1).getDay();
-    const totalDays = new Date(year, month + 1, 0).getDate();
-    return { firstDay: firstDay === 0 ? 6 : firstDay - 1, totalDays };
-  };
-
-// SECCIÓN: Componente o Función lógica
-  const isDayInVacations = (day: number, date: Date) => {
-    return selectedVacationDays.some(v => v.day === day && v.month === date.getMonth() && v.year === date.getFullYear());
-  };
-
-// SECCIÓN: Componente o Función lógica
-  const isPast = (day: number, date: Date) => {
-    const target = new Date(date.getFullYear(), date.getMonth(), day);
-    return target < today;
-  };
-
-// SECCIÓN: Componente o Función lógica
-  const isOccupied = (day: number, date: Date) => {
-    return OCCUPIED_DATA.some(o => o.day === day && o.month === date.getMonth() && o.year === date.getFullYear());
-  };
-
-// SECCIÓN: Componente o Función lógica
-  const toggleVacationDay = (day: number) => {
-    if (isPast(day, vacationDate) || isOccupied(day, vacationDate)) return;
-
-    const month = vacationDate.getMonth();
-    const year = vacationDate.getFullYear();
-
-    setSelectedVacationDays(prev => {
-      const exists = isDayInVacations(day, vacationDate);
-      if (exists) {
-        return prev.filter(v => !(v.day === day && v.month === month && v.year === year));
-      } else {
-        if (prev.length >= TOTAL_VACATION_LIMIT) return prev;
-        return [...prev, { day, month, year }];
-      }
-    });
-  };
-
-  // Simplificamos renderCalendarDays para que solo maneje el modo 'select' (Vacaciones)
-// SECCIÓN: Componente o Función lógica
-  const renderCalendarDays = (date: Date) => {
-    const { firstDay, totalDays } = getDaysInMonth(date);
-    const elements = [];
-
-    for (let i = 0; i < firstDay; i++) {
-      elements.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
-    }
-
-    for (let d = 1; d <= totalDays; d++) {
-      const past = isPast(d, date);
-      const isToday = d === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
-
-      const occupied = isOccupied(d, date);
-      const selected = isDayInVacations(d, date);
-      elements.push(
-        <div
-          key={d}
-          className={`calendar-day selectable ${occupied ? 'occupied' : ''} ${selected ? 'selected' : ''} ${past ? 'past-day' : ''} ${isToday ? 'is-today' : ''}`}
-          onClick={() => toggleVacationDay(d)}
-        >
-          <span className="day-number">{d}</span>
-          {occupied && <span className="occupied-label">Ocupado</span>}
-        </div>
-      );
-    }
-    return elements;
-  };
+  const [view, setView] = useState<'main' | 'rules' | 'teleworking' | 'committee'>('main');
 
 // SECCIÓN: Componente o Función lógica
   const renderMainView = () => (
@@ -167,103 +57,68 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ username }) => {
           {/* Componente Extraído */}
           <IntranetCalendar />
           
-          <div className="calendar-legend-colored" style={{marginTop: '0.8rem', flexShrink: 0}}>
-            <span className="leg-item"><i className="dot-del"></i> Lanzamiento</span>
-            <span className="leg-item"><i className="dot-int"></i> Sync Interna</span>
-            <span className="leg-item"><i className="dot-cli"></i> Estrategia</span>
-          </div>
         </div>
       </div>
-
-      <section className="intranet-info-footer">
-        <div className="footer-list parchment-bg">
-          <h3>Estrategia Q2</h3>
-          <ul>
-            <li>✦ Incrementar ventas un 15% en plataformas digitales</li>
-            <li>✦ Optimizar rendimiento del servidor de descargas</li>
-            <li>✦ Expandir la red de distribución logística</li>
-          </ul>
-        </div>
-        <div className="footer-list parchment-bg">
-          <h3>Hitos Alcanzados</h3>
-          <ul>
-            <li>✦ Récord de usuarios concurrentes en Enero</li>
-            <li>✦ Integración exitosa con nuevas pasarelas</li>
-            <li>✦ Reducción de tiempos de carga en la tienda un 30%</li>
-          </ul>
-        </div>
-      </section>
     </>
   );
 
 // SECCIÓN: Renderizado visual
   return (
     <div className="intranet-sketch-layout intranet-full">
-      <div className="intranet-welcome-bar">
-        <span>Hola, {username}</span>
-      </div>
+      {onBack && (
+        <button 
+          className="intranet-back-btn"
+          onClick={onBack}
+          title="Volver al inicio"
+        >
+          ← Volver
+        </button>
+      )}
       <nav className="intranet-sub-nav">
-        <button 
-          className={`sub-nav-btn ${view === 'main' ? 'active' : ''}`} 
-          onClick={() => setView('main')}
-        >
-          Inicio
-        </button>
-        <button 
-          className={`sub-nav-btn ${view === 'committee' ? 'active' : ''}`} 
-          onClick={() => setView('committee')}
-        >
-          Comité de Empresa
-        </button>
-        <button 
-          className={`sub-nav-btn ${view === 'teleworking' ? 'active' : ''}`} 
-          onClick={() => setView('teleworking')}
-        >
-          Política de Teletrabajo
-        </button>
-        <button 
-          className={`sub-nav-btn ${view === 'vacation' ? 'active' : ''}`} 
-          onClick={() => setView('vacation')}
-        >
-          Vacaciones
-        </button>
-        <button 
-          className={`sub-nav-btn ${view === 'rules' ? 'active' : ''}`} 
-          onClick={() => setView('rules')}
-        >
-          Normas
-        </button>
+        <div className="sub-nav-center">
+          <button 
+            className={`sub-nav-btn ${view === 'main' ? 'active' : ''}`} 
+            onClick={() => setView('main')}
+          >
+            Inicio
+          </button>
+          <button 
+            className={`sub-nav-btn ${view === 'committee' ? 'active' : ''}`} 
+            onClick={() => setView('committee')}
+          >
+            Comité de Empresa
+          </button>
+          <button 
+            className={`sub-nav-btn ${view === 'teleworking' ? 'active' : ''}`} 
+            onClick={() => setView('teleworking')}
+          >
+            Política de Teletrabajo
+          </button>
+          <button 
+            className={`sub-nav-btn ${view === 'rules' ? 'active' : ''}`} 
+            onClick={() => setView('rules')}
+          >
+            Normas
+          </button>
+        </div>
       </nav>
 
-      {view === 'main' && renderMainView()}
-
-      {view === 'rules' && <Normas setView={setView} />}
-
-      {view === 'vacation' && (
-        <Vacaciones
-          setView={setView}
-          vacationDate={vacationDate}
-          changeMonth={changeMonth}
-          MONTH_NAMES={MONTH_NAMES}
-          TOTAL_VACATION_LIMIT={TOTAL_VACATION_LIMIT}
-          selectedVacationDays={selectedVacationDays}
-          renderCalendarDays={renderCalendarDays}
-        />
-      )}
-
-      {view === 'teleworking' && <Teletrabajo setView={setView} />}
-
-      {view === 'committee' && <ComiteEmpresa setView={setView} />}
-
-      {view === 'main' && (
-        <section className="hr-form-sketch">
-          <div className="form-box parchment-bg">
-            <label>Mensaje al Departamento de RRHH</label>
-            <textarea placeholder="Escribe tu consulta aquí..."></textarea>
-            <button className="intranet-confirm-btn" onClick={() => alert('Mensaje enviado a RRHH.')}>Enviar Mensaje</button>
-          </div>
-        </section>
-      )}
+      <>
+        {view === 'main' && renderMainView()}
+        {view === 'rules' && <Normas setView={setView} />}
+        {view === 'teleworking' && <Teletrabajo setView={setView} />}
+        {view === 'committee' && <ComiteEmpresa setView={setView} />}
+        {view === 'main' && (
+          <section className="hr-form-sketch">
+            <div className="form-box parchment-bg">
+              <label>Mensaje al Departamento de RRHH</label>
+              <textarea placeholder="Escribe tu consulta aquí..."></textarea>
+              <button className="intranet-confirm-btn" onClick={() => alert('Mensaje enviado a RRHH.')}>Enviar Mensaje</button>
+            </div>
+          </section>
+        )}
+      </>
+      <Footer />
     </div>
   );
 };

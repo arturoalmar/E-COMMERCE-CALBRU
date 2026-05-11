@@ -10,7 +10,7 @@ import React from 'react';
 
 // SECCIÓN: Definición de datos/propiedades
 interface QuickLinksProps {
-  setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking' | 'committee') => void;
+  setView: (view: 'main' | 'rules' | 'teleworking' | 'committee') => void;
 }
 
 // SECCIÓN: Componente o Función lógica
@@ -31,10 +31,6 @@ const QuickLinks: React.FC<QuickLinksProps> = ({ setView }) => {
         <li>
           <button className="intranet-action-link" onClick={() => setView('rules')}>- Normas y Código de Conducta</button>
           <p className="link-description">Guía de comportamiento y protocolos.</p>
-        </li>
-        <li>
-          <button className="intranet-action-link" onClick={() => setView('vacation')}>- Solicitud de Vacaciones</button>
-          <p className="link-description">Gestión de días libres anuales.</p>
         </li>
         <li>
           <button className="intranet-action-link" onClick={() => setView('teleworking')}>- Política de Teletrabajo</button>

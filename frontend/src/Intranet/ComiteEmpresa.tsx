@@ -10,22 +10,16 @@ import React, { useState } from 'react';
 
 // SECCIÓN: Definición de datos/propiedades
 interface ComiteEmpresaProps {
-  setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking' | 'committee') => void;
+  setView: (view: 'main' | 'rules' | 'teleworking' | 'committee') => void;
 }
 
 // SECCIÓN: Componente o Función lógica
-const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView }) => {
-  const [activeTab, setActiveTab] = useState<'info' | 'legal' | 'goals'>('info');
+const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
+  const [activeTab, setActiveTab] = useState<'info' | 'legal' | 'copy'>('info');
 
 // SECCIÓN: Renderizado visual
   return (
     <div className="sub-view-panel parchment-bg detailed-view">
-      <div className="top-navigation-area">
-        <button className="intranet-action-link back-btn-top" onClick={() => setView('main')}>
-          ← Volver al Panel
-        </button>
-      </div>
-
       <div className="sub-view-header modern-grid-header">
         <div className="header-side-left"></div>
         <h2 className="section-title-witch centered-white-title">
@@ -49,10 +43,10 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView }) => {
           <span>⚖️</span> Normas y Leyes
         </button>
         <button 
-          className={`tab-btn-witch ${activeTab === 'goals' ? 'active' : ''}`}
-          onClick={() => setActiveTab('goals')}
+          className={`tab-btn-witch ${activeTab === 'copy' ? 'active' : ''}`}
+          onClick={() => setActiveTab('copy')}
         >
-          <span>🎯</span> Logros y Metas
+          <span>📄</span> Copia de Normas
         </button>
       </div>
 
@@ -239,12 +233,13 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView }) => {
           </div>
         )}
 
-        {/* TABS: LOGROS Y METAS */}
-        {activeTab === 'goals' && (
+        {/* TABS: COPIA DE NORMAS - LOGROS DEL COMITÉ */}
+        {activeTab === 'copy' && (
           <div className="tab-pane fade-in-active">
             
             <section className="committee-section">
-              <h3 className="section-title-witch" style={{fontSize: '2rem', textAlign: 'left', borderBottom: 'none'}}>🏆 Acuerdos Históricos Conseguidos</h3>
+              <h3 className="section-title-witch" style={{fontSize: '2rem', textAlign: 'left', borderBottom: 'none'}}>🏆 Acuerdos Históricos Conseguidos por el Comité</h3>
+              <p className="intro-text" style={{marginBottom: '2rem'}}>Estos son los logros más importantes que hemos conseguido para mejorar las condiciones laborales de todos los trabajadores.</p>
               <div className="achievements-grid">
                 <div className="achievement-card">
                   <div className="ach-icon">🌞</div>
@@ -272,12 +267,21 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView }) => {
                     <p>Ampliación de los permisos retribuidos por enfermedad de familiares directos y flexibilidad horaria de entrada/salida de hasta 2 horas.</p>
                   </div>
                 </div>
+
+                <div className="achievement-card">
+                  <div className="ach-icon">🎯</div>
+                  <div className="ach-content">
+                    <h4>Renovación de Zonas de Descanso</h4>
+                    <span className="ach-date">Aprobado - Q2 2026</span>
+                    <p>Renovación total de sillas, máquinas de café premium gratuitas y adquisición de nuevas consolas para las zonas comunes del estudio.</p>
+                  </div>
+                </div>
               </div>
             </section>
 
             <section className="committee-section" style={{marginTop: '4rem'}}>
-              <h3 className="section-title-witch" style={{fontSize: '2rem', textAlign: 'left', borderBottom: 'none', color: '#d7b3ff'}}>🚀 Objetivos Estratégicos 2026</h3>
-              <p className="intro-text" style={{marginBottom: '2rem'}}>Estas son nuestras batallas actuales en la mesa de negociación. Necesitamos vuestro apoyo en las asambleas para sacarlas adelante.</p>
+              <h3 className="section-title-witch" style={{fontSize: '2rem', textAlign: 'left', borderBottom: 'none', color: '#d7b3ff'}}>🚀 Iniciativas del Comité en Marcha</h3>
+              <p className="intro-text" style={{marginBottom: '2rem'}}>Estas son las iniciativas que estamos impulsando actualmente para seguir mejorando las condiciones laborales.</p>
               
               <div className="goals-timeline">
                 <div className="goal-pro-card">
@@ -302,18 +306,6 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView }) => {
                     <div className="progress-bar" style={{width: '20%', background: 'linear-gradient(90deg, #ffaa00, #ffcc00)'}}></div>
                   </div>
                   <span className="progress-text">Fase 1 de 3: Propuesta presentada a RRHH.</span>
-                </div>
-
-                <div className="goal-pro-card">
-                  <div className="goal-header">
-                    <h4>Renovación de Zonas de Descanso (Las Tabernas)</h4>
-                    <span className="goal-status close">Aprobado - Q2</span>
-                  </div>
-                  <p>Renovación total de sillas, máquinas de café premium gratuitas y adquisición de nuevas consolas para las zonas comunes del estudio.</p>
-                  <div className="progress-container">
-                    <div className="progress-bar" style={{width: '90%', background: 'linear-gradient(90deg, #28a745, #5cb85c)'}}></div>
-                  </div>
-                  <span className="progress-text">Fase 3 de 3: Pendiente de instalación por el proveedor.</span>
                 </div>
               </div>
             </section>

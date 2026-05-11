@@ -35,6 +35,7 @@ const IntranetCalendar: React.FC = () => {
   }, []);
 
   const [mainDate, setMainDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+  const [hoveredEvent, setHoveredEvent] = useState<string | null>(null);
 
 // SECCIÓN: Componente o Función lógica
   const changeMonth = (direction: 'next' | 'prev') => {
@@ -81,15 +82,23 @@ const IntranetCalendar: React.FC = () => {
       if (isToday) classes += " today-marker";
 
       days.push(
-        <div key={`day-${i}`} className={classes}>
+        <div 
+          key={`day-${i}`} 
+          className={classes}
+          onMouseEnter={() => dayEvents.length > 0 && setHoveredEvent(dayEvents[0].title)}
+          onMouseLeave={() => setHoveredEvent(null)}
+        >
           <span className="day-number">{i}</span>
           <div className="day-events-container">
             {dayEvents.map((ev, idx) => (
-              <div key={idx} className={`day-event-pill ${ev.type}`} title={ev.title}>
-                {ev.title}
-              </div>
+              <div key={idx} className={`day-event-pill ${ev.type}`} title={ev.title}></div>
             ))}
           </div>
+          {hoveredEvent && dayEvents.length > 0 && (
+            <div className="event-tooltip">
+              {hoveredEvent}
+            </div>
+          )}
         </div>
       );
     }
@@ -110,6 +119,20 @@ const IntranetCalendar: React.FC = () => {
       </div>
       <div className="calendar-grid-body">
         {renderCalendarDays()}
+      </div>
+      <div className="calendar-legend">
+        <div className="legend-item">
+          <div className="legend-dot delivery"></div>
+          <span>Lanzamiento</span>
+        </div>
+        <div className="legend-item">
+          <div className="legend-dot internal"></div>
+          <span>Sync Interna</span>
+        </div>
+        <div className="legend-item">
+          <div className="legend-dot client"></div>
+          <span>Estrategia</span>
+        </div>
       </div>
     </section>
   );

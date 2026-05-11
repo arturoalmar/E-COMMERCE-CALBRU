@@ -230,10 +230,6 @@ function App() {
                   toggleOption={toggleOption}
                   onBack={() => navigateTo('creator', 'select-pot', null)}
                   onCreateGame={() => navigateTo('home')}
-
-                  onCreateGame={() => navigateTo('home')}
-
-                  onCreateGame={() => navigateTo('home')}
                 />
               </>
             )}
@@ -251,7 +247,7 @@ function App() {
             </div>
           </>
         );
-      case 'intranet': return <IntranetPage username={isLoggedIn ? 'Arturo Almar' : 'Visitante'} />;
+      case 'intranet': return <IntranetPage onBack={() => navigateTo('home')} />;
       case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} />;
       case 'login':
         // SECCIÓN: Renderizado visual
@@ -278,7 +274,7 @@ function App() {
   };
 
   const isImmersiveMode = page === 'home' || page === 'creator' || page === 'login';
-  const shouldHideNavbar = isImmersiveMode;
+  const shouldHideNavbar = isImmersiveMode || page === 'intranet';
 
   // SECCIÓN: Renderizado visual
   return (
@@ -316,7 +312,7 @@ function App() {
           </button>
         )}
 
-        {(page !== 'home' && !isImmersiveMode) && (
+        {(page !== 'home' && !isImmersiveMode && page !== 'intranet') && (
           <button
             className="back-to-home-btn floating"
             onClick={() => navigateTo('home')}

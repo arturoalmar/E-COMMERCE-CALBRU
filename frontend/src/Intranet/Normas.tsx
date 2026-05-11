@@ -10,20 +10,14 @@ import React from 'react';
 
 // SECCIÓN: Definición de datos/propiedades
 interface NormasProps {
-  setView: (view: 'main' | 'rules' | 'vacation' | 'teleworking') => void;
+  setView: (view: 'main' | 'rules' | 'teleworking') => void;
 }
 
 // SECCIÓN: Componente o Función lógica
-const Normas: React.FC<NormasProps> = ({ setView }) => {
+const Normas: React.FC<NormasProps> = ({ setView: _setView }) => {
 // SECCIÓN: Renderizado visual
   return (
     <div className="sub-view-panel parchment-bg detailed-view">
-      <div className="top-navigation-area">
-        <button className="intranet-action-link back-btn-top" onClick={() => setView('main')}>
-          ← Volver al Panel
-        </button>
-      </div>
-
       <div className="sub-view-header modern-grid-header">
         <div className="header-side-left"></div>
         <h2 className="section-title-witch centered-white-title">
