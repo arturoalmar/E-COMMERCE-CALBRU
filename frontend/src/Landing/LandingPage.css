@@ -576,3 +576,36 @@
     align-items: center;
     gap: 0.5rem;
 }
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+    .forest-header {
+        padding: 1rem 2rem;
+    }
+    .nav-left, .nav-right {
+        min-width: auto;
+        gap: 1rem;
+    }
+    .nav-left .nav-btn, .nav-right .nav-btn {
+        min-width: 120px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    .forest-footer {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .forest-header {
+        padding: 0.5rem 1rem;
+    }
+    .nav-left, .nav-right {
+        gap: 0.5rem;
+    }
+    .nav-left .nav-btn, .nav-right .nav-btn {
+        min-width: 100px;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}

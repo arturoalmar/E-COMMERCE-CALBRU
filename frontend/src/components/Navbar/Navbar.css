@@ -233,6 +233,12 @@
   .navbar {
     padding: 0 1rem;
   }
+  .navbar-left, .navbar-right {
+    display: none;
+  }
+  .menu-toggle {
+    display: flex;
+  }
 /* APARTADO: .user-name - Estilos para este elemento */
   .user-name {
     display: none;

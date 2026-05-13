@@ -38,6 +38,19 @@ body.no-scroll {
   transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1) !important;
 }
 
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 0 1rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 0 0.5rem 1rem;
+  }
+}
+
 /* Modo pantalla completa para Login/Registro */
 .app-container.full-width-page {
   max-width: none !important;

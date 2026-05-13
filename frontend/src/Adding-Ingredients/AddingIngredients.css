@@ -749,6 +749,21 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 0.4rem;
   }
+
+  /* APARTADO: .config-corner - Estilos para este elemento */
+  .config-corner {
+    width: 100%;
+    position: static;
+    margin-bottom: 1rem;
+  }
+
+  .configurator-title {
+    font-size: 1.8rem;
+  }
+
+  .configurator-subtitle {
+    font-size: 0.9rem;
+  }
 }
 
 
