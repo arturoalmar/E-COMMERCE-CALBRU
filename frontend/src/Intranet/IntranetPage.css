@@ -205,7 +205,7 @@
 /* APARTADO: .day-event-pill.internal - Estilos para este elemento */
 .day-event-pill.internal {
   background: var(--accent-soft);
-  box-shadow: 0 0 4px rgba(140, 92, 255, 0.5);
+  box-shadow: 0 0 4px rgba(243, 48, 48, 0.5);
 }
 
 /* APARTADO: .day-event-pill.client - Estilos para este elemento */
@@ -1097,6 +1097,114 @@
   margin-bottom: 0.5rem;
   font-size: 1.5rem;
 }
+
+/* APARTADO: .who-intro-card - Estilos para el texto introductorio del Comité */
+.who-intro-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(140, 92, 255, 0.18);
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+/* APARTADO: .who-summary-grid - Estilos para los cuadros de la sección Quiénes somos */
+.who-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+/* APARTADO: .who-summary-box - Estilos para cada tarjeta informativa */
+.who-summary-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+.who-summary-box h4 {
+  margin-top: 0;
+  color: #f0d9ff;
+}
+
+.who-summary-box p {
+  color: #dcd1ff;
+  line-height: 1.6;
+}
+
+/* APARTADO: .delegates-grid - Estilos para los delegados */
+.delegates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* APARTADO: .delegate-card - Estilos para cada delegado */
+.delegate-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(140, 92, 255, 0.18);
+  border-radius: 22px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+}
+
+.delegate-photo-wrap {
+  min-height: 200px;
+  background: linear-gradient(135deg, rgba(140, 92, 255, 0.25), rgba(0, 0, 0, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delegate-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.delegate-meta {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.delegate-meta h4 {
+  margin: 0;
+  color: #fff;
+}
+
+.delegate-role {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(140, 92, 255, 0.18);
+  color: #e6d8ff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.delegate-meta p {
+  margin: 0;
+  color: #d7c7ff;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .delegate-photo-wrap {
+    min-height: 180px;
+  }
+}
+
 
 
 

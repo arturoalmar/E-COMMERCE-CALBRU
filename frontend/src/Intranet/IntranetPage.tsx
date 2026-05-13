@@ -33,9 +33,9 @@ interface IntranetPageProps {
 }
 
 const NEWS_ITEMS: NewsItem[] = [
-  { id: 1, title: 'Campaña de Ventas: Steam Summer Sale', img: news1, desc: 'Nuestros títulos principales entrarán en promoción global. Revisar el stock de keys y cupones de descuento.' },
-  { id: 2, title: 'Migración a PostgreSQL AWS Finalizada', img: news2, desc: 'La infraestructura de ventas ahora es un 40% más rápida. Todo el historial de compras ha sido migrado y asegurado.' },
-  { id: 3, title: 'Workshop: Optimización de Embudo de Conversión', img: news3, desc: 'Cómo mejorar el ratio de compra en la tienda usando análisis detallado de comportamiento de usuario.' }
+  { id: 1, title: 'Cena de empresa: El día 15 de junio tendremos cena de empresa', img: news1, desc: 'Invitamos a todos los empleados a participar en nuestra cena de empresa. Se enviará un correo con la hora y el sitio.' },
+  { id: 2, title: 'Migración a PostgreSQL AWS Finalizada', img: news2, desc: 'Todo el servidor que teníamos en MySQL ha sido migrado exitosamente a PostgreSQL en AWS.' },
+  { id: 3, title: 'Inicio del desarrollo de un 5 Caldero', img: news3, desc: 'Se ha empezado el desarrollo del quinto caldero para la próxima actualización de la página web. Se ha decidido que sea de carreras.' }
 ];
 
 // SECCIÓN: Componente o Función lógica

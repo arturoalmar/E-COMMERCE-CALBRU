@@ -46,7 +46,7 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
           className={`tab-btn-witch ${activeTab === 'copy' ? 'active' : ''}`}
           onClick={() => setActiveTab('copy')}
         >
-          <span>📄</span> Copia de Normas
+          <span>🏆</span> Logros y Objetivos
         </button>
       </div>
 
@@ -57,75 +57,49 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
           <div className="tab-pane fade-in-active">
             <section className="committee-section pro-card">
               <h3>¿Quiénes somos?</h3>
-              <div className="who-we-are-content">
+              <div className="who-we-are-content who-intro-card">
                 <p className="intro-text">
-                  El Comité de Empresa es el órgano representativo y colegiado del conjunto de los trabajadores en Calbru Games para la defensa de sus intereses. Somos un equipo elegido democráticamente por ti y para ti, comprometidos con el bienestar y los derechos de todos los miembros del estudio.
+                  El Comité de Empresa representa a todos los trabajadores de Calbru Games y defiende tus derechos en cada decisión del estudio. Somos los delegados elegidos para convertir tus preocupaciones en propuestas reales y proteger tu bienestar laboral.
                 </p>
-                <div className="mission-vision-grid">
-                  <div className="mv-card">
-                    <span className="mv-icon">🛡️</span>
-                    <h4>Misión</h4>
-                    <p>Proteger y mejorar los derechos laborales, asegurando un entorno de trabajo justo, seguro y equitativo para todos los desarrolladores y staff.</p>
+                <div className="who-summary-grid">
+                  <div className="who-summary-box">
+                    <h4>Delegados de Equipo</h4>
+                    <p>Actuamos como puente directo entre la plantilla y la dirección, cuidando que las decisiones respeten tus condiciones, horarios y oportunidades de crecimiento.</p>
                   </div>
-                  <div className="mv-card">
-                    <span className="mv-icon">🤝</span>
-                    <h4>Visión</h4>
-                    <p>Ser un puente transparente y eficaz entre la dirección y los empleados, fomentando el diálogo constructivo y el progreso colectivo.</p>
-                  </div>
-                  <div className="mv-card">
-                    <span className="mv-icon">⚖️</span>
-                    <h4>Valores</h4>
-                    <p>Independencia, transparencia, solidaridad, y compromiso inquebrantable con la legalidad y el bienestar de la plantilla.</p>
+                  <div className="who-summary-box">
+                    <h4>Representación Cercana</h4>
+                    <p>Nos reunimos regularmente con el equipo para escuchar tus inquietudes y trasladarlas con claridad, transparencia y prioridad a la mesa de negociación.</p>
                   </div>
                 </div>
                 <p className="closing-text">
-                  <strong>¿Para qué servimos?</strong> Actuamos como interlocutores ante la dirección, negociamos convenios, vigilamos el cumplimiento de las normas laborales y de seguridad, y te asesoramos de forma confidencial en cualquier duda sobre tus derechos y deberes.
+                  <strong>¿Para qué servimos?</strong> Trabajamos para que tus derechos laborales se mantengan, para informar de tus opciones y para que el estudio avance con condiciones justas, seguras y respetuosas.
                 </p>
               </div>
             </section>
 
-            <section className="committee-section pro-card">
-              <h3>Organigrama del Comité</h3>
-              <div className="org-chart-witch enhanced-org">
-                <div className="org-level">
-                  <div className="org-node leader">
-                    <div className="org-avatar er">ER</div>
-                    <h4>Presidente</h4>
-                    <p>Elena Rúnica</p>
-                    <span className="org-dept">Desarrollo Core</span>
+            <section className="committee-section pro-card delegates-section">
+              <h3>Delegados del Comité</h3>
+              <div className="delegates-grid">
+                <article className="delegate-card">
+                  <div className="delegate-photo-wrap">
+                    <img src="https://via.placeholder.com/320x220?text=Arturo+Almudi" alt="Foto de Arturo Almudi" className="delegate-photo" />
                   </div>
-                </div>
-                <div className="org-connect-vertical"></div>
-                <div className="org-horizontal-line"></div>
-                <div className="org-level org-row-multi">
-                  <div className="org-branch">
-                    <div className="org-connect-vertical short"></div>
-                    <div className="org-node">
-                      <div className="org-avatar ma">MA</div>
-                      <h4>Secretario</h4>
-                      <p>Marcos Alquimia</p>
-                      <span className="org-dept">Arte 3D</span>
-                    </div>
+                  <div className="delegate-meta">
+                    <h4>Arturo Almudi</h4>
+                    <span className="delegate-role">Delegado del Comité</span>
+                    <p>Encargado de recoger y presentar las necesidades del equipo, con foco en estabilidad laboral, conciliación y respeto a los derechos profesionales.</p>
                   </div>
-                  <div className="org-branch">
-                    <div className="org-connect-vertical short"></div>
-                    <div className="org-node">
-                      <div className="org-avatar ld">LD</div>
-                      <h4>Vocal Prevención</h4>
-                      <p>Lucía Dragon</p>
-                      <span className="org-dept">QA</span>
-                    </div>
+                </article>
+                <article className="delegate-card">
+                  <div className="delegate-photo-wrap">
+                    <img src="https://via.placeholder.com/320x220?text=Joel+S%C3%A1nchez" alt="Foto de Joel Sánchez" className="delegate-photo" />
                   </div>
-                  <div className="org-branch">
-                    <div className="org-connect-vertical short"></div>
-                    <div className="org-node">
-                      <div className="org-avatar tf">TF</div>
-                      <h4>Vocal Igualdad</h4>
-                      <p>Tomás Forja</p>
-                      <span className="org-dept">Narrativa</span>
-                    </div>
+                  <div className="delegate-meta">
+                    <h4>Joel Sánchez</h4>
+                    <span className="delegate-role">Delegado del Comité</span>
+                    <p>Responsable de asegurar que el estudio cumple con las normas laborales y de defender tus derechos en los procesos de negociación y consulta interna.</p>
                   </div>
-                </div>
+                </article>
               </div>
             </section>
           </div>
@@ -136,7 +110,7 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
           <div className="tab-pane fade-in-active">
             <section className="committee-section">
               <h3>Píldoras Informativas: Normativa Laboral TIC</h3>
-              <div className="info-pills-grid">
+              <div className="info-pills-list">
                 <div className="info-pill">
                   <h4><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2021-11472" target="_blank" rel="noreferrer" style={{color: '#ffaa00', textDecoration: 'none'}}>Ley de Teletrabajo</a></h4>
                   <p>Regula el trabajo a distancia. Si trabajas más del 30% en remoto, tienes derecho a la compensación de gastos y dotación de equipos.</p>
@@ -267,15 +241,6 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
                     <p>Ampliación de los permisos retribuidos por enfermedad de familiares directos y flexibilidad horaria de entrada/salida de hasta 2 horas.</p>
                   </div>
                 </div>
-
-                <div className="achievement-card">
-                  <div className="ach-icon">🎯</div>
-                  <div className="ach-content">
-                    <h4>Renovación de Zonas de Descanso</h4>
-                    <span className="ach-date">Aprobado - Q2 2026</span>
-                    <p>Renovación total de sillas, máquinas de café premium gratuitas y adquisición de nuevas consolas para las zonas comunes del estudio.</p>
-                  </div>
-                </div>
               </div>
             </section>
 
@@ -306,6 +271,18 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
                     <div className="progress-bar" style={{width: '20%', background: 'linear-gradient(90deg, #ffaa00, #ffcc00)'}}></div>
                   </div>
                   <span className="progress-text">Fase 1 de 3: Propuesta presentada a RRHH.</span>
+                </div>
+
+                <div className="goal-pro-card">
+                  <div className="goal-header">
+                    <h4>Implementación de IA en Procesos Creativos</h4>
+                    <span className="goal-status in-progress">En Desarrollo</span>
+                  </div>
+                  <p>Integración de herramientas de IA para acelerar procesos de diseño y narrativa, con formación especializada para todos los equipos.</p>
+                  <div className="progress-container">
+                    <div className="progress-bar" style={{width: '40%', background: 'linear-gradient(90deg, #8c5cff, #d7b3ff)'}}></div>
+                  </div>
+                  <span className="progress-text">Fase 1 de 2: Evaluación de herramientas completada.</span>
                 </div>
               </div>
             </section>

@@ -123,11 +123,11 @@ const IntranetCalendar: React.FC = () => {
       <div className="calendar-legend">
         <div className="legend-item">
           <div className="legend-dot delivery"></div>
-          <span>Lanzamiento</span>
+          <span>Entrega</span>
         </div>
         <div className="legend-item">
           <div className="legend-dot internal"></div>
-          <span>Sync Interna</span>
+          <span>Reunion de Departamento</span>
         </div>
         <div className="legend-item">
           <div className="legend-dot client"></div>
