@@ -63,11 +63,18 @@ body {
   /* Imagen de fondo desactivada a petición del usuario */
   /* background-image: url("./assets/Fondo de tierra.png"); */
   
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   
   /* Tipografía Almendra como fuente principal en todo el proyecto */
   font-family: 'Almendra', serif;
   line-height: 1.7;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Tipografía MedievalSharp solo para títulos principales y decorativos */
