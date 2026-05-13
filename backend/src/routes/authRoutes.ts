@@ -1,3 +1,8 @@
+/**
+ * 📄 ARCHIVO: authRoutes.ts
+ * 📝 DESCRIPCIÓN: Rutas de autenticación (Registro y Login).
+ */
+
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -6,26 +11,30 @@ import UserDAO from '../DAO/UserDAO.js';
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
-// Registro de usuario
+/**
+ * POST /api/auth/register
+ * Registra un nuevo aprendiz de mago en el sistema.
+ */
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
+  // Validación básica de campos
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
   }
 
   try {
-    // Verificar si el usuario ya existe
+    // 1. Verificar disponibilidad de nombre de usuario o email
     const existingUser = await UserDAO.findByUsernameOrEmail(username, email);
     if (existingUser) {
       return res.status(400).json({ message: 'El nombre de usuario o el email ya están registrados' });
     }
 
-    // Encriptar contraseña
+    // 2. Encriptar la contraseña (Hashing)
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Crear usuario
+    // 3. Guardar en la base de datos
     const createdUser = await UserDAO.create({
       username,
       email,
@@ -46,7 +55,10 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Inicio de sesión
+/**
+ * POST /api/auth/login
+ * Autentica a un aprendiz y le otorga un token de acceso.
+ */
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
@@ -55,20 +67,19 @@ router.post('/login', async (req, res) => {
   }
 
   try {
-    // Buscar usuario
+    // 1. Buscar al usuario por nombre
     const user = await UserDAO.findByUsername(username);
-
     if (!user) {
       return res.status(400).json({ message: 'Credenciales inválidas' });
     }
 
-    // Verificar contraseña
+    // 2. Comparar la contraseña enviada con el hash guardado
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
       return res.status(400).json({ message: 'Credenciales inválidas' });
     }
 
-    // Crear token JWT
+    // 3. Generar token JWT con vigencia de 24h
     const token = jwt.sign(
       { id: user.id_usuario, username: user.username },
       JWT_SECRET,

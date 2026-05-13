@@ -50,6 +50,20 @@ function App() {
   const [user, setUser] = useState<{ id: number, username: string, email?: string } | null>(null);
   const [isWorker] = useState(true);
 
+  // Recuperar sesión al cargar
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        setUser({ id: payload.id, username: payload.username });
+        setIsLoggedIn(true);
+      } catch (e) {
+        localStorage.removeItem('token');
+      }
+    }
+  }, []);
+
   // Estados de transición
   const [transitionStatus, setTransitionStatus] = useState<'none' | 'exiting' | 'entering'>('none');
   const [transitionDirection, setTransitionDirection] = useState<'up' | 'down'>('up');
@@ -229,7 +243,45 @@ function App() {
                   isFusionReady={isFusionReady}
                   toggleOption={toggleOption}
                   onBack={() => navigateTo('creator', 'select-pot', null)}
-                  onCreateGame={() => navigateTo('home')}
+                  onCreateGame={async () => {
+                    if (!isLoggedIn) {
+                      alert('¡Debes ser un aprendiz registrado para forjar calderos!');
+                      navigateTo('login');
+                      return;
+                    }
+
+                    const token = localStorage.getItem('token');
+                    const nombre = `Poción de ${selectedGenre?.name || 'Misterio'}`;
+                    const atributos = Object.values(selections).flat();
+
+                    try {
+                      const response = await fetch('http://localhost:5000/api/cauldrons', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                          nombre,
+                          tipo_nombre: selectedGenre?.name || 'Desconocido',
+                          atributos: atributos,
+                          estado: 'pendiente',
+                          precio: 0,
+                          config_ia: `Configuración para ${selectedGenre?.name} con ingredientes: ${atributos.join(', ')}`
+                        })
+                      });
+
+                      if (response.ok) {
+                        alert('¡Caldero forjado con éxito! Guardado en tu grimorio.');
+                        navigateTo('my-cauldrons');
+                      } else {
+                        alert('El caldero ha explotado... (Error al guardar)');
+                      }
+                    } catch (err) {
+                      console.error('Error al crear caldero:', err);
+                      alert('Error de conexión con la torre del mago.');
+                    }
+                  }}
                 />
               </>
             )}

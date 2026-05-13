@@ -1,47 +1,54 @@
-// backend/src/index.ts
-// Entry point del backend API
-// Servidor Express que sirve las rutas de la aplicación
+/**
+ * 📄 ARCHIVO: index.ts
+ * 📝 DESCRIPCIÓN: Punto de entrada principal (Entry Point) del servidor backend.
+ * Configura Express, middlewares globales y monta las rutas de la API.
+ */
 
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import pool from './db.js';
 import authRoutes from './routes/authRoutes.js';
+import cauldronRoutes from './routes/cauldronRoutes.js';
 
 dotenv.config();
 
-// Probar conexión a la base de datos
+// --- 1. VERIFICACIÓN DE CONEXIÓN ---
+// Intentamos realizar una consulta simple para confirmar que la base de datos es accesible
 pool.query('SELECT NOW()')
   .then(res => {
-    console.log('Conectado a PostgreSQL con éxito:', res.rows[0]);
+    console.log('✅ Conectado a PostgreSQL con éxito:', res.rows[0]);
   })
   .catch(err => {
     console.error('❌ Error crítico: No se pudo conectar a la base de datos.');
-    console.error('Asegúrate de que la contraseña en el archivo .env es correcta.');
-    // No matamos el proceso para permitir que el servidor responda errores 500 en lugar de "Failed to fetch"
+    console.error('Asegúrate de que la configuración en el archivo .env es correcta.');
   });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// --- 2. MIDDLEWARES GLOBALES ---
+app.use(cors()); // Permite peticiones desde el frontend (CORS)
+app.use(express.json()); // Permite procesar cuerpos de mensaje en formato JSON
 
-// Rutas de autenticación
-app.use('/api/auth', authRoutes);
+// --- 3. RUTAS DE LA API ---
+app.use('/api/auth', authRoutes); // Endpoints de registro y login
+app.use('/api/cauldrons', cauldronRoutes); // Endpoints de gestión de calderos
 
-// Health check
+// Health check para monitorear el estado del servidor
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'Backend is running' });
+  res.json({ status: 'Backend is running', timestamp: new Date() });
 });
 
-// Rutas básicas
+// Ruta base informativa
 app.get('/api', (req, res) => {
-  res.json({ message: 'E-Commerce Cauldron Game API' });
+  res.json({ 
+    message: 'E-Commerce Cauldron Game API',
+    version: '1.0.0'
+  });
 });
 
-// Iniciar servidor
+// --- 4. INICIO DEL SERVIDOR ---
 app.listen(PORT, () => {
-  console.log(`Backend server running on http://localhost:${PORT}`);
+  console.log(`🚀 Servidor backend corriendo en http://localhost:${PORT}`);
 });

@@ -1,0 +1,129 @@
+/**
+ * 📄 ARCHIVO: CauldronDAO.ts
+ * 📝 DESCRIPCIÓN: Objeto de Acceso a Datos (DAO) para la gestión de calderos y sus atributos.
+ */
+
+import pool from '../db.js';
+
+/**
+ * Representa la estructura de un caldero (proyecto de juego)
+ */
+export interface Cauldron {
+  id_caldero?: number;
+  id_usuario: number;
+  id_tipo: number;
+  nombre: string;
+  estado?: 'pendiente' | 'demo' | 'comprado' | 'juego';
+  ruta_demo?: string;
+  ruta_juego?: string;
+  precio?: number;
+  config_ia?: string;
+  fecha_creacion?: Date;
+  // Campos auxiliares para la comunicación con el frontend
+  tipo_nombre?: string;
+  atributos?: string[]; // Lista de nombres de ingredientes
+}
+
+class CauldronDAO {
+  /**
+   * Recupera todos los calderos de un usuario específico.
+   * Incluye el cálculo dinámico de ingredientes y el nombre del género.
+   */
+  async findAllByUserId(userId: number): Promise<any[]> {
+    const query = `
+      SELECT 
+        c.*, 
+        t.nombre as genero,
+        (SELECT COUNT(*) FROM caldero_atributos ca WHERE ca.id_caldero = c.id_caldero) as ingredientes,
+        COALESCE(c.config_ia, 'Sin descripción') as descripcion
+      FROM calderos c
+      JOIN tipos_juego t ON c.id_tipo = t.id_tipo
+      WHERE c.id_usuario = $1
+      ORDER BY c.fecha_creacion DESC
+    `;
+    const result = await pool.query(query, [userId]);
+    return result.rows;
+  }
+
+  /**
+   * Busca el ID de un tipo de juego basándose en su nombre.
+   */
+  async findTipoIdByName(name: string): Promise<number | null> {
+    const result = await pool.query('SELECT id_tipo FROM tipos_juego WHERE nombre = $1', [name]);
+    return result.rows[0]?.id_tipo || null;
+  }
+
+  /**
+   * Crea un caldero completo. Utiliza una TRANSACCIÓN para asegurar que 
+   * el caldero, sus atributos y sus relaciones se guarden correctamente.
+   */
+  async create(cauldron: Cauldron): Promise<Cauldron> {
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN'); // Iniciamos la transacción
+
+      // 1. Obtener id_tipo si solo tenemos el nombre
+      let id_tipo = cauldron.id_tipo;
+      if (!id_tipo && cauldron.tipo_nombre) {
+        const result = await client.query('SELECT id_tipo FROM tipos_juego WHERE nombre = $1', [cauldron.tipo_nombre]);
+        id_tipo = result.rows[0]?.id_tipo;
+      }
+
+      if (!id_tipo) throw new Error(`Tipo de juego "${cauldron.tipo_nombre}" no encontrado`);
+
+      // 2. Insertar el registro principal del caldero
+      const cauldronQuery = `
+        INSERT INTO calderos (id_usuario, id_tipo, nombre, estado, precio, config_ia)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING *
+      `;
+      const cauldronValues = [
+        cauldron.id_usuario,
+        id_tipo,
+        cauldron.nombre,
+        cauldron.estado || 'pendiente',
+        cauldron.precio || 0,
+        cauldron.config_ia || ''
+      ];
+      const cauldronResult = await client.query(cauldronQuery, cauldronValues);
+      const newCauldron = cauldronResult.rows[0];
+
+      // 3. Procesar y enlazar los atributos (ingredientes)
+      if (cauldron.atributos && cauldron.atributos.length > 0) {
+        for (const attrName of cauldron.atributos) {
+          // Insertamos el atributo si no existe (basado en nombre y tipo)
+          const attrResult = await client.query(
+            'INSERT INTO atributos (nombre, tipo) VALUES ($1, $2) ON CONFLICT (nombre, tipo) DO UPDATE SET nombre = EXCLUDED.nombre RETURNING id_atributo',
+            [attrName, 'ingrediente']
+          );
+          const id_atributo = attrResult.rows[0].id_atributo;
+          
+          // Creamos la relación en la tabla intermedia
+          await client.query(
+            'INSERT INTO caldero_atributos (id_caldero, id_atributo) VALUES ($1, $2)',
+            [newCauldron.id_caldero, id_atributo]
+          );
+        }
+      }
+
+      await client.query('COMMIT'); // Confirmamos los cambios
+      return newCauldron;
+    } catch (error) {
+      await client.query('ROLLBACK'); // Si algo falla, deshacemos todo
+      throw error;
+    } finally {
+      client.release(); // Liberamos la conexión del pool
+    }
+  }
+
+  /**
+   * Elimina un caldero si pertenece al usuario solicitante.
+   */
+  async delete(id: number, userId: number): Promise<boolean> {
+    const query = 'DELETE FROM calderos WHERE id_caldero = $1 AND id_usuario = $2';
+    const result = await pool.query(query, [id, userId]);
+    return (result.rowCount ?? 0) > 0;
+  }
+}
+
+export default new CauldronDAO();

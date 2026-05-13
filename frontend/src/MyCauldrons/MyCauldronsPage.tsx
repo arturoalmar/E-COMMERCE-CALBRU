@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MyCauldronsPage.css';
 import Footer from '../components/Footer/Footer';
 
-// Import assets
+// Import assets for mapping or fallback
 import cauldronIcon from '../assets/Icon.png';
 import cauldronCards from '../assets/cards_cauldron.png';
 import cauldronJump from '../assets/jump__cauldron.png';
@@ -10,67 +10,93 @@ import cauldronParty from '../assets/party_cauldron.png';
 import cauldronSurvivor from '../assets/survivor_cauldron.png';
 
 interface SavedCauldron {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  genre: string;
-  date: string;
-  rarity: 'Común' | 'Raro' | 'Legendario';
-  ingredients: number;
+  id_caldero: number;
+  nombre: string;
+  descripcion: string;
+  imagen_url: string;
+  genero: string;
+  fecha_creacion: string;
+  ingredientes: number;
 }
 
-const INITIAL_CAULDRONS: SavedCauldron[] = [
-  {
-    id: '1',
-    name: 'Elixir de Naipes',
-    description: 'Diseño estratégico basado en mazos de cartas y azar controlado.',
-    image: cauldronCards,
-    genre: 'Cartas',
-    date: '08/05/2024',
-    rarity: 'Legendario',
-    ingredients: 12
-  },
-  {
-    id: '2',
-    name: 'Salto Gravitacional',
-    description: 'Plataformas desafiantes con cambios de gravedad en tiempo real.',
-    image: cauldronJump,
-    genre: 'Salto',
-    date: '05/05/2024',
-    rarity: 'Raro',
-    ingredients: 8
-  },
-  {
-    id: '3',
-    name: 'Bazar del Caos',
-    description: 'Colección de minijuegos para fiestas con hasta 4 jugadores.',
-    image: cauldronParty,
-    genre: 'Party',
-    date: '01/05/2024',
-    rarity: 'Común',
-    ingredients: 15
-  },
-  {
-    id: '4',
-    name: 'Senda de la Bruja',
-    description: 'Survival horror con elementos de recolección y crafteo místico.',
-    image: cauldronSurvivor,
-    genre: 'Survivor',
-    date: '28/04/2024',
-    rarity: 'Legendario',
-    ingredients: 24
-  }
-];
-
 const MyCauldronsPage: React.FC = () => {
-  const [cauldrons, setCauldrons] = useState<SavedCauldron[]>(INITIAL_CAULDRONS);
+  const [cauldrons, setCauldrons] = useState<SavedCauldron[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const handleDelete = (id: string) => {
-    if (window.confirm('¿Estás seguro de que quieres destruir este caldero?')) {
-      setCauldrons(cauldrons.filter(c => c.id !== id));
+  const fetchCauldrons = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Debes iniciar sesión para ver tus calderos');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/cauldrons', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('No se pudieron cargar tus calderos');
+      }
+
+      const data = await response.json();
+      setCauldrons(data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchCauldrons();
+  }, []);
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('¿Estás seguro de que quieres destruir este caldero?')) return;
+
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch(`http://localhost:5000/api/cauldrons/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        setCauldrons(cauldrons.filter(c => c.id_caldero !== id));
+      } else {
+        alert('No se pudo eliminar el caldero');
+      }
+    } catch (err) {
+      console.error('Error al eliminar:', err);
+      alert('Error de conexión al intentar eliminar');
+    }
+  };
+
+  // Función para mapear imágenes según el género si no hay URL real
+  const getCauldronImage = (cauldron: SavedCauldron) => {
+    if (cauldron.imagen_url && cauldron.imagen_url.startsWith('http')) {
+      return cauldron.imagen_url;
+    }
+    
+    // Mapeo por género como fallback (basado en los nombres de tipos_juego en la DB)
+    const genre = cauldron.genero.toLowerCase();
+    
+    if (genre.includes('cartas')) return cauldronCards;
+    if (genre.includes('plataformas')) return cauldronJump;
+    if (genre.includes('party')) return cauldronParty;
+    if (genre.includes('survivor')) return cauldronSurvivor;
+    
+    return cauldronIcon;
+  };
+
+  if (loading) return <div className="loading-screen">Mezclando ingredientes...</div>;
 
   return (
     <div className="my-cauldrons-page">
@@ -91,6 +117,8 @@ const MyCauldronsPage: React.FC = () => {
           </div>
         </header>
 
+        {error && <div className="error-message">{error}</div>}
+
         <main className="cauldrons-list">
           {cauldrons.length > 0 ? (
             <div className="shelves-container">
@@ -99,25 +127,24 @@ const MyCauldronsPage: React.FC = () => {
                   <div className="shelf-plank"></div>
                   <div className="shelf-items">
                     {cauldrons.slice(shelfIndex * 3, shelfIndex * 3 + 3).map((cauldron) => (
-                      <div key={cauldron.id} className={`cauldron-item rarity-${cauldron.rarity.toLowerCase()}`}>
+                      <div key={cauldron.id_caldero} className="cauldron-item">
                         <div className="item-visual">
-                          <img src={cauldron.image} alt={cauldron.name} />
-                          <div className="rarity-tag">{cauldron.rarity}</div>
+                          <img src={getCauldronImage(cauldron)} alt={cauldron.nombre} />
                         </div>
                         <div className="item-details">
                           <div className="item-header">
-                            <span className="genre-label">{cauldron.genre}</span>
-                            <span className="date-label">{cauldron.date}</span>
+                            <span className="genre-label">{cauldron.genero}</span>
+                            <span className="date-label">{new Date(cauldron.fecha_creacion).toLocaleDateString()}</span>
                           </div>
-                          <h3>{cauldron.name}</h3>
-                          <p>{cauldron.description}</p>
+                          <h3>{cauldron.nombre}</h3>
+                          <p>{cauldron.descripcion}</p>
                           <div className="item-footer">
                             <div className="ingredients-count">
-                              <span>🧪</span> {cauldron.ingredients} Ingredientes
+                              <span>🧪</span> {cauldron.ingredientes} Ingredientes
                             </div>
                             <div className="item-actions">
                               <button className="action-btn edit-btn">Editar</button>
-                              <button className="action-btn delete-btn" onClick={() => handleDelete(cauldron.id)}>
+                              <button className="action-btn delete-btn" onClick={() => handleDelete(cauldron.id_caldero)}>
                                 Eliminar
                               </button>
                             </div>
