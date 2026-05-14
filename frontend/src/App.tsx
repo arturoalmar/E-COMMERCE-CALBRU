@@ -254,8 +254,11 @@ function App() {
                     const nombre = `Poción de ${selectedGenre?.name || 'Misterio'}`;
                     const atributos = Object.values(selections).flat();
 
+                    const endpoint = '/api/cauldrons';
+                    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+
                     try {
-                      const response = await fetch('http://localhost:5000/api/cauldrons', {
+                      const response = await fetch(`${baseUrl}${endpoint}`, {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json',

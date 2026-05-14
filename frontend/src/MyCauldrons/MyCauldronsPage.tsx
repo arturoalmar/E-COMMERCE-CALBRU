@@ -32,8 +32,10 @@ const MyCauldronsPage: React.FC = () => {
       return;
     }
 
+    const endpoint = '/api/cauldrons';
+    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
     try {
-      const response = await fetch('http://localhost:5000/api/cauldrons', {
+      const response = await fetch(`${baseUrl}${endpoint}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -60,8 +62,10 @@ const MyCauldronsPage: React.FC = () => {
     if (!window.confirm('¿Estás seguro de que quieres destruir este caldero?')) return;
 
     const token = localStorage.getItem('token');
+    const endpoint = `/api/cauldrons/${id}`;
+    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
     try {
-      const response = await fetch(`http://localhost:5000/api/cauldrons/${id}`, {
+      const response = await fetch(`${baseUrl}${endpoint}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
