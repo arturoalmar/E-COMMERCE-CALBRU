@@ -11,7 +11,7 @@ import pool from '../db.js';
 export interface Cauldron {
   id_caldero?: number;
   id_usuario: number;
-  id_tipo: number;
+  id_tipo?: number;
   nombre: string;
   estado?: 'pendiente' | 'demo' | 'comprado' | 'juego';
   ruta_demo?: string;
@@ -114,6 +114,26 @@ class CauldronDAO {
     } finally {
       client.release(); // Liberamos la conexión del pool
     }
+  }
+
+  /**
+   * Actualiza un caldero existente si pertenece al usuario.
+   * Permite cambios parciales en nombre, estado, precio y configuración IA.
+   */
+  async update(id: number, userId: number, updates: Partial<Cauldron>): Promise<any | null> {
+    const { nombre, estado, precio, config_ia } = updates;
+    const query = `
+      UPDATE calderos 
+      SET 
+        nombre = COALESCE($1, nombre),
+        estado = COALESCE($2, estado),
+        precio = COALESCE($3, precio),
+        config_ia = COALESCE($4, config_ia)
+      WHERE id_caldero = $5 AND id_usuario = $6
+      RETURNING *
+    `;
+    const result = await pool.query(query, [nombre, estado, precio, config_ia, id, userId]);
+    return result.rows[0] || null;
   }
 
   /**

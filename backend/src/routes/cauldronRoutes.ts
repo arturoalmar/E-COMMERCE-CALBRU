@@ -45,7 +45,7 @@ router.post('/', authenticateToken, async (req: AuthRequest, res: Response) => {
       estado: estado || 'pendiente',
       precio: precio || 0,
       config_ia: config_ia || ''
-    } as any);
+    });
 
     res.status(201).json(newCauldron);
   } catch (error: any) {
