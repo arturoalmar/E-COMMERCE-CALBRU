@@ -55,24 +55,35 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
         {/* TABS: EL COMITÉ */}
         {activeTab === 'info' && (
           <div className="tab-pane fade-in-active">
+            <div className="committee-video-container">
+              <div className="video-placeholder">
+                <div className="video-play-button">▶</div>
+                <p className="video-text">Vídeo Explicatorio del Comité de Empresa</p>
+              </div>
+            </div>
+
             <section className="committee-section pro-card">
               <h3>¿Quiénes somos?</h3>
               <div className="who-we-are-content who-intro-card">
                 <p className="intro-text">
-                  El Comité de Empresa representa a todos los trabajadores de Calbru Games y defiende tus derechos en cada decisión del estudio. Somos los delegados elegidos para convertir tus preocupaciones en propuestas reales y proteger tu bienestar laboral.
+                  El Comité de Empresa de The Hag's Cauldron representa a todo el equipo del estudio y trabaja para mantener un entorno laboral justo, transparente y saludable.
+Como delegados, escuchamos las necesidades de la plantilla y actuamos como enlace directo con la dirección para mejorar el día a día del equipo.
                 </p>
                 <div className="who-summary-grid">
                   <div className="who-summary-box">
-                    <h4>Delegados de Equipo</h4>
-                    <p>Actuamos como puente directo entre la plantilla y la dirección, cuidando que las decisiones respeten tus condiciones, horarios y oportunidades de crecimiento.</p>
+                    <h4>Delegados de Personal</h4>
+                    <p>Somos dos representantes elegidos para apoyar a la plantilla en temas relacionados con condiciones laborales, organización, comunicación interna y bienestar dentro del entorno laboral.
+Nuestro objetivo es que cualquier persona pueda expresar dudas, propuestas o preocupaciones con confianza.</p>
                   </div>
                   <div className="who-summary-box">
                     <h4>Representación Cercana</h4>
-                    <p>Nos reunimos regularmente con el equipo para escuchar tus inquietudes y trasladarlas con claridad, transparencia y prioridad a la mesa de negociación.</p>
+                    <p>Mantenemos una comunicación cercana con el equipo para trasladar sugerencias e inquietudes de forma clara y constructiva.
+También ayudamos a informar sobre derechos laborales, procesos internos y acuerdos que afecten al estudio.</p>
                   </div>
                 </div>
                 <p className="closing-text">
-                  <strong>¿Para qué servimos?</strong> Trabajamos para que tus derechos laborales se mantengan, para informar de tus opciones y para que el estudio avance con condiciones justas, seguras y respetuosas.
+                  <strong>¿Para qué servimos?</strong><br></br> Trabajamos para que Calbru Games siga siendo un lugar donde desarrollar videojuegos en un entorno profesional, creativo y respetuoso.
+Buscamos favorecer la colaboración, la transparencia y unas condiciones laborales equilibradas para todo el equipo.
                 </p>
               </div>
             </section>
@@ -109,7 +120,7 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
         {activeTab === 'legal' && (
           <div className="tab-pane fade-in-active">
             <section className="committee-section">
-              <h3>Píldoras Informativas: Normativa Laboral TIC</h3>
+              <h3>Píldoras Informativas: </h3>
               <div className="info-pills-list">
                 <div className="info-pill">
                   <h4><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2021-11472" target="_blank" rel="noreferrer" style={{color: '#ffaa00', textDecoration: 'none'}}>Ley de Teletrabajo</a></h4>
@@ -229,7 +240,7 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
                   <div className="ach-content">
                     <h4>Plus de Teletrabajo TIC</h4>
                     <span className="ach-date">Acuerdo de Enero 2025</span>
-                    <p>Establecimiento de un plus mensual de 50€ para compensación de gastos (luz, internet) y renovación del báculo (equipo portátil) cada 3 años.</p>
+                    <p>Establecimiento de un plus mensual de 50€ para compensación de gastos (luz, internet) y renovación del equipo portátil cada 3 años.</p>
                   </div>
                 </div>
 
@@ -296,3 +307,5 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
 };
 
 export default ComiteEmpresa;
+
+
