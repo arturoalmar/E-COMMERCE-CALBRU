@@ -97,7 +97,7 @@ class CauldronDAO {
             [attrName, 'ingrediente']
           );
           const id_atributo = attrResult.rows[0].id_atributo;
-          
+
           // Creamos la relación en la tabla intermedia
           await client.query(
             'INSERT INTO caldero_atributos (id_caldero, id_atributo) VALUES ($1, $2)',
