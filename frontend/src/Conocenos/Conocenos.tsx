@@ -1,21 +1,57 @@
 /**
  * 📄 ARCHIVO: Conocenos.tsx
- * 📝 DESCRIPCIÓN: Página informativa que presenta el proyecto y reseñas de usuarios.
+ * 📝 DESCRIPCIÓN: Página "Sobre Nosotros" con tema de pergamino mágico y contenido de la empresa.
  */
-
-// Conocenos.tsx
-// Página de información "Conócenos" que describe el proyecto, cómo funciona y muestra reseñas rotativas.
 
 import React, { useState, useEffect } from 'react';
 import './Conocenos.css';
 
-import backgroundImg from '../assets/forest_house_bg.png';
-import spritesImg from '../assets/Sprittes.png';
+import Footer from '../components/Footer/Footer';
+
+// SECCIÓN: Definición de datos/propiedades
+interface TeamMember {
+  name: string;
+  role: string;
+  description: string;
+  emoji: string;
+}
+
+const TEAM: TeamMember[] = [
+  {
+    name: 'Arturo Almudi',
+    role: 'Fundador & Maestro Supremo del Back-end',
+    description: 'Gran genio de la ingeniería de software, Arturo es el arquitecto detrás de la magia que hace funcionar The Hag\'s Cauldron. Su código es tan limpio como un hechizo bien lanzado.',
+    emoji: '🧙‍♂️'
+  },
+  {
+    name: 'Joel Sánchez',
+    role: 'Fundador & Gran Hechicero del Front-end',
+    description: 'Mente pensante detras de la interfaz encantada. Joel transforma líneas de código en experiencias visuales que hacen que cada usuario se sienta como un verdadero brujo al usar nuestra plataforma.',
+    emoji: '🔮'
+  }
+];
 
 const REVIEWS = [
-  { id: 1, user: 'Aragorn99', text: '¡Increíble! Pude prototipar mi juego de cartas en minutos. La estética es brutal.' },
-  { id: 2, user: 'Morgana_Magic', text: 'El caldero es súper intuitivo. Los efectos de partículas te hacen sentir como una verdadera bruja.' },
-  { id: 3, user: 'PixelWizard', text: 'Calbru Games ha cambiado mi forma de presentar ideas. Rápido, estiloso y funcional.' }
+  {
+    id: 1,
+    user: 'Aragorn99',
+    text: '¡Increíble! Pude prototipar mi juego de cartas en minutos. La estética es brutal.'
+  },
+  {
+    id: 2,
+    user: 'Morgana_Magic',
+    text: 'El caldero es súper intuitivo. Los efectos de partículas te hacen sentir como una verdadera bruja.'
+  },
+  {
+    id: 3,
+    user: 'PixelWizard',
+    text: 'The Hag\'s Cauldron ha cambiado mi forma de presentar ideas. Rápido, estiloso y funcional.'
+  },
+  {
+    id: 4,
+    user: 'ShadowCaster',
+    text: 'Finalmente un lugar donde la magia y la tecnología se encuentran. ¡Adictivo!'
+  }
 ];
 
 // SECCIÓN: Definición de datos/propiedades
@@ -28,82 +64,160 @@ const Conocenos: React.FC<ConocenosProps> = ({ onStartNow }) => {
   const [currentReview, setCurrentReview] = useState(0);
 
   useEffect(() => {
-// SECCIÓN: Componente o Función lógica
     const interval = setInterval(() => {
       setCurrentReview((prev) => (prev + 1) % REVIEWS.length);
-    }, 5000);
-// SECCIÓN: Renderizado visual
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
-// SECCIÓN: Renderizado visual
+  // SECCIÓN: Renderizado visual
   return (
     <div className="conocenos-page">
-      {/* SECTION: WHAT DO WE DO? & MAGIC */}
-      <section className="sketch-info-grid">
-        <div className="info-box">
-          <div className="sketch-visual-small">
-            <img src={backgroundImg} alt="Magic Background" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          </div>
-          <div className="info-text">
-            <h2>What do we do?</h2>
-            <ul>
-              <li>- Personalized games</li>
-              <li>- Demo of your idea</li>
-            </ul>
-            <h2 style={{ marginTop: '2rem' }}>Magic</h2>
-            <ul>
-              <li>- No waiting for studios</li>
-              <li>- No need to learn</li>
-              <li>- Your idea → your game</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      {/* ZONA SUPERIOR: Borde enrollado de arriba del pergamino (FIJO) */}
+      <div className="parchment-top"></div>
 
-      {/* SECTION: HOW YOU DO IT? */}
-      <section className="how-to-section-sketch">
-        <div className="how-to-flex-container">
-          <div className="how-to-text-block">
-            <h2>How you do it?</h2>
-            <ol>
-              <li>1. Choose a cauldron</li>
-              <li>2. Add what you want</li>
-              <li>3. Try your demo</li>
-              <li>4. Contact us</li>
-            </ol>
-            <button className="btn-sketch-secondary" onClick={onStartNow}>
-              BEGIN YOUR CREATION
+      {/* ZONA CENTRAL: Contenido con repetición de pergamino */}
+      <div className="parchment-middle">
+        <div className="parchment-overlay">
+        {/* HERO SECTION */}
+        <section className="hero-section">
+          <div className="hero-content">
+            <h1 className="hero-title">🧙‍♀️ The Hag's Cauldron 🔮</h1>
+            <p className="hero-tagline">Donde la Magia y la Tecnología Forjan Historias Extraordinarias</p>
+            <div className="decorative-line"></div>
+          </div>
+        </section>
+
+        {/* ORIGIN STORY SECTION */}
+        <section className="story-section">
+          <div className="section-content">
+            <h2 className="section-title">📖 Nuestra Historia</h2>
+            <p className="story-text">
+              En el corazón de un bosque encantado, hace apenas tres años, dos brujos visionarios decidieron que la magia
+              del diseño de juegos no debería ser exclusiva de los grandes estudios. Así nació <strong>The Hag's Cauldron</strong>,
+              un pequeño estudio de creatividad donde cada idea, por pequeña que sea, puede transformarse en una experiencia
+              mágica.
+            </p>
+            <p className="story-text">
+              Nuestro nombre evoca el ritual antiguo de los brujos: mezclar ingredientes precisos para crear pociones poderosas.
+              Del mismo modo, nosotros creemos que los videojuegos personalizados son la combinación perfecta de pasión,
+              tecnología y creatividad desenfrenada.
+            </p>
+          </div>
+        </section>
+
+        {/* MISSION & VALUES SECTION */}
+        <section className="mission-section">
+          <div className="section-content">
+            <h2 className="section-title">✨ Nuestra Misión y Valores</h2>
+            <div className="values-grid">
+              <div className="value-card">
+                <div className="value-emoji">🎨</div>
+                <h3>Creatividad Desenfrenada</h3>
+                <p>Sin límites, sin prototipos estándar. Tu visión, nuestro hechizo.</p>
+              </div>
+              <div className="value-card">
+                <div className="value-emoji">⚡</div>
+                <h3>Rapidez Mágica</h3>
+                <p>Ideas al caldero, juego al momento. Prototipos en minutos, no en meses.</p>
+              </div>
+              <div className="value-card">
+                <div className="value-emoji">🤝</div>
+                <h3>Comunidad Hechizada</h3>
+                <p>Juntos creamos un círculo de creadores apasionados. Tu éxito es nuestro triunfo.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* TEAM SECTION */}
+        <section className="team-section">
+          <div className="section-content">
+            <h2 className="section-title">👥 El Círculo de Brujas</h2>
+            <p className="team-intro">Dos hechiceros dedican sus días a hacer posible lo imposible.</p>
+            <div className="team-grid">
+              {TEAM.map((member) => (
+                <div key={member.name} className="team-card">
+                  <div className="team-emoji">{member.emoji}</div>
+                  <h3 className="team-name">{member.name}</h3>
+                  <p className="team-role">{member.role}</p>
+                  <p className="team-description">{member.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ACHIEVEMENTS SECTION */}
+        <section className="achievements-section">
+          <div className="section-content">
+            <h2 className="section-title">🏆 Logros Mágicos</h2>
+            <div className="achievements-grid">
+              <div className="achievement-box">
+                <div className="achievement-number">150+</div>
+                <p className="achievement-text">Calderos Forjados</p>
+              </div>
+              <div className="achievement-box">
+                <div className="achievement-number">3</div>
+                <p className="achievement-text">Años de Magia</p>
+              </div>
+              <div className="achievement-box">
+                <div className="achievement-number">1,200+</div>
+                <p className="achievement-text">Alquimistas Felices</p>
+              </div>
+              <div className="achievement-box">
+                <div className="achievement-number">∞</div>
+                <p className="achievement-text">Sueños Realizados</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* REVIEWS SECTION */}
+        <section className="reviews-section">
+          <div className="section-content">
+            <h2 className="section-title">💬 Lo Que Dicen Nuestros Alquimistas</h2>
+            <div className="reviews-container">
+              <div className="review-card-active">
+                <div className="review-text">
+                  "{REVIEWS[currentReview].text}"
+                </div>
+                <div className="review-author">— {REVIEWS[currentReview].user}</div>
+              </div>
+              <div className="carousel-dots">
+                {REVIEWS.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`dot ${i === currentReview ? 'active' : ''}`}
+                    onClick={() => setCurrentReview(i)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Review ${i + 1}`}
+                  ></span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA SECTION */}
+        <section className="cta-section">
+          <div className="section-content">
+            <h2 className="cta-title">¿Listo para Forjar tu Caldero?</h2>
+            <p className="cta-subtitle">Únete a nuestro círculo de creadores mágicos</p>
+            <button className="btn-primary-magic" onClick={onStartNow}>
+              ✨ COMIENZA AHORA ✨
             </button>
           </div>
-          <div className="how-to-image-block">
-            <img src={spritesImg} alt="Sprites and items" />
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* SECTION: REVIEWS */}
-      <section className="reviews-carousel-section">
-        <h2>Lo que dicen nuestros Alquimistas</h2>
-        <div className="carousel-container">
-          <div className="review-card-active">
-            <div className="user-info">
-              <div className="user-avatar-placeholder"></div>
-              <strong>{REVIEWS[currentReview].user}</strong>
-            </div>
-            <p className="review-text">"{REVIEWS[currentReview].text}"</p>
-          </div>
-          <div className="carousel-dots">
-            {REVIEWS.map((_, i) => (
-              <span
-                key={i}
-                className={`dot ${i === currentReview ? 'active' : ''}`}
-                onClick={() => setCurrentReview(i)}
-              ></span>
-            ))}
-          </div>
+        {/* FOOTER */}
+        <Footer />
         </div>
-      </section>
+      </div>
+
+      {/* ZONA INFERIOR: Borde enrollado de abajo del pergamino (FIJO) */}
+      <div className="parchment-bottom"></div>
     </div>
   );
 };

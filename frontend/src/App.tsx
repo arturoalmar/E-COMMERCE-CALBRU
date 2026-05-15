@@ -329,7 +329,7 @@ function App() {
   };
 
   const isImmersiveMode = page === 'home' || page === 'creator' || page === 'login';
-  const shouldHideNavbar = isImmersiveMode || page === 'intranet';
+  const shouldHideNavbar = isImmersiveMode || page === 'intranet' || page === 'conocenos';
 
   // SECCIÓN: Renderizado visual
   return (
@@ -367,7 +367,7 @@ function App() {
           </button>
         )}
 
-        {(page !== 'home' && !isImmersiveMode && page !== 'intranet') && (
+        {(page !== 'home' && !isImmersiveMode && page !== 'intranet' && page !== 'conocenos') && (
           <button
             className="back-to-home-btn floating"
             onClick={() => navigateTo('home')}
