@@ -323,17 +323,10 @@ function App() {
       case 'my-cauldrons':
         // SECCIÓN: Renderizado visual
         return (
-          <>
-            <MyCauldronsPage 
-              onCreateNew={() => navigateTo('creator')} 
-              showMagicalAlert={showMagicalAlert}
-            />
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
-              <button className="btn-back" onClick={() => navigateTo('home')}>
-                ← Volver a la aldea
-              </button>
-            </div>
-          </>
+          <MyCauldronsPage 
+            onCreateNew={() => navigateTo('creator')} 
+            showMagicalAlert={showMagicalAlert}
+          />
         );
       case 'intranet': return <IntranetPage onBack={() => navigateTo('home')} />;
       case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} />;
