@@ -19,7 +19,12 @@ interface SavedCauldron {
   ingredientes: number;
 }
 
-const MyCauldronsPage: React.FC = () => {
+interface MyCauldronsPageProps {
+  onCreateNew?: () => void;
+  showMagicalAlert?: (message: string, type: 'success' | 'error' | 'warning' | 'confirm', onConfirm?: () => void) => void;
+}
+
+const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagicalAlert }) => {
   const [cauldrons, setCauldrons] = useState<SavedCauldron[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -58,9 +63,21 @@ const MyCauldronsPage: React.FC = () => {
     fetchCauldrons();
   }, []);
 
-  const handleDelete = async (id: number) => {
-    if (!window.confirm('¿Estás seguro de que quieres destruir este caldero?')) return;
+  const handleDelete = (id: number) => {
+    if (showMagicalAlert) {
+      showMagicalAlert(
+        '¿Estás seguro de que quieres destruir este caldero? Su magia se perderá para siempre.', 
+        'confirm', 
+        () => executeDelete(id)
+      );
+    } else {
+      if (window.confirm('¿Estás seguro de que quieres destruir este caldero?')) {
+        executeDelete(id);
+      }
+    }
+  };
 
+  const executeDelete = async (id: number) => {
     const token = localStorage.getItem('token');
     const endpoint = `/api/cauldrons/${id}`;
     const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
@@ -73,13 +90,15 @@ const MyCauldronsPage: React.FC = () => {
       });
 
       if (response.ok) {
-        setCauldrons(cauldrons.filter(c => c.id_caldero !== id));
+        setCauldrons(prev => prev.filter(c => c.id_caldero !== id));
       } else {
-        alert('No se pudo eliminar el caldero');
+        if (showMagicalAlert) showMagicalAlert('No se pudo eliminar el caldero', 'error');
+        else alert('No se pudo eliminar el caldero');
       }
     } catch (err) {
       console.error('Error al eliminar:', err);
-      alert('Error de conexión al intentar eliminar');
+      if (showMagicalAlert) showMagicalAlert('Error de conexión al intentar eliminar', 'error');
+      else alert('Error de conexión al intentar eliminar');
     }
   };
 
@@ -125,47 +144,44 @@ const MyCauldronsPage: React.FC = () => {
 
         <main className="cauldrons-list">
           {cauldrons.length > 0 ? (
-            <div className="shelves-container">
-              {Array.from({ length: Math.ceil(cauldrons.length / 3) }).map((_, shelfIndex) => (
-                <div key={shelfIndex} className="cauldron-shelf">
-                  <div className="shelf-plank"></div>
-                  <div className="shelf-items">
-                    {cauldrons.slice(shelfIndex * 3, shelfIndex * 3 + 3).map((cauldron) => (
-                      <div key={cauldron.id_caldero} className="cauldron-item">
-                        <div className="item-visual">
-                          <img src={getCauldronImage(cauldron)} alt={cauldron.nombre} />
-                        </div>
-                        <div className="item-details">
-                          <div className="item-header">
-                            <span className="genre-label">{cauldron.genero}</span>
-                            <span className="date-label">{new Date(cauldron.fecha_creacion).toLocaleDateString()}</span>
-                          </div>
-                          <h3>{cauldron.nombre}</h3>
-                          <p>{cauldron.descripcion}</p>
-                          <div className="item-footer">
-                            <div className="ingredients-count">
-                              <span>🧪</span> {cauldron.ingredientes} Ingredientes
-                            </div>
-                            <div className="item-actions">
-                              <button className="action-btn edit-btn">Editar</button>
-                              <button className="action-btn delete-btn" onClick={() => handleDelete(cauldron.id_caldero)}>
-                                Eliminar
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+            <div className="cauldrons-grid-layout">
+              {cauldrons.map((cauldron) => (
+                <div key={cauldron.id_caldero} className="cauldron-card-item">
+                  <div className="item-visual">
+                    <img src={getCauldronImage(cauldron)} alt={cauldron.nombre} />
+                  </div>
+                  <div className="item-details">
+                    <div className="item-header">
+                      <span className="genre-label">{cauldron.genero}</span>
+                      <span className="date-label">{new Date(cauldron.fecha_creacion).toLocaleDateString()}</span>
+                    </div>
+                    <h3>{cauldron.nombre}</h3>
+                    <p>{cauldron.descripcion || 'Configuración mágica en espera...'}</p>
+                    <div className="item-footer">
+                      <div className="ingredients-count">
+                        <img src={cauldronIcon} alt="Icono" className="small-icon" /> {cauldron.ingredientes} Ingredientes
                       </div>
-                    ))}
+                      <div className="item-actions">
+                        <button className="action-btn edit-btn">Editar</button>
+                        <button className="action-btn delete-btn" onClick={() => handleDelete(cauldron.id_caldero)}>
+                          Eliminar
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
+              <div className="cauldron-card-item empty-forge-card" onClick={() => onCreateNew ? onCreateNew() : window.location.href = '/'}>
+                <div className="empty-vfx">✨</div>
+                <h2>FORJAR NUEVO CALDERO</h2>
+              </div>
             </div>
           ) : (
-            <div className="empty-state">
-              <div className="empty-vfx">✨</div>
-              <h2>Tu archivo está vacío</h2>
-              <p>Parece que aún no has forjado ningún caldero en la choza.</p>
-              <button className="create-btn">Forjar Nuevo Caldero</button>
+            <div className="cauldrons-grid-layout">
+              <div className="cauldron-card-item empty-forge-card" onClick={() => onCreateNew ? onCreateNew() : window.location.href = '/'}>
+                <div className="empty-vfx">✨</div>
+                <h2>FORJAR NUEVO CALDERO</h2>
+              </div>
             </div>
           )}
         </main>

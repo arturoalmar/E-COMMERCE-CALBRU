@@ -20,6 +20,7 @@ import IntranetPage from './Intranet/IntranetPage';
 import MyCauldronsPage from './MyCauldrons/MyCauldronsPage';
 import LoginPage from './Login/LoginPage';
 import Conocenos from './Conocenos/Conocenos';
+import MagicalAlert from './components/MagicalAlert/MagicalAlert';
 
 // Tipos y Datos
 import { GENRES, RANDOM_COLORS } from './constants/gameData';
@@ -49,6 +50,37 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<{ id: number, username: string, email?: string } | null>(null);
   const [isWorker] = useState(true);
+
+  // Estado para la alerta mágica
+  const [alertConfig, setAlertConfig] = useState<{
+    isOpen: boolean;
+    message: string;
+    type: 'success' | 'error' | 'warning' | 'confirm';
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    message: '',
+    type: 'success',
+    onConfirm: () => {}
+  });
+
+  const showMagicalAlert = (
+    message: string, 
+    type: 'success' | 'error' | 'warning' | 'confirm' = 'success', 
+    onConfirm: () => void = () => closeAlert()
+  ) => {
+    setAlertConfig({
+      isOpen: true,
+      message,
+      type,
+      onConfirm: () => {
+        onConfirm();
+        closeAlert();
+      }
+    });
+  };
+
+  const closeAlert = () => setAlertConfig(prev => ({ ...prev, isOpen: false }));
 
   // Recuperar sesión al cargar
   useEffect(() => {
@@ -245,8 +277,7 @@ function App() {
                   onBack={() => navigateTo('creator', 'select-pot', null)}
                   onCreateGame={async () => {
                     if (!isLoggedIn) {
-                      alert('¡Debes ser un aprendiz registrado para forjar calderos!');
-                      navigateTo('login');
+                      showMagicalAlert('¡Debes ser un aprendiz registrado para forjar calderos!', 'warning', () => navigateTo('login'));
                       return;
                     }
 
@@ -275,14 +306,13 @@ function App() {
                       });
 
                       if (response.ok) {
-                        alert('¡Caldero forjado con éxito! Guardado en tu grimorio.');
-                        navigateTo('my-cauldrons');
+                        showMagicalAlert('¡Caldero forjado con éxito! Guardado en tu grimorio.', 'success', () => navigateTo('my-cauldrons'));
                       } else {
-                        alert('El caldero ha explotado... (Error al guardar)');
+                        showMagicalAlert('El caldero ha explotado... (Error al guardar)', 'error');
                       }
                     } catch (err) {
                       console.error('Error al crear caldero:', err);
-                      alert('Error de conexión con la torre del mago.');
+                      showMagicalAlert('Error de conexión con la torre del mago.', 'error');
                     }
                   }}
                 />
@@ -294,7 +324,10 @@ function App() {
         // SECCIÓN: Renderizado visual
         return (
           <>
-            <MyCauldronsPage />
+            <MyCauldronsPage 
+              onCreateNew={() => navigateTo('creator')} 
+              showMagicalAlert={showMagicalAlert}
+            />
             <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
               <button className="btn-back" onClick={() => navigateTo('home')}>
                 ← Volver a la aldea
@@ -380,6 +413,13 @@ function App() {
         <div className="main-content" style={{ paddingTop: shouldHideNavbar ? '0' : '70px' }}>
           {renderContent()}
         </div>
+
+        <MagicalAlert 
+          isOpen={alertConfig.isOpen}
+          message={alertConfig.message}
+          type={alertConfig.type}
+          onConfirm={alertConfig.onConfirm}
+        />
       </div>
     </>
   );
