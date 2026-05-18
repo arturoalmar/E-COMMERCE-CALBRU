@@ -156,7 +156,13 @@ Buscamos favorecer la colaboración, la transparencia y unas condiciones laboral
                     <div className="timeline-marker step-1">15</div>
                     <div className="timeline-content">
                       <h4>Preaviso Obligatorio</h4>
-                      <p>La empresa debe notificarte por escrito la decisión y los motivos con un mínimo de <strong>15 días de antelación</strong> a su efectividad.</p>
+                      <p>Antes de notificarte nada, la empresa debe seguir estos pasos en orden:<br></br>
+                      Paso 1 — Consulta a la representación de los trabajadores (RLT)<br></br>
+La empresa está obligada a informar y consultar previamente al comité de empresa o delegados de personal sobre la medida, sus causas y su alcance. Si se salta este trámite, la modificación puede ser declarada nula.<br></br>
+Paso 2 — Trámite ante la Comisión Paritaria del convenio (si aplica)
+Si la modificación afecta a condiciones reguladas en el propio Convenio del Metal de Aragón (jornada pactada en convenio, salario, etc.), la empresa debe comunicar a la Comisión Paritaria sectorial las causas y la exposición de motivos. Este trámite es obligatorio para que la medida tenga efectividad jurídica.<br></br>
+Paso 3 — Notificación escrita individual
+Solo después de los pasos anteriores, la empresa debe notificarte por escrito la decisión y sus motivos con un mínimo de 15 días de antelación a su efectividad.</p>
                     </div>
                   </div>
 
@@ -166,8 +172,9 @@ Buscamos favorecer la colaboración, la transparencia y unas condiciones laboral
                       <h4>Tus 3 Opciones Legales</h4>
                       <ul className="options-list">
                         <li><span className="badge-green">Aceptar</span> Asumes las nuevas condiciones.</li>
-                        <li><span className="badge-red">Rescindir</span> Si el cambio te perjudica, puedes extinguir tu contrato con derecho a paro y una indemnización de <strong>20 días por año</strong> trabajado (máx. 9 meses).</li>
-                        <li><span className="badge-purple">Impugnar</span> Tienes <strong>20 días hábiles</strong> para demandar ante el Juzgado de lo Social si consideras la medida injustificada.</li>
+                        <li><span className="badge-red">Rescindir</span> 
+Si el cambio te perjudica, puedes extinguir tu contrato con derecho a prestación por desempleo y una indemnización de <strong>20 días por año </strong>trabajado (máximo 9 meses).</li>
+                        <li><span className="badge-purple">Impugnar</span> Tienes <strong>20 días hábiles</strong> para demandar ante el Juzgado de lo Social si consideras la medida injustificada o si la empresa no ha seguido el procedimiento obligatorio descrito arriba..</li>
                       </ul>
                     </div>
                   </div>
@@ -184,14 +191,15 @@ Buscamos favorecer la colaboración, la transparencia y unas condiciones laboral
                 </div>
 
                 <p className="info-intro">
-                  Es la sanción máxima. Se produce por un <strong>incumplimiento grave y culpable</strong> del trabajador (ausencias injustificadas, indisciplina, acoso, disminución voluntaria del rendimiento, etc.).
+                  Es la sanción máxima. Se produce por un <strong>incumplimiento grave y culpable</strong> del trabajador. El Convenio del Metal de Aragón (arts. 61–63) concreta las causas en tres niveles: faltas leves, graves y muy graves. Solo las<strong> muy graves</strong> pueden dar lugar a despido disciplinario, e incluyen ausencias injustificadas reiteradas, indisciplina grave, acoso, disminución voluntaria y continuada del rendimiento, embriaguez habitual con repercusión en el trabajo, entre otras.
                 </p>
-
+<p> Requisito formal previo — Expediente contradictorio</p>
+<p>Antes de ejecutar el despido, si eres delegado/a de personal o miembro del comité de empresa, la empresa está obligada a abrir un expediente contradictorio dándote audiencia. Si eres afiliado/a a un sindicato y la empresa lo sabe, debe notificar también a la sección sindical correspondiente. Si se omite este trámite, el despido puede ser declarado improcedente.</p>
                 <div className="info-grid-2col" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', width: '100%' }}>
                   <div className="committee-info-box box-dark">
                     <h4>Consecuencias Inmediatas</h4>
                     <ul className="bullet-list">
-                      <li>❌ <strong>Sin indemnización</strong> por despido.</li>
+                      <li>❌ <strong>Sin indemnización</strong> por despido. — si el despido es declarado procedente.</li>
                       <li>✅ Tienes derecho a <strong>Finiquito</strong> (vacaciones no disfrutadas, parte proporcional de pagas extra).</li>
                       <li>✅ Tienes derecho a solicitar el <strong>paro</strong> (si tienes la cotización necesaria).</li>
                     </ul>
@@ -201,15 +209,21 @@ Buscamos favorecer la colaboración, la transparencia y unas condiciones laboral
                     <h4>¿Qué hacer si ocurre?</h4>
                     <div className="action-step">
                       <span className="action-num">1</span>
-                      <p>Firma la carta añadiendo <strong>"NO CONFORME"</strong> y la fecha real de recepción. Esto no implica rechazar el despido, solo salva tus derechos.</p>
+                      <p>  <strong>Firma la carta añadiendo "NO CONFORME" y la fecha real de recepción. </strong> 
+Esto no implica aceptar el despido ni sus causas. Solo deja constancia de que la recibiste y preserva tus derechos. Si la empresa no te entrega carta escrita con causa concreta, el despido es automáticamente improcedente.</p>
                     </div>
                     <div className="action-step">
                       <span className="action-num">2</span>
-                      <p>Solicita inmediatamente asistencia al <strong>Comité de Empresa</strong> o a un abogado laboralista.</p>
+                      <p><strong>Comprueba que la carta de despido especifica los hechos y la fecha de efectos.</strong>
+El convenio y el ET exigen que la comunicación sea escrita y detalle los hechos que motivan el despido. Una carta vaga o sin fecha de efectos puede ser impugnable por defecto de forma.</p>
                     </div>
                     <div className="action-step">
                       <span className="action-num">3</span>
-                      <p>Tienes <strong>20 días hábiles</strong> (sin contar findes ni festivos) para presentar papeleta de conciliación e impugnar el despido.</p>
+                      <p><strong>Solicita asistencia al Comité de Empresa o a un abogado laboralista de inmediato.</strong></p>
+                    </div>
+                    <div className="action-step">
+                      <span className="action-num">4</span>
+                      <p><strong>Tienes 20 días hábiles</strong> (sin contar sábados, domingos ni festivos) para presentar papeleta de conciliación ante el SAMA (Servicio Aragonés de Mediación y Arbitraje) e impugnar el despido ante el Juzgado de lo Social. Este plazo es de caducidad: si se pasa, pierdes el derecho.</p>
                     </div>
                   </div>
                 </div>

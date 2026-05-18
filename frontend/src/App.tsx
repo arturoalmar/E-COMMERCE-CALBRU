@@ -329,7 +329,7 @@ function App() {
           />
         );
       case 'intranet': return <IntranetPage onBack={() => navigateTo('home')} />;
-      case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} />;
+      case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} onBack={() => navigateTo('home')} />;
       case 'login':
         // SECCIÓN: Renderizado visual
         return (
