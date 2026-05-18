@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Plataformas: Carrera Mística</title>
+    <style>
+        body { background: #05021a; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; color: white; font-family: monospace; }
+        canvas { border: 3px solid #00ffcc; border-radius: 8px; box-shadow: 0 0 20px rgba(0, 255, 204, 0.4); background: #111; }
+        .hud { width: 800px; display: flex; justify-content: space-between; font-size: 20px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="hud">
+        <div>Distancia: <span id="score">0</span>m</div>
+        <div style="color: #ffcc00;">PULSA [ESPACIO] PARA SALTAR</div>
+    </div>
+    <canvas id="gameCanvas" width="800" height="450"></canvas>
+    <script>
+        const ctx = document.getElementById('gameCanvas').getContext('2d');
+        let player = { x: 50, y: 350, w: 30, h: 30, vy: 0, gravity: 0.8, jump: -15, grounded: false };
+        let obstacles = []; let frame = 0; let score = 0; let gameOver = false;
+
+        window.focus();
+        window.addEventListener('click', () => window.focus());
+
+        window.addEventListener('keydown', e => {
+            if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code) || [' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+            }
+            if ((e.code === 'Space' || e.key === ' ') && player.grounded && !gameOver) {
+                player.vy = player.jump; player.grounded = false;
+            }
+            if ((e.code === 'Space' || e.key === ' ') && gameOver) location.reload();
+        });
+
+        function loop() {
+            if (gameOver) return;
+            frame++; score++;
+            document.getElementById('score').innerText = Math.floor(score / 10);
+            ctx.clearRect(0, 0, 800, 450);
+
+            // Suelo místico
+            ctx.fillStyle = '#240046'; ctx.fillRect(0, 380, 800, 70);
+
+            // Jugador (Cubo Neón)
+            player.vy += player.gravity; player.y += player.vy;
+            if (player.y >= 350) { player.y = 350; player.vy = 0; player.grounded = true; }
+            
+            ctx.shadowBlur = 15; ctx.shadowColor = '#00ffcc';
+            ctx.fillStyle = '#00ffcc';
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+
+            // Obstáculos (Pinchos Corruptos)
+            if (frame % 90 === 0) {
+                obstacles.push({ x: 800, y: 350, w: 20 + Math.random()*20, h: 30 });
+            }
+            ctx.fillStyle = '#ff3333'; ctx.shadowColor = '#ff3333';
+            obstacles.forEach((obs, i) => {
+                obs.x -= 6;
+                ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+                // Colisión
+                if (player.x < obs.x + obs.w && player.x + player.w > obs.x && player.y + player.h > obs.y) {
+                    gameOver = true;
+                    ctx.fillStyle = 'white'; ctx.font = '40px sans-serif'; ctx.shadowBlur = 0;
+                    ctx.fillText('¡CORROMPIDO! Pulsa Espacio para reiniciar', 100, 200);
+                }
+                if (obs.x + obs.w < 0) obstacles.splice(i, 1);
+            });
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>

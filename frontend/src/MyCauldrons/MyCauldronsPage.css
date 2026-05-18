@@ -281,3 +281,107 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Botón Demo Estilo Forja Dorada */
+.demo-btn {
+  background: linear-gradient(135deg, #a832a4 0%, #d48a24 100%);
+  color: #fff;
+  border-color: #ffd700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.demo-btn:hover {
+  background: linear-gradient(135deg, #d48a24 0%, #a832a4 100%);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  transform: scale(1.05);
+}
+
+/* Modal del Portal de Juego Místico */
+.magic-portal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 3, 20, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: portalFadeIn 0.3s ease-out;
+}
+
+.magic-portal-modal {
+  background: radial-gradient(circle at center, #1b0936 0%, #0c021c 100%);
+  border: 3px solid #ffd700;
+  box-shadow: 0 0 35px rgba(184, 31, 181, 0.5), 0 0 10px rgba(255, 215, 0, 0.3);
+  border-radius: 20px;
+  width: 860px;
+  max-width: 95%;
+  overflow: hidden;
+  animation: modalScaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.portal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.8rem;
+  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.portal-header h2 {
+  margin: 0;
+  font-family: 'MedievalSharp', cursive;
+  color: #ffd700;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.close-portal-btn {
+  background: transparent;
+  border: none;
+  color: #ffd700;
+  font-size: 2.2rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.close-portal-btn:hover {
+  color: #ff5555;
+  transform: rotate(90deg) scale(1.1);
+}
+
+.portal-body {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+}
+
+.portal-iframe {
+  width: 800px;
+  height: 520px;
+  border: 2px solid #8a2be2;
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+  border-radius: 10px;
+  background: #000;
+}
+
+@keyframes portalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalScaleUp {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

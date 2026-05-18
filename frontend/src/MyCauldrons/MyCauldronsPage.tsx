@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './MyCauldronsPage.css';
 import Footer from '../components/Footer/Footer';
+import { API_BASE_URL } from '../config';
 
 // Import assets for mapping or fallback
 import cauldronIcon from '../assets/Icon.png';
@@ -17,6 +18,8 @@ interface SavedCauldron {
   genero: string;
   fecha_creacion: string;
   ingredientes: number;
+  ruta_demo?: string;
+  estado?: string;
 }
 
 interface MyCauldronsPageProps {
@@ -28,6 +31,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
   const [cauldrons, setCauldrons] = useState<SavedCauldron[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [activeDemoUrl, setActiveDemoUrl] = useState<string | null>(null);
 
   const fetchCauldrons = async () => {
     const token = localStorage.getItem('token');
@@ -38,7 +42,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
     }
 
     const endpoint = '/api/cauldrons';
-    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    const baseUrl = API_BASE_URL;
     try {
       const response = await fetch(`${baseUrl}${endpoint}`, {
         headers: {
@@ -80,7 +84,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
   const executeDelete = async (id: number) => {
     const token = localStorage.getItem('token');
     const endpoint = `/api/cauldrons/${id}`;
-    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    const baseUrl = API_BASE_URL;
     try {
       const response = await fetch(`${baseUrl}${endpoint}`, {
         method: 'DELETE',
@@ -99,6 +103,24 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
       console.error('Error al eliminar:', err);
       if (showMagicalAlert) showMagicalAlert('Error de conexión al intentar eliminar', 'error');
       else alert('Error de conexión al intentar eliminar');
+    }
+  };
+
+  const handleDemo = (cauldron: SavedCauldron) => {
+    if (cauldron.ruta_demo && cauldron.ruta_demo.trim() !== '') {
+      const demoUrl = cauldron.ruta_demo.startsWith('http')
+        ? cauldron.ruta_demo
+        : `${API_BASE_URL}${cauldron.ruta_demo}`;
+      setActiveDemoUrl(demoUrl);
+    } else {
+      if (showMagicalAlert) {
+        showMagicalAlert(
+          'La demo está en proceso de creación por las brujas. ¡Pronto estará lista en tu grimorio!',
+          'warning'
+        );
+      } else {
+        alert('La demo está en proceso de creación por las brujas. ¡Pronto estará lista en tu grimorio!');
+      }
     }
   };
 
@@ -145,8 +167,8 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
         <main className="cauldrons-list">
           {cauldrons.length > 0 ? (
             <div className="cauldrons-grid-layout">
-              {cauldrons.map((cauldron) => (
-                <div key={cauldron.id_caldero} className="cauldron-card-item">
+              {cauldrons.map((cauldron, index) => (
+                <div key={`${cauldron.id_caldero}-${index}`} className="cauldron-card-item">
                   <div className="item-visual">
                     <img src={getCauldronImage(cauldron)} alt={cauldron.nombre} />
                   </div>
@@ -162,7 +184,12 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
                         <img src={cauldronIcon} alt="Icono" className="small-icon" /> {cauldron.ingredientes} Ingredientes
                       </div>
                       <div className="item-actions">
-                        <button className="action-btn edit-btn">Editar</button>
+                        <button 
+                          className="action-btn demo-btn" 
+                          onClick={() => handleDemo(cauldron)}
+                        >
+                          Demo
+                        </button>
                         <button className="action-btn delete-btn" onClick={() => handleDelete(cauldron.id_caldero)}>
                           Eliminar
                         </button>
@@ -186,6 +213,26 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
           )}
         </main>
       </div>
+
+      {activeDemoUrl && (
+        <div className="magic-portal-overlay" onClick={() => setActiveDemoUrl(null)}>
+          <div className="magic-portal-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="portal-header">
+              <h2>🎮 PORTAL DE JUEGO MÍSTICO</h2>
+              <button className="close-portal-btn" onClick={() => setActiveDemoUrl(null)}>×</button>
+            </div>
+            <div className="portal-body">
+              <iframe 
+                src={activeDemoUrl} 
+                title="Demo del juego" 
+                className="portal-iframe"
+                sandbox="allow-scripts"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );

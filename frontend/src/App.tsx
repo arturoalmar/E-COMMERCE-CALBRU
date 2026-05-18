@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
+import { API_BASE_URL } from './config';
 
 // App.tsx
 // Este componente actúa como el controlador principal de la aplicación.
@@ -286,7 +287,7 @@ function App() {
                     const atributos = Object.values(selections).flat();
 
                     const endpoint = '/api/cauldrons';
-                    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+                    const baseUrl = API_BASE_URL;
 
                     try {
                       const response = await fetch(`${baseUrl}${endpoint}`, {

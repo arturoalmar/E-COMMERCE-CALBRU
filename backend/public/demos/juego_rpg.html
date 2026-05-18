@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo RPG: Alquimista Oscuro</title>
+    <style>
+        body { background-color: #0d0614; color: #d4c5eb; font-family: monospace; margin: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; }
+        #canvas { border: 3px solid #9d4edd; background: #000; box-shadow: 0 0 30px rgba(157, 78, 221, 0.4); border-radius: 8px; }
+        .hud { width: 800px; display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 18px; color: #ff9e00; text-shadow: 0 0 10px rgba(255,158,0,0.5); }
+    </style>
+</head>
+<body>
+    <div class="hud">
+        <div>Controles: WASD o Flechas</div>
+        <div>Cristales: <span id="score">0</span> / 10</div>
+        <div>Estado: <span id="status" style="color: #00f5d4;">Explorando</span></div>
+    </div>
+    <canvas id="canvas" width="800" height="450"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas'); const ctx = canvas.getContext('2d');
+        let score = 0; let gameOver = false;
+        let player = { x: 400, y: 225, r: 15, speed: 5, light: 140 };
+        let crystals = []; let traps = []; let keys = {};
+
+        window.focus();
+        window.addEventListener('click', () => window.focus());
+        window.addEventListener('keydown', e => {
+            if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
+            keys[e.key] = true;
+        });
+        window.addEventListener('keyup', e => keys[e.key] = false);
+
+        function init() {
+            for(let i=0; i<5; i++) spawnCrystal();
+            for(let i=0; i<4; i++) spawnTrap();
+        }
+
+        function spawnCrystal() {
+            crystals.push({ x: Math.random()*740+30, y: Math.random()*390+30, r: 6, pulse: 0 });
+        }
+
+        function spawnTrap() {
+            traps.push({
+                x: Math.random()*740+30, y: Math.random()*390+30, r: 12,
+                vx: (Math.random()-0.5)*3, vy: (Math.random()-0.5)*3
+            });
+        }
+
+        function update() {
+            if(gameOver) return;
+            // Movimiento WASD o Flechas
+            if(keys['ArrowUp'] || keys['w']) player.y -= player.speed;
+            if(keys['ArrowDown'] || keys['s']) player.y += player.speed;
+            if(keys['ArrowLeft'] || keys['a']) player.x -= player.speed;
+            if(keys['ArrowRight'] || keys['d']) player.x += player.speed;
+
+            // Límites de pantalla
+            player.x = Math.max(player.r, Math.min(canvas.width - player.r, player.x));
+            player.y = Math.max(player.r, Math.min(canvas.height - player.r, player.y));
+
+            // Actualizar Trampas Móviles
+            traps.forEach(t => {
+                t.x += t.vx; t.y += t.vy;
+                if(t.x < t.r || t.x > canvas.width - t.r) t.vx *= -1;
+                if(t.y < t.r || t.y > canvas.height - t.r) t.vy *= -1;
+
+                // Colisión con trampa
+                if(Math.hypot(player.x - t.x, player.y - t.y) < player.r + t.r) {
+                    gameOver = true;
+                    document.getElementById('status').innerText = "CORRUPTO - FALLO";
+                    document.getElementById('status').style.color = "#ff3333";
+                }
+            });
+
+            // Colisión con Cristales
+            crystals.forEach((c, i) => {
+                c.pulse += 0.1;
+                if(Math.hypot(player.x - c.x, player.y - c.y) < player.r + c.r) {
+                    crystals.splice(i, 1);
+                    score++;
+                    document.getElementById('score').innerText = score;
+                    spawnCrystal();
+                    if(score % 3 === 0) spawnTrap(); // Aumenta dificultad
+                    if(score >= 10) {
+                        gameOver = true;
+                        document.getElementById('status').innerText = "TRANSMUTADO - ÉXITO";
+                        document.getElementById('status').style.color = "#00ffcc";
+                    }
+                }
+            });
+        }
+
+        function draw() {
+            ctx.fillStyle = '#05010a'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Dibujar elementos (solo se verán bien si los pisa la luz)
+            traps.forEach(t => { ctx.fillStyle = '#ff0055'; ctx.beginPath(); ctx.arc(t.x, t.y, t.r, 0, Math.PI*2); ctx.fill(); });
+            crystals.forEach(c => {
+                ctx.fillStyle = '#ffd700'; ctx.beginPath();
+                ctx.arc(c.x, c.y, c.r + Math.sin(c.pulse)*2, 0, Math.PI*2); ctx.fill();
+            });
+
+            // Dibujar Jugador
+            ctx.fillStyle = '#3a86ff'; ctx.beginPath(); ctx.arc(player.x, player.y, player.r, 0, Math.PI*2); ctx.fill();
+
+            // CAPA DE ILUMINACIÓN DINÁMICA (Niebla de guerra mística)
+            ctx.save();
+            ctx.globalCompositeOperation = 'destination-out';
+            let grad = ctx.createRadialGradient(player.x, player.y, 0, player.x, player.y, player.light);
+            grad.addColorStop(0, 'rgba(0,0,0,1)');
+            grad.addColorStop(0.7, 'rgba(0,0,0,0.8)');
+            grad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(player.x, player.y, player.light, 0, Math.PI*2); ctx.fill();
+            ctx.restore();
+
+            // Capa oscura residual
+            ctx.fillStyle = 'rgba(5, 1, 10, 0.4)';
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        function loop() { update(); draw(); requestAnimationFrame(loop); }
+        init(); loop();
+    </script>
+</body>
+</html>

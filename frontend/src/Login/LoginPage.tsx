@@ -8,6 +8,7 @@
 
 import React, { useState } from 'react';
 import './LoginPage.css';
+import { API_BASE_URL } from '../config';
 
 // SECCIÓN: Definición de datos/propiedades
 interface LoginPageProps {
@@ -34,7 +35,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack }) => {
     setMessage('');
 
     const endpoint = isRegistering ? '/api/auth/register' : '/api/auth/login';
-    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    const baseUrl = API_BASE_URL;
 
     try {
       const response = await fetch(`${baseUrl}${endpoint}`, {

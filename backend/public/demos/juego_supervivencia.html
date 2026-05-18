@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Supervivencia: Horda Oscura</title>
+    <style>
+        body { background: #000; margin: 0; overflow: hidden; color: white; font-family: monospace; }
+        canvas { display: block; background: radial-gradient(circle, #1a0b2e 0%, #000 100%); }
+        .ui { position: absolute; top: 10px; left: 10px; font-size: 20px; font-weight: bold; text-shadow: 0 0 5px black; }
+        #xp-bar { width: 300px; height: 15px; background: #333; border: 2px solid #ffd700; margin-top: 5px; }
+        #xp-fill { width: 0%; height: 100%; background: #00ffcc; transition: width 0.2s; }
+        .controls-info { position: absolute; top: 10px; right: 10px; font-size: 16px; color: #ffcc00; text-shadow: 0 0 5px black; }
+    </style>
+</head>
+<body>
+    <div class="ui">
+        <div>Nivel: <span id="lvl">1</span> | Tiempo: <span id="time">0</span>s</div>
+        <div id="xp-bar"><div id="xp-fill"></div></div>
+    </div>
+    <div class="controls-info">Controles: WASD o Flechas</div>
+    <canvas id="game"></canvas>
+
+    <script>
+        const canvas = document.getElementById('game'); const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        
+        let player = { x: canvas.width/2, y: canvas.height/2, r: 15, speed: 4 };
+        let enemies = []; let bullets = []; let gems = [];
+        let keys = {}; let frame = 0; let xp = 0; let xpMax = 10; let level = 1; let gameOver = false;
+
+        window.focus();
+        window.addEventListener('click', () => window.focus());
+
+        window.addEventListener('keydown', e => {
+            if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
+            keys[e.key] = true;
+        });
+        window.addEventListener('keyup', e => keys[e.key] = false);
+
+        function dist(x1, y1, x2, y2) { return Math.hypot(x2 - x1, y2 - y1); }
+
+        function loop() {
+            if(gameOver) return;
+            frame++; ctx.clearRect(0,0, canvas.width, canvas.height);
+
+            // Movimiento Jugador
+            if ((keys['w'] || keys['ArrowUp']) && player.y > 0) player.y -= player.speed;
+            if ((keys['s'] || keys['ArrowDown']) && player.y < canvas.height) player.y += player.speed;
+            if ((keys['a'] || keys['ArrowLeft']) && player.x > 0) player.x -= player.speed;
+            if ((keys['d'] || keys['ArrowRight']) && player.x < canvas.width) player.x += player.speed;
+
+            // Auto-Disparo al enemigo más cercano
+            if (frame % 40 === 0 && enemies.length > 0) {
+                let target = enemies.reduce((closest, e) => dist(player.x, player.y, e.x, e.y) < dist(player.x, player.y, closest.x, closest.y) ? e : closest);
+                let angle = Math.atan2(target.y - player.y, target.x - player.x);
+                bullets.push({ x: player.x, y: player.y, vx: Math.cos(angle)*8, vy: Math.sin(angle)*8 });
+            }
+
+            // Actualizar Balas
+            ctx.fillStyle = '#00ffcc';
+            bullets.forEach((b, i) => {
+                b.x += b.vx; b.y += b.vy; ctx.beginPath(); ctx.arc(b.x, b.y, 5, 0, Math.PI*2); ctx.fill();
+                if(b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) bullets.splice(i, 1);
+            });
+
+            // Generar Enemigos
+            if (frame % Math.max(20, 60 - level*5) === 0) {
+                let side = Math.floor(Math.random()*4);
+                let ex = side===0 ? 0 : side===1 ? canvas.width : Math.random()*canvas.width;
+                let ey = side===2 ? 0 : side===3 ? canvas.height : Math.random()*canvas.height;
+                enemies.push({ x: ex, y: ey, hp: 1, speed: 1.5 + Math.random() });
+            }
+
+            // Actualizar Enemigos y Colisiones
+            ctx.fillStyle = '#ff3333';
+            enemies.forEach((e, ei) => {
+                let angle = Math.atan2(player.y - e.y, player.x - e.x);
+                e.x += Math.cos(angle) * e.speed; e.y += Math.sin(angle) * e.speed;
+                ctx.beginPath(); ctx.arc(e.x, e.y, 12, 0, Math.PI*2); ctx.fill();
+
+                if (dist(player.x, player.y, e.x, e.y) < player.r + 12) {
+                    gameOver = true; 
+                    ctx.fillStyle = 'white'; ctx.font = '30px sans-serif'; ctx.textAlign = 'center';
+                    ctx.fillText("¡LA HORDA TE HA CONSUMIDO!", canvas.width/2, canvas.height/2 - 20);
+                    ctx.fillText("Sobreviviste " + Math.floor(frame/60) + " segundos.", canvas.width/2, canvas.height/2 + 20);
+                }
+
+                bullets.forEach((b, bi) => {
+                    if (dist(b.x, b.y, e.x, e.y) < 15) {
+                        gems.push({ x: e.x, y: e.y }); // Suelta gema
+                        enemies.splice(ei, 1); bullets.splice(bi, 1);
+                    }
+                });
+            });
+
+            // Actualizar Gemas (XP)
+            ctx.fillStyle = '#ffd700';
+            gems.forEach((g, gi) => {
+                ctx.beginPath(); ctx.arc(g.x, g.y, 4, 0, Math.PI*2); ctx.fill();
+                if (dist(player.x, player.y, g.x, g.y) < player.r + 20) {
+                    xp++; gems.splice(gi, 1);
+                    document.getElementById('xp-fill').style.width = (xp/xpMax)*100 + "%";
+                    if(xp >= xpMax) { xp = 0; level++; xpMax = Math.floor(xpMax * 1.5); document.getElementById('lvl').innerText = level; }
+                }
+            });
+
+            // Dibujar Jugador
+            ctx.fillStyle = '#9d4edd'; ctx.beginPath(); ctx.arc(player.x, player.y, player.r, 0, Math.PI*2); ctx.fill();
+            document.getElementById('time').innerText = Math.floor(frame/60);
+
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>

@@ -6,6 +6,7 @@
 import { Router, Response } from 'express';
 import CauldronDAO from '../DAO/CauldronDAO.js';
 import { authenticateToken, AuthRequest } from '../middleware/authMiddleware.js';
+import { cocinarDemoSimulada } from '../services/generarDemo.js';
 
 const router = Router();
 
@@ -47,7 +48,26 @@ router.post('/', authenticateToken, async (req: AuthRequest, res: Response) => {
       config_ia: config_ia || ''
     });
 
+    // Enviar respuesta inmediata al cliente (el caldero está "pendiente" y se está cocinando)
     res.status(201).json(newCauldron);
+
+    // Generar la demo del juego en segundo plano mediante simulación asíncrona
+    cocinarDemoSimulada({
+      id_caldero: newCauldron.id_caldero,
+      tipoJuego: tipo_nombre,
+      ingredientes: atributos || [],
+      config_ia: config_ia || ''
+    }).then(async (rutaDemo) => {
+      // Pasados los 3 segundos de carga simulada, actualizamos el caldero a estado 'demo' con su ruta de demo
+      await CauldronDAO.update(newCauldron.id_caldero!, userId, {
+        estado: 'demo',
+        ruta_demo: rutaDemo
+      });
+      console.log(`[Segundo Plano] ¡Demo del caldero ${newCauldron.id_caldero} autogenerada y guardada con éxito! Ruta: ${rutaDemo}`);
+    }).catch((error) => {
+      console.error(`[Segundo Plano] Error al autogenerar la demo del caldero ${newCauldron.id_caldero}:`, error);
+    });
+
   } catch (error: any) {
     console.error('Error al crear caldero:', error);
     res.status(500).json({ message: error.message || 'Error en el servidor al crear el caldero' });

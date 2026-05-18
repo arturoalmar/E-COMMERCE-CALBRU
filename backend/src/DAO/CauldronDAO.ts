@@ -121,18 +121,19 @@ class CauldronDAO {
    * Permite cambios parciales en nombre, estado, precio y configuración IA.
    */
   async update(id: number, userId: number, updates: Partial<Cauldron>): Promise<any | null> {
-    const { nombre, estado, precio, config_ia } = updates;
+    const { nombre, estado, precio, config_ia, ruta_demo } = updates;
     const query = `
       UPDATE calderos 
       SET 
         nombre = COALESCE($1, nombre),
         estado = COALESCE($2, estado),
         precio = COALESCE($3, precio),
-        config_ia = COALESCE($4, config_ia)
-      WHERE id_caldero = $5 AND id_usuario = $6
+        config_ia = COALESCE($4, config_ia),
+        ruta_demo = COALESCE($5, ruta_demo)
+      WHERE id_caldero = $6 AND id_usuario = $7
       RETURNING *
     `;
-    const result = await pool.query(query, [nombre, estado, precio, config_ia, id, userId]);
+    const result = await pool.query(query, [nombre, estado, precio, config_ia, ruta_demo, id, userId]);
     return result.rows[0] || null;
   }
 

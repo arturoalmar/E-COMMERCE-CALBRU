@@ -7,6 +7,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import pool from './db.js';
 import authRoutes from './routes/authRoutes.js';
 import cauldronRoutes from './routes/cauldronRoutes.js';
@@ -30,6 +31,7 @@ const PORT = process.env.PORT || 5000;
 // --- 2. MIDDLEWARES GLOBALES ---
 app.use(cors()); // Permite peticiones desde el frontend (CORS)
 app.use(express.json()); // Permite procesar cuerpos de mensaje en formato JSON
+app.use('/public', express.static(path.join(process.cwd(), 'public')));
 
 // --- 3. RUTAS DE LA API ---
 app.use('/api/auth', authRoutes); // Endpoints de registro y login

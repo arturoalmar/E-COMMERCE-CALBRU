@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Cartas: Duelo de Alquimistas</title>
+    <style>
+        body { background: #0b0518; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .board { display: flex; gap: 50px; margin: 30px; padding: 30px; border: 2px solid #8a2be2; border-radius: 15px; box-shadow: 0 0 30px rgba(138,43,226,0.3); background: #150a2b; }
+        .area { text-align: center; }
+        .card { width: 120px; height: 180px; background: linear-gradient(135deg, #2a0845 0%, #6441A5 100%); border: 3px solid #ffd700; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; margin-top: 15px; box-shadow: 0 0 15px #ffd700; transition: transform 0.3s; }
+        .card.enemy { background: linear-gradient(135deg, #4a0000 0%, #8b0000 100%); border-color: #ff3333; box-shadow: 0 0 15px #ff3333; }
+        button { background: #8a2be2; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-weight: bold; }
+        button:hover { background: #9d4edd; box-shadow: 0 0 15px #9d4edd; }
+        #msg { font-size: 24px; margin-bottom: 20px; height: 30px; color: #00ffcc; }
+    </style>
+</head>
+<body>
+    <div id="msg">¡Saca una carta mayor para ganar!</div>
+    <div class="board">
+        <div class="area">
+            <h2>Adversario Oscuro</h2>
+            <div id="enemyCard" class="card enemy">?</div>
+        </div>
+        <div class="area">
+            <h2>Tu Grimorio</h2>
+            <div id="playerCard" class="card">?</div>
+        </div>
+    </div>
+    <div style="display: flex; gap: 20px;">
+        <button onclick="drawCards()">Robar Cartas</button>
+    </div>
+
+    <script>
+        function drawCards() {
+            const playerVal = Math.floor(Math.random() * 10) + 1;
+            let enemyVal = Math.floor(Math.random() * 10) + 1;
+            
+            document.getElementById('playerCard').innerText = playerVal;
+            document.getElementById('enemyCard').innerText = enemyVal;
+
+            const msg = document.getElementById('msg');
+            if (playerVal > enemyVal) {
+                msg.innerText = "¡Tu hechizo es más fuerte! (Victoria)";
+                msg.style.color = "#00ffcc";
+            } else if (playerVal < enemyVal) {
+                msg.innerText = "¡El enemigo te supera! (Derrota)";
+                msg.style.color = "#ff3333";
+            } else {
+                msg.innerText = "Choque de magias (Empate)";
+                msg.style.color = "#ffd700";
+            }
+        }
+    </script>
+</body>
+</html>
