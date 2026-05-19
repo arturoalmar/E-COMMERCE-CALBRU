@@ -12,29 +12,29 @@ import survivorCauldron from '../assets/survivor_cauldron.png';
 export const GENRES: Genre[] = [
   {
     id: 'cards',
-    name: 'Juego de Cartas',
-    description: 'Construye tu mazo perfecto, crea sinergias y derrota a tus rivales con estrategia pura.',
+    name: 'Cards',
+    description: 'Build your perfect deck, create synergies and defeat your rivals with pure strategy.',
     image: cardsCauldron,
     hue: 0
   },
   {
     id: 'platformer',
-    name: 'Plataformas',
-    description: 'Saltos precisos, niveles desafiantes y mundos vibrantes llenos de secretos.',
+    name: 'Platformer',
+    description: 'Precise jumps, challenging levels and vibrant worlds full of secrets.',
     image: jumpCauldron,
     hue: 200
   },
   {
     id: 'party',
-    name: 'Estilo Mario Party',
-    description: 'Minijuegos frenéticos, amigos traicioneros y mucha diversión multijugador local.',
+    name: 'Party',
+    description: 'Frenetic mini-games, traitorous friends and lots of local multiplayer fun.',
     image: partyCauldron,
     hue: 60
   },
   {
     id: 'survivor',
-    name: 'Estilo Vampire Survivor',
-    description: 'Hordas interminables, mejoras auto-disparadas y caos en pantalla hasta el último segundo.',
+    name: 'Autoshooter',
+    description: 'Unending hordes, auto-upgrades and chaos on screen until the last second.',
     image: survivorCauldron,
     hue: 280
   },

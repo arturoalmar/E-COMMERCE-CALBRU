@@ -6,11 +6,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
 
-// App.tsx
-// Este componente actúa como el controlador principal de la aplicación.
-// Maneja la navegación entre páginas, las transiciones visuales,
-// el estado global de selección de género, ingredientes y partículas.
-
 // Componentes
 import LandingPage from './Landing/LandingPage';
 import SelectionPage from './Selection-Cauldron/SelectionPage';
@@ -31,27 +26,22 @@ function getRandomColor(): string {
 }
 
 function App() {
-  // Estado de la página actual de la aplicación.
   const [page, setPage] = useState<Page>('home');
-  // Paso actual dentro de la experiencia de creación de calderos.
   const [currentStep, setCurrentStep] = useState<Step>('select-pot');
-  // Género de juego seleccionado por el usuario.
   const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
-  // Opciones seleccionadas en las diferentes categorías del configurador.
   const [selections, setSelections] = useState<OptionsMap>({
     diseno: [],
     tematica: [],
     mecanicas: [],
     sonido: []
   });
-
+  const [cauldronName, setCauldronName] = useState('');
   const [particles, setParticles] = useState<Particle[]>([]);
   const [particleCounter, setParticleCounter] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<{ id: number, username: string, email?: string } | null>(null);
   const [isWorker] = useState(true);
 
-  // Estado para la alerta mágica
   const [alertConfig, setAlertConfig] = useState<{
     isOpen: boolean;
     message: string;
@@ -65,8 +55,8 @@ function App() {
   });
 
   const showMagicalAlert = (
-    message: string, 
-    type: 'success' | 'error' | 'warning' | 'confirm' = 'success', 
+    message: string,
+    type: 'success' | 'error' | 'warning' | 'confirm' = 'success',
     onConfirm: () => void = () => closeAlert()
   ) => {
     setAlertConfig({
@@ -82,7 +72,6 @@ function App() {
 
   const closeAlert = () => setAlertConfig(prev => ({ ...prev, isOpen: false }));
 
-  // Recuperar sesión al cargar
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -96,15 +85,11 @@ function App() {
     }
   }, []);
 
-  // Estados de transición
   const [transitionStatus, setTransitionStatus] = useState<'none' | 'exiting' | 'entering'>('none');
   const [transitionDirection, setTransitionDirection] = useState<'up' | 'down'>('up');
   const [potionSplash, setPotionSplash] = useState<'idle' | 'splatter' | 'slide'>('idle');
   const nextPageRoute = useRef<{ p: Page; s: Step; g: Genre | null } | null>(null);
 
-  // Controla la animación cuando se cambia de página.
-  // Guarda la ruta de destino y actualiza estado tras un retardo para permitir la transición.
-  // SECCIÓN: Componente o Función lógica
   const performTransition = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null) => {
     const isGoingToHome = newPage === 'home';
     const direction = isGoingToHome ? 'down' : 'up';
@@ -133,9 +118,6 @@ function App() {
     }, 450);
   }, []);
 
-  // Función central para cambiar de página.
-  // Si shouldPush es true, se desencadena la animación de transición.
-  // SECCIÓN: Componente o Función lógica
   const navigateTo = useCallback((newPage: Page, newStep: Step = 'select-pot', newGenre: Genre | null = null, shouldPush = true) => {
     if (shouldPush) {
       performTransition(newPage, newStep, newGenre);
@@ -147,7 +129,6 @@ function App() {
   }, [performTransition]);
 
   useEffect(() => {
-    // SECCIÓN: Componente o Función lógica
     const handlePopState = (event: PopStateEvent) => {
       if (event.state) {
         const { page: p, step: s, genre: g } = event.state;
@@ -158,23 +139,19 @@ function App() {
     };
     window.addEventListener('popstate', handlePopState);
     window.history.replaceState({ page, step: currentStep, genre: selectedGenre }, '');
-    // SECCIÓN: Renderizado visual
     return () => window.removeEventListener('popstate', handlePopState);
   }, [navigateTo, page, currentStep, selectedGenre]);
 
   useEffect(() => {
-    // SECCIÓN: Componente o Función lógica
     const handleSplash = () => {
       setPotionSplash('splatter');
       setTimeout(() => setPotionSplash('slide'), 1200);
       setTimeout(() => setPotionSplash('idle'), 2200);
     };
     window.addEventListener('potion-splash', handleSplash);
-    // SECCIÓN: Renderizado visual
     return () => window.removeEventListener('potion-splash', handleSplash);
   }, []);
 
-  // Control del scroll según la página
   useEffect(() => {
     if (page === 'home') {
       document.body.classList.add('no-scroll');
@@ -185,20 +162,16 @@ function App() {
     }
   }, [page]);
 
-  // SECCIÓN: Componente o Función lógica
   const handleNavigate = (newPage: Page) => {
     navigateTo(newPage, 'select-pot', null);
   };
 
-  // Selecciona un género y reinicia las selecciones para empezar la configuración.
-  // SECCIÓN: Componente o Función lógica
   const handleSelectGenre = (genre: Genre) => {
     setSelections({ diseno: [], tematica: [], mecanicas: [], sonido: [] });
+    setCauldronName('');
     navigateTo('creator', 'configurator', genre);
   };
 
-  // Crea partículas visuales cuando el usuario selecciona opciones del configurador.
-  // SECCIÓN: Componente o Función lógica
   const createParticle = () => {
     const randomX = Math.random() * 120 - 60;
     const randomY = -100;
@@ -216,7 +189,6 @@ function App() {
     }, 2000);
   };
 
-  // SECCIÓN: Componente o Función lógica
   const toggleOption = (category: ConfigCategory, optionId: string) => {
     setSelections((prev) => {
       const currentSelections = prev[category] ?? [];
@@ -235,13 +207,48 @@ function App() {
     selections.mecanicas.length > 0 ||
     selections.sonido.length > 0;
 
-  // Renderiza el contenido principal según la página actual.
-  // Cada caso corresponde a una vista distinta de la aplicación.
-  // SECCIÓN: Componente o Función lógica
+  const handleSaveCauldron = async () => {
+    if (!isLoggedIn) {
+      showMagicalAlert('You must be a registered apprentice to forge cauldrons!', 'warning', () => navigateTo('login'));
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    const nombre = cauldronName.trim() || `Poción de ${selectedGenre?.name || 'Misterio'}`;
+    const atributos = Object.values(selections).flat();
+    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+
+    try {
+      const response = await fetch(`${baseUrl}/api/cauldrons`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          nombre,
+          tipo_nombre: selectedGenre?.name || 'Desconocido',
+          atributos: atributos,
+          estado: 'pendiente',
+          precio: 0,
+          config_ia: `Configuración para ${selectedGenre?.name} con ingredientes: ${atributos.join(', ')}`
+        })
+      });
+
+      if (response.ok) {
+        showMagicalAlert('Cauldron successfully forged! Saved in your grimoire.', 'success', () => navigateTo('my-cauldrons'));
+      } else {
+        showMagicalAlert('The cauldron has exploded... (Error saving)', 'error');
+      }
+    } catch (err) {
+      console.error('Error al crear caldero:', err);
+      showMagicalAlert('Connection error with the wizard\'s tower.', 'error');
+    }
+  };
+
   const renderContent = () => {
     switch (page) {
       case 'home':
-        // SECCIÓN: Renderizado visual
         return (
           <LandingPage
             setPage={(p) => navigateTo(p as Page, 'select-pot', null)}
@@ -256,7 +263,6 @@ function App() {
           />
         );
       case 'creator':
-        // SECCIÓN: Renderizado visual
         return (
           <div className="creator-container">
             {currentStep === 'select-pot' && (
@@ -267,71 +273,31 @@ function App() {
               />
             )}
             {currentStep === 'configurator' && (
-              <>
-                <ConfiguratorPage
-                  selections={selections}
-                  particles={particles}
-                  selectedGenre={selectedGenre}
-                  isFusionReady={isFusionReady}
-                  toggleOption={toggleOption}
-                  onBack={() => navigateTo('creator', 'select-pot', null)}
-                  onCreateGame={async () => {
-                    if (!isLoggedIn) {
-                      showMagicalAlert('¡Debes ser un aprendiz registrado para forjar calderos!', 'warning', () => navigateTo('login'));
-                      return;
-                    }
-
-                    const token = localStorage.getItem('token');
-                    const nombre = `Poción de ${selectedGenre?.name || 'Misterio'}`;
-                    const atributos = Object.values(selections).flat();
-
-                    const endpoint = '/api/cauldrons';
-                    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
-
-                    try {
-                      const response = await fetch(`${baseUrl}${endpoint}`, {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                          'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                          nombre,
-                          tipo_nombre: selectedGenre?.name || 'Desconocido',
-                          atributos: atributos,
-                          estado: 'pendiente',
-                          precio: 0,
-                          config_ia: `Configuración para ${selectedGenre?.name} con ingredientes: ${atributos.join(', ')}`
-                        })
-                      });
-
-                      if (response.ok) {
-                        showMagicalAlert('¡Caldero forjado con éxito! Guardado en tu grimorio.', 'success', () => navigateTo('my-cauldrons'));
-                      } else {
-                        showMagicalAlert('El caldero ha explotado... (Error al guardar)', 'error');
-                      }
-                    } catch (err) {
-                      console.error('Error al crear caldero:', err);
-                      showMagicalAlert('Error de conexión con la torre del mago.', 'error');
-                    }
-                  }}
-                />
-              </>
+              <ConfiguratorPage
+                selections={selections}
+                particles={particles}
+                selectedGenre={selectedGenre}
+                isFusionReady={isFusionReady}
+                toggleOption={toggleOption}
+                onBack={() => navigateTo('creator', 'select-pot', null)}
+                cauldronName={cauldronName}
+                onCauldronNameChange={setCauldronName}
+                onSave={handleSaveCauldron}
+                onCreateGame={handleSaveCauldron}
+              />
             )}
           </div>
         );
       case 'my-cauldrons':
-        // SECCIÓN: Renderizado visual
         return (
-          <MyCauldronsPage 
-            onCreateNew={() => navigateTo('creator')} 
+          <MyCauldronsPage
+            onCreateNew={() => navigateTo('creator')}
             showMagicalAlert={showMagicalAlert}
           />
         );
       case 'intranet': return <IntranetPage onBack={() => navigateTo('home')} />;
       case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} onBack={() => navigateTo('home')} />;
       case 'login':
-        // SECCIÓN: Renderizado visual
         return (
           <LoginPage
             onLogin={(userData) => {
@@ -343,7 +309,6 @@ function App() {
           />
         );
       default:
-        // SECCIÓN: Renderizado visual
         return (
           <LandingPage
             setPage={(p) => navigateTo(p as Page, 'select-pot', null)}
@@ -357,7 +322,6 @@ function App() {
   const isImmersiveMode = page === 'home' || page === 'creator' || page === 'login';
   const shouldHideNavbar = isImmersiveMode || page === 'intranet' || page === 'conocenos';
 
-  // SECCIÓN: Renderizado visual
   return (
     <>
       <div className={`potion-global-overlay ${potionSplash}`}>
@@ -407,7 +371,7 @@ function App() {
           {renderContent()}
         </div>
 
-        <MagicalAlert 
+        <MagicalAlert
           isOpen={alertConfig.isOpen}
           message={alertConfig.message}
           type={alertConfig.type}

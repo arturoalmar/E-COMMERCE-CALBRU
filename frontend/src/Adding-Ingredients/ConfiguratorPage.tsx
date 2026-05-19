@@ -1,14 +1,8 @@
 /**
  * 📄 ARCHIVO: ConfiguratorPage.tsx
- * 📝 DESCRIPCIÓN: Página principal del configurador de ingredientes y creación de pociones.
- *
- * CAMBIOS:
- * - Nuevas props: cauldronName, onCauldronNameChange, onSave
- * - Input de nombre encima del .configurator-header
- * - Botones "Volver" y "Guardar Caldero" en fila horizontal dentro de .cauldron-buttons
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ConfigCategory, Genre, Particle, OptionsMap } from '../types';
 import './AddingIngredients.css';
 
@@ -16,7 +10,10 @@ import Cauldron from './Cauldron';
 import OptionsShelf from './OptionsShelf';
 import ParticleEffect from './ParticleEffect';
 import Footer from '../components/Footer/Footer';
+import MagicalAlert from '../components/MagicalAlert/MagicalAlert';
 import fondoCreacion from '../assets/fondo creación de juego.png';
+
+import { resolveLabels } from './GamePreview';
 
 interface ConfiguratorPageProps {
   selections: OptionsMap;
@@ -26,10 +23,8 @@ interface ConfiguratorPageProps {
   toggleOption: (category: ConfigCategory, optionId: string) => void;
   onBack: () => void;
   onCreateGame: () => void;
-  /** Nombre que el usuario escribe para su caldero */
   cauldronName: string;
   onCauldronNameChange: (name: string) => void;
-  /** Callback para el botón Guardar Caldero */
   onSave: () => void;
 }
 
@@ -45,9 +40,59 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
   onCauldronNameChange,
   onSave,
 }) => {
+  const [showDemoAlert, setShowDemoAlert] = useState(false);
+  const [generatingDemo, setGeneratingDemo] = useState(false);
+  const [demoError, setDemoError] = useState<string | null>(null);
+
+  const handleCreateGameClick = () => {
+    setShowDemoAlert(true);
+  };
+
+  const handleTryDemo = async () => {
+    setShowDemoAlert(false);
+    setGeneratingDemo(true);
+    setDemoError(null);
+
+    const resolved = resolveLabels(selections);
+
+    try {
+      const res = await fetch('http://localhost:5000/api/game/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          genre: selectedGenre?.name || 'aventura',
+          diseno: resolved.diseno,
+          tematica: resolved.tematica,
+          mecanicas: resolved.mecanicas,
+          sonido: resolved.sonido,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setDemoError(data.message || 'Unknown error');
+        return;
+      }
+
+      const blob = new Blob([data.html], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+
+    } catch (e) {
+      setDemoError('Could not connect to the server. Is the backend running?');
+    } finally {
+      setGeneratingDemo(false);
+    }
+  };
+
+  const handleContinue = () => {
+    setShowDemoAlert(false);
+    onCreateGame();
+  };
+
   return (
     <>
-      {/* Fondo */}
       <div
         className="configurator-bg"
         style={{ backgroundImage: `url("${fondoCreacion}")` }}
@@ -55,7 +100,6 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
 
       <div className="configurator-layout">
 
-        {/* Paneles de ingredientes en las 4 esquinas (position: absolute) */}
         <OptionsShelf
           category="diseno"
           title="Design"
@@ -85,7 +129,6 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
           toggleOption={toggleOption}
         />
 
-        {/* Input de nombre — encima del header, centrado en el flujo flex */}
         <input
           type="text"
           className="cauldron-name-input"
@@ -95,30 +138,35 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
           maxLength={60}
         />
 
-        {/* Título centrado */}
         <div className="configurator-header">
           <h1 className="configurator-title">Create Your Magical Game</h1>
           <p className="configurator-subtitle">Select ingredients for your potion</p>
         </div>
 
-        {/* Dashboard central: caldero + botones en columna */}
         <div className="center-dashboard">
 
-          {/* Partículas (position: fixed, no afecta al flujo) */}
           <ParticleEffect particles={particles} />
 
-          {/* Caldero — anclado por la base dentro de su wrapper */}
           <Cauldron selectedGenre={selectedGenre} isFusionReady={isFusionReady} />
 
-          {/* Botones debajo del caldero */}
           <div className="cauldron-buttons">
 
-            {/* Botón principal: Crear Juego — ocupa su propia fila */}
-            <button className="btn-create-game" onClick={onCreateGame}>
+            <button className="btn-create-game" onClick={handleCreateGameClick}>
               Create Game
             </button>
 
-            {/* Fila inferior: Volver + Guardar Caldero */}
+            {generatingDemo && (
+              <p style={{ color: '#a855f7', fontSize: '1rem', textAlign: 'center' }}>
+                🔮 Preparing your spell...
+              </p>
+            )}
+
+            {demoError && (
+              <p style={{ color: '#f87171', fontSize: '0.9rem', textAlign: 'center' }}>
+                ❌ {demoError}
+              </p>
+            )}
+
             <div className="cauldron-buttons-row">
               <button className="btn-back-game" onClick={onBack}>
                 Back
@@ -134,6 +182,17 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
       </div>
 
       <Footer />
+
+      {/* Pop-up de decisión */}
+      <MagicalAlert
+        isOpen={showDemoAlert}
+        message="Do you want to try a demo of your game before continuing?"
+        type="confirm"
+        confirmText="Try Demo"
+        cancelText="➡️ Continue"
+        onConfirm={handleTryDemo}
+        onCancel={handleContinue}
+      />
     </>
   );
 };
