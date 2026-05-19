@@ -214,8 +214,9 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
           {cauldrons.length > 0 ? (
             <div className="cauldrons-grid-layout">
               {cauldrons.map((cauldron) => (
-                <div key={cauldron.id_caldero} className="cauldron-card-item">
+                <div key={cauldron.id_caldero} className={`cauldron-card-item ${cauldron.estado === 'comprado' ? 'cauldron-card-item--bought' : ''}`}>
                   <div className="item-visual">
+                    {cauldron.estado === 'comprado' && <div className="purchased-seal">👑</div>}
                     <img src={getCauldronImage(cauldron)} alt={cauldron.nombre} />
                   </div>
                   <div className="item-details">
