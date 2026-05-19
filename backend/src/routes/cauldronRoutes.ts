@@ -75,6 +75,29 @@ router.delete('/:id', authenticateToken, async (req: AuthRequest, res: Response)
 });
 
 // Actualizar un caldero
+router.post('/:id/buy', authenticateToken, async (req: AuthRequest, res: Response) => {
+  const { id } = req.params;
+  const userId = req.user!.id;
+  const { nota_usuario } = req.body;
+
+  console.log(`🛒 Intentando compra: caldero=${id}, usuario=${userId}`);
+
+  try {
+    const purchase = await CauldronDAO.buy(parseInt(id), userId, nota_usuario);
+    console.log(`✅ Compra exitosa: ${id}`);
+    res.status(201).json({ message: 'Compra realizada con éxito', purchase });
+  } catch (error: any) {
+    console.error('❌ Error al comprar caldero:', error.message || error);
+    if (error.message === 'Caldero no encontrado') {
+      return res.status(404).json({ message: error.message });
+    }
+    if (error.message.includes('ya ha sido comprado')) {
+      return res.status(409).json({ message: error.message });
+    }
+    res.status(500).json({ message: error.message || 'Error en el servidor al procesar la compra' });
+  }
+});
+
 router.put('/:id', authenticateToken, async (req: AuthRequest, res: Response) => {
   const { id } = req.params;
   const userId = req.user!.id;

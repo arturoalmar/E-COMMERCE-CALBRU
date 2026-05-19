@@ -47,7 +47,20 @@ const createTables = async () => {
         fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
     );
 
-    -- 5. RELACIÓN CALDERO - ATRIBUTOS: Enlace muchos-a-muchos entre calderos e ingredientes
+    -- 5. COMPRAS: Registra las compras realizadas por usuarios
+    CREATE TABLE IF NOT EXISTS compras (
+        id_compra SERIAL PRIMARY KEY,
+        id_usuario INTEGER NOT NULL REFERENCES usuarios(id_usuario),
+        id_caldero INTEGER NOT NULL REFERENCES calderos(id_caldero),
+        monto_pagado NUMERIC(6,2) NOT NULL,
+        fecha_compra TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        estado_pago VARCHAR(30) NOT NULL CHECK (estado_pago IN ('pendiente', 'pagado', 'fallido')),
+        nota_usuario TEXT,
+        CONSTRAINT uq_compras_usuario_caldero UNIQUE (id_usuario, id_caldero)
+    );
+    ALTER TABLE compras ADD COLUMN IF NOT EXISTS nota_usuario TEXT;
+
+    -- 6. RELACIÓN CALDERO - ATRIBUTOS: Enlace muchos-a-muchos entre calderos e ingredientes
     CREATE TABLE IF NOT EXISTS caldero_atributos (
         id_caldero INTEGER NOT NULL REFERENCES calderos(id_caldero) ON DELETE CASCADE,
         id_atributo INTEGER NOT NULL REFERENCES atributos(id_atributo),

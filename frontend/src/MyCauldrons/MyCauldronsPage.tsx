@@ -17,6 +17,8 @@ interface SavedCauldron {
   genero: string;
   fecha_creacion: string;
   ingredientes: number;
+  precio?: number | string;
+  estado?: string;
 }
 
 interface MyCauldronsPageProps {
@@ -28,6 +30,10 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
   const [cauldrons, setCauldrons] = useState<SavedCauldron[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
+  const [purchaseNote, setPurchaseNote] = useState('');
+  const [selectedCauldron, setSelectedCauldron] = useState<SavedCauldron | null>(null);
+  const [purchaseError, setPurchaseError] = useState('');
 
   const fetchCauldrons = async () => {
     const token = localStorage.getItem('token');
@@ -102,7 +108,69 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
     }
   };
 
+  const openBuyModal = (cauldron: SavedCauldron) => {
+    setSelectedCauldron(cauldron);
+    setPurchaseNote('');
+    setPurchaseError('');
+    setIsPurchaseModalOpen(true);
+  };
+
+  const closeBuyModal = () => {
+    setIsPurchaseModalOpen(false);
+    setSelectedCauldron(null);
+    setPurchaseError('');
+  };
+
+  const handleConfirmPurchase = async () => {
+    if (!selectedCauldron) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      if (showMagicalAlert) {
+        showMagicalAlert('Necesitas iniciar sesión para comprar un caldero.', 'warning', () => window.location.href = '/login');
+      } else {
+        alert('Necesitas iniciar sesión para comprar un caldero.');
+      }
+      return;
+    }
+
+    const endpoint = `/api/cauldrons/${selectedCauldron.id_caldero}/buy`;
+    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    try {
+      const response = await fetch(`${baseUrl}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          nota_usuario: purchaseNote
+        })
+      });
+
+      if (response.ok) {
+        setCauldrons(prev => prev.map(c => c.id_caldero === selectedCauldron.id_caldero ? { ...c, estado: 'comprado' } : c));
+        closeBuyModal();
+        if (showMagicalAlert) showMagicalAlert('¡Compra realizada! Tu caldero ya está marcado como comprado.', 'success');
+      } else {
+        const data = await response.json();
+        const message = data?.message || 'No se pudo procesar la compra';
+        setPurchaseError(message);
+      }
+    } catch (err) {
+      console.error('Error al comprar:', err);
+      setPurchaseError('Error de conexión al procesar la compra');
+    }
+  };
+
   // Función para mapear imágenes según el género si no hay URL real
+  const safePrice = (precio?: number | string): string => {
+    const value = typeof precio === 'number'
+      ? precio
+      : precio ? parseFloat(precio.toString().replace(',', '.')) : NaN;
+    return Number.isFinite(value) ? value.toFixed(2) : '0.00';
+  };
+
   const getCauldronImage = (cauldron: SavedCauldron) => {
     if (cauldron.imagen_url && cauldron.imagen_url.startsWith('http')) {
       return cauldron.imagen_url;
@@ -157,11 +225,24 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
                     </div>
                     <h3>{cauldron.nombre}</h3>
                     <p>{cauldron.descripcion || 'Configuración mágica en espera...'}</p>
+                    <div className="price-status-row">
+                      {cauldron.precio !== undefined && (
+                        <span className="price-label">Precio: ${safePrice(cauldron.precio)}</span>
+                      )}
+                      <span className={`status-label ${cauldron.estado === 'comprado' ? 'status-bought' : 'status-pending'}`}>
+                        {cauldron.estado ? cauldron.estado.toUpperCase() : 'PENDIENTE'}
+                      </span>
+                    </div>
                     <div className="item-footer">
                       <div className="ingredients-count">
                         <img src={cauldronIcon} alt="Icono" className="small-icon" /> {cauldron.ingredientes} Ingredientes
                       </div>
                       <div className="item-actions">
+                        {cauldron.estado !== 'comprado' && (
+                          <button className="action-btn buy-btn" onClick={() => openBuyModal(cauldron)}>
+                            Comprar
+                          </button>
+                        )}
                         <button className="action-btn edit-btn">Editar</button>
                         <button className="action-btn delete-btn" onClick={() => handleDelete(cauldron.id_caldero)}>
                           Eliminar
@@ -186,6 +267,41 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
           )}
         </main>
       </div>
+
+      {isPurchaseModalOpen && selectedCauldron && (
+        <div className="purchase-modal-overlay" onClick={closeBuyModal}>
+          <div className="purchase-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="purchase-modal-header">
+              <h2>Comprar Caldero</h2>
+              <button className="close-modal-btn" onClick={closeBuyModal} aria-label="Cerrar diálogo">×</button>
+            </div>
+            <p className="purchase-modal-subtitle">
+              Añade información adicional sobre el juego que deseas construir antes de confirmar la compra.
+            </p>
+            <div className="purchase-modal-content">
+              <div className="purchase-summary">
+                <strong>{selectedCauldron.nombre}</strong>
+                <span>{selectedCauldron.genero}</span>
+                <span>Precio: ${safePrice(selectedCauldron.precio)}</span>
+              </div>
+              <label className="purchase-label" htmlFor="purchase-note">Descripción del juego</label>
+              <textarea
+                id="purchase-note"
+                className="purchase-textarea"
+                value={purchaseNote}
+                onChange={(e) => setPurchaseNote(e.target.value)}
+                placeholder="Describe cómo quieres que sea el juego: historia, estilo, mecánicas principales..."
+              />
+              {purchaseError && <div className="purchase-error">{purchaseError}</div>}
+            </div>
+            <div className="purchase-modal-actions">
+              <button className="action-btn cancel-btn" onClick={closeBuyModal}>Cancelar</button>
+              <button className="action-btn buy-btn" onClick={handleConfirmPurchase}>Confirmar compra</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );

@@ -117,6 +117,55 @@ class CauldronDAO {
   }
 
   /**
+   * Registra la compra de un caldero y actualiza su estado a comprado.
+   */
+  async buy(calderoId: number, userId: number, nota_usuario?: string): Promise<any> {
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+
+      const cauldronResult = await client.query(
+        'SELECT id_caldero, precio FROM calderos WHERE id_caldero = $1',
+        [calderoId]
+      );
+
+      if (cauldronResult.rowCount === 0) {
+        await client.query('ROLLBACK');
+        throw new Error('Caldero no encontrado');
+      }
+
+      const precio = cauldronResult.rows[0].precio ?? 0;
+
+      const purchaseResult = await client.query(
+        `INSERT INTO compras (id_usuario, id_caldero, monto_pagado, estado_pago, nota_usuario)
+         VALUES ($1, $2, $3, $4, $5)
+         RETURNING *`,
+        [userId, calderoId, precio, 'pagado', nota_usuario || null]
+      );
+
+      await client.query(
+        'UPDATE calderos SET estado = $1 WHERE id_caldero = $2',
+        ['comprado', calderoId]
+      );
+
+      await client.query('COMMIT');
+      return purchaseResult.rows[0];
+    } catch (error: any) {
+      try {
+        await client.query('ROLLBACK');
+      } catch (rollbackError) {
+        console.error('Error durante ROLLBACK:', rollbackError);
+      }
+      if (error.code === '23505') {
+        throw new Error('Este caldero ya ha sido comprado por este usuario');
+      }
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  /**
    * Actualiza un caldero existente si pertenece al usuario.
    * Permite cambios parciales en nombre, estado, precio y configuración IA.
    */
