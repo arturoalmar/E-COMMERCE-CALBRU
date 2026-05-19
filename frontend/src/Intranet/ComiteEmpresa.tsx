@@ -7,6 +7,9 @@
 // Vista del Comité de Empresa con pestañas para información, normativa y objetivos.
 
 import React, { useState } from 'react';
+import tfgVideo from '../assets/TFG.mp4';
+import arturoImg from '../assets/IMG_7846.jpg';
+import joelImg from '../assets/IMG_7847.jpg';
 
 // SECCIÓN: Definición de datos/propiedades
 interface ComiteEmpresaProps {
@@ -56,10 +59,10 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
         {activeTab === 'info' && (
           <div className="tab-pane fade-in-active">
             <div className="committee-video-container">
-              <div className="video-placeholder">
-                <div className="video-play-button">▶</div>
-                <p className="video-text">Vídeo Explicatorio del Comité de Empresa</p>
-              </div>
+              <video controls width="100%">
+                <source src={tfgVideo} type="video/mp4" />
+                Tu navegador no soporta la reproducción de vídeo.
+              </video>
             </div>
 
             <section className="committee-section pro-card">
@@ -93,7 +96,7 @@ Buscamos favorecer la colaboración, la transparencia y unas condiciones laboral
               <div className="delegates-grid">
                 <article className="delegate-card">
                   <div className="delegate-photo-wrap">
-                    <img src="https://via.placeholder.com/320x220?text=Arturo+Almudi" alt="Foto de Arturo Almudi" className="delegate-photo" />
+                    <img src={arturoImg} alt="Foto de Arturo Almudi" className="delegate-photo" />
                   </div>
                   <div className="delegate-meta">
                     <h4>Arturo Almudi</h4>
@@ -103,7 +106,7 @@ Buscamos favorecer la colaboración, la transparencia y unas condiciones laboral
                 </article>
                 <article className="delegate-card">
                   <div className="delegate-photo-wrap">
-                    <img src="https://via.placeholder.com/320x220?text=Joel+S%C3%A1nchez" alt="Foto de Joel Sánchez" className="delegate-photo" />
+                    <img src={joelImg} alt="Foto de Joel Sánchez" className="delegate-photo" />
                   </div>
                   <div className="delegate-meta">
                     <h4>Joel Sánchez</h4>
@@ -321,5 +324,3 @@ El convenio y el ET exigen que la comunicación sea escrita y detalle los hechos
 };
 
 export default ComiteEmpresa;
-
-
