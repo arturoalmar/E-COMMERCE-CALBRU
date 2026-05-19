@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import { ConfigCategory, Genre, Particle, OptionsMap } from '../types';
 import './AddingIngredients.css';
+import DemoLoadingScreen from './DemoLoadingScreen';
 
 import Cauldron from './Cauldron';
 import OptionsShelf from './OptionsShelf';
@@ -155,11 +156,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
               Create Game
             </button>
 
-            {generatingDemo && (
-              <p style={{ color: '#a855f7', fontSize: '1rem', textAlign: 'center' }}>
-                🔮 Preparing your spell...
-              </p>
-            )}
+            {generatingDemo && <DemoLoadingScreen />}
 
             {demoError && (
               <p style={{ color: '#f87171', fontSize: '0.9rem', textAlign: 'center' }}>

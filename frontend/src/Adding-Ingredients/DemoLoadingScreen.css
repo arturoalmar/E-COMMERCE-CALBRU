@@ -1,0 +1,126 @@
+.demo-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  background: radial-gradient(ellipse at center, rgba(30, 10, 50, 0.98) 0%, rgba(10, 5, 20, 1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInOverlay 0.4s ease;
+  overflow: hidden;
+}
+
+.demo-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 100000;
+}
+
+.demo-loading-cauldron {
+  font-size: 5rem;
+  animation: cauldron-float 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(171, 71, 188, 0.8));
+  position: relative;
+  z-index: 100001;
+}
+
+.demo-loading-title {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 2rem;
+  color: #e9d5ff;
+  text-align: center;
+  text-shadow:
+    0 0 20px rgba(171, 71, 188, 0.8),
+    0 0 40px rgba(171, 71, 188, 0.4);
+  letter-spacing: 1.5px;
+  margin: 0;
+  position: relative;
+  z-index: 100001;
+}
+
+.demo-loading-message {
+  font-family: 'Almendra', serif;
+  font-size: 1.1rem;
+  color: rgba(220, 180, 255, 0.85);
+  text-align: center;
+  min-height: 1.6rem;
+  animation: fadeMessage 0.5s ease;
+  margin: 0;
+  position: relative;
+  z-index: 100001;
+}
+
+.demo-loading-bar {
+  width: 280px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  overflow: hidden;
+  border: 1px solid rgba(171, 71, 188, 0.3);
+  position: relative;
+  z-index: 100001;
+}
+
+.demo-loading-bar-fill {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, #6b21a8, #a855f7, #6b21a8);
+  background-size: 200% 100%;
+  border-radius: 99px;
+  animation: shimmer-bar 1.5s linear infinite;
+}
+
+.demo-loading-orbs {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 99998;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  animation: orbit linear infinite;
+  opacity: 0.7;
+}
+
+.orb-1 { width: 10px; height: 10px; background: #a855f7; animation-duration: 4s;   top: 0%;   left: 50%; }
+.orb-2 { width: 8px;  height: 8px;  background: #ec4899; animation-duration: 6s;   top: 50%;  left: 0%;  }
+.orb-3 { width: 12px; height: 12px; background: #8b5cf6; animation-duration: 5s;   top: 100%; left: 50%; }
+.orb-4 { width: 7px;  height: 7px;  background: #c084fc; animation-duration: 7s;   top: 50%;  left: 100%;}
+.orb-5 { width: 9px;  height: 9px;  background: #f0abfc; animation-duration: 3.5s; top: 25%;  left: 25%; }
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cauldron-float {
+  0%, 100% { transform: translateY(0px) rotate(-3deg); }
+  50%       { transform: translateY(-15px) rotate(3deg); }
+}
+
+@keyframes fadeMessage {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes shimmer-bar {
+  0%   { background-position: 200% 0;  }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes orbit {
+  0%   { transform: rotate(0deg)   translateX(120px) rotate(0deg);   }
+  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
