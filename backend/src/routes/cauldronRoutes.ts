@@ -78,12 +78,12 @@ router.delete('/:id', authenticateToken, async (req: AuthRequest, res: Response)
 router.post('/:id/buy', authenticateToken, async (req: AuthRequest, res: Response) => {
   const { id } = req.params;
   const userId = req.user!.id;
-  const { nota_usuario } = req.body;
+  const { informacion } = req.body;
 
   console.log(`🛒 Intentando compra: caldero=${id}, usuario=${userId}`);
 
   try {
-    const purchase = await CauldronDAO.buy(parseInt(id), userId, nota_usuario);
+    const purchase = await CauldronDAO.buy(parseInt(id), userId, informacion);
     console.log(`✅ Compra exitosa: ${id}`);
     res.status(201).json({ message: 'Compra realizada con éxito', purchase });
   } catch (error: any) {

@@ -144,7 +144,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          nota_usuario: purchaseNote
+          informacion: purchaseNote
         })
       });
 

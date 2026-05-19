@@ -12,10 +12,11 @@ const createTables = async () => {
     -- 1. USUARIOS: Almacena las credenciales y perfiles de los magos/aprendices
     CREATE TABLE IF NOT EXISTS usuarios (
       id_usuario SERIAL PRIMARY KEY,
-      username VARCHAR(100) UNIQUE NOT NULL,
-      email VARCHAR(150) UNIQUE,
+      username VARCHAR(255) NOT NULL,
+      email VARCHAR(100) UNIQUE NOT NULL,
       password_hash VARCHAR(255) NOT NULL,
-      fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      es_admin BOOLEAN DEFAULT FALSE,
+      fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
     );
 
     -- 2. TIPOS DE JUEGO: Catálogo de géneros (Cartas, Plataformas, etc.)
@@ -47,7 +48,7 @@ const createTables = async () => {
         fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
     );
 
-    -- 5. COMPRAS: Registra las compras realizadas por usuarios
+    -- 6. COMPRAS: Registra las compras realizadas por usuarios
     CREATE TABLE IF NOT EXISTS compras (
         id_compra SERIAL PRIMARY KEY,
         id_usuario INTEGER NOT NULL REFERENCES usuarios(id_usuario),
@@ -55,12 +56,11 @@ const createTables = async () => {
         monto_pagado NUMERIC(6,2) NOT NULL,
         fecha_compra TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
         estado_pago VARCHAR(30) NOT NULL CHECK (estado_pago IN ('pendiente', 'pagado', 'fallido')),
-        nota_usuario TEXT,
+        informacion TEXT,
         CONSTRAINT uq_compras_usuario_caldero UNIQUE (id_usuario, id_caldero)
     );
-    ALTER TABLE compras ADD COLUMN IF NOT EXISTS nota_usuario TEXT;
 
-    -- 6. RELACIÓN CALDERO - ATRIBUTOS: Enlace muchos-a-muchos entre calderos e ingredientes
+    -- 5. RELACIÓN CALDERO - ATRIBUTOS: Enlace muchos-a-muchos entre calderos e ingredientes
     CREATE TABLE IF NOT EXISTS caldero_atributos (
         id_caldero INTEGER NOT NULL REFERENCES calderos(id_caldero) ON DELETE CASCADE,
         id_atributo INTEGER NOT NULL REFERENCES atributos(id_atributo),

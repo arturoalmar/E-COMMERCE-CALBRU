@@ -119,7 +119,7 @@ class CauldronDAO {
   /**
    * Registra la compra de un caldero y actualiza su estado a comprado.
    */
-  async buy(calderoId: number, userId: number, nota_usuario?: string): Promise<any> {
+  async buy(calderoId: number, userId: number, informacion?: string): Promise<any> {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
@@ -137,10 +137,10 @@ class CauldronDAO {
       const precio = cauldronResult.rows[0].precio ?? 0;
 
       const purchaseResult = await client.query(
-        `INSERT INTO compras (id_usuario, id_caldero, monto_pagado, estado_pago, nota_usuario)
+        `INSERT INTO compras (id_usuario, id_caldero, monto_pagado, estado_pago, informacion)
          VALUES ($1, $2, $3, $4, $5)
          RETURNING *`,
-        [userId, calderoId, precio, 'pagado', nota_usuario || null]
+        [userId, calderoId, precio, 'pagado', informacion || null]
       );
 
       await client.query(
