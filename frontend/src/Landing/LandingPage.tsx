@@ -56,7 +56,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
       <header className="forest-header">
         <nav className="forest-nav">
           <div className="nav-left">
-            <button className="nav-btn magical-btn" onClick={() => setPage('my-cauldrons')}>CAULDRONS</button>
+            <button className="nav-btn magical-btn" onClick={() => setPage('my-cauldrons')}>MY CAULDRONS</button>
             <button className="nav-btn magical-btn" onClick={() => setPage('conocenos')}>ABOUT US</button>
           </div>
 

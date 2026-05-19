@@ -2169,3 +2169,29 @@
   font-size: 0.95rem;
 }
 
+
+/* FIX: Acuerdos históricos — ancho completo */
+.tab-pane {
+  width: 100%;
+}
+
+.tab-pane .committee-section {
+  width: 100%;
+}
+
+.tab-pane .achievements-grid {
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 900px) {
+  .tab-pane .achievements-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .tab-pane .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+}
