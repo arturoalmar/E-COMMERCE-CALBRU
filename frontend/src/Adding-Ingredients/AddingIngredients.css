@@ -1,72 +1,10 @@
 /* CONFIGURADOR (EL CALDERO MAGICO)
    ========================================================================== */
 
-/* 
-=========================================================
- ðŸ“„ ARCHIVO: AddingIngredients_layout.css
- ðŸ“ DESCRIPCIÃ“N: Define la cuadrÃ­cula y disposiciÃ³n de los 
- paneles en el configurador de ingredientes.
-=========================================================
-*/
 
-/* 
-=========================================================
- ðŸ“ LAYOUT DEL CONFIGURADOR ðŸ“
- 📌 LAYOUT DEL CONFIGURADOR 📌 
- Define la estructura de 4 esquinas (ingredientes) y 1 centro (caldero).
-=========================================================
-*/
-/* Layout 2x2 para las esquinas de ingredientes con el caldero en el centro */
-.configurator-layout {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
-
-
-.configurator-header {
-  top: 0px;
-  left: -15px;
-  position: relative;
-  text-align: center;
-  z-index: 20;
-  margin-bottom: 0;
-  transform: translateY(-25%);
-}
-
-.configurator-title {
-  font-family: 'MedievalSharp', cursive;
-  font-size: 2.5rem;
-  color: #ffffff;
-  margin: 0;
-  letter-spacing: 1.5px;
-  background: linear-gradient(135deg, rgba(60, 30, 10, 0.909), rgba(40, 20, 5, 0.899));
-  backdrop-filter: blur(10px);
-  padding: 0.75rem 1.5rem;
-  border-radius: 10px;
-  border: 1px solid rgba(81, 35, 0, 0.769);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(170, 80, 200, 0.15);
-}
-
-.configurator-subtitle {
-  font-family: 'Almendra', serif;
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-top: 8px;
-  font-weight: 300;
-  letter-spacing: 0.5px;
-  background: linear-gradient(135deg, rgba(60, 30, 10, 0.65), rgba(40, 20, 5, 0.65));
-  backdrop-filter: blur(10px);
-  padding: 0.5rem 1.2rem;
-  border-radius: 8px;
-  border: 1px solid rgba(81, 35, 0, 0.769);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(170, 80, 200, 0.1);
-}
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
 
 .configurator-bg {
   position: fixed;
@@ -82,18 +20,79 @@
   filter: brightness(0.75);
 }
 
-/* Estilo de los paneles de las esquinas (Estanterías de ingredientes) */
-/* APARTADO: .config-corner - Estilos para este elemento */
+
+/* =========================================================
+   LAYOUT PRINCIPAL
+   ========================================================= */
+
+.configurator-layout {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+
+/* =========================================================
+   TÍTULO
+   ========================================================= */
+
+.configurator-header {
+  position: relative;
+  text-align: center;
+  z-index: 20;
+  margin-bottom: 0;
+  transform: translateY(-20px);
+}
+
+.configurator-title {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.9rem;
+  color: #ffffff;
+  margin: 75px 0px 0 0;
+  letter-spacing: 1.5px;
+  background: linear-gradient(135deg, rgba(60, 30, 10, 0.909), rgba(40, 20, 5, 0.899));
+  backdrop-filter: blur(10px);
+  padding: 0.8rem 1.3rem;
+  border-radius: 10px;
+  border: 1px solid rgba(81, 35, 0, 0.769);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(170, 80, 200, 0.15);
+}
+
+.configurator-subtitle {
+  font-family: 'Almendra', serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 5px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, rgba(60, 30, 10, 0.65), rgba(40, 20, 5, 0.65));
+  backdrop-filter: blur(10px);
+  padding: 0.28rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(81, 35, 0, 0.769);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(170, 80, 200, 0.1);
+}
+
+
+/* =========================================================
+   PANELES DE ESQUINA (.config-corner)
+   ========================================================= */
+
 .config-corner {
   background: linear-gradient(135deg, rgba(60, 30, 10, 0.65), rgba(40, 20, 5, 0.65));
   backdrop-filter: blur(15px);
   border: 1px solid rgba(200, 150, 100, 0.3);
   border-radius: 18px;
-  padding: 0.75rem;
-  width: 230px;
-  min-height: 235px;
-  max-height: 310px;
-  overflow-y: auto;
+  padding: 0.6rem 0.65rem 0.65rem;
+  width: 315px;
+  height: 225px;
+  min-height: 0;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -104,29 +103,7 @@
   z-index: 15;
 }
 
-.config-corner h3 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-.options-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.35rem;
-  margin-top: 0.35rem;
-}
-
-.option-btn {
-  height: 38px;
-  font-size: 0.65rem;
-  padding: 0.2rem;
-}
-
-
-
-/* Detalle estÃƒÂ©tico: "clavos" de madera en las esquinas */
 .config-corner::before,
-/* APARTADO: .config-corner::after - Estilos para este elemento */
 .config-corner::after {
   content: '';
   position: absolute;
@@ -140,73 +117,49 @@
     0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-/* APARTADO: .config-corner::before - Estilos para este elemento */
-.config-corner::before {
-  left: px;
-}
+.config-corner::before { left: 10px; }
+.config-corner::after  { right: 10px; }
 
-/* APARTADO: .config-corner::after - Estilos para este elemento */
-.config-corner::after {
-  right: 10px;
-}
+.corner-tl { top: 20px;    left: 20px;  }
+.corner-tr { top: 20px;    right: 20px; }
+.corner-bl { bottom: 40px; left: 20px;  }
+.corner-br { bottom: 40px; right: 20px; }
 
-/* APARTADO: .corner-tl - Estilos para este elemento */
-.corner-tl {
-  top: 15px;
-  left: 15px;
-}
-
-.corner-tr {
-  top: 15px;
-  right: 75px;
-}
-
-.corner-bl {
-  bottom: 40px;
-  left: 15px;
-}
-
-.corner-br {
-  bottom: 40px;
-  right: 75px;
-}
-
-/* APARTADO: .config-corner h3 - Estilos para este elemento */
 .config-corner h3 {
   text-align: center;
-  margin-bottom: 0.5rem;
-  font-size: 1.4rem;
+  margin: 0 0 0.55rem 0;      /* era 0.4rem */
+  font-size: 1.25rem;          /* era 1.1rem */
   color: var(--secondary-light);
   letter-spacing: 0.1em;
-}
+} 
 
-/* APARTADO: .options-grid - Estilos para este elemento */
 .options-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
+  gap: 0.4rem;                 /* era 0.32rem */
 }
 
-/* APARTADO: .option-btn - Estilos para este elemento */
 .option-btn {
   background: linear-gradient(135deg, rgba(30, 15, 10, 0.7), rgba(25, 12, 8, 0.7));
   border: 1.5px solid rgba(150, 100, 70, 0.4);
   border-radius: 6px;
-  height: 45px;
+  height: 50px;                /* era 38px → calculado: 159px ÷ 3 = 53px */
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  font-size: 0.75rem;
+  font-size: 0.82rem;          /* era 0.7rem */
   color: rgba(220, 200, 180, 0.9);
   font-weight: 500;
   text-align: center;
-  padding: 0.3rem;
+  padding: 0.2rem 0.15rem;
   cursor: pointer;
+  line-height: 1.2;
+  word-break: break-word;
+  hyphens: auto;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* APARTADO: .option-btn:hover - Estilos para este elemento */
 .option-btn:hover {
   background: linear-gradient(135deg, rgba(45, 25, 15, 0.8), rgba(40, 20, 12, 0.8));
   border-color: rgba(200, 150, 100, 0.6);
@@ -216,7 +169,6 @@
     0 0 12px rgba(170, 100, 70, 0.3);
 }
 
-/* APARTADO: .option-btn.selected - Estilos para este elemento */
 .option-btn.selected {
   background: linear-gradient(135deg, rgba(188, 128, 71, 0.3), rgba(171, 71, 188, 0.15));
   border-color: var(--secondary-color);
@@ -227,44 +179,102 @@
   font-weight: 600;
 }
 
-.btn-finish-cauldron {
-  position: absolute;
-  bottom: 500px;
-  left: 400px;
-  transform: translateX(-50%);
-  padding: 0.8rem 2rem;
-  background: rgb(83, 22, 84);
-  border: 2px solid rgba(226, 3, 247, 0.902);
-  border-radius: 12px;
-  color: #edccf5;
-  font-family: 'MedievalSharp', cursive;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  z-index: 20;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+
+/* =========================================================
+   CENTRO — CALDERO + BOTONES
+   ========================================================= */
+
+.center-dashboard {
+  background: transparent;
+  border: none;
+  width: 500px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  z-index: 50;
+  text-align: center;
+  position: relative;
 }
 
-.btn-finish-cauldron:hover {
-  background: linear-gradient(135deg, rgba(163, 5, 180, 0.68), rgba(207, 0, 183, 0.726));
-  box-shadow: 0 0 25px rgba(245, 3, 221, 0.4);
-  transform: translateX(-50%) translateY(-2px);
-  color: #fff;
+/*
+  ✅ FIX PRINCIPAL: height reducida de 300px → 200px.
+  Con 300px el wrapper reservaba demasiado espacio vacío debajo del caldero,
+  empujando los botones fuera de la pantalla.
+  200px es suficiente para alojar la imagen del caldero con bottom: 0.
+*/
+.center-dashboard-content {
+  position: relative;
+  width: 100%;
+  height: 200px;   /* ← era 300px, ahora 200px */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/*
+  ✅ FIX: bottom ajustado de 95px → 0px.
+  Con height: 200px el wrapper es más ajustado, así que la imagen
+  se ancla en la base (bottom: 0) y queda sobre las llamas del fondo.
+  Si necesitas subir/bajar el caldero sobre las llamas, toca solo este valor.
+*/
+.cauldron-image {
+  position: absolute;
+  bottom: 10px;        /* ← era 95px, eliminado el espacio muerto */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
+  z-index: 60;
+}
+
+.cauldron-ready .cauldron-image {
+  filter: drop-shadow(0 0 30px rgba(124, 179, 66, 0.8));
+}
+
+.cauldron-placeholder {
+  width: 100%;
+  max-width: 320px;
+  padding: 1.2rem 1.5rem;
+  border-radius: 18px;
+  border: 1px dashed rgba(191, 136, 255, 0.32);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  margin: 1rem auto 0;
+}
+
+/*
+  ✅ FIX: margin-top reducido de 1.1rem → 0.6rem.
+  Junto con el wrapper más pequeño, esto mantiene los botones
+  pegados al caldero y visibles sin scroll.
+*/
+.cauldron-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.6rem;   /* ← era 1.1rem */
+  width: 100%;
+  position: relative;
+  z-index: 55;
 }
 
 .btn-create-game {
-  position: relative;
-  margin: 200px 180px auto auto;
-  display: block;
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 2.5rem;
   background: linear-gradient(135deg, rgba(100, 30, 120, 0.8), rgba(80, 20, 100, 0.8));
   border: 2px solid rgba(200, 100, 220, 0.6);
   border-radius: 12px;
   color: rgba(240, 200, 255, 0.95);
   font-family: 'MedievalSharp', cursive;
   font-size: 1.1rem;
+  margin-top: 0;        /* ← eliminado el margin-top: 1px residual */
   cursor: pointer;
   transition: all 0.3s ease;
   text-transform: uppercase;
@@ -280,10 +290,7 @@
 }
 
 .btn-back-game {
-  position: relative;
-  margin: 1rem 225px -40px auto;
-  display: block;
-  padding: 0.56rem 1.4rem;
+  padding: 0.5rem 1.4rem;
   background: linear-gradient(135deg, rgba(60, 60, 80, 0.7), rgba(40, 40, 60, 0.7));
   border: 2px solid rgba(120, 120, 150, 0.6);
   border-radius: 8px;
@@ -305,134 +312,54 @@
 }
 
 
-/* 
-=========================================================
+/* =========================================================
+   GLOWS DEL CALDERO
+   ========================================================= */
 
-=========================================================
+/*
+  ✅ FIX: top ajustado de 300px → 200px para seguir al nuevo wrapper.
 */
-/* 
-=========================================================
- ðŸ“„ ARCHIVO: AddingIngredients_cauldron.css
- ðŸ“ DESCRIPCIÃ“N: Estilos especÃ­ficos para la visualizaciÃ³n y animaciÃ³n del caldero central.
-=========================================================
-*/
-
-/* GUIA: Tamano y posicion del caldero central. Modifica .center-dashboard para el area redonda. Modifica .cauldron-image para la imagen. */
-
-/* Dashboard Central: El Caldero Magico circular */
-/* APARTADO: .center-dashboard - Estilos para este elemento */
-.center-dashboard {
-  background: transparent;
-  border: none;
-  width: 500px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  z-index: 50;
-  text-align: center;
-  position: relative;
-  /* El contenedor layout ya tiene justify-content: center, lo que centra esto en Y */
-  transform: translateY(5%);
-}
-
-/* Imagen y animaciÃƒÂ³n del caldero */
-/* APARTADO: .cauldron-image - Estilos para este elemento */
-.cauldron-image {
-  position: absolute;
-  top: 40px;
-  left: 45%;
-  transform: translateX(-50%);
-  width: 39%;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
-  z-index: 8;
-}
-
-.cauldron-ready .cauldron-image {
-  filter: drop-shadow(0 0 30px rgba(124, 179, 66, 0.8));
-  transform: translateX(-50%) scale(1.03);
-}
-
-/* APARTADO: .cauldron-placeholder - Estilos para este elemento */
-.cauldron-placeholder {
-  width: 100%;
-  max-width: 320px;
-  padding: 1.2rem 1.5rem;
-  border-radius: 18px;
-  border: 1px dashed rgba(191, 136, 255, 0.32);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.6;
-  text-align: center;
-  margin: 1rem auto 0;
-}
-
-/* Falling particles into cauldron */
-/* 
-=========================================================
- ðŸ“„ ARCHIVO: AddingIngredients_animations.css
- ðŸ“ DESCRIPCIÃ“N: Define las animaciones y efectos de partÃ­culas
- para el proceso de creaciÃ³n de pociones en el caldero.
-=========================================================
-*/
-
-/* Partículas que caen dentro del caldero al seleccionar ingredientes */
-/* APARTADO: .falling-particle - Estilos para este elemento */
-.falling-particle {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--particle-color);
-  box-shadow:
-    0 0 10px var(--particle-color),
-    inset -2px -2px 4px rgba(0, 0, 0, 0.5);
-  animation: fall-to-cauldron 2s ease-in forwards;
-  top: -20px;
-  left: calc(50% + var(--particle-x));
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* APARTADO: .center-dashboard::before - Estilos para este elemento */
 .center-dashboard::before {
   content: '';
   position: absolute;
-  bottom: -200px;
+  top: 200px;           /* ← era 300px, sigue al nuevo height del wrapper */
+  left: 0;
+  right: 0;
   width: 85%;
-  height: 40%;
-  background: radial-gradient(ellipse 100% 100% at 50% 100%,
-      rgba(124, 179, 66, 0.3),
-      rgba(124, 179, 66, 0.1) 40%,
+  margin: 0 auto;
+  height: 80px;
+  background: radial-gradient(ellipse 100% 100% at 50% 0%,
+      rgba(124, 179, 66, 0.35),
+      rgba(124, 179, 66, 0.1) 50%,
       transparent 80%);
-  border-radius: 50% 50% 20% 20%;
+  border-radius: 50%;
   z-index: 3;
   animation: cauldron-glow 3s infinite alternate;
   filter: blur(8px);
+  pointer-events: none;
 }
 
-/* APARTADO: .center-dashboard::after - Estilos para este elemento */
 .center-dashboard::after {
   content: '';
   position: absolute;
-  bottom: -230px;
+  top: 190px;           /* ← era 290px, sigue al nuevo height del wrapper */
   left: 0;
   right: 0;
-  height: 12%;
-  background: radial-gradient(ellipse 80% 100% at 50% 100%,
-      rgba(171, 71, 188, 0.2),
+  height: 60px;
+  background: radial-gradient(ellipse 80% 100% at 50% 0%,
+      rgba(171, 71, 188, 0.25),
       transparent 80%);
   border-radius: 50%;
   z-index: 3;
   filter: blur(10px);
+  pointer-events: none;
 }
 
-/* APARTADO: .center-dashboard h2 - Estilos para este elemento */
+
+/* =========================================================
+   OTROS ELEMENTOS DEL CENTRO
+   ========================================================= */
+
 .center-dashboard h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -444,7 +371,6 @@
   letter-spacing: 0.1em;
 }
 
-/* APARTADO: .selected-genre-badge - Estilos para este elemento */
 .selected-genre-badge {
   background: linear-gradient(135deg, rgba(191, 136, 255, 0.24), rgba(191, 136, 255, 0.08));
   color: var(--secondary-light);
@@ -458,13 +384,11 @@
   transition: all 0.3s ease;
 }
 
-/* APARTADO: .selected-genre-badge:hover - Estilos para este elemento */
 .selected-genre-badge:hover {
   box-shadow: 0 0 20px rgba(171, 71, 188, 0.5);
   transform: scale(1.05);
 }
 
-/* APARTADO: .status-preview - Estilos para este elemento */
 .status-preview {
   margin: 2.5rem 0;
   display: flex;
@@ -474,7 +398,6 @@
   min-height: 40px;
 }
 
-/* APARTADO: .status-preview p - Estilos para este elemento */
 .status-preview p {
   color: var(--secondary-light);
   font-style: italic;
@@ -483,7 +406,6 @@
   animation: pulse-text 1.5s infinite;
 }
 
-/* APARTADO: .btn-fusionar - Estilos para este elemento */
 .btn-fusionar {
   background: linear-gradient(135deg, var(--secondary-dark), var(--secondary-color));
   border: 3px solid rgba(191, 136, 255, 0.9);
@@ -520,16 +442,30 @@
   margin-top: 10px;
 }
 
-
-
-
-
-/* APARTADO: .btn-fusionar:active - Estilos para este elemento */
-.btn-fusionar:active {
-  transform: scale(0.98);
+.btn-finish-cauldron {
+  padding: 0.8rem 2rem;
+  background: rgb(83, 22, 84);
+  border: 2px solid rgba(226, 3, 247, 0.902);
+  border-radius: 12px;
+  color: #edccf5;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 20;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
-/* APARTADO: .btn-fusionar:disabled - Estilos para este elemento */
+.btn-finish-cauldron:hover {
+  background: linear-gradient(135deg, rgba(163, 5, 180, 0.68), rgba(207, 0, 183, 0.726));
+  box-shadow: 0 0 25px rgba(245, 3, 221, 0.4);
+  color: #fff;
+}
+
+.btn-fusionar:active { transform: scale(0.98); }
+
 .btn-fusionar:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -539,7 +475,6 @@
   background: linear-gradient(135deg, rgba(123, 31, 45, 0.5), rgba(139, 39, 58, 0.5));
 }
 
-/* APARTADO: .btn-back - Estilos para este elemento */
 .btn-back {
   margin-top: 3rem;
   color: var(--text-muted);
@@ -552,7 +487,6 @@
   border-bottom: 2px solid transparent;
 }
 
-/* APARTADO: .btn-back:hover - Estilos para este elemento */
 .btn-back:hover {
   color: var(--primary-light);
   border-bottom-color: var(--primary-light);
@@ -560,72 +494,73 @@
   transform: translateX(-3px);
 }
 
-/* ANIMACIÃ“N: fadeInDown */
+
+/* =========================================================
+   PARTÍCULAS
+   ========================================================= */
+
+.falling-particle {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--particle-color);
+  box-shadow:
+    0 0 10px var(--particle-color),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.5);
+  top: -30px;
+  left: calc(50% + var(--particle-x));
+  z-index: 30;
+  pointer-events: none;
+  animation: fall-to-cauldron 1.8s cubic-bezier(0.4, 0, 0.8, 1) forwards;
+}
+
+
+/* =========================================================
+   ANIMACIONES
+   ========================================================= */
+
 @keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ANIMACIÃ“N: fadeInUp */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ANIMACIÃ“N: fall-to-cauldron */
 @keyframes fall-to-cauldron {
   0% {
-    opacity: 1;
-    transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+    opacity: 0;
+    transform: translateX(0) translateY(-30px) scale(1.2) rotate(0deg);
   }
-
-  75% {
+  10% { opacity: 1; }
+  70% {
     opacity: 1;
+    transform: translateX(var(--drift-x, 0px)) translateY(55vh) scale(0.8) rotate(540deg);
   }
-
+  85% {
+    opacity: 0.6;
+    transform: translateX(calc(var(--drift-x, 0px) * 0.5)) translateY(65vh) scale(0.4) rotate(680deg);
+  }
   100% {
     opacity: 0;
-    transform: translateX(0) translateY(calc(85vh - 10px)) scale(0.2) rotate(720deg);
+    transform: translateX(0) translateY(70vh) scale(0) rotate(720deg);
   }
 }
 
-/* ANIMACIÃ“N: cauldron-bob */
 @keyframes cauldron-bob {
-
-  0%,
-  100% {
-    transform: translate(-50%, calc(-27% + 5px));
-  }
-
-  50% {
-    transform: translate(-50%, calc(-30% + 5px));
-  }
+  0%, 100% { transform: translate(-50%, calc(-27% + 5px)); }
+  50%       { transform: translate(-50%, calc(-30% + 5px)); }
 }
 
-/* ANIMACIÃ“N: pulse */
 @keyframes pulse {
-
-  0%,
-  100% {
+  0%, 100% {
     box-shadow:
       0 0 20px rgba(124, 179, 66, 0.3),
       inset 0 -2px 6px rgba(0, 0, 0, 0.3);
   }
-
   50% {
     box-shadow:
       0 0 40px rgba(124, 179, 66, 0.6),
@@ -633,346 +568,92 @@
   }
 }
 
-/* ANIMACIÃ“N: pulse-text */
 @keyframes pulse-text {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.7;
-  }
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.7; }
 }
 
-/* ANIMACIÃ“N: cauldron-glow */
 @keyframes cauldron-glow {
-  0% {
-    opacity: 0.5;
-    transform: scale(0.9) translateY(5px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1.1) translateY(-5px);
-  }
+  0%   { opacity: 0.5; transform: scale(0.9) translateY(5px);  }
+  100% { opacity: 1;   transform: scale(1.1) translateY(-5px); }
 }
 
-/* ANIMACIÃ“N: majorGlow */
 @keyframes majorGlow {
-
-  0%,
-  100% {
-    border-color: var(--secondary-light);
-  }
-
-  50% {
-    border-color: var(--secondary-color);
-  }
+  0%, 100% { border-color: var(--secondary-light); }
+  50%       { border-color: var(--secondary-color); }
 }
+
+
+/* =========================================================
+   MEDIA QUERIES
+   ========================================================= */
 
 @media (max-width: 1200px) {
-
-  /* APARTADO: .configurator-layout - Estilos para este elemento */
-  .configurator-layout {
-    grid-template-areas:
-      "tl tr"
-      "center center"
-      "bl br";
-    gap: 2rem;
-  }
-
-  /* APARTADO: .center-dashboard - Estilos para este elemento */
-  .center-dashboard {
-    width: 450px;
-    height: 380px;
+  .config-corner {
+    width: 245px;
   }
 }
 
-@media (max-width: 900px) {
-  header h1 {
-    font-size: 3rem;
-  }
-
-  /* APARTADO: .configurator-layout - Estilos para este elemento */
+@media (max-width: 1024px) {
   .configurator-layout {
-    grid-template-areas:
-      "center"
-      "tl"
-      "tr"
-      "bl"
-      "br";
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1rem;
+    gap: 1rem;
   }
 
-  /* APARTADO: .config-corner - Estilos para este elemento */
   .config-corner {
-    max-width: 100%;
+    position: static;
+    width: calc(50% - 0.5rem);
+    min-height: auto;
   }
 
-  /* APARTADO: .center-dashboard - Estilos para este elemento */
+  .corner-tl, .corner-tr,
+  .corner-bl, .corner-br {
+    top: auto; left: auto;
+    right: auto; bottom: auto;
+  }
+
   .center-dashboard {
     width: 100%;
-    border-radius: 20px;
-    height: auto;
-    min-height: 400px;
+    order: -1;
   }
 }
 
 @media (max-width: 600px) {
+  .app-container { padding: 1.5rem 1rem; }
 
-  /* APARTADO: .app-container - Estilos para este elemento */
-  .app-container {
-    padding: 1.5rem 1rem;
-  }
+  header h1 { font-size: 2.2rem; }
+  header p  { font-size: 1rem; }
 
-  header h1 {
-    font-size: 2.2rem;
-  }
+  .genre-grid { gap: 1.5rem; }
+  .genre-card { padding: 1.5rem; }
 
-  header p {
-    font-size: 1rem;
-  }
-
-  /* APARTADO: .genre-grid - Estilos para este elemento */
-  .genre-grid {
-    gap: 1.5rem;
-  }
-
-  /* APARTADO: .genre-card - Estilos para este elemento */
-  .genre-card {
-    padding: 1.5rem;
-  }
-
-  /* APARTADO: .options-grid - Estilos para este elemento */
   .options-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.4rem;
   }
 
-  /* APARTADO: .config-corner - Estilos para este elemento */
   .config-corner {
     width: 100%;
     position: static;
     margin-bottom: 1rem;
   }
 
-  .configurator-title {
-    font-size: 1.8rem;
-  }
+  .configurator-title    { font-size: 1.3rem; }
+  .configurator-subtitle { font-size: 0.75rem; }
 
-  .configurator-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .btn-finish-cauldron,
   .btn-create-game,
   .btn-back-game {
     width: 100%;
     max-width: 360px;
-    margin: 1rem auto 0;
-    transform: none;
-    position: relative;
-  }
-}
-
-
-
-/* ANIMACIÃ“N: fadeInDown */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ANIMACIÃ“N: fadeInUp */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ANIMACIÃ“N: fall-to-cauldron */
-@keyframes fall-to-cauldron {
-  0% {
-    opacity: 1;
-    transform: translateX(0) translateY(0) scale(1) rotate(0deg);
-  }
-
-  75% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(0) translateY(calc(85vh - 10px)) scale(0.2) rotate(720deg);
-  }
-}
-
-/* ANIMACIÃ“N: cauldron-bob */
-@keyframes cauldron-bob {
-
-  0%,
-  100% {
-    transform: translate(-50%, calc(-27% + 5px));
-  }
-
-  50% {
-    transform: translate(-50%, calc(-30% + 5px));
-  }
-}
-
-/* ANIMACIÃ“N: pulse */
-@keyframes pulse {
-
-  0%,
-  100% {
-    box-shadow:
-      0 0 20px rgba(124, 179, 66, 0.3),
-      inset 0 -2px 6px rgba(0, 0, 0, 0.3);
-  }
-
-  50% {
-    box-shadow:
-      0 0 40px rgba(124, 179, 66, 0.6),
-      inset 0 -2px 6px rgba(0, 0, 0, 0.3);
-  }
-}
-
-/* ANIMACIÃ“N: pulse-text */
-@keyframes pulse-text {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.7;
-  }
-}
-
-/* ANIMACIÃ“N: cauldron-glow */
-@keyframes cauldron-glow {
-  0% {
-    opacity: 0.5;
-    transform: scale(0.9) translateY(5px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1.1) translateY(-5px);
-  }
-}
-
-/* ANIMACIÃ“N: majorGlow */
-@keyframes majorGlow {
-
-  0%,
-  100% {
-    border-color: var(--secondary-light);
-  }
-
-  50% {
-    border-color: var(--secondary-color);
-  }
-}
-
-@media (max-width: 1200px) {
-
-  /* APARTADO: .configurator-layout - Estilos para este elemento */
-  .configurator-layout {
-    grid-template-areas:
-      "tl tr"
-      "center center"
-      "bl br";
-    gap: 2rem;
-  }
-
-  /* APARTADO: .center-dashboard - Estilos para este elemento */
-  .center-dashboard {
-    width: 450px;
-    height: 380px;
-  }
-}
-
-@media (max-width: 900px) {
-  header h1 {
-    font-size: 3rem;
-  }
-
-  /* APARTADO: .configurator-layout - Estilos para este elemento */
-  .configurator-layout {
-    grid-template-areas:
-      "center"
-      "tl"
-      "tr"
-      "bl"
-      "br";
-    gap: 1.5rem;
-  }
-
-  /* APARTADO: .config-corner - Estilos para este elemento */
-  .config-corner {
-    max-width: 100%;
-  }
-
-  /* APARTADO: .center-dashboard - Estilos para este elemento */
-  .center-dashboard {
-    width: 100%;
-    border-radius: 20px;
-    height: auto;
-    min-height: 400px;
-  }
-}
-
-@media (max-width: 600px) {
-
-  /* APARTADO: .app-container - Estilos para este elemento */
-  .app-container {
-    padding: 1.5rem 1rem;
-  }
-
-  header h1 {
-    font-size: 2.2rem;
-  }
-
-  header p {
-    font-size: 1rem;
-  }
-
-  /* APARTADO: .genre-grid - Estilos para este elemento */
-  .genre-grid {
-    gap: 1.5rem;
-  }
-
-  /* APARTADO: .genre-card - Estilos para este elemento */
-  .genre-card {
-    padding: 1.5rem;
-  }
-
-  /* APARTADO: .options-grid - Estilos para este elemento */
-  .options-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.4rem;
-  }
-
-  /* APARTADO: .btn-fusionar - Estilos para este elemento */
   .btn-fusionar {
     padding: 0.8rem 2rem;
     font-size: 1rem;
   }
+
+  .center-dashboard { width: 100%; }
 }

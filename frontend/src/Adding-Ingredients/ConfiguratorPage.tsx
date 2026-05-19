@@ -1,11 +1,14 @@
 /**
  * 📄 ARCHIVO: ConfiguratorPage.tsx
  * 📝 DESCRIPCIÓN: Página principal del configurador de ingredientes y creación de pociones.
+ *
+ * CAMBIOS:
+ * - Los botones "Crear Juego" y "Volver" se envuelven en <div className="cauldron-buttons">
+ *   para que el CSS flexbox los coloque correctamente debajo del caldero.
+ * - Se elimina el transformY hardcodeado del header; ahora se controla desde CSS.
+ * - El configurator-header se mantiene fuera del center-dashboard para no
+ *   interferir en el flujo flex del caldero + botones.
  */
-
-// ConfiguratorPage.tsx
-// Página donde el usuario combina ingredientes sobre el caldero.
-// Presenta las estanterías de opciones, el efecto de partículas y el estado de la fusión.
 
 import React from 'react';
 import { ConfigCategory, Genre, Particle, OptionsMap } from '../types';
@@ -17,7 +20,6 @@ import ParticleEffect from './ParticleEffect';
 import Footer from '../components/Footer/Footer';
 import fondoCreacion from '../assets/fondo creación de juego.png';
 
-// SECCIÓN: Definición de datos/propiedades
 interface ConfiguratorPageProps {
   selections: OptionsMap;
   particles: Particle[];
@@ -37,35 +39,74 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
   onBack,
   onCreateGame
 }) => {
-  // SECCIÓN: Renderizado visual
   return (
     <>
+      {/* Fondo */}
       <div
         className="configurator-bg"
         style={{ backgroundImage: `url("${fondoCreacion}")` }}
       />
+
       <div className="configurator-layout">
-        {/* Botón volver arriba a la izquierda */}
-      
 
-        <OptionsShelf category="diseno" title="Diseño" cornerClass="corner-tl" selections={selections} toggleOption={toggleOption} />
-        <OptionsShelf category="tematica" title="Temática" cornerClass="corner-tr" selections={selections} toggleOption={toggleOption} />
-        <OptionsShelf category="mecanicas" title="Mecánicas" cornerClass="corner-bl" selections={selections} toggleOption={toggleOption} />
-        <OptionsShelf category="sonido" title="Sonido" cornerClass="corner-br" selections={selections} toggleOption={toggleOption} />
+        {/* Paneles de ingredientes en las 4 esquinas (position: absolute) */}
+        <OptionsShelf
+          category="diseno"
+          title="Diseño"
+          cornerClass="corner-tl"
+          selections={selections}
+          toggleOption={toggleOption}
+        />
+        <OptionsShelf
+          category="tematica"
+          title="Temática"
+          cornerClass="corner-tr"
+          selections={selections}
+          toggleOption={toggleOption}
+        />
+        <OptionsShelf
+          category="mecanicas"
+          title="Mecánicas"
+          cornerClass="corner-bl"
+          selections={selections}
+          toggleOption={toggleOption}
+        />
+        <OptionsShelf
+          category="sonido"
+          title="Sonido"
+          cornerClass="corner-br"
+          selections={selections}
+          toggleOption={toggleOption}
+        />
 
+        {/* Título centrado — en flujo normal del flex, se muestra arriba del caldero */}
         <div className="configurator-header">
           <h1 className="configurator-title">Crea tu Juego Mágico</h1>
           <p className="configurator-subtitle">Selecciona los ingredientes para tu poción</p>
         </div>
 
-        {/* El Dashboard Central: El Caldero Mágico */}
+        {/* Dashboard central: caldero + botones en columna */}
         <div className="center-dashboard">
+
+          {/* Partículas (position: fixed, no afecta al flujo) */}
           <ParticleEffect particles={particles} />
+
+          {/* Caldero — anclado por la base dentro de su wrapper */}
           <Cauldron selectedGenre={selectedGenre} isFusionReady={isFusionReady} />
-          <button className="btn-create-game" onClick={onCreateGame}>Crear Juego</button>
-          <button className="btn-back-game" onClick={onBack}>Volver</button>
+
+          {/* Botones debajo del caldero, en flujo normal */}
+          <div className="cauldron-buttons">
+            <button className="btn-create-game" onClick={onCreateGame}>
+              Crear Juego
+            </button>
+            <button className="btn-back-game" onClick={onBack}>
+              Volver
+            </button>
+          </div>
+
         </div>
       </div>
+
       <Footer />
     </>
   );

@@ -1,29 +1,32 @@
 /**
  * 📄 ARCHIVO: Cauldron.tsx
  * 📝 DESCRIPCIÓN: Componente principal que representa el caldero mágico y su lógica.
+ *
+ * CAMBIOS:
+ * - El div raíz ahora usa className "center-dashboard-content" en lugar de
+ *   "center-dashboard-content {readyClass}".
+ *   La clase "cauldron-ready" se aplica al wrapper para que el CSS selector
+ *   ".cauldron-ready .cauldron-image" siga funcionando.
+ * - La imagen usa position: absolute con bottom: 0 (definido en CSS)
+ *   para quedar anclada visualmente sobre el fuego del fondo.
  */
-
-// Cauldron.tsx
-// Componente central del configurador. Muestra el caldero, la base de juego seleccionada
-// y el estado de si el conjuro está listo para disparar.
 
 import React from 'react';
 import { Genre } from '../types';
 
-// SECCIÓN: Definición de datos/propiedades
 interface CauldronProps {
   selectedGenre: Genre | null;
   isFusionReady: boolean;
 }
 
-// SECCIÓN: Componente o Función lógica
 const Cauldron: React.FC<CauldronProps> = ({ selectedGenre, isFusionReady }) => {
   const readyClass = isFusionReady ? 'cauldron-ready' : '';
-// SECCIÓN: Renderizado visual
+
   return (
+    /* center-dashboard-content: wrapper de altura fija (300px en CSS).
+       La imagen del caldero se ancla con bottom: 0 para coincidir
+       visualmente con la zona de fuego del fondo. */
     <div className={`center-dashboard-content ${readyClass}`}>
-
-
 
       {selectedGenre ? (
         <img
@@ -36,6 +39,7 @@ const Cauldron: React.FC<CauldronProps> = ({ selectedGenre, isFusionReady }) => 
           Selecciona una base de juego para activar el caldero.
         </div>
       )}
+
     </div>
   );
 };

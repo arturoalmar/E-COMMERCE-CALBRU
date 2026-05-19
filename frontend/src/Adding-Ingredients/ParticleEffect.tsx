@@ -1,36 +1,46 @@
 /**
  * 📄 ARCHIVO: ParticleEffect.tsx
  * 📝 DESCRIPCIÓN: Componente para el efecto visual de partículas al añadir ingredientes.
+ *
+ * - position: fixed → las partículas se posicionan relativas al viewport, no al DOM
+ * - top: -30px (en CSS) → arrancan fuera de pantalla por arriba
+ * - z-index: 30 (en CSS) → por debajo del caldero (z-index: 60) para que
+ *   el caldero las "trague" visualmente al llegar a él
+ * - --drift-x: deriva horizontal aleatoria para trayectoria más orgánica
  */
-
-// ParticleEffect.tsx
-// Renderiza las partículas que caen desde el caldero cuando el usuario selecciona opciones.
-// Cada partícula usa variables CSS personalizadas para recibir posición y color.
 
 import React from 'react';
 import { Particle } from '../types';
 
-// SECCIÓN: Definición de datos/propiedades
 interface ParticleEffectProps {
   particles: Particle[];
 }
 
-// SECCIÓN: Componente o Función lógica
 const ParticleEffect: React.FC<ParticleEffectProps> = ({ particles }) => {
-// SECCIÓN: Renderizado visual
   return (
     <>
-      {particles.map((particle) => (
-        <div
-          key={particle.id}
-          className="falling-particle"
-          style={{
-            '--particle-color': particle.color,
-            '--particle-x': `${particle.x}px`,
-            '--particle-y': `${particle.y}px`
-          } as React.CSSProperties & { '--particle-color': string; '--particle-x': string; '--particle-y': string }}
-        />
-      ))}
+      {particles.map((particle) => {
+        // Deriva horizontal aleatoria entre -30px y +30px
+        const driftX = Math.round((Math.random() - 0.5) * 60);
+
+        return (
+          <div
+            key={particle.id}
+            className="falling-particle"
+            style={{
+              '--particle-color': particle.color,
+              '--particle-x': `${particle.x}px`,
+              '--particle-y': `${particle.y}px`,
+              '--drift-x': `${driftX}px`,
+            } as React.CSSProperties & {
+              '--particle-color': string;
+              '--particle-x': string;
+              '--particle-y': string;
+              '--drift-x': string;
+            }}
+          />
+        );
+      })}
     </>
   );
 };
