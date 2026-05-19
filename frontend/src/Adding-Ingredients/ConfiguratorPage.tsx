@@ -3,11 +3,9 @@
  * 📝 DESCRIPCIÓN: Página principal del configurador de ingredientes y creación de pociones.
  *
  * CAMBIOS:
- * - Los botones "Crear Juego" y "Volver" se envuelven en <div className="cauldron-buttons">
- *   para que el CSS flexbox los coloque correctamente debajo del caldero.
- * - Se elimina el transformY hardcodeado del header; ahora se controla desde CSS.
- * - El configurator-header se mantiene fuera del center-dashboard para no
- *   interferir en el flujo flex del caldero + botones.
+ * - Nuevas props: cauldronName, onCauldronNameChange, onSave
+ * - Input de nombre encima del .configurator-header
+ * - Botones "Volver" y "Guardar Caldero" en fila horizontal dentro de .cauldron-buttons
  */
 
 import React from 'react';
@@ -28,6 +26,11 @@ interface ConfiguratorPageProps {
   toggleOption: (category: ConfigCategory, optionId: string) => void;
   onBack: () => void;
   onCreateGame: () => void;
+  /** Nombre que el usuario escribe para su caldero */
+  cauldronName: string;
+  onCauldronNameChange: (name: string) => void;
+  /** Callback para el botón Guardar Caldero */
+  onSave: () => void;
 }
 
 const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
@@ -37,7 +40,10 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
   isFusionReady,
   toggleOption,
   onBack,
-  onCreateGame
+  onCreateGame,
+  cauldronName,
+  onCauldronNameChange,
+  onSave,
 }) => {
   return (
     <>
@@ -79,7 +85,17 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
           toggleOption={toggleOption}
         />
 
-        {/* Título centrado — en flujo normal del flex, se muestra arriba del caldero */}
+        {/* Input de nombre — encima del header, centrado en el flujo flex */}
+        <input
+          type="text"
+          className="cauldron-name-input"
+          placeholder="Nombre de tu caldero..."
+          value={cauldronName}
+          onChange={(e) => onCauldronNameChange(e.target.value)}
+          maxLength={60}
+        />
+
+        {/* Título centrado */}
         <div className="configurator-header">
           <h1 className="configurator-title">Crea tu Juego Mágico</h1>
           <p className="configurator-subtitle">Selecciona los ingredientes para tu poción</p>
@@ -94,14 +110,24 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
           {/* Caldero — anclado por la base dentro de su wrapper */}
           <Cauldron selectedGenre={selectedGenre} isFusionReady={isFusionReady} />
 
-          {/* Botones debajo del caldero, en flujo normal */}
+          {/* Botones debajo del caldero */}
           <div className="cauldron-buttons">
+
+            {/* Botón principal: Crear Juego — ocupa su propia fila */}
             <button className="btn-create-game" onClick={onCreateGame}>
               Crear Juego
             </button>
-            <button className="btn-back-game" onClick={onBack}>
-              Volver
-            </button>
+
+            {/* Fila inferior: Volver + Guardar Caldero */}
+            <div className="cauldron-buttons-row">
+              <button className="btn-back-game" onClick={onBack}>
+                Volver
+              </button>
+              <button className="btn-save-game" onClick={onSave}>
+                Guardar Caldero
+              </button>
+            </div>
+
           </div>
 
         </div>
