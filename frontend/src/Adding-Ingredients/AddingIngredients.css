@@ -510,7 +510,7 @@
   box-shadow:
     0 0 10px var(--particle-color),
     inset -2px -2px 4px rgba(0, 0, 0, 0.5);
-  top: -30px;
+  top: -270px;
   left: calc(50% + var(--particle-x));
   z-index: 30;
   pointer-events: none;
