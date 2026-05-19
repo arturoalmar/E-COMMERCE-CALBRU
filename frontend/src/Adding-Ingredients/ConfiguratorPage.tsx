@@ -58,28 +58,28 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
         {/* Paneles de ingredientes en las 4 esquinas (position: absolute) */}
         <OptionsShelf
           category="diseno"
-          title="Diseño"
+          title="Design"
           cornerClass="corner-tl"
           selections={selections}
           toggleOption={toggleOption}
         />
         <OptionsShelf
           category="tematica"
-          title="Temática"
+          title="Theme"
           cornerClass="corner-tr"
           selections={selections}
           toggleOption={toggleOption}
         />
         <OptionsShelf
           category="mecanicas"
-          title="Mecánicas"
+          title="Mechanics"
           cornerClass="corner-bl"
           selections={selections}
           toggleOption={toggleOption}
         />
         <OptionsShelf
           category="sonido"
-          title="Sonido"
+          title="Sound"
           cornerClass="corner-br"
           selections={selections}
           toggleOption={toggleOption}
@@ -89,7 +89,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
         <input
           type="text"
           className="cauldron-name-input"
-          placeholder="Nombre de tu caldero..."
+          placeholder="Your cauldron name..."
           value={cauldronName}
           onChange={(e) => onCauldronNameChange(e.target.value)}
           maxLength={60}
@@ -97,8 +97,8 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
 
         {/* Título centrado */}
         <div className="configurator-header">
-          <h1 className="configurator-title">Crea tu Juego Mágico</h1>
-          <p className="configurator-subtitle">Selecciona los ingredientes para tu poción</p>
+          <h1 className="configurator-title">Create Your Magical Game</h1>
+          <p className="configurator-subtitle">Select ingredients for your potion</p>
         </div>
 
         {/* Dashboard central: caldero + botones en columna */}
@@ -115,16 +115,16 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
 
             {/* Botón principal: Crear Juego — ocupa su propia fila */}
             <button className="btn-create-game" onClick={onCreateGame}>
-              Crear Juego
+              Create Game
             </button>
 
             {/* Fila inferior: Volver + Guardar Caldero */}
             <div className="cauldron-buttons-row">
               <button className="btn-back-game" onClick={onBack}>
-                Volver
+                Back
               </button>
               <button className="btn-save-game" onClick={onSave}>
-                Guardar Caldero
+                Save Cauldron
               </button>
             </div>
 

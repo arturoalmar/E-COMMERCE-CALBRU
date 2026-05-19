@@ -41,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, user,
       <div className="navbar-left">
         {!hideMenuToggle && (
           <>
-            <button className="menu-toggle" onClick={toggleMenu} aria-label="Abrir menú">
+            <button className="menu-toggle" onClick={toggleMenu} aria-label="Open menu">
               <div className="bar"></div>
               <div className="bar"></div>
               <div className="bar"></div>
@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ isWorker, onNavigate, isLoggedIn, user,
             {isMenuOpen && (
               <div className="dropdown-menu">
                 <button onClick={() => handleNavigate('home')}>Home</button>
-                <button onClick={() => handleNavigate('conocenos')}>Conócenos</button>
+                <button onClick={() => handleNavigate('conocenos')}>About Us</button>
                 <button onClick={() => handleNavigate('creator')}>New Cauldron</button>
                 <button onClick={() => handleNavigate('my-cauldrons')}>My Cauldrons</button>
                 {isLoggedIn && isWorker && (

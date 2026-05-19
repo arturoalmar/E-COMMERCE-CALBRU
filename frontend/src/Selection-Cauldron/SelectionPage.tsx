@@ -23,15 +23,15 @@ const SelectionPage: React.FC<SelectionPageProps> = ({ genres, handleSelectGenre
 
   return (
     <div className="selection-container">
-      <button className="back-to-landing-btn" onClick={onBack} aria-label="Volver al inicio">
-        ← Volver
+      <button className="back-to-landing-btn" onClick={onBack} aria-label="Back to home">
+        ← Back
       </button>
       <div
         className="selection-bg-layer"
         style={{ backgroundImage: `url(${fondoElegir})` }}
       />
       <div className="selection-content">
-        <h1 className="selection-title">Selecciona un Género de Juego</h1>
+        <h1 className="selection-title">Select a Game Genre</h1>
         <div className="cauldrons-grid">
           {genres.map((genre) => (
             <div
@@ -49,7 +49,7 @@ const SelectionPage: React.FC<SelectionPageProps> = ({ genres, handleSelectGenre
       {hoveredGenre && (
         <div className="book-overlay">
           <div className="book-container">
-            <img src={libroImg} alt="Libro" className="book-image" />
+            <img src={libroImg} alt="Book" className="book-image" />
             <div className="book-text-overlay">
               <h2>{hoveredGenre.name}</h2>
               <p>{hoveredGenre.description}</p>

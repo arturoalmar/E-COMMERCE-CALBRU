@@ -17,21 +17,21 @@ interface TeamMember {
 const TEAM: TeamMember[] = [
   {
     name: 'Arturo Almudi',
-    role: 'Fundador & Maestro Supremo del Back-end',
-    description: 'Gran genio de la ingeniería de software, Arturo es el arquitecto detrás de la magia que hace funcionar The Hag\'s Cauldron. Su código es tan limpio como un hechizo bien lanzado.',
+    role: 'Founder & Supreme Master of Back-end',
+    description: 'Great genius of software engineering, Arturo is the architect behind the magic that makes The Hag\'s Cauldron work. His code is as clean as a well-cast spell.',
   },
   {
     name: 'Joel Sánchez',
-    role: 'Fundador & Gran Hechicero del Front-end',
-    description: 'Mente pensante detras de la interfaz encantada. Joel transforma líneas de código en experiencias visuales que hacen que cada usuario se sienta como un verdadero brujo al usar nuestra plataforma.',
+    role: 'Founder & Great Front-end Sorcerer',
+    description: 'Brilliant mind behind the enchanted interface. Joel transforms lines of code into visual experiences that make every user feel like a true wizard using our platform.',
   }
 ];
 
 const REVIEWS = [
-  { id: 1, user: 'Aragorn99', text: '¡Increíble! Pude prototipar mi juego de cartas en minutos. La estética es brutal.' },
-  { id: 2, user: 'Morgana_Magic', text: 'El caldero es súper intuitivo. Los efectos de partículas te hacen sentir como una verdadera bruja.' },
-  { id: 3, user: 'PixelWizard', text: 'The Hag\'s Cauldron ha cambiado mi forma de presentar ideas. Rápido, estiloso y funcional.' },
-  { id: 4, user: 'ShadowCaster', text: 'Finalmente un lugar donde la magia y la tecnología se encuentran. ¡Adictivo!' }
+  { id: 1, user: 'Aragorn99', text: 'Incredible! I was able to prototype my card game in minutes. The aesthetics are brutal.' },
+  { id: 2, user: 'Morgana_Magic', text: 'The cauldron is super intuitive. The particle effects make you feel like a true witch.' },
+  { id: 3, user: 'PixelWizard', text: 'The Hag\'s Cauldron has changed the way I present ideas. Fast, stylish and functional.' },
+  { id: 4, user: 'ShadowCaster', text: 'Finally a place where magic and technology meet. Addictive!' }
 ];
 
 interface ConocenosProps {
@@ -52,8 +52,8 @@ const Conocenos: React.FC<ConocenosProps> = ({ onStartNow, onBack }) => {
   return (
     <div className="conocenos-wrapper">
     <div className="conocenos-page" style={{ backgroundImage: `url(${libroAbout})` }}>
-      <button className="btn-back" onClick={onBack} aria-label="Volver a la landing">
-        ← Volver
+      <button className="btn-back" onClick={onBack} aria-label="Back to landing">
+        ← Back
       </button>
       <div className="scroll-content">
 
@@ -61,7 +61,7 @@ const Conocenos: React.FC<ConocenosProps> = ({ onStartNow, onBack }) => {
         <section className="hero-section">
           <div className="hero-content">
             <h1 className="hero-title">The Hag's Cauldron</h1>
-            <p className="hero-tagline">Donde la Magia y la Tecnología Forjan Historias Extraordinarias</p>
+            <p className="hero-tagline">Where Magic and Technology Forge Extraordinary Stories</p>
             <div className="decorative-line"></div>
           </div>
         </section>
@@ -69,16 +69,16 @@ const Conocenos: React.FC<ConocenosProps> = ({ onStartNow, onBack }) => {
         {/* HISTORIA */}
         <section className="story-section">
           <div className="section-content">
-            <h2 className="section-title">Nuestra Historia</h2>
+            <h2 className="section-title">Our Story</h2>
             <p className="story-text">
-              En el corazón de un bosque encantado, hace apenas tres años, dos brujos visionarios decidieron que la magia
-              del diseño de juegos no debería ser exclusiva de los grandes estudios. Así nació <strong>The Hag's Cauldron</strong>,
-              un pequeño estudio de creatividad donde cada idea, por pequeña que sea, puede transformarse en una experiencia mágica.
+              In the heart of an enchanted forest, just three years ago, two visionary sorcerers decided that the magic
+              of game design should not be exclusive to big studios. Thus was born <strong>The Hag's Cauldron</strong>,
+              a small studio of creativity where every idea, no matter how small, can be transformed into a magical experience.
             </p>
             <p className="story-text">
-              Nuestro nombre evoca el ritual antiguo de los brujos: mezclar ingredientes precisos para crear pociones poderosas.
-              Del mismo modo, nosotros creemos que los videojuegos personalizados son la combinación perfecta de pasión,
-              tecnología y creatividad desenfrenada.
+              Our name evokes the ancient ritual of sorcerers: mixing precise ingredients to create powerful potions.
+              In the same way, we believe that personalized video games are the perfect combination of passion,
+              technology and unleashed creativity.
             </p>
           </div>
         </section>
@@ -86,19 +86,19 @@ const Conocenos: React.FC<ConocenosProps> = ({ onStartNow, onBack }) => {
         {/* MISIÓN Y VALORES */}
         <section className="mission-section">
           <div className="section-content">
-            <h2 className="section-title">Nuestra Misión y Valores</h2>
+            <h2 className="section-title">Our Mission and Values</h2>
             <div className="values-grid">
               <div className="value-card">
-                <h3>Creatividad Desenfrenada</h3>
-                <p>Sin límites, sin prototipos estándar. Tu visión, nuestro hechizo.</p>
+                <h3>Unleashed Creativity</h3>
+                <p>No limits, no standard prototypes. Your vision, our spell.</p>
               </div>
               <div className="value-card">
-                <h3>Rapidez Mágica</h3>
-                <p>Ideas al caldero, juego al momento. Prototipos en minutos, no en meses.</p>
+                <h3>Magical Speed</h3>
+                <p>Ideas to cauldron, game at once. Prototypes in minutes, not months.</p>
               </div>
               <div className="value-card">
-                <h3>Comunidad Hechizada</h3>
-                <p>Juntos creamos un círculo de creadores apasionados. Tu éxito es nuestro triunfo.</p>
+                <h3>Enchanted Community</h3>
+                <p>Together we create a circle of passionate creators. Your success is our triumph.</p>
               </div>
             </div>
           </div>
@@ -107,8 +107,8 @@ const Conocenos: React.FC<ConocenosProps> = ({ onStartNow, onBack }) => {
         {/* EQUIPO */}
         <section className="team-section">
           <div className="section-content">
-            <h2 className="section-title">El Círculo de Brujas</h2>
-            <p className="team-intro">Dos hechiceros dedican sus días a hacer posible lo imposible.</p>
+            <h2 className="section-title">The Circle of Witches</h2>
+            <p className="team-intro">Two sorcerers dedicate their days to making the impossible possible.</p>
             <div className="team-grid">
               {TEAM.map((member) => (
                 <div key={member.name} className="team-card">
@@ -124,23 +124,23 @@ const Conocenos: React.FC<ConocenosProps> = ({ onStartNow, onBack }) => {
         {/* LOGROS */}
         <section className="achievements-section">
           <div className="section-content">
-            <h2 className="section-title">Logros Mágicos</h2>
+            <h2 className="section-title">Magical Achievements</h2>
             <div className="achievements-grid">
               <div className="achievement-box">
                 <div className="achievement-number">150+</div>
-                <p className="achievement-text">Calderos Forjados</p>
+                <p className="achievement-text">Cauldrons Forged</p>
               </div>
               <div className="achievement-box">
                 <div className="achievement-number">3</div>
-                <p className="achievement-text">Años de Magia</p>
+                <p className="achievement-text">Years of Magic</p>
               </div>
               <div className="achievement-box">
                 <div className="achievement-number">1,200+</div>
-                <p className="achievement-text">Alquimistas Felices</p>
+                <p className="achievement-text">Happy Alchemists</p>
               </div>
               <div className="achievement-box">
                 <div className="achievement-number">∞</div>
-                <p className="achievement-text">Sueños Realizados</p>
+                <p className="achievement-text">Dreams Realized</p>
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@ const Conocenos: React.FC<ConocenosProps> = ({ onStartNow, onBack }) => {
         {/* REVIEWS */}
         <section className="reviews-section">
           <div className="section-content">
-            <h2 className="section-title">Lo Que Dicen Nuestros Alquimistas</h2>
+            <h2 className="section-title">What Our Alchemists Say</h2>
             <div className="reviews-container">
               <div className="review-card-active">
                 <div className="review-text">"{REVIEWS[currentReview].text}"</div>
@@ -174,10 +174,10 @@ const Conocenos: React.FC<ConocenosProps> = ({ onStartNow, onBack }) => {
         {/* CTA */}
         <section className="cta-section">
           <div className="section-content">
-            <h2 className="cta-title">¿Listo para Forjar tu Caldero?</h2>
-            <p className="cta-subtitle">Únete a nuestro círculo de creadores mágicos</p>
+            <h2 className="cta-title">Ready to Forge Your Cauldron?</h2>
+            <p className="cta-subtitle">Join our circle of magical creators</p>
             <button className="btn-primary-magic" onClick={onStartNow}>
-              COMIENZA AHORA
+              START NOW
             </button>
           </div>
         </section>

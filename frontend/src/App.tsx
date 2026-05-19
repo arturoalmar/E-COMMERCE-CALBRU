@@ -387,7 +387,7 @@ function App() {
           <button
             className="sotano-back-arrow"
             onClick={() => navigateTo('home')}
-            aria-label="Volver a la aldea"
+            aria-label="Back to the village"
           >
             <span className="arrow-icon">↑</span>
           </button>
@@ -397,7 +397,7 @@ function App() {
           <button
             className="back-to-home-btn floating"
             onClick={() => navigateTo('home')}
-            aria-label="Volver al inicio"
+            aria-label="Back to home"
           >
             <span className="back-text">Back</span>
           </button>

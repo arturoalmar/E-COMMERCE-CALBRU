@@ -36,7 +36,7 @@ const Cauldron: React.FC<CauldronProps> = ({ selectedGenre, isFusionReady }) => 
         />
       ) : (
         <div className="cauldron-placeholder">
-          Selecciona una base de juego para activar el caldero.
+          Select a game base to activate the cauldron.
         </div>
       )}
 

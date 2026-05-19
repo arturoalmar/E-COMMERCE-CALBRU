@@ -52,11 +52,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Error en la petición');
+        throw new Error(data.message || 'Request error');
       }
 
       if (isRegistering) {
-        setMessage('¡Mago registrado con éxito! Ya puedes entrar.');
+        setMessage('Wizard successfully registered! You can now enter.');
         setIsRegistering(false);
         setUsername('');
         setEmail('');

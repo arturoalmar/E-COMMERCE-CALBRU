@@ -17,8 +17,8 @@ const MagicalAlert: React.FC<MagicalAlertProps> = ({
   type = 'success', 
   onConfirm, 
   onCancel,
-  confirmText = 'Aceptar',
-  cancelText = 'Cancelar'
+  confirmText = 'Accept',
+  cancelText = 'Cancel'
 }) => {
   if (!isOpen) return null;
 

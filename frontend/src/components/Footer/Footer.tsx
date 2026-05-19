@@ -15,24 +15,24 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="footer-section">
-          <h4>Navegación</h4>
+          <h4>Navigation</h4>
           <ul>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Calderos</a></li>
-            <li><a href="#">Ingredientes</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Cauldrons</a></li>
+            <li><a href="#">Ingredients</a></li>
           </ul>
         </div>
         <div className="footer-section">
-          <h4>Contacto</h4>
+          <h4>Contact</h4>
           <ul>
-            <li><a href="#">Ayuda</a></li>
-            <li><a href="#">Términos</a></li>
-            <li><a href="#">Privacidad</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Privacy</a></li>
           </ul>
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© 2024 Hag's Cauldron - Forjando Leyendas</p>
+        <p>© 2024 Hag's Cauldron - Forging Legends</p>
       </div>
     </footer>
   );
