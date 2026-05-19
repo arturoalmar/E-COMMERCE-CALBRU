@@ -239,11 +239,13 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
                         <img src={cauldronIcon} alt="Icono" className="small-icon" /> {cauldron.ingredientes} Ingredientes
                       </div>
                       <div className="item-actions">
-                        {cauldron.estado !== 'comprado' && (
-                          <button className="action-btn buy-btn" onClick={() => openBuyModal(cauldron)}>
-                            Comprar
-                          </button>
-                        )}
+                        <button 
+                          className={`action-btn ${cauldron.estado === 'comprado' ? 'buy-btn-disabled' : 'buy-btn'}`}
+                          onClick={() => cauldron.estado !== 'comprado' && openBuyModal(cauldron)}
+                          disabled={cauldron.estado === 'comprado'}
+                        >
+                          {cauldron.estado === 'comprado' ? '✓ Comprado' : 'Comprar'}
+                        </button>
                         <button className="action-btn edit-btn">Editar</button>
                         <button className="action-btn delete-btn" onClick={() => handleDelete(cauldron.id_caldero)}>
                           Eliminar
