@@ -29,9 +29,30 @@ router.get('/', authenticateToken, async (req: AuthRequest, res: Response) => {
  * Crea un nuevo caldero vinculado al usuario autenticado.
  */
 router.post('/', authenticateToken, async (req: AuthRequest, res: Response) => {
-  const { nombre, tipo_nombre, atributos, estado, precio, config_ia } = req.body;
+  const {
+    nombre,
+    name,
+    tipo_nombre,
+    type_name,
+    genre,
+    atributos,
+    attributes,
+    estado,
+    status,
+    precio,
+    price,
+    config_ia,
+    ai_config
+  } = req.body;
 
-  if (!nombre || !tipo_nombre) {
+  const cauldronName = nombre || name;
+  const tipoNombre = tipo_nombre || type_name || genre;
+  const cauldronAttributes = atributos || attributes;
+  const cauldronEstado = estado || status;
+  const cauldronPrecio = precio ?? price;
+  const cauldronConfig = config_ia || ai_config;
+
+  if (!cauldronName || !tipoNombre) {
     return res.status(400).json({ message: 'El nombre y el tipo de juego son obligatorios' });
   }
 
@@ -39,12 +60,12 @@ router.post('/', authenticateToken, async (req: AuthRequest, res: Response) => {
     const userId = req.user!.id;
     const newCauldron = await CauldronDAO.create({
       id_usuario: userId,
-      nombre,
-      tipo_nombre,
-      atributos: atributos || [],
-      estado: estado || 'pendiente',
-      precio: precio || 0,
-      config_ia: config_ia || ''
+      nombre: cauldronName,
+      tipo_nombre: tipoNombre,
+      atributos: Array.isArray(cauldronAttributes) ? cauldronAttributes : [],
+      estado: cauldronEstado || 'pendiente',
+      precio: cauldronPrecio || 0,
+      config_ia: cauldronConfig || ''
     });
 
     res.status(201).json(newCauldron);
@@ -101,7 +122,12 @@ router.post('/:id/buy', authenticateToken, async (req: AuthRequest, res: Respons
 router.put('/:id', authenticateToken, async (req: AuthRequest, res: Response) => {
   const { id } = req.params;
   const userId = req.user!.id;
-  const updates = req.body;
+  const updates = {
+    nombre: req.body.nombre ?? req.body.name,
+    estado: req.body.estado ?? req.body.status,
+    precio: req.body.precio ?? req.body.price,
+    config_ia: req.body.config_ia ?? req.body.ai_config
+  };
 
   try {
     const updatedCauldron = await CauldronDAO.update(parseInt(id), userId, updates);

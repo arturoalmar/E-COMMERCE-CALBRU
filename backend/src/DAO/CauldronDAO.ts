@@ -5,6 +5,17 @@
 
 import pool from '../db.js';
 
+const GENRE_NAME_MAP: Record<string, string> = {
+  Cards: 'Juego de Cartas',
+  Platformer: 'Plataformas',
+  Party: 'Estilo Mario Party',
+  Autoshooter: 'Estilo Vampire Survivor',
+  'Juego de Cartas': 'Juego de Cartas',
+  'Plataformas': 'Plataformas',
+  'Estilo Mario Party': 'Estilo Mario Party',
+  'Estilo Vampire Survivor': 'Estilo Vampire Survivor'
+};
+
 /**
  * Representa la estructura de un caldero (proyecto de juego)
  */
@@ -49,7 +60,11 @@ class CauldronDAO {
    * Busca el ID de un tipo de juego basándose en su nombre.
    */
   async findTipoIdByName(name: string): Promise<number | null> {
-    const result = await pool.query('SELECT id_tipo FROM tipos_juego WHERE nombre = $1', [name]);
+    const normalized = GENRE_NAME_MAP[name] || name;
+    const result = await pool.query(
+      'SELECT id_tipo FROM tipos_juego WHERE LOWER(nombre) = LOWER($1)',
+      [normalized]
+    );
     return result.rows[0]?.id_tipo || null;
   }
 
@@ -63,10 +78,9 @@ class CauldronDAO {
       await client.query('BEGIN'); // Iniciamos la transacción
 
       // 1. Obtener id_tipo si solo tenemos el nombre
-      let id_tipo = cauldron.id_tipo;
+      let id_tipo: number | undefined = cauldron.id_tipo ?? undefined;
       if (!id_tipo && cauldron.tipo_nombre) {
-        const result = await client.query('SELECT id_tipo FROM tipos_juego WHERE nombre = $1', [cauldron.tipo_nombre]);
-        id_tipo = result.rows[0]?.id_tipo;
+        id_tipo = await this.findTipoIdByName(cauldron.tipo_nombre) ?? undefined;
       }
 
       if (!id_tipo) throw new Error(`Tipo de juego "${cauldron.tipo_nombre}" no encontrado`);

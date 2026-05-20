@@ -217,6 +217,13 @@ function App() {
     const nombre = cauldronName.trim() || `Poción de ${selectedGenre?.name || 'Misterio'}`;
     const atributos = Object.values(selections).flat();
     const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    const genreNameMap: Record<string, string> = {
+      Cards: 'Juego de Cartas',
+      Platformer: 'Plataformas',
+      Party: 'Estilo Mario Party',
+      Autoshooter: 'Estilo Vampire Survivor'
+    };
+    const tipoNombre = genreNameMap[selectedGenre?.name || ''] || selectedGenre?.name || 'Desconocido';
 
     try {
       const response = await fetch(`${baseUrl}/api/cauldrons`, {
@@ -227,7 +234,8 @@ function App() {
         },
         body: JSON.stringify({
           nombre,
-          tipo_nombre: selectedGenre?.name || 'Desconocido',
+          tipo_nombre: tipoNombre,
+          genre: selectedGenre?.name || 'Unknown',
           atributos: atributos,
           estado: 'pendiente',
           precio: 0,
@@ -238,6 +246,8 @@ function App() {
       if (response.ok) {
         showMagicalAlert('Cauldron successfully forged! Saved in your grimoire.', 'success', () => navigateTo('my-cauldrons'));
       } else {
+        const errorBody = await response.text();
+        console.error('Failed to save cauldron:', response.status, errorBody);
         showMagicalAlert('The cauldron has exploded... (Error saving)', 'error');
       }
     } catch (err) {
