@@ -216,7 +216,7 @@ function App() {
     const token = localStorage.getItem('token');
     const nombre = cauldronName.trim() || `Poción de ${selectedGenre?.name || 'Misterio'}`;
     const atributos = Object.values(selections).flat();
-    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    const baseUrl = 'http://localhost:5000';
     const genreNameMap: Record<string, string> = {
       Cards: 'Juego de Cartas',
       Platformer: 'Plataformas',

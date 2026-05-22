@@ -34,7 +34,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onBack }) => {
     setMessage('');
 
     const endpoint = isRegistering ? '/api/auth/register' : '/api/auth/login';
-    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    const baseUrl = 'http://localhost:5000';
 
     try {
       const response = await fetch(`${baseUrl}${endpoint}`, {

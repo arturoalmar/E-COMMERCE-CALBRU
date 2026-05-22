@@ -44,7 +44,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
     }
 
     const endpoint = '/api/cauldrons';
-    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    const baseUrl = 'http://localhost:5000';
     try {
       const response = await fetch(`${baseUrl}${endpoint}`, {
         headers: {
@@ -86,7 +86,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
   const executeDelete = async (id: number) => {
     const token = localStorage.getItem('token');
     const endpoint = `/api/cauldrons/${id}`;
-    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    const baseUrl = 'http://localhost:5000';
     try {
       const response = await fetch(`${baseUrl}${endpoint}`, {
         method: 'DELETE',
@@ -135,7 +135,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
     }
 
     const endpoint = `/api/cauldrons/${selectedCauldron.id_caldero}/buy`;
-    const baseUrl = 'https://the-hags-cauldron-back-end.onrender.com';
+    const baseUrl = 'http://localhost:5000';
     try {
       const response = await fetch(`${baseUrl}${endpoint}`, {
         method: 'POST',
@@ -202,8 +202,11 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
           </div>
           <div className="stats-section">
             <div className="stat-item">
-              <span className="stat-value">{cauldrons.length}</span>
-              <span className="stat-label">Cauldrons</span>
+              <img src={cauldronIcon} alt="Cauldron Icon" className="stat-icon" />
+              <div className="stat-info">
+                <span className="stat-value">{cauldrons.length}</span>
+                <span className="stat-label">CAULDRONS</span>
+              </div>
             </div>
           </div>
         </header>
@@ -211,63 +214,75 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
         {error && <div className="error-message">{error}</div>}
 
         <main className="cauldrons-list">
-          {cauldrons.length > 0 ? (
-            <div className="cauldrons-grid-layout">
-              {cauldrons.map((cauldron) => (
-                <div key={cauldron.id_caldero} className={`cauldron-card-item ${cauldron.estado === 'comprado' ? 'cauldron-card-item--bought' : ''}`}>
-                  <div className="item-visual">
-                    {cauldron.estado === 'comprado' && <div className="purchased-seal">👑</div>}
-                    <img src={getCauldronImage(cauldron)} alt={cauldron.nombre} />
-                  </div>
-                  <div className="item-details">
-                    <div className="item-header">
-                      <span className="genre-label">{cauldron.genero}</span>
-                      <span className="date-label">{new Date(cauldron.fecha_creacion).toLocaleDateString()}</span>
-                    </div>
-                    <h3>{cauldron.nombre}</h3>
-                    <p>{cauldron.descripcion || 'Magic configuration pending...'}</p>
-                    <div className="price-status-row">
-                      {cauldron.precio !== undefined && (
-                        <span className="price-label">Price: ${safePrice(cauldron.precio)}</span>
-                      )}
-                      <span className={`status-label ${cauldron.estado === 'comprado' ? 'status-bought' : 'status-pending'}`}>
-                        {cauldron.estado ? cauldron.estado === 'comprado' ? 'PURCHASED' : 'PENDING' : 'PENDING'}
-                      </span>
-                    </div>
-                    <div className="item-footer">
-                      <div className="ingredients-count">
-                        <img src={cauldronIcon} alt="Icon" className="small-icon" /> {cauldron.ingredientes} Ingredients
+          {(() => {
+            const itemsPerRow = 3;
+            const combinedItems: any[] = [...cauldrons, { isEmptySlot: true }];
+            const chunkedRows = [];
+            for (let i = 0; i < combinedItems.length; i += itemsPerRow) {
+              chunkedRows.push(combinedItems.slice(i, i + itemsPerRow));
+            }
+
+            return chunkedRows.map((row, rowIndex) => (
+              <div className="shelf-row" key={`row-${rowIndex}`}>
+                <div className="shelf-content">
+                  {row.map((item, itemIndex) => {
+                    if (item.isEmptySlot) {
+                      return (
+                        <div className="empty-slot" key="empty" onClick={() => onCreateNew ? onCreateNew() : window.location.href = '/'}>
+                          <div className="empty-circle">+</div>
+                          <span>Forge New Cauldron</span>
+                        </div>
+                      );
+                    }
+
+                    const c = item as SavedCauldron;
+                    return (
+                      <div className="cauldron-item" key={c.id_caldero}>
+                        {c.estado === 'comprado' && <div className="crown">👑</div>}
+                        <div className="cauldron-img-wrap">
+                          <div className="smoke"><span/><span/><span/></div>
+                          <img src={getCauldronImage(c)} alt={c.nombre} />
+                        </div>
+                        <div className="scroll-label">
+                          <div className="scroll-header">
+                            <span className="scroll-genre">{c.genero}</span>
+                            <span className="scroll-date">{new Date(c.fecha_creacion).toLocaleDateString()}</span>
+                          </div>
+                          <h3 className="scroll-title">{c.nombre}</h3>
+                          <p className="scroll-desc">{c.descripcion || 'Magic configuration pending...'}</p>
+                          <div className="scroll-price-row">
+                            {c.precio !== undefined && (
+                              <span className="scroll-price">Price: ${safePrice(c.precio)}</span>
+                            )}
+                            <span className={`scroll-status ${c.estado === 'comprado' ? 'scroll-status-bought' : 'scroll-status-pending'}`}>
+                              {c.estado === 'comprado' ? 'PURCHASED' : 'PENDING'}
+                            </span>
+                          </div>
+                          <div className="scroll-footer">
+                            <div className="scroll-ingredients">
+                              <span className="checkbox-icon">☐</span> {c.ingredientes} ingredients
+                            </div>
+                            <div className="scroll-actions">
+                              <button 
+                                className={`scroll-btn ${c.estado === 'comprado' ? 'scroll-buy-disabled' : 'scroll-buy'}`}
+                                onClick={() => c.estado !== 'comprado' && openBuyModal(c)}
+                                disabled={c.estado === 'comprado'}
+                              >
+                                {c.estado === 'comprado' ? '✓ Purchased' : 'Buy'}
+                              </button>
+                              <button className="scroll-btn scroll-edit">Edit</button>
+                              <button className="scroll-btn scroll-delete" onClick={() => handleDelete(c.id_caldero)}>Delete</button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="item-actions">
-                        <button 
-                          className={`action-btn ${cauldron.estado === 'comprado' ? 'buy-btn-disabled' : 'buy-btn'}`}
-                          onClick={() => cauldron.estado !== 'comprado' && openBuyModal(cauldron)}
-                          disabled={cauldron.estado === 'comprado'}
-                        >
-                          {cauldron.estado === 'comprado' ? '✓ Purchased' : 'Buy'}
-                        </button>
-                        <button className="action-btn edit-btn">Edit</button>
-                        <button className="action-btn delete-btn" onClick={() => handleDelete(cauldron.id_caldero)}>
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
-              ))}
-              <div className="cauldron-card-item empty-forge-card" onClick={() => onCreateNew ? onCreateNew() : window.location.href = '/'}>
-                <div className="empty-vfx">✨</div>
-                <h2>FORGE NEW CAULDRON</h2>
+                <div className="shelf-plank" />
               </div>
-            </div>
-          ) : (
-            <div className="cauldrons-grid-layout">
-              <div className="cauldron-card-item empty-forge-card" onClick={() => onCreateNew ? onCreateNew() : window.location.href = '/'}>
-                <div className="empty-vfx">✨</div>
-                <h2>FORGE NEW CAULDRON</h2>
-              </div>
-            </div>
-          )}
+            ));
+          })()}
         </main>
       </div>
 
