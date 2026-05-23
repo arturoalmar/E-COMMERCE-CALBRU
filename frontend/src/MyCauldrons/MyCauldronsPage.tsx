@@ -135,7 +135,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
     }
 
     const endpoint = `/api/cauldrons/${selectedCauldron.id_caldero}/buy`;
-    const baseUrl = 'http://localhost:5000';
+    const baseUrl = 'http://localhost:5001';
     try {
       const response = await fetch(`${baseUrl}${endpoint}`, {
         method: 'POST',

@@ -80,7 +80,16 @@ class CauldronDAO {
       // 1. Obtener id_tipo si solo tenemos el nombre
       let id_tipo: number | undefined = cauldron.id_tipo ?? undefined;
       if (!id_tipo && cauldron.tipo_nombre) {
+        // Intentamos buscar el tipo existente
         id_tipo = await this.findTipoIdByName(cauldron.tipo_nombre) ?? undefined;
+        // Si no existe, lo creamos automáticamente
+        if (!id_tipo) {
+          const insertRes = await client.query(
+            'INSERT INTO tipos_juego (nombre) VALUES ($1) RETURNING id_tipo',
+            [cauldron.tipo_nombre]
+          );
+          id_tipo = insertRes.rows[0].id_tipo;
+        }
       }
 
       if (!id_tipo) throw new Error(`Tipo de juego "${cauldron.tipo_nombre}" no encontrado`);
