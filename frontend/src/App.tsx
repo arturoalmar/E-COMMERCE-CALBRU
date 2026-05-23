@@ -19,7 +19,7 @@ import MagicalAlert from './components/MagicalAlert/MagicalAlert';
 
 // Tipos y Datos
 import { GENRES, RANDOM_COLORS } from './constants/gameData';
-import { ConfigCategory, Genre, Step, OptionsMap, Page, Particle } from './types';
+import type { AttributeOptionsMap, ConfigCategory, Genre, Step, OptionsMap, Page, Particle } from './types';
 
 function getRandomColor(): string {
   return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
@@ -41,6 +41,12 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<{ id: number, username: string, email?: string } | null>(null);
   const [isWorker] = useState(true);
+  const [attributeOptions, setAttributeOptions] = useState<AttributeOptionsMap>({
+    diseno: [],
+    tematica: [],
+    mecanicas: [],
+    sonido: []
+  });
 
   const [alertConfig, setAlertConfig] = useState<{
     isOpen: boolean;
@@ -83,6 +89,37 @@ function App() {
         localStorage.removeItem('token');
       }
     }
+  }, []);
+
+  useEffect(() => {
+    const fetchAttributeOptions = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/attributes');
+        if (!response.ok) {
+          throw new Error('Failed to load ingredient options');
+        }
+        const data: Array<{ id: string; label: string; categoria: string }> = await response.json();
+        const grouped: AttributeOptionsMap = {
+          diseno: [],
+          tematica: [],
+          mecanicas: [],
+          sonido: []
+        };
+
+        data.forEach((item) => {
+          const category = item.categoria as ConfigCategory;
+          if (grouped[category]) {
+            grouped[category].push({ id: item.id, label: item.label, categoria: category });
+          }
+        });
+
+        setAttributeOptions(grouped);
+      } catch (error) {
+        console.error('Error loading attribute options:', error);
+      }
+    };
+
+    fetchAttributeOptions();
   }, []);
 
   const [transitionStatus, setTransitionStatus] = useState<'none' | 'exiting' | 'entering'>('none');
@@ -215,7 +252,11 @@ function App() {
 
     const token = localStorage.getItem('token');
     const nombre = cauldronName.trim() || `Poción de ${selectedGenre?.name || 'Misterio'}`;
-    const atributos = Object.values(selections).flat();
+    const atributos = Object.entries(selections).flatMap(([category, ids]) =>
+      ids.map(id =>
+        attributeOptions[category as ConfigCategory]?.find(option => option.id === id)?.label || id
+      )
+    );
     const baseUrl = 'http://localhost:5000';
     const genreNameMap: Record<string, string> = {
       Cards: 'Juego de Cartas',
@@ -294,6 +335,7 @@ function App() {
                 onCauldronNameChange={setCauldronName}
                 onSave={handleSaveCauldron}
                 onCreateGame={handleSaveCauldron}
+                attributeOptions={attributeOptions}
               />
             )}
           </div>

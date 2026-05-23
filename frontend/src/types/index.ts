@@ -5,6 +5,12 @@
 
 export type Step = 'select-pot' | 'configurator';
 export type ConfigCategory = 'diseno' | 'tematica' | 'mecanicas' | 'sonido';
+export interface AttributeOption {
+  id: string;
+  label: string;
+  categoria?: ConfigCategory;
+}
+export type AttributeOptionsMap = Record<ConfigCategory, AttributeOption[]>;
 export type OptionsMap = Record<ConfigCategory, string[]>;
 export type Page = 'home' | 'creator' | 'my-cauldrons' | 'intranet' | 'login' | 'conocenos';
 

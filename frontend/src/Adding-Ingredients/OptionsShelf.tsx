@@ -8,7 +8,7 @@
 // para una categoría concreta de ingredientes.
 
 import React from 'react';
-import { ConfigCategory, OptionsMap } from '../types';
+import type { AttributeOption, ConfigCategory, OptionsMap } from '../types';
 
 // SECCIÓN: Definición de datos/propiedades
 interface OptionsShelfProps {
@@ -16,6 +16,7 @@ interface OptionsShelfProps {
   title: string;
   cornerClass: string;
   selections: OptionsMap;
+  options?: AttributeOption[];
   toggleOption: (category: ConfigCategory, optionId: string) => void;
 }
 
@@ -71,17 +72,18 @@ const OptionsShelf: React.FC<OptionsShelfProps> = ({
   title,
   cornerClass,
   selections,
+  options,
   toggleOption
 }) => {
   // SECCIÓN: Componente o Función lógica
-  const options = categoryOptions[category] || [];
+  const optionList = options?.length ? options : categoryOptions[category] || [];
 
   // SECCIÓN: Renderizado visual
   return (
     <div className={`config-corner ${cornerClass}`}>
       <h3>{title}</h3>
       <div className="options-grid">
-        {options.map((opt) => (
+        {optionList.map((opt) => (
           <button
             key={opt.id}
             className={`option-btn ${selections[category]?.includes(opt.id) ? 'selected' : ''}`}

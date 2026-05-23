@@ -11,7 +11,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 // Extendemos la interfaz Request de Express para incluir los datos del usuario autenticado
 export interface AuthRequest extends Request {
   user?: {
-    id: number;
+    id: string;
     username: string;
   };
 }

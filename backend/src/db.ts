@@ -3,9 +3,9 @@
  * 📝 DESCRIPCIÓN: Configuración de la conexión a la base de datos PostgreSQL (AWS RDS).
  */
 
-import pkg from 'pg';
+import * as pkg from 'pg';
 const { Pool } = pkg;
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 

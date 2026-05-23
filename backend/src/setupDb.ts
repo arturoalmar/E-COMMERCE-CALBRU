@@ -7,76 +7,130 @@
 import pool from './db.js';
 
 const createTables = async () => {
-  // Query principal que define la estructura relacional de la aplicación
   const queryText = `
-    -- 1. USUARIOS: Almacena las credenciales y perfiles de los magos/aprendices
-    CREATE TABLE IF NOT EXISTS usuarios (
-      id_usuario SERIAL PRIMARY KEY,
-      username VARCHAR(255) NOT NULL,
-      email VARCHAR(100) UNIQUE NOT NULL,
-      password_hash VARCHAR(255) NOT NULL,
-      es_admin BOOLEAN DEFAULT FALSE,
-      fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
-    );
+    -- Borramos todo lo anterior para aplicar el cambio de estructura limpio.
+    DROP TABLE IF EXISTS Compra, Caldero_Atributos, Atributos, Caldero, Cliente, Admin, Usuario CASCADE;
+    DROP TYPE IF EXISTS estado_caldero, tipo_juego_enum, categoria_atributo CASCADE;
 
-    -- 2. TIPOS DE JUEGO: Catálogo de géneros (Cartas, Plataformas, etc.)
-    CREATE TABLE IF NOT EXISTS tipos_juego (
-        id_tipo SERIAL PRIMARY KEY,
-        nombre VARCHAR(50) UNIQUE NOT NULL
-    );
+    -- Enums para asegurar los estados y las categorías
+    CREATE TYPE estado_caldero AS ENUM ('pendiente', 'demo', 'pagado');
+    CREATE TYPE tipo_juego_enum AS ENUM ('cartas', 'plataformas', 'party', 'roguelite');
+    CREATE TYPE categoria_atributo AS ENUM ('diseño', 'mecanicas', 'sonido', 'tematica');
 
-    -- 3. ATRIBUTOS: Almacena los ingredientes/opciones disponibles para los calderos
-    CREATE TABLE IF NOT EXISTS atributos (
-        id_atributo SERIAL PRIMARY KEY,
-        nombre VARCHAR(100) NOT NULL,
-        tipo VARCHAR(50) NOT NULL,
-        CONSTRAINT uq_atributos_nombre_tipo UNIQUE (nombre, tipo)
-    );
-
-    -- 4. CALDEROS: Objeto central donde se guardan los proyectos personalizados
-    CREATE TABLE IF NOT EXISTS calderos (
-        id_caldero SERIAL PRIMARY KEY,
-        id_usuario INTEGER NOT NULL REFERENCES usuarios(id_usuario),
-        id_tipo INTEGER NOT NULL REFERENCES tipos_juego(id_tipo),
+    -- Tabla base de usuarios
+    CREATE TABLE Usuario (
+        idUsuario VARCHAR(255) PRIMARY KEY,
         nombre VARCHAR(255) NOT NULL,
-        estado VARCHAR(30) NOT NULL DEFAULT 'pendiente' 
-            CHECK (estado IN ('pendiente', 'demo', 'comprado', 'juego')),
-        ruta_demo VARCHAR(500), 
-        ruta_juego VARCHAR(500),
-        precio NUMERIC(6,2) DEFAULT 0,
-        config_ia TEXT,
-        fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+        email VARCHAR(255) NOT NULL UNIQUE,
+        contraseña VARCHAR(255) NOT NULL,
+        fechaRegistro VARCHAR(100) NOT NULL,
+        softDeleted BOOLEAN DEFAULT FALSE NOT NULL
     );
 
-    -- 6. COMPRAS: Registra las compras realizadas por usuarios
-    CREATE TABLE IF NOT EXISTS compras (
-        id_compra SERIAL PRIMARY KEY,
-        id_usuario INTEGER NOT NULL REFERENCES usuarios(id_usuario),
-        id_caldero INTEGER NOT NULL REFERENCES calderos(id_caldero),
-        monto_pagado NUMERIC(6,2) NOT NULL,
-        fecha_compra TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        estado_pago VARCHAR(30) NOT NULL CHECK (estado_pago IN ('pendiente', 'pagado', 'fallido')),
-        informacion TEXT,
-        CONSTRAINT uq_compras_usuario_caldero UNIQUE (id_usuario, id_caldero)
+    -- Roles heredados
+    CREATE TABLE Cliente (
+        idUsuario VARCHAR(255) PRIMARY KEY,
+        CONSTRAINT fk_cliente_usuario FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
     );
 
-    -- 5. RELACIÓN CALDERO - ATRIBUTOS: Enlace muchos-a-muchos entre calderos e ingredientes
-    CREATE TABLE IF NOT EXISTS caldero_atributos (
-        id_caldero INTEGER NOT NULL REFERENCES calderos(id_caldero) ON DELETE CASCADE,
-        id_atributo INTEGER NOT NULL REFERENCES atributos(id_atributo),
-        PRIMARY KEY (id_caldero, id_atributo)
+    CREATE TABLE Admin (
+        idUsuario VARCHAR(255) PRIMARY KEY,
+        CONSTRAINT fk_admin_usuario FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario) ON DELETE CASCADE
     );
 
-    -- SEEDING: Insertamos los tipos de juego iniciales si no existen
-    INSERT INTO tipos_juego (nombre) VALUES 
-    ('Juego de Cartas'), ('Plataformas'), ('Estilo Mario Party'), ('Estilo Vampire Survivor')
-    ON CONFLICT (nombre) DO NOTHING;
+    -- Tabla de los juegos creados
+    CREATE TABLE Caldero (
+        idCaldero VARCHAR(255) PRIMARY KEY,
+        nombre VARCHAR(255) NOT NULL,
+        estado estado_caldero NOT NULL,
+        precio INTEGER NOT NULL,
+        fechaCreacion VARCHAR(100) NOT NULL,
+        tipoJuego tipo_juego_enum NOT NULL,
+        idUsuario VARCHAR(255) NOT NULL,
+        softDeleted BOOLEAN DEFAULT FALSE NOT NULL,
+        CONSTRAINT fk_caldero_usuario FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+    );
+
+    -- Tabla de atributos
+    CREATE TABLE Atributos (
+        idAtributo VARCHAR(255) PRIMARY KEY,
+        label VARCHAR(255) NOT NULL,
+        categoria categoria_atributo NOT NULL,
+        precio INTEGER DEFAULT 0
+    );
+
+    -- Tabla intermedia: relaciones muchos a muchos entre calderos y atributos
+    CREATE TABLE Caldero_Atributos (
+        idCaldero VARCHAR(255),
+        idAtributo VARCHAR(255),
+        PRIMARY KEY (idCaldero, idAtributo),
+        CONSTRAINT fk_intermedia_caldero FOREIGN KEY (idCaldero) REFERENCES Caldero(idCaldero) ON DELETE CASCADE,
+        CONSTRAINT fk_intermedia_atributo FOREIGN KEY (idAtributo) REFERENCES Atributos(idAtributo) ON DELETE CASCADE
+    );
+
+    -- Registro de compras
+    CREATE TABLE Compra (
+        idCompra VARCHAR(255) PRIMARY KEY,
+        fechaCompra VARCHAR(100) NOT NULL,
+        informacion VARCHAR(500) NOT NULL,
+        cancelado BOOLEAN DEFAULT FALSE NOT NULL,
+        idUsuario VARCHAR(255) NOT NULL,
+        idCaldero VARCHAR(255) NOT NULL,
+        CONSTRAINT fk_compra_usuario FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario),
+        CONSTRAINT fk_compra_caldero FOREIGN KEY (idCaldero) REFERENCES Caldero(idCaldero),
+        CONSTRAINT uq_compras_usuario_caldero UNIQUE (idUsuario, idCaldero)
+    );
+
+    -- Insert de los atributos
+    INSERT INTO Atributos (idAtributo, label, categoria) VALUES
+    ('diseno-forest', 'Comic', 'diseño'),
+    ('diseno-vintage', 'Sketch', 'diseño'),
+    ('diseno-illustrative', '3D', 'diseño'),
+    ('diseno-acuarela', 'Pixel Art', 'diseño'),
+    ('diseno-nocturno', 'Realist', 'diseño'),
+    ('diseno-cartoon', 'Anime', 'diseño'),
+    ('diseno-rustico', 'Voxel Art', 'diseño'),
+    ('diseno-elegante', 'Noir', 'diseño'),
+    ('diseno-minimal', 'Low Poly', 'diseño');
+
+    INSERT INTO Atributos (idAtributo, label, categoria) VALUES
+    ('tematica-alquimia', 'Medieval', 'tematica'),
+    ('tematica-leyenda', 'Si-Fi', 'tematica'),
+    ('tematica-brujeria', 'Demons', 'tematica'),
+    ('tematica-elfico', 'Zombie', 'tematica'),
+    ('tematica-fantasia', 'Fantasy', 'tematica'),
+    ('tematica-cristales', 'Alien', 'tematica'),
+    ('tematica-lunar', 'Postapocalyptic', 'tematica'),
+    ('tematica-forestal', 'Cyberpunk', 'tematica'),
+    ('tematica-mistico', 'Superhero', 'tematica');
+
+    INSERT INTO Atributos (idAtributo, label, categoria) VALUES
+    ('mecanicas-puzzle', 'Puzzle', 'mecanicas'),
+    ('mecanicas-aventura', 'Turn-Based', 'mecanicas'),
+    ('mecanicas-plataforma', 'Double Jump', 'mecanicas'),
+    ('mecanicas-ritmo', 'Stealth', 'mecanicas'),
+    ('mecanicas-exploracion', 'Skill Tree', 'mecanicas'),
+    ('mecanicas-combate', 'Combat', 'mecanicas'),
+    ('mecanicas-sigilo', 'Lives', 'mecanicas'),
+    ('mecanicas-simulacion', 'Crafting', 'mecanicas'),
+    ('mecanicas-estrategia', 'Resource Management', 'mecanicas');
+
+    INSERT INTO Atributos (idAtributo, label, categoria) VALUES
+    ('sonido-misterioso', 'Mistery', 'sonido'),
+    ('sonido-coros', 'Orchestral', 'sonido'),
+    ('sonido-campanas', 'Bells', 'sonido'),
+    ('sonido-flauta', 'Calm', 'sonido'),
+    ('sonido-tambores', 'Synthwave', 'sonido'),
+    ('sonido-susurros', 'Rock/Metal', 'sonido'),
+    ('sonido-eco', 'Comercial', 'sonido'),
+    ('sonido-ambiente', 'Medieval', 'sonido'),
+    ('sonido-magico', 'Funk', 'sonido');
   `;
 
   try {
-    console.log('🔮 Configurando base de datos con el nuevo esquema...');
+    console.log('🔮 Reemplazando la base de datos con el nuevo esquema...');
     await pool.query(queryText);
-    console.log('✅ Esquema de base de datos actualizado y listo.');
+    console.log('✅ Base de datos actualizada con éxito.');
     process.exit(0);
   } catch (err) {
     console.error('❌ Error configurando la base de datos:', err);

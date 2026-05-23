@@ -84,7 +84,7 @@ router.delete('/:id', authenticateToken, async (req: AuthRequest, res: Response)
   const userId = req.user!.id;
 
   try {
-    const deleted = await CauldronDAO.delete(parseInt(id), userId);
+    const deleted = await CauldronDAO.delete(id, userId);
     if (!deleted) {
       return res.status(404).json({ message: 'Caldero no encontrado o no pertenece al usuario' });
     }
@@ -104,7 +104,7 @@ router.post('/:id/buy', authenticateToken, async (req: AuthRequest, res: Respons
   console.log(`🛒 Intentando compra: caldero=${id}, usuario=${userId}`);
 
   try {
-    const purchase = await CauldronDAO.buy(parseInt(id), userId, informacion);
+    const purchase = await CauldronDAO.buy(id, userId, informacion);
     console.log(`✅ Compra exitosa: ${id}`);
     res.status(201).json({ message: 'Compra realizada con éxito', purchase });
   } catch (error: any) {
@@ -130,7 +130,7 @@ router.put('/:id', authenticateToken, async (req: AuthRequest, res: Response) =>
   };
 
   try {
-    const updatedCauldron = await CauldronDAO.update(parseInt(id), userId, updates);
+    const updatedCauldron = await CauldronDAO.update(id, userId, updates);
     if (!updatedCauldron) {
       return res.status(404).json({ message: 'Caldero no encontrado o no pertenece al usuario' });
     }

@@ -1,4 +1,4 @@
-import { ConfigCategory, OptionsMap } from '../types';
+import type { AttributeOption, ConfigCategory, OptionsMap } from '../types';
 
 const categoryOptions: Record<ConfigCategory, Array<{ id: string; label: string }>> = {
   diseno: [
@@ -47,11 +47,14 @@ const categoryOptions: Record<ConfigCategory, Array<{ id: string; label: string 
   ]
 };
 
-export function resolveLabels(selections: OptionsMap): Record<string, string[]> {
+export function resolveLabels(
+  selections: OptionsMap,
+  availableOptions?: Record<ConfigCategory, AttributeOption[]>
+): Record<string, string[]> {
   const result: Record<string, string[]> = {};
   for (const category of Object.keys(selections) as ConfigCategory[]) {
     const selectedIds = selections[category];
-    const options = categoryOptions[category];
+    const options = availableOptions?.[category] ?? categoryOptions[category];
     result[category] = selectedIds
       .map(id => options.find(o => o.id === id)?.label)
       .filter(Boolean) as string[];

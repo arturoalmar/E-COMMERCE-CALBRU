@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
 import pool from './db.js';
 import authRoutes from './routes/authRoutes.js';
 import cauldronRoutes from './routes/cauldronRoutes.js';
+import attributeRoutes from './routes/attributeRoutes.js';
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use(express.json()); // Permite procesar cuerpos de mensaje en formato JSON
 // --- 3. RUTAS DE LA API ---
 app.use('/api/auth', authRoutes); // Endpoints de registro y login
 app.use('/api/cauldrons', cauldronRoutes); // Endpoints de gestión de calderos
+app.use('/api/attributes', attributeRoutes); // Endpoints de atributos desde la base de datos
 
 // Health check para monitorear el estado del servidor
 app.get('/api/health', (req, res) => {

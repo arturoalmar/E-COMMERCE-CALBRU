@@ -4,8 +4,9 @@
  */
 
 import { Router } from 'express';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { randomUUID } from 'crypto';
 import UserDAO from '../DAO/UserDAO.js';
 
 const router = Router();
@@ -36,16 +37,19 @@ router.post('/register', async (req, res) => {
 
     // 3. Guardar en la base de datos
     const createdUser = await UserDAO.create({
-      username,
+      idUsuario: randomUUID(),
+      nombre: username,
       email,
-      password_hash: hashedPassword
+      contraseña: hashedPassword,
+      fechaRegistro: new Date().toISOString(),
+      softDeleted: false
     });
 
     res.status(201).json({
       message: 'Usuario registrado con éxito',
       user: {
-        id: createdUser.id_usuario,
-        username: createdUser.username,
+        id: createdUser.idUsuario,
+        username: createdUser.nombre,
         email: createdUser.email
       }
     });
@@ -74,14 +78,14 @@ router.post('/login', async (req, res) => {
     }
 
     // 2. Comparar la contraseña enviada con el hash guardado
-    const isMatch = await bcrypt.compare(password, user.password_hash);
+    const isMatch = await bcrypt.compare(password, user.contraseña);
     if (!isMatch) {
       return res.status(400).json({ message: 'Credenciales inválidas' });
     }
 
     // 3. Generar token JWT con vigencia de 24h
     const token = jwt.sign(
-      { id: user.id_usuario, username: user.username },
+      { id: user.idUsuario, username: user.nombre },
       JWT_SECRET,
       { expiresIn: '24h' }
     );
@@ -89,15 +93,15 @@ router.post('/login', async (req, res) => {
     res.json({
       message: 'Inicio de sesión exitoso',
       token,
-      user: { 
-        id: user.id_usuario, 
-        username: user.username,
+      user: {
+        id: user.idUsuario,
+        username: user.nombre,
         email: user.email
       }
     });
   } catch (error) {
-    console.error('Error en login:', error);
-    res.status(500).json({ message: 'Error en el servidor al iniciar sesión' });
+    console.error('Error en login:', error instanceof Error ? error.stack : error);
+    res.status(500).json({ message: error instanceof Error ? error.message : 'Error en el servidor al iniciar sesión' });
   }
 });
 

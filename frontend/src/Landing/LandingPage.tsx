@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import forestBg from '../assets/forest_house_bg.png';
+import forestBgOpen from '../assets/forest_house_bg_open.mp4';
 import './LandingPage.css';
 
 import titleLabel from '../assets/Etiqueta-titulo.png';
@@ -27,45 +28,61 @@ interface LandingPageProps {
 // SECCIÓN: Componente o Función lógica
 const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, isWorker: _isWorker, onLogout }) => {
   const [isExploding, setIsExploding] = useState(false);
+  const [isDoorOpen, setIsDoorOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   // SECCIÓN: Componente o Función lógica
-  const handlePotionClick = () => {
+  const handleOptionClick = (target: Page) => {
     if (isExploding) return;
+    setIsDoorOpen(true);
     setIsExploding(true);
 
     setTimeout(() => {
       window.dispatchEvent(new CustomEvent('potion-splash'));
 
       setTimeout(() => {
-        setPage('creator');
+        setPage(target);
+        setIsExploding(false);
       }, 500);
     }, 400);
   };
+
+  const handlePotionClick = () => handleOptionClick('creator');
 
   // SECCIÓN: Renderizado visual
   return (
     <div className="landing-forest-container">
       {/* Background Illustration */}
-      <div
-        className="forest-bg-layer"
-        style={{ backgroundImage: `url(${forestBg})` }}
-      />
+      {!isDoorOpen ? (
+        <div
+          className="forest-bg-layer"
+          style={{ backgroundImage: `url(${forestBg})` }}
+        />
+      ) : (
+        <video
+          className="forest-bg-video"
+          src={forestBgOpen}
+          autoPlay
+          muted
+          playsInline
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      )}
 
       {/* Header Navigation */}
       <header className="forest-header">
         <nav className="forest-nav">
-          <div className="nav-left">
-            <button className="nav-btn magical-btn" onClick={() => setPage('my-cauldrons')}>MY CAULDRONS</button>
-            <button className="nav-btn magical-btn" onClick={() => setPage('conocenos')}>ABOUT US</button>
+            <div className="nav-left">
+            <button className="nav-btn magical-btn" onClick={() => handleOptionClick('my-cauldrons')}>MY CAULDRONS</button>
+            <button className="nav-btn magical-btn" onClick={() => handleOptionClick('conocenos')}>ABOUT US</button>
           </div>
 
           <div className="logo-center">
             <img src={iconImg} alt="Calbru Logo" className="nav-logo-img" />
           </div>
 
-          <div className="nav-right" style={{ position: 'relative' }}>
-            <button className="nav-btn magical-btn" onClick={() => setPage('intranet')}>INTRANET</button>
+            <div className="nav-right" style={{ position: 'relative' }}>
+            <button className="nav-btn magical-btn" onClick={() => handleOptionClick('intranet')}>INTRANET</button>
             {isLoggedIn && user ? (
               <>
                 <div
@@ -122,7 +139,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
             ) : (
               <button
                 className="forest-sign-in-btn"
-                onClick={() => setPage('login')}
+                onClick={() => handleOptionClick('login')}
               >
                 SIGN IN
               </button>

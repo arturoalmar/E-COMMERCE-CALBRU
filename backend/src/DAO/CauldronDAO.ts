@@ -4,151 +4,170 @@
  */
 
 import pool from '../db.js';
+import { randomUUID } from 'crypto';
 
-const GENRE_NAME_MAP: Record<string, string> = {
-  Cards: 'Juego de Cartas',
-  Platformer: 'Plataformas',
-  Party: 'Estilo Mario Party',
-  Autoshooter: 'Estilo Vampire Survivor',
-  'Juego de Cartas': 'Juego de Cartas',
-  'Plataformas': 'Plataformas',
-  'Estilo Mario Party': 'Estilo Mario Party',
-  'Estilo Vampire Survivor': 'Estilo Vampire Survivor'
+const GENRE_NAME_TO_ENUM: Record<string, string> = {
+  Cards: 'cartas',
+  Platformer: 'plataformas',
+  Party: 'party',
+  Autoshooter: 'roguelite',
+  'Juego de Cartas': 'cartas',
+  'Plataformas': 'plataformas',
+  'Estilo Mario Party': 'party',
+  'Estilo Vampire Survivor': 'roguelite',
+  cartas: 'cartas',
+  plataformas: 'plataformas',
+  party: 'party',
+  roguelite: 'roguelite'
 };
 
-/**
- * Representa la estructura de un caldero (proyecto de juego)
- */
+const ENUM_TO_FRONT_GENRE: Record<string, string> = {
+  cartas: 'Juego de Cartas',
+  plataformas: 'Plataformas',
+  party: 'Estilo Mario Party',
+  roguelite: 'Estilo Vampire Survivor'
+};
+
+const STATUS_MAP: Record<string, 'pendiente' | 'demo' | 'pagado'> = {
+  pendiente: 'pendiente',
+  demo: 'demo',
+  pagado: 'pagado',
+  comprado: 'pagado'
+};
+
+const ATTRIBUTE_CATEGORY_KEYWORDS: Array<{ pattern: RegExp; category: 'diseño' | 'mecanicas' | 'sonido' | 'tematica' }> = [
+  { pattern: /diseno|design|comic|sketch|3d|pixel|minimal|noir|elegante|rustico|realist/i, category: 'diseño' },
+  { pattern: /puzzle|turn|jump|stealth|skill|combat|craft|resource|lives|simulacion|aventura|exploracion/i, category: 'mecanicas' },
+  { pattern: /sonido|sound|orchestral|synth|bells|rock|metal|funk|ambient|calm|mistery|campanas|flauta|eco|susurros/i, category: 'sonido' },
+  { pattern: /medieval|fantasy|cyber|post|alien|superhero|zombie|demon|brujeria|leyenda|mistico|forestal|lunar/i, category: 'tematica' }
+];
+
 export interface Cauldron {
-  id_caldero?: number;
-  id_usuario: number;
-  id_tipo?: number;
+  idCaldero?: string;
+  id_usuario: string;
   nombre: string;
-  estado?: 'pendiente' | 'demo' | 'comprado' | 'juego';
-  ruta_demo?: string;
-  ruta_juego?: string;
-  precio?: number;
-  config_ia?: string;
-  fecha_creacion?: Date;
-  // Campos auxiliares para la comunicación con el frontend
   tipo_nombre?: string;
-  atributos?: string[]; // Lista de nombres de ingredientes
+  tipoJuego?: string;
+  estado?: 'pendiente' | 'demo' | 'pagado' | 'comprado';
+  precio?: number;
+  fechaCreacion?: string;
+  softDeleted?: boolean;
+  config_ia?: string;
+  atributos?: string[];
 }
 
 class CauldronDAO {
-  /**
-   * Recupera todos los calderos de un usuario específico.
-   * Incluye el cálculo dinámico de ingredientes y el nombre del género.
-   */
-  async findAllByUserId(userId: number): Promise<any[]> {
+  async findAllByUserId(userId: string): Promise<any[]> {
     const query = `
-      SELECT 
-        c.*, 
-        t.nombre as genero,
-        (SELECT COUNT(*) FROM caldero_atributos ca WHERE ca.id_caldero = c.id_caldero) as ingredientes,
-        COALESCE(c.config_ia, 'Sin descripción') as descripcion
-      FROM calderos c
-      JOIN tipos_juego t ON c.id_tipo = t.id_tipo
-      WHERE c.id_usuario = $1
-      ORDER BY c.fecha_creacion DESC
+      SELECT
+        c.idCaldero AS id_caldero,
+        c.idUsuario AS id_usuario,
+        c.nombre,
+        c.estado,
+        c.precio,
+        c.fechaCreacion AS fecha_creacion,
+        CASE c.tipoJuego
+          WHEN 'cartas' THEN 'Juego de Cartas'
+          WHEN 'plataformas' THEN 'Plataformas'
+          WHEN 'party' THEN 'Estilo Mario Party'
+          WHEN 'roguelite' THEN 'Estilo Vampire Survivor'
+          ELSE c.tipoJuego
+        END as genero,
+        COALESCE((SELECT COUNT(*) FROM Caldero_Atributos ca WHERE ca.idCaldero = c.idCaldero), 0) as ingredientes,
+        'Sin descripción' as descripcion
+      FROM Caldero c
+      WHERE c.idUsuario = $1 AND c.softDeleted = FALSE
+      ORDER BY c.fechaCreacion DESC
     `;
     const result = await pool.query(query, [userId]);
     return result.rows;
   }
 
-  /**
-   * Busca el ID de un tipo de juego basándose en su nombre.
-   */
-  async findTipoIdByName(name: string): Promise<number | null> {
-    const normalized = GENRE_NAME_MAP[name] || name;
-    const result = await pool.query(
-      'SELECT id_tipo FROM tipos_juego WHERE LOWER(nombre) = LOWER($1)',
-      [normalized]
-    );
-    return result.rows[0]?.id_tipo || null;
+  normalizeGenre(name: string | undefined): string | null {
+    if (!name) return null;
+    return GENRE_NAME_TO_ENUM[name] || GENRE_NAME_TO_ENUM[name.toLowerCase()] || null;
   }
 
-  /**
-   * Crea un caldero completo. Utiliza una TRANSACCIÓN para asegurar que 
-   * el caldero, sus atributos y sus relaciones se guarden correctamente.
-   */
-  async create(cauldron: Cauldron): Promise<Cauldron> {
+  normalizeStatus(status: string | undefined): 'pendiente' | 'demo' | 'pagado' {
+    if (!status) return 'pendiente';
+    return STATUS_MAP[status] || 'pendiente';
+  }
+
+  inferAttributeCategory(label: string): 'diseño' | 'mecanicas' | 'sonido' | 'tematica' {
+    for (const entry of ATTRIBUTE_CATEGORY_KEYWORDS) {
+      if (entry.pattern.test(label)) {
+        return entry.category;
+      }
+    }
+    return 'diseño';
+  }
+
+  async create(cauldron: Cauldron): Promise<any> {
     const client = await pool.connect();
     try {
-      await client.query('BEGIN'); // Iniciamos la transacción
+      await client.query('BEGIN');
 
-      // 1. Obtener id_tipo si solo tenemos el nombre
-      let id_tipo: number | undefined = cauldron.id_tipo ?? undefined;
-      if (!id_tipo && cauldron.tipo_nombre) {
-        // Intentamos buscar el tipo existente
-        id_tipo = await this.findTipoIdByName(cauldron.tipo_nombre) ?? undefined;
-        // Si no existe, lo creamos automáticamente
-        if (!id_tipo) {
-          const insertRes = await client.query(
-            'INSERT INTO tipos_juego (nombre) VALUES ($1) RETURNING id_tipo',
-            [cauldron.tipo_nombre]
-          );
-          id_tipo = insertRes.rows[0].id_tipo;
-        }
-      }
+      const tipoJuego = this.normalizeGenre(cauldron.tipo_nombre || cauldron.tipoJuego) || 'cartas';
+      const estado = this.normalizeStatus(cauldron.estado);
+      const idCaldero = randomUUID();
+      const fechaCreacion = new Date().toISOString();
 
-      if (!id_tipo) throw new Error(`Tipo de juego "${cauldron.tipo_nombre}" no encontrado`);
-
-      // 2. Insertar el registro principal del caldero
       const cauldronQuery = `
-        INSERT INTO calderos (id_usuario, id_tipo, nombre, estado, precio, config_ia)
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING *
+        INSERT INTO Caldero (idCaldero, nombre, estado, precio, fechaCreacion, tipoJuego, idUsuario, softDeleted)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, FALSE)
+        RETURNING idCaldero AS id_caldero, idUsuario AS id_usuario, nombre, estado, precio, fechaCreacion AS fecha_creacion, tipoJuego AS genero
       `;
       const cauldronValues = [
-        cauldron.id_usuario,
-        id_tipo,
+        idCaldero,
         cauldron.nombre,
-        cauldron.estado || 'pendiente',
-        cauldron.precio || 0,
-        cauldron.config_ia || ''
+        estado,
+        cauldron.precio ?? 0,
+        fechaCreacion,
+        tipoJuego,
+        cauldron.id_usuario
       ];
       const cauldronResult = await client.query(cauldronQuery, cauldronValues);
       const newCauldron = cauldronResult.rows[0];
 
-      // 3. Procesar y enlazar los atributos (ingredientes)
       if (cauldron.atributos && cauldron.atributos.length > 0) {
-        for (const attrName of cauldron.atributos) {
-          // Insertamos el atributo si no existe (basado en nombre y tipo)
-          const attrResult = await client.query(
-            'INSERT INTO atributos (nombre, tipo) VALUES ($1, $2) ON CONFLICT (nombre, tipo) DO UPDATE SET nombre = EXCLUDED.nombre RETURNING id_atributo',
-            [attrName, 'ingrediente']
-          );
-          const id_atributo = attrResult.rows[0].id_atributo;
+        for (const attrLabel of cauldron.atributos) {
+          const existingAttr = await client.query('SELECT idAtributo FROM Atributos WHERE label = $1', [attrLabel]);
+          let idAtributo: string;
 
-          // Creamos la relación en la tabla intermedia
+          if ((existingAttr.rowCount ?? 0) > 0) {
+            idAtributo = existingAttr.rows[0].idatributo;
+          } else {
+            idAtributo = randomUUID();
+            await client.query(
+              'INSERT INTO Atributos (idAtributo, label, categoria) VALUES ($1, $2, $3)',
+              [idAtributo, attrLabel, this.inferAttributeCategory(attrLabel)]
+            );
+          }
+
           await client.query(
-            'INSERT INTO caldero_atributos (id_caldero, id_atributo) VALUES ($1, $2)',
-            [newCauldron.id_caldero, id_atributo]
+            'INSERT INTO Caldero_Atributos (idCaldero, idAtributo) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+            [idCaldero, idAtributo]
           );
         }
       }
 
-      await client.query('COMMIT'); // Confirmamos los cambios
-      return newCauldron;
+      await client.query('COMMIT');
+      return { ...newCauldron, ingredientes: cauldron.atributos?.length ?? 0, descripcion: 'Sin descripción' };
     } catch (error) {
-      await client.query('ROLLBACK'); // Si algo falla, deshacemos todo
+      await client.query('ROLLBACK');
       throw error;
     } finally {
-      client.release(); // Liberamos la conexión del pool
+      client.release();
     }
   }
 
-  /**
-   * Registra la compra de un caldero y actualiza su estado a comprado.
-   */
-  async buy(calderoId: number, userId: number, informacion?: string): Promise<any> {
+  async buy(calderoId: string, userId: string, informacion?: string): Promise<any> {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
 
       const cauldronResult = await client.query(
-        'SELECT id_caldero, precio FROM calderos WHERE id_caldero = $1',
+        'SELECT idCaldero AS id_caldero, precio FROM Caldero WHERE idCaldero = $1',
         [calderoId]
       );
 
@@ -158,17 +177,19 @@ class CauldronDAO {
       }
 
       const precio = cauldronResult.rows[0].precio ?? 0;
+      const purchaseId = randomUUID();
+      const fechaCompra = new Date().toISOString();
 
       const purchaseResult = await client.query(
-        `INSERT INTO compras (id_usuario, id_caldero, monto_pagado, estado_pago, informacion)
-         VALUES ($1, $2, $3, $4, $5)
+        `INSERT INTO Compra (idCompra, fechaCompra, informacion, cancelado, idUsuario, idCaldero)
+         VALUES ($1, $2, $3, FALSE, $4, $5)
          RETURNING *`,
-        [userId, calderoId, precio, 'pagado', informacion || null]
+        [purchaseId, fechaCompra, informacion || '', userId, calderoId]
       );
 
       await client.query(
-        'UPDATE calderos SET estado = $1 WHERE id_caldero = $2',
-        ['comprado', calderoId]
+        'UPDATE Caldero SET estado = $1 WHERE idCaldero = $2',
+        ['pagado', calderoId]
       );
 
       await client.query('COMMIT');
@@ -188,31 +209,24 @@ class CauldronDAO {
     }
   }
 
-  /**
-   * Actualiza un caldero existente si pertenece al usuario.
-   * Permite cambios parciales en nombre, estado, precio y configuración IA.
-   */
-  async update(id: number, userId: number, updates: Partial<Cauldron>): Promise<any | null> {
-    const { nombre, estado, precio, config_ia } = updates;
+  async update(id: string, userId: string, updates: Partial<Cauldron>): Promise<any | null> {
+    const { nombre, estado, precio } = updates;
+    const normalizedEstado = this.normalizeStatus(estado);
     const query = `
-      UPDATE calderos 
-      SET 
+      UPDATE Caldero
+      SET
         nombre = COALESCE($1, nombre),
         estado = COALESCE($2, estado),
-        precio = COALESCE($3, precio),
-        config_ia = COALESCE($4, config_ia)
-      WHERE id_caldero = $5 AND id_usuario = $6
-      RETURNING *
+        precio = COALESCE($3, precio)
+      WHERE idCaldero = $4 AND idUsuario = $5
+      RETURNING idCaldero AS id_caldero, idUsuario AS id_usuario, nombre, estado, precio, fechaCreacion AS fecha_creacion, tipoJuego AS genero
     `;
-    const result = await pool.query(query, [nombre, estado, precio, config_ia, id, userId]);
+    const result = await pool.query(query, [nombre, normalizedEstado, precio, id, userId]);
     return result.rows[0] || null;
   }
 
-  /**
-   * Elimina un caldero si pertenece al usuario solicitante.
-   */
-  async delete(id: number, userId: number): Promise<boolean> {
-    const query = 'DELETE FROM calderos WHERE id_caldero = $1 AND id_usuario = $2';
+  async delete(id: string, userId: string): Promise<boolean> {
+    const query = 'DELETE FROM Caldero WHERE idCaldero = $1 AND idUsuario = $2';
     const result = await pool.query(query, [id, userId]);
     return (result.rowCount ?? 0) > 0;
   }

@@ -3,7 +3,7 @@
  */
 
 import React, { useState } from 'react';
-import { ConfigCategory, Genre, Particle, OptionsMap } from '../types';
+import type { AttributeOptionsMap, ConfigCategory, Genre, Particle, OptionsMap } from '../types';
 import './AddingIngredients.css';
 import DemoLoadingScreen from './DemoLoadingScreen';
 
@@ -13,6 +13,7 @@ import ParticleEffect from './ParticleEffect';
 import Footer from '../components/Footer/Footer';
 import MagicalAlert from '../components/MagicalAlert/MagicalAlert';
 import fondoCreacion from '../assets/fondo creación de juego.png';
+import forestHouseBg from '../assets/forest_house_bg.png';
 
 import { resolveLabels } from './GamePreview';
 
@@ -27,6 +28,7 @@ interface ConfiguratorPageProps {
   cauldronName: string;
   onCauldronNameChange: (name: string) => void;
   onSave: () => void;
+  attributeOptions: AttributeOptionsMap;
 }
 
 const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
@@ -40,6 +42,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
   cauldronName,
   onCauldronNameChange,
   onSave,
+  attributeOptions,
 }) => {
   const [showDemoAlert, setShowDemoAlert] = useState(false);
   const [generatingDemo, setGeneratingDemo] = useState(false);
@@ -54,7 +57,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
     setGeneratingDemo(true);
     setDemoError(null);
 
-    const resolved = resolveLabels(selections);
+    const resolved = resolveLabels(selections, attributeOptions);
 
     try {
       const res = await fetch('http://localhost:5000/api/game/generate', {
@@ -92,11 +95,13 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
     onCreateGame();
   };
 
+  const backgroundImage = isFusionReady ? fondoCreacion : forestHouseBg;
+
   return (
     <>
       <div
         className="configurator-bg"
-        style={{ backgroundImage: `url("${fondoCreacion}")` }}
+        style={{ backgroundImage: `url("${backgroundImage}")` }}
       />
 
       <div className="configurator-layout">
@@ -106,6 +111,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
           title="Design"
           cornerClass="corner-tl"
           selections={selections}
+          options={attributeOptions.diseno}
           toggleOption={toggleOption}
         />
         <OptionsShelf
@@ -113,6 +119,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
           title="Theme"
           cornerClass="corner-tr"
           selections={selections}
+          options={attributeOptions.tematica}
           toggleOption={toggleOption}
         />
         <OptionsShelf
@@ -120,6 +127,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
           title="Mechanics"
           cornerClass="corner-bl"
           selections={selections}
+          options={attributeOptions.mecanicas}
           toggleOption={toggleOption}
         />
         <OptionsShelf
@@ -127,6 +135,7 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
           title="Sound"
           cornerClass="corner-br"
           selections={selections}
+          options={attributeOptions.sonido}
           toggleOption={toggleOption}
         />
 
