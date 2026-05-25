@@ -131,23 +131,40 @@ class CauldronDAO {
 
       if (cauldron.atributos && cauldron.atributos.length > 0) {
         for (const attrLabel of cauldron.atributos) {
-          const existingAttr = await client.query('SELECT idAtributo FROM Atributos WHERE label = $1', [attrLabel]);
-          let idAtributo: string;
-
-          if ((existingAttr.rowCount ?? 0) > 0) {
-            idAtributo = existingAttr.rows[0].idatributo;
-          } else {
-            idAtributo = randomUUID();
-            await client.query(
-              'INSERT INTO Atributos (idAtributo, label, categoria) VALUES ($1, $2, $3)',
-              [idAtributo, attrLabel, this.inferAttributeCategory(attrLabel)]
+          try {
+            // Buscar por label exacto primero
+            const existingAttr = await client.query(
+              'SELECT idAtributo FROM Atributos WHERE label = $1',
+              [attrLabel]
             );
-          }
+            let idAtributo: string;
 
-          await client.query(
-            'INSERT INTO Caldero_Atributos (idCaldero, idAtributo) VALUES ($1, $2) ON CONFLICT DO NOTHING',
-            [idCaldero, idAtributo]
-          );
+            if ((existingAttr.rowCount ?? 0) > 0) {
+              idAtributo = existingAttr.rows[0].idatributo;
+            } else {
+              // El label no existe — buscar por id (fallback cuando el frontend
+              // envía el id crudo en vez del label por el bug diseño/diseno)
+              const attrById = await client.query(
+                'SELECT idAtributo FROM Atributos WHERE idAtributo = $1',
+                [attrLabel]
+              );
+              if ((attrById.rowCount ?? 0) > 0) {
+                idAtributo = attrById.rows[0].idatributo;
+              } else {
+                // No existe ni por label ni por id — omitir este atributo
+                console.warn(`⚠️  Atributo no encontrado, se omite: "${attrLabel}"`);
+                continue;
+              }
+            }
+
+            await client.query(
+              'INSERT INTO Caldero_Atributos (idCaldero, idAtributo) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+              [idCaldero, idAtributo]
+            );
+          } catch (attrError) {
+            // Error individual en un atributo: solo advertencia, no cancela el caldero
+            console.warn(`⚠️  Error vinculando atributo "${attrLabel}", se omite:`, attrError);
+          }
         }
       }
 

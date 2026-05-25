@@ -107,7 +107,9 @@ function App() {
         };
 
         data.forEach((item) => {
-          const category = item.categoria as ConfigCategory;
+          // La BD devuelve 'diseño' (con ñ) pero el mapa usa 'diseno' (sin ñ)
+          const normalized = item.categoria === 'diseño' ? 'diseno' : item.categoria;
+          const category = normalized as ConfigCategory;
           if (grouped[category]) {
             grouped[category].push({ id: item.id, label: item.label, categoria: category });
           }

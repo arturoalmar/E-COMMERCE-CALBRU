@@ -68,6 +68,18 @@ body.no-scroll {
   padding-top: 0 !important;
 }
 
+/* En páginas inmersivas (home, creator, login) anulamos el transform del
+   contenedor para que los fondos position:fixed no queden anclados al padre
+   transformado sino al viewport. Solo se aplica el fade de opacidad. */
+.app-container.sotano-mode.transition-exiting,
+.app-container.sotano-mode.transition-entering,
+.app-container.sotano-mode.transition-none,
+.app-container.full-width-page.transition-exiting,
+.app-container.full-width-page.transition-entering,
+.app-container.full-width-page.transition-none {
+  transform: none !important;
+}
+
 /* APARTADO: .app-container::before - Estilos para este elemento */
 .app-container::before {
   content: '';
@@ -250,7 +262,7 @@ body {
 /* Estado normal: Visible y tamaño original */
 .app-container.transition-none {
   opacity: 1 !important;
-  transform: scale(1) !important;
+  transform: none !important;
 }
 
 /* Eliminamos las transiciones direccionales antiguas para evitar conflictos */

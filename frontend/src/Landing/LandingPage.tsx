@@ -3,7 +3,7 @@
  * 📝 DESCRIPCIÓN: Página de inicio temática con la poción mágica.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import forestBg from '../assets/forest_house_bg.png';
 import forestBgOpen from '../assets/forest_house_bg_open.mp4';
 import './LandingPage.css';
@@ -30,12 +30,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
   const [isExploding, setIsExploding] = useState(false);
   const [isDoorOpen, setIsDoorOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // SECCIÓN: Componente o Función lógica
-  const handleOptionClick = (target: Page, withSplash = false) => {
+  const handleOptionClick = (target: Page, withSplash = false, withExplode = false) => {
     if (isExploding) return;
     setIsDoorOpen(true);
-    setIsExploding(true);
+    videoRef.current?.play();
+    if (withExplode) setIsExploding(true);
 
     setTimeout(() => {
       if (withSplash) {
@@ -49,27 +51,43 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
     }, 400);
   };
 
-  const handlePotionClick = () => handleOptionClick('creator', true);
+  const handlePotionClick = () => handleOptionClick('creator', true, true);
 
   // SECCIÓN: Renderizado visual
   return (
     <div className="landing-forest-container">
       {/* Background Illustration */}
-      {!isDoorOpen ? (
-        <div
-          className="forest-bg-layer"
-          style={{ backgroundImage: `url(${forestBg})` }}
-        />
-      ) : (
-        <video
-          className="forest-bg-video"
-          src={forestBgOpen}
-          autoPlay
-          muted
-          playsInline
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-      )}
+      <img
+        src={forestBg}
+        alt=""
+        style={{
+          position: 'fixed',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          zIndex: 1,
+        }}
+      />
+      <video
+        ref={videoRef}
+        className="forest-bg-video"
+        src={forestBgOpen}
+        muted
+        playsInline
+        preload="auto"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: isDoorOpen ? 1 : 0,
+          transition: 'opacity 0.15s ease',
+          zIndex: 2,
+        }}
+      />
 
       {/* Header Navigation */}
       <header className="forest-header">
