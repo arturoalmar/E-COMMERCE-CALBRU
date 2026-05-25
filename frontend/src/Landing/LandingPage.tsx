@@ -32,13 +32,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   // SECCIÓN: Componente o Función lógica
-  const handleOptionClick = (target: Page) => {
+  const handleOptionClick = (target: Page, withSplash = false) => {
     if (isExploding) return;
     setIsDoorOpen(true);
     setIsExploding(true);
 
     setTimeout(() => {
-      window.dispatchEvent(new CustomEvent('potion-splash'));
+      if (withSplash) {
+        window.dispatchEvent(new CustomEvent('potion-splash'));
+      }
 
       setTimeout(() => {
         setPage(target);
@@ -47,7 +49,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
     }, 400);
   };
 
-  const handlePotionClick = () => handleOptionClick('creator');
+  const handlePotionClick = () => handleOptionClick('creator', true);
 
   // SECCIÓN: Renderizado visual
   return (
