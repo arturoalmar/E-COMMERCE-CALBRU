@@ -14,12 +14,20 @@ const router = Router();
  * Recupera la lista de calderos que pertenecen al usuario autenticado.
  */
 router.get('/', authenticateToken, async (req: AuthRequest, res: Response) => {
+  const userId = req.user?.id;
+  console.log('📋 GET /api/cauldrons — req.user:', JSON.stringify(req.user), '| userId:', userId);
+
+  if (!userId) {
+    console.warn('⚠️  GET — userId missing from token, returning 401');
+    return res.status(401).json({ message: 'Sesión inválida o expirada. Por favor, inicia sesión de nuevo.' });
+  }
+
   try {
-    const userId = req.user!.id;
     const cauldrons = await CauldronDAO.findAllByUserId(userId);
+    console.log(`✅ GET — Found ${cauldrons.length} cauldrons for user ${userId}`);
     res.json(cauldrons);
   } catch (error) {
-    console.error('Error al obtener calderos:', error);
+    console.error('❌ Error al obtener calderos:', error);
     res.status(500).json({ message: 'Error en el servidor al obtener calderos' });
   }
 });
@@ -128,12 +136,17 @@ router.post('/:id/buy', authenticateToken, async (req: AuthRequest, res: Respons
 
 router.put('/:id', authenticateToken, async (req: AuthRequest, res: Response) => {
   const { id } = req.params;
-  const userId = req.user!.id;
+  const userId = req.user?.id;
+  if (!userId) {
+    return res.status(401).json({ message: 'Sesión inválida o expirada.' });
+  }
   const updates = {
-    nombre: req.body.nombre ?? req.body.name,
-    estado: req.body.estado ?? req.body.status,
-    precio: req.body.precio ?? req.body.price,
-    config_ia: req.body.config_ia ?? req.body.ai_config
+    nombre:      req.body.nombre      ?? req.body.name,
+    tipo_nombre: req.body.tipo_nombre ?? req.body.genre,
+    estado:      req.body.estado      ?? req.body.status,
+    precio:      req.body.precio      ?? req.body.price,
+    config_ia:   req.body.config_ia   ?? req.body.ai_config,
+    atributos:   req.body.atributos   ?? req.body.attributes   // array de labels/ids
   };
 
   try {

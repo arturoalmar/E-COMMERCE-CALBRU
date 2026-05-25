@@ -12,7 +12,15 @@ export interface AttributeOption {
 }
 export type AttributeOptionsMap = Record<ConfigCategory, AttributeOption[]>;
 export type OptionsMap = Record<ConfigCategory, string[]>;
-export type Page = 'home' | 'creator' | 'my-cauldrons' | 'intranet' | 'login' | 'conocenos';
+export type Page = 'home' | 'creator' | 'my-cauldrons' | 'intranet' | 'login' | 'conocenos' | 'edit-cauldron';
+
+export interface EditingCauldronData {
+  id: string | number;
+  nombre: string;
+  genero: string;       // nombre display: "Juego de Cartas", "Plataformas", etc.
+  descripcion: string;  // labels separados por coma (de STRING_AGG)
+  precio?: number | string;
+}
 
 export interface Genre {
   id: string;

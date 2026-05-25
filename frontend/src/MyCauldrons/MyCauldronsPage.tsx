@@ -24,10 +24,11 @@ interface SavedCauldron {
 
 interface MyCauldronsPageProps {
   onCreateNew?: () => void;
+  onEditCauldron?: (data: { id: string | number; nombre: string; genero: string; descripcion: string; precio?: number | string }) => void;
   showMagicalAlert?: (message: string, type: 'success' | 'error' | 'warning' | 'confirm', onConfirm?: () => void) => void;
 }
 
-const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagicalAlert }) => {
+const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, onEditCauldron, showMagicalAlert }) => {
   const [cauldrons, setCauldrons] = useState<SavedCauldron[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -39,27 +40,35 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
   const fetchCauldrons = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
-      setError('You must log in to see your cauldrons');
+      setError('You must log in to see your cauldrons.');
       setLoading(false);
       return;
     }
 
-    const endpoint = '/api/cauldrons';
     try {
-        const response = await fetch(`${API_BASE}${endpoint}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+      const response = await fetch(`${API_BASE}/api/cauldrons`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (response.status === 401 || response.status === 403) {
+        // Token expirado o sin id — limpiar sesión y pedir login
+        localStorage.removeItem('token');
+        setError('Your session has expired. Please log in again.');
+        setLoading(false);
+        return;
+      }
 
       if (!response.ok) {
-        throw new Error('Could not load your cauldrons');
+        const body = await response.text();
+        console.error('GET /api/cauldrons error:', response.status, body);
+        throw new Error(`Server error (${response.status}): ${body}`);
       }
 
       const data = await response.json();
       setCauldrons(data);
     } catch (err: any) {
-      setError(err.message);
+      console.error('fetchCauldrons caught:', err);
+      setError(err.message || 'Could not load your cauldrons.');
     } finally {
       setLoading(false);
     }
@@ -120,48 +129,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
     setPurchaseError('');
   };
 
-  // ---------- Creation Modal State ----------
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [newCauldron, setNewCauldron] = useState({
-    nombre: '',
-    descripcion: '',
-    genero: 'cartas',
-    precio: ''
-  });
-  const [createError, setCreateError] = useState('');
 
-  const handleCreateCauldron = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      if (showMagicalAlert) {
-        showMagicalAlert('You need to log in to create a cauldron.', 'warning', () => (window.location.href = '/login'));
-      } else {
-        alert('You need to log in to create a cauldron.');
-      }
-      return;
-    }
-    try {
-      const response = await fetch(`${API_BASE}/api/cauldrons`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(newCauldron)
-      });
-      if (response.ok) {
-        setIsCreateModalOpen(false);
-        fetchCauldrons();
-        setNewCauldron({ nombre: '', descripcion: '', genero: 'cartas', precio: '' });
-        if (showMagicalAlert) showMagicalAlert('Cauldron created successfully!', 'success');
-      } else {
-        const data = await response.json();
-        setCreateError(data?.message || 'Failed to create cauldron');
-      }
-    } catch (err) {
-      setCreateError('Error connecting to server');
-    }
-  };
 
   const handleConfirmPurchase = async () => {
     if (!selectedCauldron) return;
@@ -267,7 +235,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
                   {row.map((item, itemIndex) => {
                     if (item.isEmptySlot) {
                       return (
-                        <div className="empty-slot" key="empty" onClick={() => setIsCreateModalOpen(true)}>
+                        <div className="empty-slot" key="empty" onClick={() => onCreateNew?.()}>
                           <div className="empty-circle">+</div>
                           <span>Forge New Cauldron</span>
                         </div>
@@ -288,7 +256,7 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
                             <span className="scroll-date">{new Date(c.fecha_creacion).toLocaleDateString()}</span>
                           </div>
                           <h3 className="scroll-title">{c.nombre}</h3>
-                          <p className="scroll-desc">{c.descripcion || 'Magic configuration pending...'}</p>
+                          <p className="scroll-desc">{c.descripcion || 'No ingredients added yet'}</p>
                           <div className="scroll-price-row">
                             {c.precio !== undefined && (
                               <span className="scroll-price">Price: ${safePrice(c.precio)}</span>
@@ -309,7 +277,16 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
                               >
                                 {c.estado === 'comprado' ? '✓ Purchased' : 'Buy'}
                               </button>
-                              <button className="scroll-btn scroll-edit">Edit</button>
+                              <button
+                                className="scroll-btn scroll-edit"
+                                onClick={() => onEditCauldron?.({
+                                  id: c.id_caldero,
+                                  nombre: c.nombre,
+                                  genero: c.genero,
+                                  descripcion: c.descripcion,
+                                  precio: c.precio
+                                })}
+                              >Edit</button>
                               <button className="scroll-btn scroll-delete" onClick={() => handleDelete(c.id_caldero)}>Delete</button>
                             </div>
                           </div>
@@ -359,37 +336,6 @@ const MyCauldronsPage: React.FC<MyCauldronsPageProps> = ({ onCreateNew, showMagi
         </div>
       )}
 
-      {/* Creation Modal */}
-      {isCreateModalOpen && (
-        <div className="purchase-modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
-          <div className="purchase-modal" onClick={e => e.stopPropagation()}>
-            <div className="purchase-modal-header">
-              <h2>Create New Cauldron</h2>
-              <button className="close-modal-btn" onClick={() => setIsCreateModalOpen(false)} aria-label="Close dialog">×</button>
-            </div>
-            <div className="purchase-modal-content">
-              <label>Name</label>
-              <input type="text" value={newCauldron.nombre} onChange={e => setNewCauldron({ ...newCauldron, nombre: e.target.value })} />
-              <label>Description</label>
-              <textarea value={newCauldron.descripcion} onChange={e => setNewCauldron({ ...newCauldron, descripcion: e.target.value })} />
-              <label>Genre</label>
-              <select value={newCauldron.genero} onChange={e => setNewCauldron({ ...newCauldron, genero: e.target.value })}>
-                <option value="cartas">Cartas</option>
-                <option value="plataformas">Plataformas</option>
-                <option value="party">Party</option>
-                <option value="roguelite">Roguelite</option>
-              </select>
-              <label>Price</label>
-              <input type="number" value={newCauldron.precio} onChange={e => setNewCauldron({ ...newCauldron, precio: e.target.value })} />
-              {createError && <div className="purchase-error">{createError}</div>}
-            </div>
-            <div className="purchase-modal-actions">
-              <button className="action-btn cancel-btn" onClick={() => setIsCreateModalOpen(false)}>Cancel</button>
-              <button className="action-btn buy-btn" onClick={handleCreateCauldron}>Create</button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <Footer />
     </div>

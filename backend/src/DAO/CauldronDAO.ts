@@ -66,15 +66,21 @@ class CauldronDAO {
         c.estado,
         c.precio,
         c.fechaCreacion AS fecha_creacion,
-        CASE c.tipoJuego
-          WHEN 'cartas' THEN 'Juego de Cartas'
+        CASE c.tipoJuego::text
+          WHEN 'cartas'      THEN 'Juego de Cartas'
           WHEN 'plataformas' THEN 'Plataformas'
-          WHEN 'party' THEN 'Estilo Mario Party'
-          WHEN 'roguelite' THEN 'Estilo Vampire Survivor'
-          ELSE c.tipoJuego
+          WHEN 'party'       THEN 'Estilo Mario Party'
+          WHEN 'roguelite'   THEN 'Estilo Vampire Survivor'
+          ELSE c.tipoJuego::text
         END as genero,
         COALESCE((SELECT COUNT(*) FROM Caldero_Atributos ca WHERE ca.idCaldero = c.idCaldero), 0) as ingredientes,
-        'Sin descripción' as descripcion
+        COALESCE(
+          (SELECT STRING_AGG(a.label, ', ' ORDER BY a.label)
+           FROM Caldero_Atributos ca
+           JOIN Atributos a ON ca.idAtributo = a.idAtributo
+           WHERE ca.idCaldero = c.idCaldero),
+          'No ingredients added yet'
+        ) as descripcion
       FROM Caldero c
       WHERE c.idUsuario = $1 AND c.softDeleted = FALSE
       ORDER BY c.fechaCreacion DESC
@@ -232,19 +238,96 @@ class CauldronDAO {
   }
 
   async update(id: string, userId: string, updates: Partial<Cauldron>): Promise<any | null> {
-    const { nombre, estado, precio } = updates;
-    const normalizedEstado = this.normalizeStatus(estado);
-    const query = `
-      UPDATE Caldero
-      SET
-        nombre = COALESCE($1, nombre),
-        estado = COALESCE($2, estado),
-        precio = COALESCE($3, precio)
-      WHERE idCaldero = $4 AND idUsuario = $5
-      RETURNING idCaldero AS id_caldero, idUsuario AS id_usuario, nombre, estado, precio, fechaCreacion AS fecha_creacion, tipoJuego AS genero
-    `;
-    const result = await pool.query(query, [nombre, normalizedEstado, precio, id, userId]);
-    return result.rows[0] || null;
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+
+      const { nombre, tipo_nombre, estado, precio, atributos } = updates;
+      const normalizedEstado = estado ? this.normalizeStatus(estado) : undefined;
+      const normalizedGenre  = tipo_nombre ? this.normalizeGenre(tipo_nombre) : null;
+
+      // Build the SET clause dynamically so we never pass NULL for an enum parameter
+      const setClauses: string[] = [
+        'nombre    = COALESCE($1, nombre)',
+        'estado    = COALESCE($2, estado)',
+        'precio    = COALESCE($3, precio)',
+      ];
+      const queryParams: (string | number | null | undefined)[] = [
+        nombre ?? null,
+        normalizedEstado ?? null,
+        precio ?? null,
+      ];
+      let nextParam = 4;
+
+      if (normalizedGenre) {
+        setClauses.push(`tipoJuego = $${nextParam}::tipo_juego_enum`);
+        queryParams.push(normalizedGenre);
+        nextParam++;
+      }
+
+      // WHERE params
+      queryParams.push(id, userId);
+      const pId     = nextParam;
+      const pUserId = nextParam + 1;
+
+      const updateQuery = `
+        UPDATE Caldero
+        SET ${setClauses.join(', ')}
+        WHERE idCaldero = $${pId} AND idUsuario = $${pUserId}
+        RETURNING idCaldero AS id_caldero, idUsuario AS id_usuario, nombre, estado, precio,
+                  fechaCreacion AS fecha_creacion, tipoJuego::text AS genero
+      `;
+
+      console.log('🔧 CauldronDAO.update — id:', id, '| userId:', userId, '| genre:', normalizedGenre ?? '(unchanged)');
+      const result = await client.query(updateQuery, queryParams);
+
+      if ((result.rowCount ?? 0) === 0) {
+        await client.query('ROLLBACK');
+        return null;
+      }
+
+      // Si se envían atributos, reemplazar los existentes
+      if (Array.isArray(atributos)) {
+        await client.query('DELETE FROM Caldero_Atributos WHERE idCaldero = $1', [id]);
+
+        for (const attrLabel of atributos) {
+          try {
+            const existingAttr = await client.query(
+              'SELECT idAtributo FROM Atributos WHERE label = $1', [attrLabel]
+            );
+            let idAtributo: string;
+
+            if ((existingAttr.rowCount ?? 0) > 0) {
+              idAtributo = existingAttr.rows[0].idatributo;
+            } else {
+              const attrById = await client.query(
+                'SELECT idAtributo FROM Atributos WHERE idAtributo = $1', [attrLabel]
+              );
+              if ((attrById.rowCount ?? 0) > 0) {
+                idAtributo = attrById.rows[0].idatributo;
+              } else {
+                console.warn(`⚠️  Atributo no encontrado al editar, se omite: "${attrLabel}"`);
+                continue;
+              }
+            }
+            await client.query(
+              'INSERT INTO Caldero_Atributos (idCaldero, idAtributo) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+              [id, idAtributo]
+            );
+          } catch (attrError) {
+            console.warn(`⚠️  Error vinculando atributo "${attrLabel}" en edición, se omite:`, attrError);
+          }
+        }
+      }
+
+      await client.query('COMMIT');
+      return result.rows[0];
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
   async delete(id: string, userId: string): Promise<boolean> {

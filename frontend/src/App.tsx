@@ -10,6 +10,8 @@ import './App.css';
 import LandingPage from './Landing/LandingPage';
 import SelectionPage from './Selection-Cauldron/SelectionPage';
 import ConfiguratorPage from './Adding-Ingredients/ConfiguratorPage';
+import EditSelectionPage from './Edit-Cauldron/EditSelectionPage';
+import EditConfiguratorPage from './Edit-Cauldron/EditConfiguratorPage';
 import Navbar from './components/Navbar/Navbar';
 import IntranetPage from './Intranet/IntranetPage';
 import MyCauldronsPage from './MyCauldrons/MyCauldronsPage';
@@ -19,7 +21,7 @@ import MagicalAlert from './components/MagicalAlert/MagicalAlert';
 
 // Tipos y Datos
 import { GENRES, RANDOM_COLORS } from './constants/gameData';
-import type { AttributeOptionsMap, ConfigCategory, Genre, Step, OptionsMap, Page, Particle } from './types';
+import type { AttributeOptionsMap, ConfigCategory, EditingCauldronData, Genre, Step, OptionsMap, Page, Particle } from './types';
 
 function getRandomColor(): string {
   return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
@@ -40,13 +42,16 @@ function App() {
   const particleCounter = useRef(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<{ id: number, username: string, email?: string } | null>(null);
-  const [isWorker] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [attributeOptions, setAttributeOptions] = useState<AttributeOptionsMap>({
     diseno: [],
     tematica: [],
     mecanicas: [],
     sonido: []
   });
+
+  // Edit-cauldron flow
+  const [editingCauldronData, setEditingCauldronData] = useState<EditingCauldronData | null>(null);
 
   const [alertConfig, setAlertConfig] = useState<{
     isOpen: boolean;
@@ -85,6 +90,7 @@ function App() {
         const payload = JSON.parse(atob(token.split('.')[1]));
         setUser({ id: payload.id, username: payload.username });
         setIsLoggedIn(true);
+        setIsAdmin(payload.isAdmin ?? false);
       } catch (e) {
         localStorage.removeItem('token');
       }
@@ -202,6 +208,10 @@ function App() {
   }, [page]);
 
   const handleNavigate = (newPage: Page) => {
+    if (newPage === 'intranet' && !isAdmin) {
+      showMagicalAlert('Acceso restringido. Solo administradores pueden entrar en la intranet.', 'warning');
+      return;
+    }
     navigateTo(newPage, 'select-pot', null);
   };
 
@@ -300,6 +310,116 @@ function App() {
     }
   };
 
+  // ── Edit cauldron flow ────────────────────────────────────────────────────
+
+  /**
+   * Llamado desde MyCauldronsPage al pulsar Edit.
+   * Guarda los datos del caldero y navega a EditSelectionPage.
+   */
+  const handleStartEdit = (data: EditingCauldronData) => {
+    setEditingCauldronData(data);
+    setCauldronName(data.nombre);
+    navigateTo('edit-cauldron', 'select-pot', null);
+  };
+
+  /**
+   * Llamado desde EditSelectionPage cuando el usuario elige (o mantiene) un género.
+   * Pre-rellena los atributos a partir de los labels ya guardados.
+   */
+  const handleEditSelectGenre = (genre: Genre) => {
+    const newSelections: OptionsMap = { diseno: [], tematica: [], mecanicas: [], sonido: [] };
+
+    const desc = editingCauldronData?.descripcion;
+    if (desc && desc !== 'No ingredients added yet') {
+      const labels = desc.split(', ').map((l) => l.trim());
+      labels.forEach((label) => {
+        for (const cat of ['diseno', 'tematica', 'mecanicas', 'sonido'] as ConfigCategory[]) {
+          const opt = attributeOptions[cat].find((o) => o.label === label);
+          if (opt) {
+            newSelections[cat].push(opt.id);
+            break;
+          }
+        }
+      });
+    }
+
+    setSelections(newSelections);
+    navigateTo('edit-cauldron', 'configurator', genre);
+  };
+
+  /**
+   * Llamado desde EditConfiguratorPage al pulsar "Confirm Changes".
+   * Envía un PUT al backend con los nuevos datos.
+   */
+  const handleUpdateCauldron = async () => {
+    if (!editingCauldronData) return;
+
+    if (!isLoggedIn) {
+      showMagicalAlert('You must be logged in to edit cauldrons!', 'warning', () => navigateTo('login'));
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    const nombre = cauldronName.trim() || editingCauldronData.nombre;
+
+    const atributos = Object.entries(selections).flatMap(([category, ids]) =>
+      ids.map((id) =>
+        attributeOptions[category as ConfigCategory]?.find((opt) => opt.id === id)?.label || id
+      )
+    );
+
+    const genreNameMap: Record<string, string> = {
+      Cards:       'Juego de Cartas',
+      Platformer:  'Plataformas',
+      Party:       'Estilo Mario Party',
+      Autoshooter: 'Estilo Vampire Survivor',
+    };
+    const tipoNombre =
+      genreNameMap[selectedGenre?.name || ''] ||
+      selectedGenre?.name ||
+      editingCauldronData.genero;
+
+    const payload = { nombre, tipo_nombre: tipoNombre, atributos };
+    console.log('🔧 handleUpdateCauldron — id:', editingCauldronData.id, '| payload:', JSON.stringify(payload));
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/cauldrons/${editingCauldronData.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        setEditingCauldronData(null);
+        showMagicalAlert('Cauldron updated successfully! ✨', 'success', () =>
+          navigateTo('my-cauldrons')
+        );
+      } else if (response.status === 401) {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+        setUser(null);
+        showMagicalAlert('Your session has expired. Please log in again.', 'warning', () =>
+          navigateTo('login')
+        );
+      } else {
+        const body = await response.text();
+        console.error('Failed to update cauldron:', response.status, body);
+        // Parse server message if JSON, else show raw
+        let serverMsg = body;
+        try { serverMsg = JSON.parse(body)?.message || body; } catch (_) {}
+        showMagicalAlert(`Update failed (${response.status}): ${serverMsg}`, 'error');
+      }
+    } catch (err) {
+      console.error('Error updating cauldron:', err);
+      showMagicalAlert("Connection error with the wizard's tower.", 'error');
+    }
+  };
+
+  // ─────────────────────────────────────────────────────────────────────────
+
   const renderContent = () => {
     switch (page) {
       case 'home':
@@ -308,10 +428,11 @@ function App() {
             setPage={(p) => navigateTo(p as Page, 'select-pot', null)}
             isLoggedIn={isLoggedIn}
             user={user}
-            isWorker={isWorker}
+            isWorker={isAdmin}
             onLogout={() => {
               setIsLoggedIn(false);
               setUser(null);
+              setIsAdmin(false);
               localStorage.removeItem('token');
             }}
           />
@@ -347,8 +468,41 @@ function App() {
         return (
           <MyCauldronsPage
             onCreateNew={() => navigateTo('creator')}
+            onEditCauldron={handleStartEdit}
             showMagicalAlert={showMagicalAlert}
           />
+        );
+
+      case 'edit-cauldron':
+        return (
+          <div className="creator-container">
+            {currentStep === 'select-pot' && (
+              <EditSelectionPage
+                genres={GENRES}
+                currentGenreName={
+                  editingCauldronData
+                    ? editingCauldronData.genero
+                    : null
+                }
+                handleSelectGenre={handleEditSelectGenre}
+                onBack={() => navigateTo('my-cauldrons')}
+              />
+            )}
+            {currentStep === 'configurator' && (
+              <EditConfiguratorPage
+                selections={selections}
+                particles={particles}
+                selectedGenre={selectedGenre}
+                isFusionReady={isFusionReady}
+                toggleOption={toggleOption}
+                onBack={() => navigateTo('edit-cauldron', 'select-pot', null)}
+                onUpdate={handleUpdateCauldron}
+                cauldronName={cauldronName}
+                onCauldronNameChange={setCauldronName}
+                attributeOptions={attributeOptions}
+              />
+            )}
+          </div>
         );
       case 'intranet': return <IntranetPage onBack={() => navigateTo('home')} />;
       case 'conocenos': return <Conocenos onStartNow={() => navigateTo('creator')} onBack={() => navigateTo('home')} />;
@@ -358,6 +512,14 @@ function App() {
             onLogin={(userData) => {
               setIsLoggedIn(true);
               setUser(userData);
+              // Leer isAdmin del token recién guardado
+              try {
+                const token = localStorage.getItem('token');
+                if (token) {
+                  const payload = JSON.parse(atob(token.split('.')[1]));
+                  setIsAdmin(payload.isAdmin ?? false);
+                }
+              } catch (_) {}
               navigateTo('home');
             }}
             onBack={() => navigateTo('home')}
@@ -368,13 +530,13 @@ function App() {
           <LandingPage
             setPage={(p) => navigateTo(p as Page, 'select-pot', null)}
             isLoggedIn={isLoggedIn}
-            isWorker={isWorker}
+            isWorker={isAdmin}
           />
         );
     }
   };
 
-  const isImmersiveMode = page === 'home' || page === 'creator' || page === 'login';
+  const isImmersiveMode = page === 'home' || page === 'creator' || page === 'login' || page === 'edit-cauldron';
   const shouldHideNavbar = isImmersiveMode || page === 'intranet' || page === 'conocenos';
 
   return (
@@ -387,7 +549,7 @@ function App() {
       <div className={`app-container transition-${transitionStatus} dir-${transitionDirection} ${isImmersiveMode ? 'sotano-mode' : ''} ${page === 'login' ? 'full-width-page' : ''}`}>
         {!shouldHideNavbar && (
           <Navbar
-            isWorker={isWorker}
+            isWorker={isAdmin}
             onNavigate={handleNavigate}
             isLoggedIn={isLoggedIn}
             user={user}
@@ -395,6 +557,8 @@ function App() {
               if (isLoggedIn) {
                 setIsLoggedIn(false);
                 setUser(null);
+                setIsAdmin(false);
+                localStorage.removeItem('token');
               } else {
                 navigateTo('login');
               }

@@ -96,6 +96,41 @@
   border-radius: 50%;
 }
 
+/* Edit-mode: current genre highlight */
+.cauldron-button.current-genre {
+  position: relative;
+  filter: brightness(1.2) drop-shadow(0 0 18px rgba(255, 210, 50, 0.8));
+}
+
+.current-genre-badge {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #b8860b, #ffd700);
+  color: #2c1810;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.selection-subtitle {
+  font-family: 'Almendra', serif;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  transform: translateY(-10vh);
+}
+
 .cauldron-button img {
   width: 225px;
   height: 225px;

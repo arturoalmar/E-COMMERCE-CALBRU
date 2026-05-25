@@ -37,7 +37,7 @@ const QuickLinks: React.FC<QuickLinksProps> = ({ setView }) => {
           <p className="link-description">Condiciones para trabajo remoto.</p>
         </li>
         <li>
-          <button className="intranet-action-link" onClick={() => setView('committee')}>- Comité de Empresa</button>
+          <button className="intranet-action-link" onClick={() => setView('committee')}>- Delegados de Personal</button>
           <p className="link-description">Representación y derechos de los trabajadores.</p>
         </li>
       </ul>

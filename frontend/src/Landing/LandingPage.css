@@ -125,12 +125,31 @@
 
 .forest-nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     max-width: 1400px;
+    position: relative;
 }
 
+/* ── Logo izquierda (layout normal, sin intranet) ── */
+/* Fuera del flujo flex para no desplazar los botones */
+.nav-logo {
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* ── Botones centrados (layout normal) ── */
+.nav-buttons-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* ── Logo centrado (layout admin) ── */
 .logo-center {
     position: absolute;
     left: 50%;
@@ -138,12 +157,13 @@
     z-index: 110;
 }
 
+/* ── Lados izquierdo/derecho (layout admin) ── */
 .nav-left,
 .nav-right {
     display: flex;
     align-items: center;
     gap: 2rem;
-    min-width: 300px;
+    flex: 1;
 }
 
 .nav-right {
@@ -151,17 +171,15 @@
 }
 
 .nav-left .nav-btn,
-.nav-right .nav-btn {
+.nav-right .nav-btn,
+.nav-buttons-group .nav-btn {
     text-decoration: none;
     background: rgba(121, 58, 119, 0.85);
-    /* Much more opaque */
     border: 2px solid var(--gold);
-    /* Gold border for visibility */
     padding: 0.7rem 1.2rem;
     min-width: 180px;
     border-radius: 12px;
     color: #ffffff;
-    /* White text for contrast */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     font-family: "Almendra", serif;
     font-weight: 700;
@@ -175,8 +193,10 @@
 
 .nav-left .nav-btn::before,
 .nav-right .nav-btn::before,
+.nav-buttons-group .nav-btn::before,
 .nav-left .nav-btn::after,
-.nav-right .nav-btn::after {
+.nav-right .nav-btn::after,
+.nav-buttons-group .nav-btn::after {
     content: '⭐';
     position: absolute;
     font-size: 0.8rem;
@@ -186,31 +206,36 @@
 }
 
 .nav-left .nav-btn::before,
-.nav-right .nav-btn::before {
+.nav-right .nav-btn::before,
+.nav-buttons-group .nav-btn::before {
     top: 5px;
     left: 5px;
 }
 
 .nav-left .nav-btn::after,
-.nav-right .nav-btn::after {
+.nav-right .nav-btn::after,
+.nav-buttons-group .nav-btn::after {
     bottom: 5px;
     right: 5px;
 }
 
 .nav-left .nav-btn:hover::before,
-.nav-right .nav-btn:hover::before {
+.nav-right .nav-btn:hover::before,
+.nav-buttons-group .nav-btn:hover::before {
     opacity: 1;
     transform: translate(-10px, -10px) scale(1.2);
 }
 
 .nav-left .nav-btn:hover::after,
-.nav-right .nav-btn:hover::after {
+.nav-right .nav-btn:hover::after,
+.nav-buttons-group .nav-btn:hover::after {
     opacity: 1;
     transform: translate(10px, 10px) scale(1.2);
 }
 
 .nav-left .nav-btn:hover,
-.nav-right .nav-btn:hover {
+.nav-right .nav-btn:hover,
+.nav-buttons-group .nav-btn:hover {
     background: rgb(121, 58, 119);
     color: #fff;
     transform: translateY(-3px);
@@ -219,105 +244,93 @@
 }
 
 .nav-logo-img {
-    height: 55px;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+    height: 48px;
+    display: block;
 }
 
-.forest-sign-in-btn {
-    background: rgba(121, 58, 119, 0.9);
-    backdrop-filter: blur(8px);
-    color: #ffffff;
-    border: 2px solid var(--gold);
-    padding: 0.7rem 2rem;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    font-family: "Almendra", serif;
-    letter-spacing: 1px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: pointer;
-    position: relative;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-
-.forest-sign-in-btn::before,
-.forest-sign-in-btn::after {
-    content: '⭐';
-    position: absolute;
-    font-size: 0.7rem;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
-}
-
-.forest-sign-in-btn::before {
-    top: 2px;
-    left: 2px;
-}
-
-.forest-sign-in-btn::after {
-    bottom: 2px;
-    right: 2px;
-}
-
-.forest-sign-in-btn:hover::before {
-    opacity: 1;
-    transform: translate(-8px, -8px) scale(1.2);
-}
-
-.forest-sign-in-btn:hover::after {
-    opacity: 1;
-    transform: translate(8px, 8px) scale(1.2);
-}
-
-.forest-sign-in-btn:hover {
-    background: rgb(121, 58, 119);
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(121, 58, 119, 0.4);
-}
-
-/* User Profile Badge Styles */
-.user-profile-badge {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    user-select: none;
-    background: rgba(121, 58, 119, 0.9) !important;
-    border: 2px solid var(--gold) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
-    padding: 0.4rem 1.2rem;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-}
-
-.user-profile-badge:hover {
-    background: rgb(121, 58, 119) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(240, 200, 110, 0.4) !important;
-}
-
-.user-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(240, 200, 110, 0.1);
-    width: 32px;
-    height: 32px;
+/* Círculo oscuro alrededor del logo para separarlo del fondo */
+.nav-logo .nav-logo-img,
+.logo-center .nav-logo-img {
+    background: rgba(18, 10, 28, 0.82);
     border-radius: 50%;
-    border: 1px solid rgba(240, 200, 110, 0.3);
+    padding: 8px;
+    box-shadow:
+        0 0 0 2px rgba(195, 145, 40, 0.7),
+        0 4px 18px rgba(0, 0, 0, 0.55);
 }
 
-.user-info-text {
+/*
+  Los botones SIGN IN y USER BADGE usan directamente las clases
+  nav-btn y magical-btn, igual que INTRANET, MY CAULDRONS, etc.
+  No necesitan estilos propios — heredan todo de .nav-right .nav-btn.
+*/
+
+/* ─── DROPDOWN DEL USUARIO ─────────────────────────────── */
+
+.user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: rgba(20, 15, 25, 0.97);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 0.8rem;
+    min-width: 180px;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    gap: 0.5rem;
+    animation: slideDown 0.2s ease-out;
 }
 
-.user-info-text span {
-    line-height: 1.2;
+.user-dropdown-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
 }
+
+.user-dropdown-label {
+    margin: 0;
+    font-size: 0.72rem;
+    color: #888;
+    font-family: "Almendra", serif;
+}
+
+.user-dropdown-username {
+    margin: 0;
+    font-weight: 700;
+    font-family: "Almendra", serif;
+    color: var(--gold);
+    font-size: 1rem;
+}
+
+.user-dropdown-logout {
+    background: rgba(255, 50, 50, 0.1);
+    border: 1px solid #ff4444;
+    color: #ff4444;
+    padding: 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "Almendra", serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.user-dropdown-logout:hover {
+    background: rgba(255, 50, 50, 0.22);
+    transform: translateY(-1px);
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─────────────────────────────────────────────────────── */
 
 .forest-main {
     position: relative;

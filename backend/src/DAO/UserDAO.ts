@@ -12,6 +12,7 @@ export interface User {
   contraseña: string;
   fechaRegistro?: string;
   softDeleted?: boolean;
+  isAdmin?: boolean;
 }
 
 class UserDAO {
@@ -27,6 +28,7 @@ class UserDAO {
       contraseña:    row.contraseña,
       fechaRegistro: row.fecharegistro,
       softDeleted:   row.softdeleted,
+      isAdmin:       row.isadmin ?? false,
     };
   }
 

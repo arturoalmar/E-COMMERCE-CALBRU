@@ -26,7 +26,7 @@ interface LandingPageProps {
 }
 
 // SECCIÓN: Componente o Función lógica
-const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, isWorker: _isWorker, onLogout }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, isWorker, onLogout }) => {
   const [isExploding, setIsExploding] = useState(false);
   const [isDoorOpen, setIsDoorOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -92,79 +92,73 @@ const LandingPage: React.FC<LandingPageProps> = ({ setPage, isLoggedIn, user, is
       {/* Header Navigation */}
       <header className="forest-header">
         <nav className="forest-nav">
-            <div className="nav-left">
-            <button className="nav-btn magical-btn" onClick={() => handleOptionClick('my-cauldrons')}>MY CAULDRONS</button>
-            <button className="nav-btn magical-btn" onClick={() => handleOptionClick('conocenos')}>ABOUT US</button>
-          </div>
+          {isWorker ? (
+            /* ── Layout ADMIN: logo centrado, botones a ambos lados ── */
+            <>
+              <div className="nav-left">
+                <button className="nav-btn magical-btn" onClick={() => handleOptionClick('my-cauldrons')}>MY CAULDRONS</button>
+              </div>
 
-          <div className="logo-center">
-            <img src={iconImg} alt="Calbru Logo" className="nav-logo-img" />
-          </div>
+              <div className="logo-center">
+                <img src={iconImg} alt="Calbru Logo" className="nav-logo-img" />
+              </div>
 
-            <div className="nav-right" style={{ position: 'relative' }}>
-            <button className="nav-btn magical-btn" onClick={() => handleOptionClick('intranet')}>INTRANET</button>
-            {isLoggedIn && user ? (
-              <>
-                <div
-                  className="user-profile-badge"
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'rgba(121, 58, 119, 0.9)', padding: '0.4rem 1rem', borderRadius: '30px', border: '2px solid var(--gold)', cursor: 'pointer' }}
-                >
-                  <div className="user-icon" style={{ fontSize: '1.2rem' }}>🧙‍♂️</div>
-                  <div className="user-info-text" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'white' }}>{user.username}</span>
-                    {user.email && <span style={{ fontSize: '0.7rem', color: '#ccc' }}>{user.email}</span>}
-                  </div>
-                </div>
-
-                {isUserMenuOpen && (
-                  <div className="user-dropdown-menu" style={{
-                    position: 'absolute',
-                    top: '110%',
-                    right: 0,
-                    background: 'rgba(20, 15, 25, 0.95)',
-                    border: '2px solid var(--gold)',
-                    borderRadius: '12px',
-                    padding: '0.8rem',
-                    minWidth: '180px',
-                    zIndex: 1000,
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.8)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.5rem'
-                  }}>
-                    <div style={{ borderBottom: '1px solid #444', paddingBottom: '0.5rem', marginBottom: '0.5rem' }}>
-                      <p style={{ margin: 0, fontSize: '0.75rem', color: '#888' }}>Logged in as</p>
-                      <p style={{ margin: 0, fontWeight: 'bold', color: 'var(--gold)' }}>{user.username}</p>
-                    </div>
-                    <button
-                      onClick={onLogout}
-                      style={{
-                        background: 'rgba(255, 50, 50, 0.1)',
-                        border: '1px solid #ff4444',
-                        color: '#ff4444',
-                        padding: '0.6rem',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontWeight: 'bold',
-                        transition: 'all 0.2s',
-                        textAlign: 'center'
-                      }}
-                    >
-                      LOGOUT
+              <div className="nav-right" style={{ position: 'relative' }}>
+                <button className="nav-btn magical-btn" onClick={() => handleOptionClick('intranet')}>INTRANET</button>
+                <button className="nav-btn magical-btn" onClick={() => handleOptionClick('conocenos')}>ABOUT US</button>
+                {isLoggedIn && user ? (
+                  <>
+                    <button className="nav-btn magical-btn user-profile-badge" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
+                      🧙‍♂️ {user.username}
                     </button>
-                  </div>
+                    {isUserMenuOpen && (
+                      <div className="user-dropdown-menu">
+                        <div className="user-dropdown-header">
+                          <p className="user-dropdown-label">Logged in as</p>
+                          <p className="user-dropdown-username">{user.username}</p>
+                        </div>
+                        <button className="user-dropdown-logout" onClick={onLogout}>LOGOUT</button>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <button className="nav-btn magical-btn" onClick={() => handleOptionClick('login')}>SIGN IN</button>
                 )}
-              </>
-            ) : (
-              <button
-                className="forest-sign-in-btn"
-                onClick={() => handleOptionClick('login')}
-              >
-                SIGN IN
-              </button>
-            )}
-          </div>
+              </div>
+            </>
+          ) : (
+            /* ── Layout NORMAL: logo izquierda, botones centrados ── */
+            <>
+              <div className="nav-logo">
+                <img src={iconImg} alt="Calbru Logo" className="nav-logo-img" />
+              </div>
+
+              <div className="nav-buttons-group">
+                <button className="nav-btn magical-btn" onClick={() => handleOptionClick('my-cauldrons')}>MY CAULDRONS</button>
+                <button className="nav-btn magical-btn" onClick={() => handleOptionClick('conocenos')}>ABOUT US</button>
+                <div style={{ position: 'relative' }}>
+                  {isLoggedIn && user ? (
+                    <>
+                      <button className="nav-btn magical-btn user-profile-badge" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
+                        🧙‍♂️ {user.username}
+                      </button>
+                      {isUserMenuOpen && (
+                        <div className="user-dropdown-menu">
+                          <div className="user-dropdown-header">
+                            <p className="user-dropdown-label">Logged in as</p>
+                            <p className="user-dropdown-username">{user.username}</p>
+                          </div>
+                          <button className="user-dropdown-logout" onClick={onLogout}>LOGOUT</button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <button className="nav-btn magical-btn" onClick={() => handleOptionClick('login')}>SIGN IN</button>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </nav>
       </header>
 

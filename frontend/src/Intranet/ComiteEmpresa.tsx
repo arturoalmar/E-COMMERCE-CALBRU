@@ -1,10 +1,10 @@
 /**
  * 📄 ARCHIVO: ComiteEmpresa.tsx
- * 📝 DESCRIPCIÓN: Componente principal de la sección del Comité de Empresa.
+ * 📝 DESCRIPCIÓN: Componente principal de la sección de Delegados de Personal.
  */
 
 // ComiteEmpresa.tsx
-// Vista del Comité de Empresa con pestañas para información, normativa y objetivos.
+// Vista de los Delegados de Personal con pestañas para información, normativa y logros.
 
 import React, { useState } from 'react';
 import tfgVideo from '../assets/TFG.mp4';
@@ -26,7 +26,7 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
       <div className="sub-view-header modern-grid-header">
         <div className="header-side-left"></div>
         <h2 className="section-title-witch centered-white-title">
-          Comité de Empresa
+          Delegados de Personal
         </h2>
         <div className="header-side-right"></div>
       </div>
@@ -37,7 +37,7 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
           className={`tab-btn-witch ${activeTab === 'info' ? 'active' : ''}`}
           onClick={() => setActiveTab('info')}
         >
-          <span>👥</span> El Comité
+          <span>👥</span> Los Delegados
         </button>
         <button 
           className={`tab-btn-witch ${activeTab === 'legal' ? 'active' : ''}`}
@@ -55,7 +55,7 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
 
       <div className="committee-content vertical-stack full-width-content">
         
-        {/* TABS: EL COMITÉ */}
+        {/* TABS: LOS DELEGADOS */}
         {activeTab === 'info' && (
           <div className="tab-pane fade-in-active">
             <div className="committee-video-container">
@@ -69,7 +69,7 @@ const ComiteEmpresa: React.FC<ComiteEmpresaProps> = ({ setView: _setView }) => {
               <h3>¿Quiénes somos?</h3>
               <div className="who-we-are-content who-intro-card">
                 <p className="intro-text">
-                  El Comité de Empresa de The Hag's Cauldron representa a todo el equipo del estudio y trabaja para mantener un entorno laboral justo, transparente y saludable.
+                  Los Delegados de Personal de The Hag's Cauldron representan a todo el equipo del estudio y trabajan para mantener un entorno laboral justo, transparente y saludable.
 Como delegados, escuchamos las necesidades de la plantilla y actuamos como enlace directo con la dirección para mejorar el día a día del equipo.
                 </p>
                 <div className="who-summary-grid">
@@ -92,7 +92,7 @@ Buscamos favorecer la colaboración, la transparencia y unas condiciones laboral
             </section>
 
             <section className="committee-section pro-card delegates-section">
-              <h3>Delegados del Comité</h3>
+              <h3>Delegados de Personal</h3>
               <div className="delegates-grid">
                 <article className="delegate-card">
                   <div className="delegate-photo-wrap">
@@ -100,7 +100,7 @@ Buscamos favorecer la colaboración, la transparencia y unas condiciones laboral
                   </div>
                   <div className="delegate-meta">
                     <h4>Arturo Almudi</h4>
-                    <span className="delegate-role">Delegado del Comité</span>
+                    <span className="delegate-role">Delegado de Personal</span>
                     <p>Encargado de recoger y presentar las necesidades del equipo, con foco en estabilidad laboral, conciliación y respeto a los derechos profesionales.</p>
                   </div>
                 </article>
@@ -110,7 +110,7 @@ Buscamos favorecer la colaboración, la transparencia y unas condiciones laboral
                   </div>
                   <div className="delegate-meta">
                     <h4>Joel Sánchez</h4>
-                    <span className="delegate-role">Delegado del Comité</span>
+                    <span className="delegate-role">Delegado de Personal</span>
                     <p>Responsable de asegurar que el estudio cumple con las normas laborales y de defender tus derechos en los procesos de negociación y consulta interna.</p>
                   </div>
                 </article>
@@ -222,7 +222,7 @@ El convenio y el ET exigen que la comunicación sea escrita y detalle los hechos
                     </div>
                     <div className="action-step">
                       <span className="action-num">3</span>
-                      <p><strong>Solicita asistencia al Comité de Empresa o a un abogado laboralista de inmediato.</strong></p>
+                      <p><strong>Solicita asistencia a los Delegados de Personal o a un abogado laboralista de inmediato.</strong></p>
                     </div>
                     <div className="action-step">
                       <span className="action-num">4</span>
@@ -235,12 +235,12 @@ El convenio y el ET exigen que la comunicación sea escrita y detalle los hechos
           </div>
         )}
 
-        {/* TABS: COPIA DE NORMAS - LOGROS DEL COMITÉ */}
+        {/* TABS: LOGROS Y OBJETIVOS DE LOS DELEGADOS */}
         {activeTab === 'copy' && (
           <div className="tab-pane fade-in-active">
             
             <section className="committee-section">
-              <h3 className="section-title-witch" style={{fontSize: '2rem', textAlign: 'left', borderBottom: 'none'}}>🏆 Acuerdos Históricos Conseguidos por el Comité</h3>
+              <h3 className="section-title-witch" style={{fontSize: '2rem', textAlign: 'left', borderBottom: 'none'}}>🏆 Acuerdos Históricos Conseguidos por los Delegados de Personal</h3>
               <p className="intro-text" style={{marginBottom: '2rem'}}>Estos son los logros más importantes que hemos conseguido para mejorar las condiciones laborales de todos los trabajadores.</p>
               <div className="achievements-grid">
                 <div className="achievement-card">
@@ -273,7 +273,7 @@ El convenio y el ET exigen que la comunicación sea escrita y detalle los hechos
             </section>
 
             <section className="committee-section" style={{marginTop: '4rem'}}>
-              <h3 className="section-title-witch" style={{fontSize: '2rem', textAlign: 'left', borderBottom: 'none', color: '#d7b3ff'}}>🚀 Iniciativas del Comité en Marcha</h3>
+              <h3 className="section-title-witch" style={{fontSize: '2rem', textAlign: 'left', borderBottom: 'none', color: '#d7b3ff'}}>🚀 Iniciativas de los Delegados de Personal en Marcha</h3>
               <p className="intro-text" style={{marginBottom: '2rem'}}>Estas son las iniciativas que estamos impulsando actualmente para seguir mejorando las condiciones laborales.</p>
               
               <div className="goals-timeline">

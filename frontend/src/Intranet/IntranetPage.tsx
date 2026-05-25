@@ -5,7 +5,7 @@
 
 // IntranetPage.tsx
 // Página principal de la intranet corporativa para empleados.
-// Contiene noticias, calendario, acceso a normas, vacaciones, teletrabajo y comité de empresa.
+// Contiene noticias, calendario, acceso a normas, vacaciones, teletrabajo y delegados de personal.
 
 import React, { useState } from 'react';
 import './IntranetPage.css';
@@ -86,7 +86,7 @@ const IntranetPage: React.FC<IntranetPageProps> = ({ onBack }) => {
             className={`sub-nav-btn ${view === 'committee' ? 'active' : ''}`} 
             onClick={() => setView('committee')}
           >
-            Comité de Empresa
+            Delegados de Personal
           </button>
           <button 
             className={`sub-nav-btn ${view === 'teleworking' ? 'active' : ''}`} 
