@@ -29,6 +29,14 @@ router.get('/', authenticateToken, async (req: AuthRequest, res: Response) => {
  * Crea un nuevo caldero vinculado al usuario autenticado.
  */
 router.post('/', authenticateToken, async (req: AuthRequest, res: Response) => {
+  const userId = req.user?.id;
+  console.log('🔑 POST /api/cauldrons — req.user:', JSON.stringify(req.user), '| userId:', userId);
+
+  if (!userId) {
+    console.warn('⚠️  userId is missing from token — returning 401');
+    return res.status(401).json({ message: 'Sesión inválida o expirada. Por favor, inicia sesión de nuevo.' });
+  }
+
   const {
     nombre,
     name,
@@ -57,7 +65,6 @@ router.post('/', authenticateToken, async (req: AuthRequest, res: Response) => {
   }
 
   try {
-    const userId = req.user!.id;
     const newCauldron = await CauldronDAO.create({
       id_usuario: userId,
       nombre: cauldronName,

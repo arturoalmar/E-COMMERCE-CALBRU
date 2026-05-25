@@ -103,10 +103,15 @@ class CauldronDAO {
   }
 
   async create(cauldron: Cauldron): Promise<any> {
+    if (!cauldron.id_usuario) {
+      throw new Error('id_usuario es obligatorio para crear un caldero');
+    }
+
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
 
+      console.log('🪄  CauldronDAO.create — id_usuario:', cauldron.id_usuario, '| nombre:', cauldron.nombre);
       const tipoJuego = this.normalizeGenre(cauldron.tipo_nombre || cauldron.tipoJuego) || 'cartas';
       const estado = this.normalizeStatus(cauldron.estado);
       const idCaldero = randomUUID();

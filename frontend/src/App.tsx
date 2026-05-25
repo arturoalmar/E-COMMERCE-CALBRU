@@ -37,7 +37,7 @@ function App() {
   });
   const [cauldronName, setCauldronName] = useState('');
   const [particles, setParticles] = useState<Particle[]>([]);
-  const [particleCounter, setParticleCounter] = useState(0);
+  const particleCounter = useRef(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<{ id: number, username: string, email?: string } | null>(null);
   const [isWorker] = useState(true);
@@ -212,19 +212,14 @@ function App() {
   };
 
   const createParticle = () => {
+    const id = particleCounter.current++;
     const randomX = Math.random() * 120 - 60;
     const randomY = -100;
     const color = getRandomColor();
-    const newParticle: Particle = {
-      id: particleCounter,
-      x: randomX,
-      y: randomY,
-      color: color
-    };
+    const newParticle: Particle = { id, x: randomX, y: randomY, color };
     setParticles(prev => [...prev, newParticle]);
-    setParticleCounter(prev => prev + 1);
     setTimeout(() => {
-      setParticles(prev => prev.filter(p => p.id !== newParticle.id));
+      setParticles(prev => prev.filter(p => p.id !== id));
     }, 2000);
   };
 
@@ -288,6 +283,12 @@ function App() {
 
       if (response.ok) {
         showMagicalAlert('Cauldron successfully forged! Saved in your grimoire.', 'success', () => navigateTo('my-cauldrons'));
+      } else if (response.status === 401) {
+        // Token inválido o expirado — limpiar sesión y pedir nuevo login
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+        setUser(null);
+        showMagicalAlert('Your session has expired. Please log in again.', 'warning', () => navigateTo('login'));
       } else {
         const errorBody = await response.text();
         console.error('Failed to save cauldron:', response.status, errorBody);

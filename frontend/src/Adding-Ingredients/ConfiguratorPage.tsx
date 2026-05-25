@@ -13,7 +13,6 @@ import ParticleEffect from './ParticleEffect';
 import Footer from '../components/Footer/Footer';
 import MagicalAlert from '../components/MagicalAlert/MagicalAlert';
 import fondoCreacion from '../assets/fondo creación de juego.png';
-import forestHouseBg from '../assets/forest_house_bg.png';
 
 import { resolveLabels } from './GamePreview';
 
@@ -95,13 +94,11 @@ const ConfiguratorPage: React.FC<ConfiguratorPageProps> = ({
     onCreateGame();
   };
 
-  const backgroundImage = isFusionReady ? fondoCreacion : forestHouseBg;
-
   return (
     <>
       <div
         className="configurator-bg"
-        style={{ backgroundImage: `url("${backgroundImage}")` }}
+        style={{ backgroundImage: `url("${fondoCreacion}")` }}
       />
 
       <div className="configurator-layout">
